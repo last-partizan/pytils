@@ -82,6 +82,8 @@ def _get_float_remainder(fvalue, signs=9):
 
     @return: remainder
     @rtype: C{str}
+
+    @raise ValueError: Signs overflow
     """
     assert isinstance(fvalue, (int, float))
     if isinstance(fvalue, int):
@@ -257,6 +259,7 @@ def sum_string(amount, gender, items=None):
     @rtype: C{unicode}
 
     @raise AssertionError: input parameters' check failed
+    @raise ValueError: amount bigger than 10**11
     """
     if items is None:
         items = (u"", u"", u"")
