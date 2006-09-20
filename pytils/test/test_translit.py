@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 # License: GNU GPL2
 # Author: Pythy <the.pythy@gmail.com>
+"""
+Unit-tests for pytils.translit
+"""
 
-__id__ = "$Id$"
+
+__id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import unittest
@@ -10,32 +14,53 @@ import unittest
 import pytils
 
 class TranslitTestCase(unittest.TestCase):
+    """
+    Test case for pytils.translit
+    """
 
-    def ck_transl(self, in_, out_):
+    def ckTransl(self, in_, out_):
+        """
+        Checks translify
+        """
         self.assertEquals(pytils.translit.translify(in_), out_)
 
-    def ck_detransl(self, in_, out_):
+    def ckDetransl(self, in_, out_):
+        """
+        Checks detranslify
+        """
         self.assertEquals(pytils.translit.detranslify(in_), out_)
 
-    def ck_slug(self, in_, out_):
+    def ckSlug(self, in_, out_):
+        """
+        Checks slugify
+        """
         self.assertEquals(pytils.translit.slugify(in_), out_)
 
-    def test_transliteration(self):
-        self.ck_transl(u"тест", 'test')
-        self.ck_transl(u"проверка", 'proverka')
-        self.ck_transl(u"транслит", 'translit')
-        self.ck_transl(u"правда ли это", 'pravda li eto')
+    def testTransliteration(self):
+        """
+        Unit-test for transliterations
+        """
+        self.ckTransl(u"тест", 'test')
+        self.ckTransl(u"проверка", 'proverka')
+        self.ckTransl(u"транслит", 'translit')
+        self.ckTransl(u"правда ли это", 'pravda li eto')
 
-    def test_detransliteration(self):
-        self.ck_detransl('test', u"тест")
-        self.ck_detransl('proverka', u"проверка")
-        self.ck_detransl('translit', u"транслит")
+    def testDetransliteration(self):
+        """
+        Unit-test for detransliterations
+        """
+        self.ckDetransl('test', u"тест")
+        self.ckDetransl('proverka', u"проверка")
+        self.ckDetransl('translit', u"транслит")
 
-    def test_slug(self):
-        self.ck_slug(u"ТеСт", 'test')
-        self.ck_slug(u"Проверка связи", 'proverka-svyazi')
-        self.ck_slug(u"me&you", 'me-and-you')
-        self.ck_slug(u"и еще один тест", 'i-esche-odin-test')
+    def testSlug(self):
+        """
+        Unit-test for slugs
+        """
+        self.ckSlug(u"ТеСт", 'test')
+        self.ckSlug(u"Проверка связи", 'proverka-svyazi')
+        self.ckSlug(u"me&you", 'me-and-you')
+        self.ckSlug(u"и еще один тест", 'i-esche-odin-test')
 
 if __name__ == '__main__':
     unittest.main()

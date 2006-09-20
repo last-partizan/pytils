@@ -6,7 +6,7 @@
 Russian dates without locales
 """
 
-__id__ = "$Id$"
+__id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import time
@@ -14,10 +14,11 @@ import datetime
 
 from pytils import numeral
 
-TOMORROW = u"завтра"
-YESTERDAY = u"вчера"
-THE_DAY_AFTER_TOMORROW = u"послезавтра"
-THE_DAY_BEFORE_YESTERDAY = u"позавчера"
+DAY_ALTERNATIVES = {
+    1: (u"вчера", u"завтра"),
+    2: (u"позавчера", u"послезавтра")
+    }
+
 DAY_VARIANTS = (
     u"день",
     u"дня",
@@ -68,9 +69,12 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     @param from_time: source time (in seconds from epoch)
     @type from_time: C{int} or C{float}
+
     @param accuracy: level of accuracy (1..3), default=1
     @type accuracy: C{int}
-    @param to_time: target time (in seconds from epoch), default=None translates to current time
+
+    @param to_time: target time (in seconds from epoch),
+        default=None translates to current time
     @type to_time: C{int} or C{float}
 
     @return: distance of time in words
@@ -88,97 +92,101 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     assert isinstance(to_time, (int, float))
     assert isinstance(accuracy, int) and accuracy > 0
 
-    seconds = int(abs(to_time - from_time))
-    minutes = int(abs(to_time - from_time)/60.0)
-    hours   = int(abs(to_time - from_time)/3600.0)
-    days =    int(abs(to_time - from_time)/86400.0)
+    seconds_orig = int(abs(to_time - from_time))
+    minutes_orig = int(abs(to_time - from_time)/60.0)
+    hours_orig   = int(abs(to_time - from_time)/3600.0)
+    days_orig =    int(abs(to_time - from_time)/86400.0)
     in_future = from_time > to_time
 
-    st = []
-    st_val = []
-    st_alt = []
+    words = []
+    values = []
+    alternatives = []
 
-    hours_orig = hours
-    hours = hours - days*24
+    days = days_orig
+    hours = hours_orig - days_orig*24
 
-    if days > 0:
-        st.append(u"%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
-        st_val.append(days)
-
-        if days == 1:
-            if in_future:
-                st_alt.append(TOMORROW)
-            else:
-                st_alt.append(YESTERDAY)
-        elif days == 2:
-            if in_future:
-                st_alt.append(THE_DAY_AFTER_TOMORROW)
-            else:
-                st_alt.append(THE_DAY_BEFORE_YESTERDAY)
-        
-    if hours > 0 or (hours == 0 and days > 0):
-        st.append(u"%d %s" % (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
-        st_val.append(hours)
-
-    if hours == 1:
-        st_alt.append(u"час")
-
-    minutes = minutes - hours_orig*60
-
-    if minutes > 0 or (minutes == 0 and hours > 0):
-        st.append(u"%d %s" % (minutes, numeral.choose_plural(minutes, MINUTE_VARIANTS)))
-        st_val.append(minutes)
-
-    if minutes == 1:
-        st_alt.append(u"минуту")
-
-    if minutes == 0 and not st_alt:
-        if in_future:
-             return u"менее чем через минуту"
-        else:
-            return u"менее минуты назад"
-
-    idx = min(accuracy, len(st))
-    if st_val[idx-1] == 0:
-        # для того, чтобы не было 1 день 0 часов назад и т.д.
-        idx -= 1
-
-    if idx == 1 and st_alt and current:
-        if in_future:
-            if not days:
-                return u"%s %s" % (PREFIX_IN, st_alt[0])
-            else:
-                return st_alt[0]
-        else:
-            if not days:
-                return u"%s %s" % (st_alt[0], SUFFIX_AGO)
-            else:
-                return st_alt[0]
+    words.append(u"%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
+    values.append(days)
     
-    st_str = u" ".join(filter(lambda x: len(x) > 0, st[:idx]))
+    words.append(u"%d %s" % \
+                  (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
+    values.append(hours)
 
-    if in_future:
-        return u"%s %s" % (PREFIX_IN, st_str)
-    else:
-        return u"%s %s" % (st_str, SUFFIX_AGO)
+    hours == 1 and current and alternatives.append(u"час")
 
-def ru_strftime(format=u"%d.%m.%Y", dt=None, inflected=False):
+    minutes = minutes_orig - hours_orig*60
+
+    words.append(u"%d %s" % (minutes,
+                              numeral.choose_plural(minutes, MINUTE_VARIANTS)))
+    values.append(minutes)
+
+    minutes == 1 and current and alternatives.append(u"минуту")
+
+    real_words = words
+    # убираем из values и words конечные нули
+    while values and not values[-1]:
+        values.pop()
+        words.pop()
+    # убираем из values и words начальные нули
+    while values and not values[0]:
+        values.pop(0)
+        words.pop(0)
+    limit = min(accuracy, len(words))
+    real_words = words[:limit]
+    real_values = values[:limit]
+    # снова убираем конечные нули
+    while real_values and not real_values[-1]:
+        real_values.pop()
+        real_words.pop()
+        limit -= 1
+
+    real_str = u" ".join(real_words)
+    
+    # альтернативные варианты нужны только если в real_words одно значение
+    # и, вдобавок, если используется текущее время
+    alter_str = limit == 1 and current and \
+                alternatives and alternatives[0]
+    _result_str = alter_str or real_str
+    result_str = in_future and u"%s %s" % (PREFIX_IN, _result_str) \
+                           or u"%s %s" % (_result_str, SUFFIX_AGO)
+
+    # если же прошло менее минуты, то real_words -- пустой, и поэтому
+    # нужно брать alternatives[0], а не result_str
+    zero_str = minutes == 0 and not real_words and \
+            (in_future and u"менее чем через минуту" \
+                        or u"менее минуты назад")
+
+    # нужно использовать вчера/позавчера/завтра/послезавтра
+    # если days 1..2 и в real_words одно значение
+    day_alternatives = DAY_ALTERNATIVES.get(days, False)
+    alternate_day = day_alternatives and current and limit == 1 and \
+                    ((in_future and day_alternatives[1]) \
+                                 or day_alternatives[0])
+
+    
+    final_str = not real_words and zero_str or alternate_day or result_str
+
+    return final_str
+
+
+def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False):
     """
     Russian strftime without locale
 
     @param format: strftime format, default=u'%d.%m.%Y'
     @type format: C{unicode}
-    @param dt: date value, default=None translates to today
-    @type dt: C{datetime.date} or C{datetime.datetime}
+
+    @param date: date value, default=None translates to today
+    @type date: C{datetime.date} or C{datetime.datetime}
 
     @return: strftime string
     @rtype: unicode
 
     @raise AssertionError: input parameters' check failed
     """
-    if dt is None:
-        dt = datetime.datetime.today()
-    assert isinstance(dt, (datetime.date, datetime.datetime))
+    if date is None:
+        date = datetime.datetime.today()
+    assert isinstance(date, (datetime.date, datetime.datetime))
     assert isinstance(format, unicode)
     
     if inflected:
@@ -186,14 +194,14 @@ def ru_strftime(format=u"%d.%m.%Y", dt=None, inflected=False):
     else:
         midx = 1
 
-    format = format.replace(u'%a', DAY_NAMES[dt.weekday()][0])
-    format = format.replace(u'%A', DAY_NAMES[dt.weekday()][1])
-    format = format.replace(u'%b', MONTH_NAMES[dt.month-1][0])
-    format = format.replace(u'%B', MONTH_NAMES[dt.month-1][midx])
+    format = format.replace(u'%a', DAY_NAMES[date.weekday()][0])
+    format = format.replace(u'%A', DAY_NAMES[date.weekday()][1])
+    format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
+    format = format.replace(u'%B', MONTH_NAMES[date.month-1][midx])
 
     # strftime must be str, so encode it to utf8:
     s_format = format.encode("utf-8")
-    s_res = dt.strftime(s_format)
+    s_res = date.strftime(s_format)
     # and back to unicode
     u_res = s_res.decode("utf-8")
 

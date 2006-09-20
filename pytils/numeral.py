@@ -6,7 +6,7 @@
 Plural forms and in-word representation for numerals.
 """
 
-__id__ = "$Id$"
+__id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 FRACTIONS = (
@@ -107,7 +107,8 @@ def _get_float_remainder(fvalue, signs=9):
 
     if len(remainder) > signs:
         # при округлении цифр вида 0.998 ругаться
-        raise ValueError("Signs overflow: I can't round only fractional part of %s to fit %s in %d signs" % \
+        raise ValueError("Signs overflow: I can't round only fractional part \
+                          of %s to fit %s in %d signs" % \
                          (str(fvalue), orig_remainder, signs))
 
     return remainder
@@ -163,7 +164,8 @@ def rubles(amount, zero_for_kopeck=False):
         # если 3.1, то это 10 копеек, а не одна
         if iremainder < 10 and len(remainder) == 1:
             iremainder *= 10
-        pts.append(sum_string(iremainder, 2, (u"копейка", u"копейки", u"копеек")))
+        pts.append(sum_string(iremainder, 2,
+                              (u"копейка", u"копейки", u"копеек")))
 
     return u" ".join(pts)
 
@@ -203,7 +205,8 @@ def in_words_float(amount, gender=2):
     assert isinstance(amount, float)
     pts = []
     # преобразуем целую часть
-    pts.append(sum_string(int(amount), gender, (u"целая", u"целых", u"целых")))
+    pts.append(sum_string(int(amount), gender,
+                          (u"целая", u"целых", u"целых")))
     # теперь то, что после запятой
     remainder = _get_float_remainder(amount)
     signs = len(str(remainder)) - 1
@@ -239,7 +242,8 @@ def in_words(amount, gender=None):
         return in_words_float(*args)
     # ни float, ни int
     else:
-        raise TypeError("Amount must be float or int, not %s" % type(amount))
+        raise TypeError("Amount must be float or int, not %s" % \
+                        type(amount))
 
 def sum_string(amount, gender, items=None):
     """
@@ -270,34 +274,29 @@ def sum_string(amount, gender, items=None):
     assert isinstance(two_items, unicode)
     assert isinstance(five_items, unicode)
     
-    if amount == 0: return u"ноль %s" % five_items
+    if amount == 0:
+        return u"ноль %s" % five_items
 
     into = u''
     tmp_val = amount
 
     # единицы
-    into, tmp_val = __sum_string_fn(into, tmp_val, gender, items)
-    if tmp_val == 0: return into
-
+    into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
     # тысячи
-    into, tmp_val = __sum_string_fn(into, tmp_val, 2,
+    into, tmp_val = _sum_string_fn(into, tmp_val, 2,
                                     (u"тысяча", u"тысячи", u"тысяч"))
-    if tmp_val == 0: return into
-
     # миллионы
-    into, tmp_val = __sum_string_fn(into, tmp_val, 1,
+    into, tmp_val = _sum_string_fn(into, tmp_val, 1,
                                     (u"миллион", u"миллиона", u"миллионов"))
-    if tmp_val == 0: return into
-
     # миллиарды
-    into, tmp_val = __sum_string_fn(into, tmp_val, 1,
+    into, tmp_val = _sum_string_fn(into, tmp_val, 1,
                                     (u"миллиард", u"миллиарда", u"миллиардов"))
     if tmp_val == 0:
         return into
     else:
         raise ValueError("Cannot operand with numbers bigger than 10**11")
 
-def __sum_string_fn(into, tmp_val, gender, items=None):
+def _sum_string_fn(into, tmp_val, gender, items=None):
     """
     Make in-words representation of single order
 
@@ -328,8 +327,11 @@ def __sum_string_fn(into, tmp_val, gender, items=None):
     assert isinstance(two_items, unicode)
     assert isinstance(five_items, unicode)
 
+    if tmp_val == 0:
+        return into, tmp_val
+
     rest = rest1 = end_word = None
-    st = []
+    words = []
 
     rest = tmp_val % 1000
     tmp_val = tmp_val / 1000
@@ -343,30 +345,28 @@ def __sum_string_fn(into, tmp_val, gender, items=None):
     end_word = five_items
 
     # сотни
-    st.append(HUNDREDS[rest / 100])
+    words.append(HUNDREDS[rest / 100])
 
     # десятки
     rest = rest % 100
     rest1 = rest / 10
-    if rest1 == 1: # особый случай
-        tens = TENS[rest]
-    else:
-        tens = TENS[rest1]
-    st.append(tens)
+    # особый случай -- tens=1
+    tens = rest1 == 1 and TENS[rest] or TENS[rest1]
+    words.append(tens)
 
     # единицы
     if rest1 < 1 or rest1 > 1:
         amount = rest % 10
         end_word = choose_plural(amount, items)
-        st.append(ONES[amount][gender-1])
-    st.append(end_word)
+        words.append(ONES[amount][gender-1])
+    words.append(end_word)
 
     # добавляем то, что уже было
-    st.append(into)
+    words.append(into)
 
     # убираем пустые подстроки
-    st = filter(lambda x: len(x) > 0, st)
+    words = filter(lambda x: len(x) > 0, words)
 
     # склеиваем и отдаем
-    return u" ".join(st).strip(), tmp_val
+    return u" ".join(words).strip(), tmp_val
 

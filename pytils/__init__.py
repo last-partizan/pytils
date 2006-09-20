@@ -5,7 +5,7 @@
 Simple processing for russian strings
 """
 
-__id__ = "$Id$"
+__id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 __all__ = ["numeral", "dt", "translit", "test"]
 
@@ -18,21 +18,25 @@ VERSION = "%d.%d.%d" % (VERSION_MAJOR, VERSION_MINOR, VERSION_TINY)
 
 REL_DATE = '20060902'
 
-def __get_svn_date_from_id(id_string):
+def _get_svn_date_from_id(id_string):
+    """Returns date of last update (extract from __id__)"""
     if id_string.replace('$', '') == "Id":
         return REL_DATE
     else:
         return id_string.split()[3].replace('-', '')
 
 
-__module_dates = [__get_svn_date_from_id(__id__), ]
+_module_dates = [_get_svn_date_from_id(__id__), ]
 
 # импорт модулей
-for __module_name in __all__:
-    __imported_module = __import__("pytils."+__module_name, globals(), locals(), ["pytils"])
-    __module_dates.append(__get_svn_date_from_id(__imported_module.__id__))
+for _module_name in __all__:
+    _imported_module = __import__("pytils."+_module_name,
+                                   globals(),
+                                   locals(),
+                                   ["pytils"])
+    _module_dates.append(_get_svn_date_from_id(_imported_module.__id__))
 
-SVN_DATE = max(__module_dates)
+SVN_DATE = max(_module_dates)
 
 # если взяли с svn, то версия будет
 # X.Y.Z-svnYYYYMMDD, где X.Y.Z - номер оригинальной версии,

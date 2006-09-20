@@ -6,7 +6,7 @@
 Simple transliteration
 """
 
-__id__ = "$Id$"
+__id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import re
@@ -101,16 +101,16 @@ def translify(in_string):
     """
     assert isinstance(in_string, unicode)
 
-    s = in_string
+    translit = in_string
     for symb_in, symb_out in TRANSTABLE:
-        s = s.replace(symb_in, symb_out)
+        translit = translit.replace(symb_in, symb_out)
 
     # в str
     # в этом моменте может произойти UnicodeError
     # если не всё перекодировалось
-    s = str(s)
+    translit = str(translit)
 
-    return s
+    return translit
 
 def detranslify(in_string):
     """
@@ -128,12 +128,12 @@ def detranslify(in_string):
     # в unicode
     # в этом моменте може произойти UnicodeError
     # если передан не-ascii 
-    s = unicode(in_string)
+    russian = unicode(in_string)
 
     for symb_out, symb_in in TRANSTABLE:
-        s = s.replace(symb_in, symb_out)
+        russian = russian.replace(symb_in, symb_out)
 
-    return s
+    return russian
 
 def slugify(in_string):
     """
