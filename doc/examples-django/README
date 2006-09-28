@@ -1,0 +1,17 @@
+Examples of usage PyTils with Django.
+
+It's a regular project, so just start it 
+
+python manage.py runserver
+
+go to http://127.0.0.1:8000/ and look it...
+
+------------------------------------
+Пример использования PyTils с Django.
+
+Это обычный проект. Запускайте 
+
+python manage.py runserver
+
+заходите бразуером на http://127.0.0.1:8000/ и смотрите...
+

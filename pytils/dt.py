@@ -53,13 +53,13 @@ MONTH_NAMES = (
     )
 
 DAY_NAMES = (
-    (u"пн", u"понедельник"),
-    (u"вт", u"вторник"),
-    (u"ср", u"среда"),
-    (u"чт", u"четверг"),
-    (u"пт", u"пятница"),
-    (u"сб", u"суббота"),
-    (u"вск", u"воскресенье"),
+    (u"пн", u"понедельник", u"понедельник"),
+    (u"вт", u"вторник", u"вторник"),
+    (u"ср", u"среда", u"среду"),
+    (u"чт", u"четверг", u"четверг"),
+    (u"пт", u"пятница", u"пятницу"),
+    (u"сб", u"суббота", u"субботу"),
+    (u"вск", u"воскресенье", u"субботу"),
     )
 
 
@@ -169,7 +169,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     return final_str
 
 
-def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False):
+def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=False):
     """
     Russian strftime without locale
 
@@ -188,14 +188,12 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False):
         date = datetime.datetime.today()
     assert isinstance(date, (datetime.date, datetime.datetime))
     assert isinstance(format, unicode)
-    
-    if inflected:
-        midx = 2
-    else:
-        midx = 1
+
+    midx = inflected and 2 or 1
+    didx = inflected_day and 2 or 1 
 
     format = format.replace(u'%a', DAY_NAMES[date.weekday()][0])
-    format = format.replace(u'%A', DAY_NAMES[date.weekday()][1])
+    format = format.replace(u'%A', DAY_NAMES[date.weekday()][didx])
     format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
     format = format.replace(u'%B', MONTH_NAMES[date.month-1][midx])
 

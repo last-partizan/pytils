@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+<meta http-equiv="Content-Language" content="ru-ru" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PyTils Demo</title>
+</head>
+
+<body>
+<h1><a href="/">PyTils Demo</a></h1>
+{% block content %}
+<p>Для того, чтобы воспользоваться PyTils в Django, нужно:
+<ol>
+<li>Добавить 'pytils' в INSTALLED_APPS</li>
+<li>В шаблоне загрузить соответствующий компонент PyTils (подробности см. в 
+примерах к компонентам)</li>
+<li>Вставить в нужном месте искомый тег/фильтр.</li>
+</ol>
+</p>
+<p>
+Компоненты PyTils, доступные для загрузки:
+<ul>
+<li><a href="dt/">pytils_dt</a> - работа с датами</li>
+<li><a href="numeral/">pytils_numeral</a> - работа с числами</li>
+<li><a href="translit/">pytils_translit</a> - простая транслитерация</li>
+</ul>
+</p>
+<p>Замечание: в случае какой-либо ошибки фильтры/теги возвращают значение 
+'unknown' (для Django это нестандарт)</p>
+{% endblock %}
+<br />
+<hr width="60%" size="2" align="center" />
+<div align="center"><small><a href="http://gorod-omsk.ru/blog/pythy/projects/pytils/">PyTils</a> - 
+простой обработчик русского текста</small></div>
+</body>
+
+</html>

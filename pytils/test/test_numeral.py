@@ -106,7 +106,7 @@ class InWordsTestCase(unittest.TestCase):
 
     def testFloat(self):
         """
-        Unit-test for in_words_int
+        Unit-test for in_words_float
         """                
         self.assertEquals(pytils.numeral.in_words_float(10.0),
                           u"десять целых ноль десятых")
@@ -117,6 +117,26 @@ class InWordsTestCase(unittest.TestCase):
         self.assertEquals(pytils.numeral.in_words_float(0.10),
                           u"ноль целых одна десятая")
         self.assertRaises(AssertionError, pytils.numeral.in_words_float, 2)
+
+    def testWithGender(self):
+        """
+        Unit-test for in_words_float with gender
+        """
+        self.assertEquals(pytils.numeral.in_words(21, 1),
+                          u"двадцать один")
+        self.assertEquals(pytils.numeral.in_words(21, 2),
+                          u"двадцать одна")
+        self.assertEquals(pytils.numeral.in_words(21, 3),
+                          u"двадцать одно")
+        # на дробные пол не должен влиять - всегда в женском роде
+        self.assertEquals(pytils.numeral.in_words(21.0, 1),
+                          u"двадцать одна целая ноль десятых")
+        self.assertEquals(pytils.numeral.in_words(21.0, 2),
+                          u"двадцать одна целая ноль десятых")
+        self.assertEquals(pytils.numeral.in_words(21.0, 3),
+                          u"двадцать одна целая ноль десятых")
+        
+        
 
     def testCommon(self):
         """

@@ -7,7 +7,7 @@ Simple processing for russian strings
 
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
-__all__ = ["numeral", "dt", "translit", "test"]
+__all__ = ["numeral", "dt", "translit", "test", "utils"]
 
 # версия PyTils
 VERSION_MAJOR = 0

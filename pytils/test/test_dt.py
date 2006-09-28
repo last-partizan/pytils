@@ -199,6 +199,13 @@ class RuStrftimeTestCase(unittest.TestCase):
         res = pytils.dt.ru_strftime(format, self.date, True)
         self.assertEquals(res, estimates)
 
+    def ckInflectedDay(self, format, estimates):
+        """
+        Checks with inflected day
+        """
+        res = pytils.dt.ru_strftime(format, self.date, inflected_day=True)
+        self.assertEquals(res, estimates)
+
     def testRuStrftime(self):
         """
         Unit-tests for pytils.dt.ru_strftime
@@ -210,6 +217,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckInflected(u"тест %B", u"тест августа")
         self.ckInflected(u"тест выполнен %d %B %Y года",
                           u"тест выполнен 25 августа 2006 года")
+        self.ckInflectedDay(u"тест выполнен в %A", u"тест выполнен в пятницу")
 
 if __name__ == '__main__':
     unittest.main()

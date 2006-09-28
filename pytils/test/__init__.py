@@ -7,7 +7,7 @@ Unit tests for pytils
 
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
-__all__ = ["test_numeral", "test_dt", "test_translit"]
+__all__ = ["test_numeral", "test_dt", "test_translit", "test_utils"]
 
 import unittest
 

@@ -187,15 +187,12 @@ def in_words_int(amount, gender=1):
     assert isinstance(amount, int)
     return sum_string(amount, gender)
 
-def in_words_float(amount, gender=2):
+def in_words_float(amount, _gender=2):
     """
     Float in words
 
     @param amount: float numeral
     @type amount: C{float}
-    
-    @param gender: gender (male=1, female=2, neuter=3)
-    @type gender: C{int}
 
     @return: in-words reprsentation of float numeral
     @rtype: C{unicode}
@@ -205,7 +202,7 @@ def in_words_float(amount, gender=2):
     assert isinstance(amount, float)
     pts = []
     # преобразуем целую часть
-    pts.append(sum_string(int(amount), gender,
+    pts.append(sum_string(int(amount), 2,
                           (u"целая", u"целых", u"целых")))
     # теперь то, что после запятой
     remainder = _get_float_remainder(amount)
