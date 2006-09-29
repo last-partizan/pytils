@@ -20,3 +20,7 @@ print pytils.numeral.choose_plural(12, (u"пример", u"примера", u"п
 #-> примеров
 print pytils.numeral.choose_plural(32, (u"пример", u"примера", u"примеров"))
 #-> примера
+
+# также можно задавать варианты в одну строку, разделенные запятой
+print pytils.numeral.choose_plural(32, u"пример,примера, примеров")
+#-> примера

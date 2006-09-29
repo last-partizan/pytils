@@ -24,6 +24,9 @@
 получается &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.text|translify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
 </code></pre></p>
 
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+отображается оригинальный текст.</p>
+
 <h4>detranslify</h4>
 <p>Простая детранслитерация, из текста <blockquote>{{ params.translit }}</blockquote> 
 получается <blockquote><em>{{ params.translit|detranslify }}</em></blockquote></p>
@@ -33,6 +36,10 @@
 &lt;p&gt;Простая детранслитерация, из текста &lt;blockquote&gt;{% templatetag openvariable %} params.translit {% templatetag closevariable %}&lt;/blockquote&gt; 
 получается &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.translit|detranslify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
 </code></pre></p>
+
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+отображается оригинальный текст.</p>
+
 
 <h4>slugify</h4>
 <p>Подготовка текста для URL. Из текста <blockquote>{{ params.text }}</blockquote> 
@@ -49,5 +56,7 @@
 получается slug &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.translit|slugify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
 </code></pre></p>
 
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+отображается оригинальный текст.</p>
 
 {% endblock %}

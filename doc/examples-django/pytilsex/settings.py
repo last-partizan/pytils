@@ -78,3 +78,6 @@ INSTALLED_APPS = (
 # -- install pytils  
     'pytils',
 )
+
+# is value will shown at error in pytils (default - False)
+# PYTILS_SHOW_VALUES_ON_ERROR = True

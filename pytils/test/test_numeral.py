@@ -9,7 +9,7 @@ __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import unittest
-import pytils 
+import pytils
 
 class ChoosePluralTestCase(unittest.TestCase):
     """
@@ -39,6 +39,11 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(5, u"гвоздей")
         self.checkChoosePlural(11, u"гвоздей")
         self.checkChoosePlural(109, u"гвоздей")
+
+    def testChoosePluralVariantsInStr(self):
+        self.assertEquals(
+            pytils.numeral.choose_plural(1,u"гвоздь,гвоздя, гвоздей"),
+            u"гвоздь")
 
 class GetFloatRemainderTestCase(unittest.TestCase):
     """

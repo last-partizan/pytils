@@ -124,10 +124,13 @@ def choose_plural(amount, variants):
     @param variants: variants (forms) of object in such form: 
         (1 object, 2 objects, 5 objects).
     @type variants: 3-element C{sequence} of C{unicode}
+        or C{unicode} (three variants with delimeter ',')
 
     @return: proper variant
     @rtype: C{unicode}
     """
+    if isinstance(variants, unicode):
+        variants = [v.strip() for v in variants.split(',')]
     ## выбирает нужный падеж существительного в зависимости от числа
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0

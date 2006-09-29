@@ -19,12 +19,28 @@
 комментариев: {{ params.comment_number }} <em>{{ params.comment_number|choose_plural:params.comment_variants }}</em>
 </p>
 
+<p>В качестве аргумента можно передавать не только список вариантов, но и 
+варианты в одну строку, например: так {{ params.comment_number }} 
+комментари<em>{{ params.comment_number|choose_plural:"й,я,ев" }}</em> или так 
+{{ params.comment_number }} <em>{{ params.comment_number|choose_plural:"комментарий, комментария, комментариев" }}</em>
+- как Вам больше нравится.</p>
+
 <p>Сделано это так:
 <code><pre>
 &lt;p&gt;Выбор нужной формы множественного числа. Классический пример с количеством 
 комментариев: {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} &lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:params.comment_variants {% templatetag closevariable %}&lt;/em&gt;
 &lt;/p&gt;
+
+&lt;p&gt;В качестве аргумента можно передавать не только список вариантов, но и 
+варианты в одну строку, например: так {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
+комментари&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"й,я,ев" {% templatetag closevariable %}&lt;/em&gt; или так 
+{% templatetag openvariable %} params.comment_number {% templatetag closevariable %} &lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"комментарий, комментария, комментариев" {% templatetag closevariable %}&lt;/em&gt;
+- как Вам больше нравится.&lt;/p&gt;
 </pre></code></p>
+
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
+первый вариант либо пустая строка (если получить первый вариант не 
+получилось).</p>
 
 <h4>rubles</h4>
 <p>Рубли словами. К примеру, {{ params.rubles_value }} р. словами будет <em>{{ params.rubles_value|rubles }}</em>. У этого фильтра есть один 
@@ -40,6 +56,9 @@
 словами будет &lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles {% templatetag closevariable %}&lt;/em&gt;, а с копейками - 
 &lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles:True {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
+
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
+просто число.</p>
 
 <h4>in_words</h4>
 <p>Число словами. Можно целые, можно дробные. Примеры: {{ params.int_value }} - 
@@ -63,6 +82,10 @@
 словами будет &lt;em&gt;{% templatetag openvariable %} params.float_value|in_words {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
 
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
+просто число.</p>
+
+
 <h3>Теги</h3>
 <p>Пока только один.</p>
 
@@ -81,5 +104,8 @@
 &lt;em&gt;{% templatetag openblock %} sum_string params.comment_number params.comment_gender params.comment_variants {% templatetag closeblock %}&lt;/em&gt;
 &lt;/p&gt;
 </pre></code>
+
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
+просто число (без названия объекта).</p>
 
 {% endblock %}

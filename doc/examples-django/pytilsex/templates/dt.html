@@ -34,6 +34,11 @@
 следующий тест будет &lt;em&gt;{% templatetag openvariable %} params.ftime|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
 
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+будет отображена разница во времени в секундах, либо пустая строка (если 
+получить разницу не удалось).
+</p>
+
 <h4>ru_strftime</h4>
 <p>Тоже всё просто - используем обычный формат strtime, в котором %a, %A, %b, 
 %B заменены на русские.</p>
@@ -45,6 +50,12 @@
 &lt;p&gt;К примеру, текущая дата: &lt;em&gt;{% templatetag openvariable %} params.cdate|ru_strftime:"%d %B %Y, %A" {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </code></pre></p>
 
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+будет отображена дата с использованием оригинального strftime (т.е. с 
+английскими днями/месяцами), либо пустая строка (если strftime не получилось 
+выполнить).
+</p>
+
 <h4>ru_strftime_inflected</h4>
 <p>Аналогично <code>ru_strftime</code>, только день склоняется. Т.е. текущий тест был 
 выполнен в <em>{{ params.cdate|ru_strftime_inflected:"%A, %d %B %Y" }}</em>
@@ -54,7 +65,13 @@
 <pre><code>
 &lt;p&gt;Аналогично &lt;code&gt;ru_strftime&lt;/code&gt;, только день склоняется. Т.е. текущий тест был 
 выполнен в &lt;em&gt;{% templatetag openvariable %} params.cdate|ru_strftime_inflected:"%A, %d %B %Y" {% templatetag closevariable %}&lt;/em&gt;
-
 </pre></code>
 </p>
+
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+будет отображена дата с использованием оригинального strftime (т.е. с 
+английскими днями/месяцами), либо пустая строка (если strftime не получилось 
+выполнить).
+</p>
+
 {% endblock %}

@@ -23,8 +23,8 @@ def provide_unicode(stext, encoding, default=u"неизвестно"):
     """
     try:
         utext = str(stext).decode(encoding)
-    except UnicodeDecodeError:
-        utext = default
+    except UnicodeDecodeError, err:
+        utext = default % {'error': err, 'value': u""}
     return utext
 
 def provide_str(utext, encoding, default="unknown"):
@@ -41,6 +41,6 @@ def provide_str(utext, encoding, default="unknown"):
     """
     try:
         stext = unicode(utext).encode(encoding)
-    except UnicodeEncodeError:
-        stext = default
+    except UnicodeEncodeError, err:
+        stext = default % {'error': err, 'value': ""}
     return stext
