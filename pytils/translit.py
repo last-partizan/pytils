@@ -94,12 +94,16 @@ def translify(in_string):
     Translify russian text
 
     @param in_string: input string
-    @type in_string: unicode
+    @type in_string: C{unicode}
     
     @return: transliterated string
-    @rtype: str
+    @rtype: C{str}
+
+    @raise AssertionError: when in_string is not unicode
     """
-    assert isinstance(in_string, unicode)
+    #assert isinstance(in_string, unicode)
+    if not isinstance(in_string, unicode):
+        raise TypeError("Expecting unicode, but got %s" % type(in_string))
 
     translit = in_string
     for symb_in, symb_out in TRANSTABLE:
@@ -117,10 +121,10 @@ def detranslify(in_string):
     Detranslify
 
     @param in_string: input string
-    @type in_string: basestring
+    @type in_string: C{basestring}
     
     @return: detransliterated string
-    @rtype: str
+    @rtype: C{str}
     """
 
     assert isinstance(in_string, basestring)
@@ -140,14 +144,22 @@ def slugify(in_string):
     Prepare string for slug (i.e. URL or file/dir name)
 
     @param in_string: input string
-    @type in_string: unicode
+    @type in_string: C{basestring}
 
     @return: slug-string
-    @rtype: str
+    @rtype: C{str}
+
+    @raise TypeError: when in_string isn't C{unicode} or C{str}
+    @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    assert isinstance(in_string, unicode)
+    if not isinstance(in_string, basestring):
+        raise TypeError("Expecting basestring, but got %s" % type(in_string))
+    try:
+        u_in_string = unicode(in_string)
+    except UnicodeDecodeError:
+        raise ValueError("Expecting that string will be ascii, otherwise use unicode")
     
-    st = translify(in_string)
+    st = translify(u_in_string)
 
     # convert & to "and"
     st = re.sub('\&amp\;|\&', ' and ', st)

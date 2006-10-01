@@ -1,13 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
 <head>
 <meta http-equiv="Content-Language" content="ru-ru" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>PyTils Demo</title>
+<style media="screen" type="text/css">
+@import "/static/css/style.css";
+</style>
 </head>
 
 <body>
+<div id="header"></div>
+<div id="main_content">
 <h1><a href="/">PyTils Demo</a></h1>
 {% block content %}
 <p>Для того, чтобы воспользоваться PyTils в Django, нужно:
@@ -34,18 +39,22 @@
 "unknown: краткое описание ошибки"</li>
 <li>Если не в режиме отладки, то вместо значений подставляется пустая 
 строка</li>
-<li>Если не в режиме отладки, но в settings указано 
+<li>Если не в режиме отлакди, но в settings указано 
 <code>PYTILS_SHOW_VALUES_ON_ERROR = True</code>, то вместо значений 
 подставляются переданные параметры. Подробности см. в описании 
 тегов/фильтров.</li>
 </ul>
 </p>
 
+<p>Протестировано с Django-0.95.</p>
+
 {% endblock %}
-<br />
-<hr width="60%" size="2" align="center" />
-<div align="center"><small><a href="http://gorod-omsk.ru/blog/pythy/projects/pytils/">PyTils</a> - 
-простой обработчик русского текста</small></div>
+</div>
+<!-- End of main_content -->
+<div id="footer">
+<a href="http://gorod-omsk.ru/blog/pythy/projects/pytils/">PyTils</a> - 
+простой обработчик русского текста
+</div>
 </body>
 
 </html>

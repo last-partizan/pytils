@@ -62,5 +62,9 @@ class TranslitTestCase(unittest.TestCase):
         self.ckSlug(u"me&you", 'me-and-you')
         self.ckSlug(u"и еще один тест", 'i-esche-odin-test')
 
+    def testSlugExceptions(self):
+        self.assertRaises(TypeError, pytils.translit.slugify, 25)
+        self.assertRaises(ValueError, pytils.translit.slugify, "тест")
+
 if __name__ == '__main__':
     unittest.main()

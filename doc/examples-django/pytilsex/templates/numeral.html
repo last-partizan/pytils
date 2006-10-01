@@ -28,13 +28,15 @@
 <p>Сделано это так:
 <code><pre>
 &lt;p&gt;Выбор нужной формы множественного числа. Классический пример с количеством 
-комментариев: {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} &lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:params.comment_variants {% templatetag closevariable %}&lt;/em&gt;
+комментариев: {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
+&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:params.comment_variants {% templatetag closevariable %}&lt;/em&gt;
 &lt;/p&gt;
 
 &lt;p&gt;В качестве аргумента можно передавать не только список вариантов, но и 
 варианты в одну строку, например: так {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
 комментари&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"й,я,ев" {% templatetag closevariable %}&lt;/em&gt; или так 
-{% templatetag openvariable %} params.comment_number {% templatetag closevariable %} &lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"комментарий, комментария, комментариев" {% templatetag closevariable %}&lt;/em&gt;
+{% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
+&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"комментарий, комментария, комментариев" {% templatetag closevariable %}&lt;/em&gt;
 - как Вам больше нравится.&lt;/p&gt;
 </pre></code></p>
 
@@ -50,9 +52,10 @@
 
 <p>В шаблоне этот фрагмент записан так:
 <code><pre>
-&lt;p&gt;Рубли словами. К примеру, {% templatetag openvariable %} params.rubles_value {% templatetag closevariable %} р. словами будет &lt;em&gt;{% templatetag openvariable %} params.rubles_value|rubles {% templatetag closevariable %}&lt;/em&gt;. 
-У этого фильтра есть один параметр, определяющий, нужно ли нулевые копейки "проговаривать". Если нужно - то True, 
-по умолчанию &lt;code&gt;rubles&lt;/code&gt; этого не делает. Пример: {% templatetag openvariable %} params.rubles_value2 {% templatetag closevariable %} р. 
+&lt;p&gt;Рубли словами. К примеру, {% templatetag openvariable %} params.rubles_value {% templatetag closevariable %} р. словами будет 
+&lt;em&gt;{% templatetag openvariable %} params.rubles_value|rubles {% templatetag closevariable %}&lt;/em&gt;. 
+У этого фильтра есть один параметр, определяющий, нужно ли нулевые копейки "проговаривать". Если нужно - 
+то True, по умолчанию &lt;code&gt;rubles&lt;/code&gt; этого не делает. Пример: {% templatetag openvariable %} params.rubles_value2 {% templatetag closevariable %} р. 
 словами будет &lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles {% templatetag closevariable %}&lt;/em&gt;, а с копейками - 
 &lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles:True {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
