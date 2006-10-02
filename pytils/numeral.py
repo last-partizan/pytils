@@ -9,6 +9,8 @@ Plural forms and in-word representation for numerals.
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
+from pytils import utils
+
 FRACTIONS = (
     (u"десятая", u"десятых", u"десятых"),
     (u"сотая", u"сотых", u"сотых"),
@@ -83,11 +85,14 @@ def _get_float_remainder(fvalue, signs=9):
     @return: remainder
     @rtype: C{str}
 
-    @raise ValueError: Signs overflow
+    @raise TypeError: fvalue neither C{int}, no C{float}
+    @raise ValueError: fvalue is negative    
+    @raise ValueError: signs overflow
     """
-    assert isinstance(fvalue, (int, float))
+    utils.check_type('fvalue', (int, float))
+    utils.check_positive('fvalue')
     if isinstance(fvalue, int):
-        return 0
+        return "0"
 
     signs = min(signs, len(FRACTIONS))
 
@@ -128,10 +133,17 @@ def choose_plural(amount, variants):
 
     @return: proper variant
     @rtype: C{unicode}
+
+    @raise TypeError: amount isn't C{int}, variants isn't C{sequence}
+    @raise ValueError: amount is negative
+    @raise ValueError: variants' length lesser than 3
     """
+    utils.check_type('amount', int)
+    utils.check_positive('amount')
+    utils.check_type('variants', (list, tuple, unicode))
+    
     if isinstance(variants, unicode):
         variants = [v.strip() for v in variants.split(',')]
-    ## выбирает нужный падеж существительного в зависимости от числа
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0
     elif amount % 10 >= 2 and amount % 10 <= 4 and \
@@ -139,6 +151,8 @@ def choose_plural(amount, variants):
         variant = 1
     else:
         variant = 2
+
+    utils.check_length('variants', 3)
     return variants[variant]
 
 def rubles(amount, zero_for_kopeck=False):
@@ -154,9 +168,12 @@ def rubles(amount, zero_for_kopeck=False):
     @return: in-words representation of money's amount
     @rtype: C{unicode}
 
-    @raise AssertionError: input parameters' check failed
+    @raise TypeError: amount neither C{int}, no C{float}
+    @raise ValueError: amount is negative
     """
-    assert isinstance(amount, (int, float))
+    utils.check_type('amount', (int, float))
+    utils.check_positive('amount')
+    
     pts = []
     amount = round(amount, 2)
     pts.append(sum_string(int(amount), 1, (u"рубль", u"рубля", u"рублей")))
@@ -185,9 +202,12 @@ def in_words_int(amount, gender=1):
     @return: in-words reprsentation of numeral
     @rtype: C{unicode}
 
-    @raise AssertionError: when amount is not C{int}
+    @raise TypeError: when amount is not C{int}
+    @raise ValueError: amount is negative
     """
-    assert isinstance(amount, int)
+    utils.check_type('amount', int)
+    utils.check_positive('amount')
+    
     return sum_string(amount, gender)
 
 def in_words_float(amount, _gender=2):
@@ -200,9 +220,12 @@ def in_words_float(amount, _gender=2):
     @return: in-words reprsentation of float numeral
     @rtype: C{unicode}
 
-    @raise AssertionError: when amount is not C{float}
+    @raise TypeError: when amount is not C{float}
+    @raise ValueError: when ammount is negative
     """
-    assert isinstance(amount, float)
+    utils.check_type('amount', float)
+    utils.check_positive('amount')
+    
     pts = []
     # преобразуем целую часть
     pts.append(sum_string(int(amount), 2,
@@ -228,8 +251,15 @@ def in_words(amount, gender=None):
     @rtype: C{unicode}
 
     raise TypeError: when amount not C{int} or C{float}
+    raise ValueError: when amount is negative
+    raise TypeError: when gender is not C{int} (and not None)
+    raise ValueError: if gender isn't in (1,2,3)
     """
-    assert isinstance(amount, (int, float))
+    utils.check_positive('amount')
+    gender is not None and utils.check_type('gender', int)
+    if not (gender is None or 1 <= gender <= 3):
+        raise ValueError("Gender must be male (1), female (2), " + \
+                         "neuter (3), not %d" % gender)
     if gender is None:
         args = (amount,)
     else:
@@ -257,22 +287,35 @@ def sum_string(amount, gender, items=None):
     
     @param items: variants of object in three forms: 
         for one object, for two objects and for five objects
-    @type items: 3-element C{sequence} of C{unicode}
+    @type items: 3-element C{sequence} of C{unicode} or
+        just C{unicode} (three variants with delimeter ',')
 
     @return: in-words representation objects' amount
     @rtype: C{unicode}
 
-    @raise AssertionError: input parameters' check failed
+    @raise TypeError: input parameters' check failed
+    @raise ValueError: items isn't 3-element C{sequence}
     @raise ValueError: amount bigger than 10**11
+    @raise ValueError: amount is negative
     """
+    if isinstance(items, unicode):
+        items = [i.strip() for i in items.split(',')]
     if items is None:
         items = (u"", u"", u"")
-    one_item, two_items, five_items = items
-    assert isinstance(amount, int)
-    assert isinstance(gender, int)
-    assert isinstance(one_item, unicode)
-    assert isinstance(two_items, unicode)
-    assert isinstance(five_items, unicode)
+
+    utils.check_type('items', (list, tuple))
+
+    try:
+        one_item, two_items, five_items = items
+    except ValueError:
+        raise ValueError("Items must be 3-element sequence")
+
+    utils.check_type('amount', int)
+    utils.check_type('gender', int)
+    utils.check_type('one_item', unicode)
+    utils.check_type('two_items', unicode)
+    utils.check_type('five_items', unicode)
+    utils.check_positive('amount')
     
     if amount == 0:
         return u"ноль %s" % five_items
@@ -315,17 +358,19 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @return: new into and tmp_val
     @rtype: C{tuple}
 
-    @raise AssertionError: input parameters' check failed
+    @raise TypeError: input parameters' check failed
+    @raise ValueError: tmp_val is negative
     """
     if items is None:
         items = (u"", u"", u"")
     one_item, two_items, five_items = items
-    assert isinstance(into, unicode)
-    assert isinstance(tmp_val, int)
-    assert isinstance(gender, int)
-    assert isinstance(one_item, unicode)
-    assert isinstance(two_items, unicode)
-    assert isinstance(five_items, unicode)
+    utils.check_type('into', unicode)
+    utils.check_type('tmp_val', int)
+    utils.check_type('gender', int)
+    utils.check_type('one_item', unicode)
+    utils.check_type('two_items', unicode)
+    utils.check_type('five_items', unicode)
+    utils.check_positive('tmp_val')
 
     if tmp_val == 0:
         return into, tmp_val

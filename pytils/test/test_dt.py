@@ -77,7 +77,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         # ---
         self.assertEquals(res, estimated)
 
-    def testDistanceOfTimeInWordsDefaultAccuracy(self):
+    def testDOTIWDefaultAccuracy(self):
         """
         Unit-test for distance_of_time_in_words with default accuracy
         """
@@ -99,7 +99,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultAccuracy("in_1day1hr", u"через 1 день")
         self.ckDefaultAccuracy("in_2day", u"через 2 дня")
 
-    def testDistanceOfTimeInWordsDefaultToTimeAcc1(self):
+    def testDOTIWDefaultToTimeAcc1(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=1
         """
@@ -122,7 +122,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_1day1hr", 1, u"завтра")
         self.ckDefaultToTime("in_2day", 1, u"послезавтра")
         
-    def testDistanceOfTimeInWordsDefaultToTimeAcc2(self):
+    def testDOTIWDefaultToTimeAcc2(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=2
         """
@@ -145,7 +145,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_1day1hr", 2, u"через 1 день 1 час")
         self.ckDefaultToTime("in_2day", 2, u"послезавтра")
         
-    def testDistanceOfTimeInWordsDefaultToTimeAcc3(self):
+    def testDOTIWDefaultToTimeAcc3(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=3
         """
@@ -173,6 +173,15 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
                                 u"через 1 день 1 час 10 минут")
         self.ckDefaultToTime("in_2day", 3,
                                 u"через 2 дня 0 часов 40 минут")
+
+    def testDOTIWExceptions(self):
+        """
+        Unit-tests for testings distance_of_time_in_words' exceptions
+        """
+        self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, "test")
+        self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), "test")
+        self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
+        self.assertRaises(ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0)
 
 class RuStrftimeTestCase(unittest.TestCase):
     """
@@ -218,6 +227,14 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckInflected(u"тест выполнен %d %B %Y года",
                           u"тест выполнен 25 августа 2006 года")
         self.ckInflectedDay(u"тест выполнен в %A", u"тест выполнен в пятницу")
+
+    def testRuStrftimeExceptions(self):
+        """
+        Unit-tests for testing pytils.dt.ru_strftime's exceptions
+        """
+        self.assertRaises(TypeError, pytils.dt.ru_strftime, time.time())
+        self.assertRaises(TypeError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
+        
 
 if __name__ == '__main__':
     unittest.main()

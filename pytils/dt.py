@@ -80,7 +80,8 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     @return: distance of time in words
     @rtype: unicode
 
-    @raise AssertionError: input parameters' check failed
+    @raise TypeError: input parameters' check failed
+    @raise ValueError: accuracy is lesser or equal zero
     """
     current = False
     
@@ -88,9 +89,14 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
         current = True
         to_time = time.time()
 
-    assert isinstance(from_time, (int, float))
-    assert isinstance(to_time, (int, float))
-    assert isinstance(accuracy, int) and accuracy > 0
+    if not isinstance(from_time, (int, float)):
+        raise TypeError("Time must be float or integer, not %s" % type(from_time))
+    if not isinstance(to_time, (int, float)):
+        raise TypeError("Time must be float or integer, not %s" % type(to_time))
+    if not isinstance(accuracy, int):
+        raise TypeError("Accuracy must be integer, not %s" % type(accuracy))
+    if accuracy <= 0:
+        raise ValueError("Accuracy must be bigger than zero")
 
     seconds_orig = int(abs(to_time - from_time))
     minutes_orig = int(abs(to_time - from_time)/60.0)
@@ -182,12 +188,16 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     @return: strftime string
     @rtype: unicode
 
-    @raise AssertionError: input parameters' check failed
+    @raise TypeError: input parameters' check failed
     """
     if date is None:
         date = datetime.datetime.today()
-    assert isinstance(date, (datetime.date, datetime.datetime))
-    assert isinstance(format, unicode)
+    if not isinstance(date, (datetime.date, datetime.datetime)):
+        raise TypeError("Expects that date is datetime.date or " + \
+                        "datetim.datetime, not %s" % type(date))
+    if not isinstance(format, unicode):
+        raise TypeError("Expects that format is unicode, not %s" % \
+                        type(format))
 
     midx = inflected and 2 or 1
     didx = inflected_day and 2 or 1 

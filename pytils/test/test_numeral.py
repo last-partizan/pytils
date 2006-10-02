@@ -40,6 +40,19 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(11, u"гвоздей")
         self.checkChoosePlural(109, u"гвоздей")
 
+    def testChoosePluralExceptions(self):
+        """
+        Unit-test for testing choos_plural's exceptions
+        """
+        self.assertRaises(TypeError, pytils.numeral.choose_plural,
+                          "25", u"any,bene,raba")
+        self.assertRaises(TypeError, pytils.numeral.choose_plural,
+                          25, 30)
+        self.assertRaises(ValueError, pytils.numeral.choose_plural,
+                          25, u"any,bene")
+        self.assertRaises(ValueError, pytils.numeral.choose_plural,
+                          -25, u"any,bene,raba")
+
     def testChoosePluralVariantsInStr(self):
         self.assertEquals(
             pytils.numeral.choose_plural(1,u"гвоздь,гвоздя, гвоздей"),
@@ -64,8 +77,17 @@ class GetFloatRemainderTestCase(unittest.TestCase):
                           '35')
         self.assertEquals(pytils.numeral._get_float_remainder(0.01),
                           '01')
+        self.assertEquals(pytils.numeral._get_float_remainder(5),
+                          '0')
+
+    def testFloatRemainderExceptions(self):
+        """
+        Unit-test for testing _get_float_remainder's exceptions
+        """
         self.assertRaises(ValueError, pytils.numeral._get_float_remainder,
                           2.998, 2)
+        self.assertRaises(TypeError, pytils.numeral._get_float_remainder, "1.23")
+        self.assertRaises(ValueError, pytils.numeral._get_float_remainder, -1.23)
 
 class RublesTestCase(unittest.TestCase):
     """
@@ -89,6 +111,14 @@ class RublesTestCase(unittest.TestCase):
         self.assertEquals(pytils.numeral.rubles(3, True),
                           u"три рубля ноль копеек")
 
+    def testRublesExceptions(self):
+        """
+        Unit-test for testing rubles' exceptions
+        """
+        self.assertRaises(TypeError, pytils.numeral.rubles, "3")
+        self.assertRaises(ValueError, pytils.numeral.rubles, -15)
+        
+
 class InWordsTestCase(unittest.TestCase):
     """
     Test case for pytils.numeral.in_words
@@ -107,7 +137,13 @@ class InWordsTestCase(unittest.TestCase):
                           u"три тысячи пятьсот")
         self.assertEquals(pytils.numeral.in_words_int(5231000),
                           u"пять миллионов двести тридцать одна тысяча")
-        self.assertRaises(AssertionError, pytils.numeral.in_words_int, 2.5)
+
+    def testIntExceptions(self):
+        """
+        Unit-test for testing in_words_int's exceptions
+        """
+        self.assertRaises(TypeError, pytils.numeral.in_words_int, 2.5)
+        self.assertRaises(ValueError, pytils.numeral.in_words_int, -3)
 
     def testFloat(self):
         """
@@ -121,7 +157,14 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна сотая")
         self.assertEquals(pytils.numeral.in_words_float(0.10),
                           u"ноль целых одна десятая")
-        self.assertRaises(AssertionError, pytils.numeral.in_words_float, 2)
+
+    def testFloatExceptions(self):
+        """
+        Unit-test for testing in_words_float's exceptions
+        """
+        self.assertRaises(TypeError, pytils.numeral.in_words_float, '2')
+        self.assertRaises(TypeError, pytils.numeral.in_words_float, 2)
+        self.assertRaises(ValueError, pytils.numeral.in_words_float, -2.3)        
 
     def testWithGender(self):
         """
@@ -141,8 +184,6 @@ class InWordsTestCase(unittest.TestCase):
         self.assertEquals(pytils.numeral.in_words(21.0, 3),
                           u"двадцать одна целая ноль десятых")
         
-        
-
     def testCommon(self):
         """
         Unit-test for general in_words
@@ -164,7 +205,16 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна сотая")
         self.assertEquals(pytils.numeral.in_words(0.10),
                           u"ноль целых одна десятая")
-        self.assertRaises(AssertionError, pytils.numeral.in_words_float, '2')
+
+    def testCommonExceptions(self):
+        """
+        Unit-test for testing in_words' exceptions
+        """
+        self.assertRaises(TypeError, pytils.numeral.in_words, "0.2")
+        self.assertRaises(TypeError, pytils.numeral.in_words, 0.2, "1")
+        self.assertRaises(ValueError, pytils.numeral.in_words, 0.2, 5)
+        self.assertRaises(ValueError, pytils.numeral.in_words, -2)
+        
 
 class SumStringTestCase(unittest.TestCase):
     """
@@ -207,6 +257,29 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemale(2, u"две шляпки")
         self.ckFemale(31, u"тридцать одна шляпка")
 
+        self.assertEquals(u"одиннадцать негритят",
+                          pytils.numeral.sum_string(
+                              11,
+                              1,
+                              u"негритенок,негритенка,негритят"
+                              ))
+
+    def testSumStringExceptions(self):
+        """
+        Unit-test for testing sum_string's exceptions
+        """
+        self.assertRaises(TypeError, pytils.numeral.sum_string,
+                                      "1", 1)
+        self.assertRaises(TypeError, pytils.numeral.sum_string,
+                                      1, "1")
+        self.assertRaises(TypeError, pytils.numeral.sum_string,
+                                      1, "1", 23)
+        self.assertRaises(TypeError, pytils.numeral.sum_string,
+                                      1, 1, (23,24,25))
+        self.assertRaises(ValueError, pytils.numeral.sum_string,
+                                      1, 1, (23,))
+        self.assertRaises(ValueError, pytils.numeral.sum_string,
+                                      -1, 1, u"any,bene,raba")
 
 if __name__ == '__main__':
     unittest.main()

@@ -44,6 +44,14 @@ class TranslitTestCase(unittest.TestCase):
         self.ckTransl(u"проверка", 'proverka')
         self.ckTransl(u"транслит", 'translit')
         self.ckTransl(u"правда ли это", 'pravda li eto')
+        self.ckTransl(u"Щука", 'Schuka')
+
+    def testTransliterationExceptions(self):
+        """
+        Unit-test for testing translify's exceptions
+        """
+        self.assertRaises(TypeError, pytils.translit.translify, 25)
+        self.assertRaises(ValueError, pytils.translit.translify, u'\u00bfHabla espa\u00f1ol?')
 
     def testDetransliteration(self):
         """
@@ -52,6 +60,15 @@ class TranslitTestCase(unittest.TestCase):
         self.ckDetransl('test', u"тест")
         self.ckDetransl('proverka', u"проверка")
         self.ckDetransl('translit', u"транслит")
+        self.ckDetransl('SCHuka', u"Щука")
+        self.ckDetransl('Schuka', u"Щука")
+
+    def testDetransliterationExceptions(self):
+        """
+        Unit-test for testing detranslify's exceptions
+        """
+        self.assertRaises(TypeError, pytils.translit.detranslify, 25)
+        self.assertRaises(ValueError, pytils.translit.detranslify, "тест")
 
     def testSlug(self):
         """
@@ -63,6 +80,9 @@ class TranslitTestCase(unittest.TestCase):
         self.ckSlug(u"и еще один тест", 'i-esche-odin-test')
 
     def testSlugExceptions(self):
+        """
+        Unit-test for testing slugify's exceptions
+        """
         self.assertRaises(TypeError, pytils.translit.slugify, 25)
         self.assertRaises(ValueError, pytils.translit.slugify, "тест")
 
