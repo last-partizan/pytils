@@ -9,7 +9,6 @@ Russian dates without locales
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
-import time
 import datetime
 
 from pytils import numeral
@@ -68,14 +67,14 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     Represents distance of time in words
 
     @param from_time: source time (in seconds from epoch)
-    @type from_time: C{int} or C{float}
+    @type from_time: C{int}, C{float} or C{datetime.datetime}
 
     @param accuracy: level of accuracy (1..3), default=1
     @type accuracy: C{int}
 
     @param to_time: target time (in seconds from epoch),
         default=None translates to current time
-    @type to_time: C{int} or C{float}
+    @type to_time: C{int}, C{float} or C{datetime.datetime}
 
     @return: distance of time in words
     @rtype: unicode
@@ -87,21 +86,30 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     
     if to_time is None:
         current = True
-        to_time = time.time()
+        to_time = datetime.datetime.now()
 
-    if not isinstance(from_time, (int, float)):
-        raise TypeError("Time must be float or integer, not %s" % type(from_time))
-    if not isinstance(to_time, (int, float)):
-        raise TypeError("Time must be float or integer, not %s" % type(to_time))
+    if not isinstance(from_time, (int, float, datetime.datetime)):
+        raise TypeError("Time must be float, integer or datetime.datetime, not %s" % type(from_time))
+    if not isinstance(to_time, (int, float, datetime.datetime)):
+        raise TypeError("Time must be float, integer or datetime.datetime, not %s" % type(to_time))
     if not isinstance(accuracy, int):
         raise TypeError("Accuracy must be integer, not %s" % type(accuracy))
     if accuracy <= 0:
         raise ValueError("Accuracy must be bigger than zero")
 
-    seconds_orig = int(abs(to_time - from_time))
-    minutes_orig = int(abs(to_time - from_time)/60.0)
-    hours_orig   = int(abs(to_time - from_time)/3600.0)
-    days_orig =    int(abs(to_time - from_time)/86400.0)
+    if not isinstance(from_time, datetime.datetime):
+        from_time = datetime.datetime.fromtimestamp(from_time)
+
+    if not isinstance(to_time, datetime.datetime):
+        to_time = datetime.datetime.fromtimestamp(to_time)
+
+    dt_delta = to_time - from_time
+    difference = dt_delta.days*86400 + dt_delta.seconds
+
+    seconds_orig = int(abs(difference))
+    minutes_orig = int(abs(difference)/60.0)
+    hours_orig   = int(abs(difference)/3600.0)
+    days_orig =    int(abs(difference)/86400.0)
     in_future = from_time > to_time
 
     words = []

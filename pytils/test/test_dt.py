@@ -174,6 +174,15 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_2day", 3,
                                 u"через 2 дня 0 часов 40 минут")
 
+    def testDOTWDateTimeType(self):
+        first_time = datetime.datetime.now()
+        second_time = first_time + datetime.timedelta(0, 1000)
+        self.assertEquals(pytils.dt.distance_of_time_in_words(
+            from_time=first_time,
+            accuracy=1,
+            to_time=second_time),
+                          u"16 минут назад")
+
     def testDOTIWExceptions(self):
         """
         Unit-tests for testings distance_of_time_in_words' exceptions
