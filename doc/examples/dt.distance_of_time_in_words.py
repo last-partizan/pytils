@@ -1,12 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
 import time
 import pytils
 
+# поддерживаются оба модуля работы со временем:
+# time
 current_time = time.time()
 in_past = current_time - 100000
 in_future = current_time + 100000
+# и datetime.datetime
+dt_current_time = datetime.datetime.now()
+dt_in_past = dt_current_time - datetime.timedelta(0, 100000)
+dt_in_future = dt_current_time + datetime.timedelta(0, 100000)
 
 #
 # У distance_of_time_in_words три параметра:
@@ -16,9 +23,12 @@ in_future = current_time + 100000
 #
 
 # если to_time не передано, считается от "сейчас",
-# и тогда -1 день -> "вчера"
+# и тогда -1 день -> "вчера", а +1 день -> "завтра"
 print pytils.dt.distance_of_time_in_words(in_past)
 #-> вчера
+print pytils.dt.distance_of_time_in_words(dt_in_future)
+#-> завтра
+
 
 # а вот если передано to_time, то нельзя говорить "вчера",
 # потому что to_time не обязательно "сейчас",

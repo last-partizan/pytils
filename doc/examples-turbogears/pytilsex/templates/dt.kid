@@ -25,6 +25,11 @@ import pytils
 будет <em>${pytils.dt.distance_of_time_in_words(ftime)}</em>
 </p>
 <p>
+<code>distance_of_time</code> умеет работать с обеими типами времени, представленных 
+в Python: с <code>datetime.datetime</code> и <code>time.time</code>. Например,
+${fdate} будет <em>${pytils.dt.distance_of_time_in_words(fdate)}</em>
+</p>
+<p>
 В шаблоне это выглядит так:
 <code><pre>
 &lt;p&gt;Например, тест прошлого времени был &lt;em&gt;$${pytils.dt.distance_of_time_in_words(otime)}&lt;/em&gt;.
@@ -34,6 +39,11 @@ import pytils
 &lt;p&gt;
 Точно так же (т.е. для Вас абсолютно прозрачно) и с будущим временем - следующий тест
 будет &lt;em&gt;$${pytils.dt.distance_of_time_in_words(ftime)}&lt;/em&gt;
+&lt;/p&gt;
+&lt;p>
+&lt;code&gt;distance_of_time&lt;/code&gt; умеет работать с обеими типами времени, представленных 
+в Python: с &lt;code&gt;datetime.datetime&lt;/code&gt; и &lt;code&gt;time.time&lt;/code&gt;. Например,
+$${fdate} будет &lt;em&gt;$${pytils.dt.distance_of_time_in_words(fdate)}&lt;/em&gt;
 &lt;/p&gt;
 </pre></code>
 </p>

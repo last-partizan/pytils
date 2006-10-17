@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import time
+import datetime
 import cherrypy
 import turbogears
 
@@ -20,6 +21,8 @@ class Root(controllers.RootController):
         return {
             'otime': time.time()-100000,
             'ftime': time.time()+100000,
+            'odate': datetime.datetime.now() - datetime.timedelta(0,100000),
+            'fdate': datetime.datetime.now() + datetime.timedelta(0,100000),
             }
 
     @expose(template="pytilsex.templates.numeral")

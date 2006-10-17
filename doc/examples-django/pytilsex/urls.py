@@ -13,6 +13,8 @@ urlpatterns = patterns('django.views',
           'otime': time.time() - 100000,
           'ftime': time.time() + 100000,
           'cdate': datetime.datetime.now(),
+          'odate': datetime.datetime.now() - datetime.timedelta(0, 100000),
+          'fdate': datetime.datetime.now() + datetime.timedelta(0, 100000),
           }   
     ),
     (r'^numeral/', 'generic.simple.direct_to_template',
