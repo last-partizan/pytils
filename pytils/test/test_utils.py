@@ -129,6 +129,27 @@ class ChecksTestCase(unittest.TestCase):
             self.assertEquals("var4 must be positive or zero, not -2.12",
                               str(err))
 
+    def testCheckPositiveStrict(self):
+        """
+        Unit-test for pytils.utils.check_positive
+        """        
+        var1 = 1
+        var2 = 0
+        var3 = -2
+
+        self.assertEquals(None, pytils.utils.check_positive('var1', strict=True))
+
+        try:
+            pytils.utils.check_positive('var2', strict=True)
+        except ValueError, err:
+            self.assertEquals("var2 must be positive, not 0",
+                              str(err))
+        try:
+            pytils.utils.check_positive('var3')
+        except ValueError, err:
+            self.assertEquals("var3 must be positive or zero, not -2",
+                              str(err))
+
 
 if __name__ == '__main__':
     unittest.main()

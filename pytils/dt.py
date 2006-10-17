@@ -11,7 +11,7 @@ __url__ = "$URL$"
 
 import datetime
 
-from pytils import numeral
+from pytils import numeral, utils
 
 DAY_ALTERNATIVES = {
     1: (u"вчера", u"завтра"),
@@ -88,14 +88,10 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
         current = True
         to_time = datetime.datetime.now()
 
-    if not isinstance(from_time, (int, float, datetime.datetime)):
-        raise TypeError("Time must be float, integer or datetime.datetime, not %s" % type(from_time))
-    if not isinstance(to_time, (int, float, datetime.datetime)):
-        raise TypeError("Time must be float, integer or datetime.datetime, not %s" % type(to_time))
-    if not isinstance(accuracy, int):
-        raise TypeError("Accuracy must be integer, not %s" % type(accuracy))
-    if accuracy <= 0:
-        raise ValueError("Accuracy must be bigger than zero")
+    utils.check_type('from_time', (int, float, datetime.datetime))
+    utils.check_type('to_time', (int, float, datetime.datetime))
+    utils.check_type('accuracy', int)
+    utils.check_positive('accuracy', strict=True)
 
     if not isinstance(from_time, datetime.datetime):
         from_time = datetime.datetime.fromtimestamp(from_time)
@@ -200,12 +196,8 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     """
     if date is None:
         date = datetime.datetime.today()
-    if not isinstance(date, (datetime.date, datetime.datetime)):
-        raise TypeError("Expects that date is datetime.date or " + \
-                        "datetim.datetime, not %s" % type(date))
-    if not isinstance(format, unicode):
-        raise TypeError("Expects that format is unicode, not %s" % \
-                        type(format))
+    utils.check_type('date', (datetime.date, datetime.datetime))
+    utils.check_type('format', unicode)
 
     midx = inflected and 2 or 1
     didx = inflected_day and 2 or 1 

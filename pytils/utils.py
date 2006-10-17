@@ -106,7 +106,7 @@ def check_length(variable_name, length):
         raise ValueError("%s's length must be %d, but it %d" % \
                          (variable_name, length, _length))
 
-def check_positive(variable_name):
+def check_positive(variable_name, strict=False):
     """
     Checks if variable is positive
 
@@ -118,6 +118,10 @@ def check_positive(variable_name):
     @raise ValueError: check failed
     """
     variable_value = get_value_by_name(variable_name, 2)
-    if variable_value < 0:
+    if not strict and variable_value < 0:
         raise ValueError("%s must be positive or zero, not %s" % \
                          (variable_name, str(variable_value)))
+    if strict and variable_value <= 0:
+        raise ValueError("%s must be positive, not %s" % \
+                         (variable_name, str(variable_value)))
+        

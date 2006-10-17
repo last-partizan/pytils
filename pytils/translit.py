@@ -10,6 +10,7 @@ __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import re
+from pytils import utils
 
 TRANSTABLE = (
         (u"№", u"#"),
@@ -115,8 +116,7 @@ def translify(in_string):
     @raise TypeError: when in_string is not C{unicode}
     @raise ValueError: when string doesn't transliterate completely
     """
-    if not isinstance(in_string, unicode):
-        raise TypeError("Expects unicode, but got %s" % type(in_string))
+    utils.check_type('in_string', unicode)
 
     translit = in_string
     for symb_in, symb_out in TRANSTABLE:
@@ -143,8 +143,7 @@ def detranslify(in_string):
     @raise TypeError: when in_string neither C{str}, no C{unicode}
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    if not isinstance(in_string, basestring):
-        raise TypeError("Expects basestring, but got %s" % type(in_string))
+    utils.check_type('in_string', basestring)    
 
     # в unicode
     try:
