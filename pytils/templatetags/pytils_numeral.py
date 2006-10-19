@@ -34,8 +34,17 @@ else:
 # -- filters
 
 def choose_plural(amount, variants):
-    """Choose proper form for plural"""
-    
+    """
+    Choose proper form for plural.
+
+    Value is a amount, parameters are forms of noun.
+    Forms are variants for 1, 2, 5 nouns. It may be tuple
+    of elements, or string where variants separates each other
+    by comma.
+
+    Examples::
+        {{ some_int|choose_plural:"пример,примера,примеров" }}
+    """
     try:
         if isinstance(variants, str):
             uvariants = utils.provide_unicode(variants, encoding, default_value)
@@ -56,7 +65,7 @@ def choose_plural(amount, variants):
     return res
 
 def rubles(amount, zero_for_kopeck=False):
-    """Convert float value to in-words representation (for money)"""
+    """Converts float value to in-words representation (for money)"""
     try:
         res = utils.provide_str(
             numeral.rubles(amount, zero_for_kopeck),
@@ -69,7 +78,15 @@ def rubles(amount, zero_for_kopeck=False):
     return res
 
 def in_words(amount, gender=None):
-    """In-words representation of amount"""
+    """
+    In-words representation of amount.
+
+    Parameter is a gender: 1=male, 2=female, 3=neuter
+
+    Examples::
+        {{ some_int|in_words }}
+        {{ some_other_int|in_words:2 }}
+    """
     try:
         res = utils.provide_str(
             numeral.in_words(amount, gender),
@@ -90,7 +107,19 @@ register.filter('in_words', in_words)
 # -- tags
 
 def sum_string(amount, gender, items):
-    """in_words and choose_plural in a one flask"""
+    """
+    in_words and choose_plural in a one flask
+    Makes in-words representation of value with
+    choosing correct form of noun.
+
+    First parameter is an amount of objects. Second is a
+    gender (1=male, 2=female, 3=neuter). Third is a variants
+    of forms for object name.
+
+    Examples::
+        {% sum_string some_int 1 "пример,примера,примеров" %}
+        {% sum_string some_other_int 2 "задача,задачи,задач" %}
+    """
     try:
         uitems = [utils.provide_unicode(i, encoding, default_uvalue) for i in items]
         res = utils.provide_str(

@@ -61,7 +61,7 @@ def detranslify(stext):
     return res
 
 def slugify(stext):
-    """Make slug from text"""
+    """Make slug from (russian) text"""
     try:
         res = translit.slugify(
             utils.provide_unicode(
