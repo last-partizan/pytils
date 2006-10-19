@@ -1,0 +1,26 @@
+Examples of usage PyTils with TurboGears.
+========================================
+
+You need installed TurboGears (1.0b1 and higher) and PyTils 
+for run it.
+
+It's a regular TG-project, so just start it
+
+    python start-pytilsex.py
+
+go to http://127.0.0.1:8080/ and look it...
+
+------------------------------------
+
+Пример использования PyTils с TurboGears.
+========================================
+
+Чтобы запустить примеры, Вам понадобятся установленные 
+TurboGears (версии 1.0b1 и выше) и PyTils.
+
+Это обычный TG-проект. Запускайте 
+
+    python start-pytilsex.py
+
+заходите бразуером на http://127.0.0.1:8080/ и смотрите...
+
