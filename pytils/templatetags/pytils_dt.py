@@ -12,10 +12,10 @@ import time
 from django import template, conf
 from pytils import dt, utils
 
-register = template.Library()
-encoding = conf.settings.DEFAULT_CHARSET
-debug = conf.settings.DEBUG
-show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)
+register = template.Library()  #: Django template tag/filter registrator
+encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
+debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
+show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Show values on errors (sets in Django project's settings)
 
 # Если отладка, то показываем 'unknown+сообщение об ошибке'.
 # Если отладка выключена, то можно чтобы при ошибках показывалось

@@ -16,25 +16,28 @@ from pytils import numeral, utils
 DAY_ALTERNATIVES = {
     1: (u"вчера", u"завтра"),
     2: (u"позавчера", u"послезавтра")
-    }
+    }  #: Day alternatives (i.e. one day ago -> yesterday) 
 
 DAY_VARIANTS = (
     u"день",
     u"дня",
     u"дней",
-    )
+    )  #: Forms (1, 2, 5) for noun 'day'
+
 HOUR_VARIANTS = (
     u"час",
     u"часа",
     u"часов",
-    )
+    )  #: Forms (1, 2, 5) for noun 'hour'
+
 MINUTE_VARIANTS = (
     u"минуту",
     u"минуты",
     u"минут",
-    )
-PREFIX_IN = u"через"
-SUFFIX_AGO = u"назад"
+    )  #: Forms (1, 2, 5) for noun 'minute'
+
+PREFIX_IN = u"через"  #: Prefix 'in' (i.e. B{in} three hours)
+SUFFIX_AGO = u"назад"  #: Prefix 'ago' (i.e. three hours B{ago})
 
 MONTH_NAMES = (
     (u"янв", u"январь", u"января"),
@@ -49,7 +52,7 @@ MONTH_NAMES = (
     (u"окт", u"октябрь", u"октября"),
     (u"ноя", u"ноябрь", u"ноября"),
     (u"дек", u"декабрь", u"декабря"),
-    )
+    )  #: Month names (abbreviated, full, inflected)
 
 DAY_NAMES = (
     (u"пн", u"понедельник", u"понедельник"),
@@ -59,7 +62,7 @@ DAY_NAMES = (
     (u"пт", u"пятница", u"пятницу"),
     (u"сб", u"суббота", u"субботу"),
     (u"вск", u"воскресенье", u"субботу"),
-    )
+    )  #: Day names (abbreviated, full, inflected)
 
 
 def distance_of_time_in_words(from_time, accuracy=1, to_time=None):

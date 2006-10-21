@@ -10,13 +10,13 @@ __url__ = "$URL$"
 __all__ = ["numeral", "dt", "translit", "test", "utils"]
 
 # версия PyTils
-VERSION_MAJOR = 0
-VERSION_MINOR = 1
-VERSION_TINY = 0
+VERSION_MAJOR = 0  #: Major version of PyTils (i.e. branch)
+VERSION_MINOR = 1  #: Minor version of PyTils (i.e. release)
+VERSION_TINY = 0   #: Tiny version of PyTils (i.e. subrelease)
 
-VERSION = "%d.%d.%d" % (VERSION_MAJOR, VERSION_MINOR, VERSION_TINY)
+VERSION = "%d.%d.%d" % (VERSION_MAJOR, VERSION_MINOR, VERSION_TINY)  #: Version's string
 
-REL_DATE = '20060902'
+REL_DATE = '20060902'  #: Release date
 
 def _get_svn_date_from_id(id_string):
     """Returns date of last update (extract from __id__)"""
@@ -26,7 +26,7 @@ def _get_svn_date_from_id(id_string):
         return id_string.split()[3].replace('-', '')
 
 
-_module_dates = [_get_svn_date_from_id(__id__), ]
+_module_dates = [_get_svn_date_from_id(__id__), ]  #: Last changes in submodules
 
 # импорт модулей
 for _module_name in __all__:
@@ -36,7 +36,7 @@ for _module_name in __all__:
                                    ["pytils"])
     _module_dates.append(_get_svn_date_from_id(_imported_module.__id__))
 
-SVN_DATE = max(_module_dates)
+SVN_DATE = max(_module_dates)  #: Last change in submodules
 
 # если взяли с svn, то версия будет
 # X.Y.Z-svnYYYYMMDD, где X.Y.Z - номер оригинальной версии,
@@ -46,6 +46,6 @@ SVN_DATE = max(_module_dates)
 # будет оригинальной. Это можно обойти, скажем, учитывая дату
 # изменения файлов, но я пока не вижу в этом смысла.
 if SVN_DATE > REL_DATE:
-    VERSION = "%s-svn%s" % (VERSION, SVN_DATE)
+    VERSION = "%s-svn%s" % (VERSION, SVN_DATE)  #: Version's string (with appended svndate)
 
 

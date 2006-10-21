@@ -101,7 +101,7 @@ TRANSTABLE = (
         (u"э", u"e"),
         (u"ъ", u"`"),
         (u"ь", u"'"),
-        )
+        )  #: Translation table
 
 def translify(in_string):
     """
