@@ -5,8 +5,6 @@ import os
 
 import pytils
 
-os.system("epydoc pytils")
-
 setup(name='pytils',
       version=pytils.VERSION,
       author='Pythy',

@@ -1,0 +1,31 @@
+ID: $Id$
+
+Установка PyTils
+================
+
+Установка из исходных текстов
+-----------------------------
+
+  1. Скачайте последнюю версию с http://cheeseshop.python.org/pypi/pytils/
+  2. Разархивируйте архив
+  3. Выполните `python setup.py install`
+
+Установка с использованием easy_install
+---------------------------------------
+
+Вы также можете установить последнюю версию PyTils используя 
+[easy_install](http://peak.telecommunity.com/DevCenter/EasyInstall)
+
+   easy_install pytils
+
+Установка разрабатываемой версии
+--------------------------------
+
+Если Вы хотите быть на пике изменений, то Вы можете взять PyTils с 
+репозитория:
+
+  1. Установить один из [Subversion-клиентов](http://subversion.tigris.org/links.html#clients)
+  2. При помощи Subversion-клиента получить исходные тексты PyTils с репозитария
+     http://pythy.googlecode.com/svn/trunk/pytils/
+  3. Поместить каталог pytils/pytils в PYTHONPATH
+
