@@ -72,7 +72,7 @@ def check_type(variable_name, typ):
     Checks type of variable
 
     @param variable_name: name of variable
-    @type: C{str}
+    @type variable_name: C{str}
 
     @param typ: type checking for
     @type typ: C{type} or C{tuple} of types
