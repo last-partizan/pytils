@@ -52,10 +52,10 @@ def get_value_by_name(variable_name, depth=1):
     Return value of variable by it's name
 
     @param variable_name: name of variable
-    @type: C{str}
+    @type variable_name: C{str}
 
     @param depth: stack depth
-    @type: C{int}
+    @type depth: C{int}
 
     @raise RuntimeError: when unable to fetch variable
     """
@@ -75,7 +75,7 @@ def check_type(variable_name, typ):
     @type: C{str}
 
     @param typ: type checking for
-    @type: C{type}
+    @type typ: C{type} or C{tuple} of types
 
     @return: None when check successful
 
@@ -91,10 +91,10 @@ def check_length(variable_name, length):
     Checks length of variable's value
 
     @param variable_name: name of variable
-    @type: C{str}
+    @type variable_name: C{str}
 
     @param length: length checking for
-    @type: C{int}
+    @type length: C{int}
 
     @return: None when check successful
 
@@ -111,7 +111,7 @@ def check_positive(variable_name, strict=False):
     Checks if variable is positive
 
     @param variable_name: name of variable
-    @type: C{str}
+    @type variable_name: C{str}
 
     @return: None when check successful
 
