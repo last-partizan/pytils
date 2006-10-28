@@ -1,0 +1,7 @@
+recursive-include doc *
+include AUTHORS
+include LICENSE
+include TODO
+include README
+
+
