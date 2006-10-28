@@ -118,6 +118,16 @@ TRANSTABLE = (
 	(u"Q", u"Q"),
 	(u"Y", u"Y"),
 	(u"X", u"X"),
+	(u"1", u"1"),
+	(u"2", u"2"),
+	(u"3", u"3"),
+	(u"4", u"4"),
+	(u"5", u"5"),
+	(u"6", u"6"),
+	(u"7", u"7"),
+	(u"8", u"8"),
+	(u"9", u"9"),
+	(u"0", u"0"),
         )  #: Translation table
 
 RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can translate

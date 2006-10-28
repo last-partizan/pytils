@@ -100,6 +100,7 @@ class TranslitTestCase(unittest.TestCase):
 	Unit-test for testing that bug#10 fixed
 	"""
 	self.ckSlug(u"Проверка связи…", 'proverka-svyazi')
+        self.ckSlug(u"Проверка\x0aсвязи 2", 'proverka-svyazi-2')
 
 if __name__ == '__main__':
     unittest.main()
