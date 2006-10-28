@@ -13,6 +13,12 @@ import re
 from pytils import utils
 
 TRANSTABLE = (
+        (u"‘", u"'"),
+	(u"’", u"'"),
+	(u"«", u'"'),
+	(u"»", u'"'),
+	(u"–", u"-"),
+	(u"…", u"..."),
         (u"№", u"#"),
         ## верхний регистр
         # трехбуквенные замены
@@ -101,7 +107,23 @@ TRANSTABLE = (
         (u"э", u"e"),
         (u"ъ", u"`"),
         (u"ь", u"'"),
+	# для полноты английского алфавит (в slugify)
+	# дополняем английскими буквами, которых
+	# не в парах
+	(u"c", u"c"),
+	(u"q", u"q"),
+	(u"y", u"y"),
+	(u"x", u"x"),
+	(u"C", u"C"),
+	(u"Q", u"Q"),
+	(u"Y", u"Y"),
+	(u"X", u"X"),
         )  #: Translation table
+
+RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can translate
+EN_ALPHABET = [x[1] for x in TRANSTABLE] #: English alphabet that we can detransliterate
+ALPHABET = RU_ALPHABET + EN_ALPHABET #: Alphabet that we can (de)transliterate
+
 
 def translify(in_string):
     """
@@ -143,7 +165,7 @@ def detranslify(in_string):
     @raise TypeError: when in_string neither C{str}, no C{unicode}
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    utils.check_type('in_string', basestring)    
+    utils.check_type('in_string', basestring)
 
     # в unicode
     try:
@@ -171,8 +193,7 @@ def slugify(in_string):
     @raise TypeError: when in_string isn't C{unicode} or C{str}
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    if not isinstance(in_string, basestring):
-        raise TypeError("Expects basestring, but got %s" % type(in_string))
+    utils.check_type('in_string', basestring)
     try:
         u_in_string = unicode(in_string)
     except UnicodeDecodeError:
@@ -180,14 +201,18 @@ def slugify(in_string):
                          "it is an ascii, but now it isn't. Use unicode " + \
                          "in this case.")
     
-    st = translify(u_in_string)
+
 
     # convert & to "and"
-    st = re.sub('\&amp\;|\&', ' and ', st)
-    # remove non-alpha
-    st = re.sub('[^\w\s-]', '', st).strip().lower()
+    u_in_string = re.sub('\&amp\;|\&', ' and ', u_in_string)
     # replace spaces by hyphen
-    return re.sub('[-\s]+', '-', st)
+    u_in_string = re.sub('[-\s]+', '-', u_in_string)
+    # remove symbols that not in alphabet
+    u_in_string = u''.join([symb for symb  in u_in_string if symb in ALPHABET])
+    # translify it
+    out_string = translify(u_in_string)
+    # remove non-alpha
+    return re.sub('[^\w\s-]', '', out_string).strip().lower()
         
 def dirify(in_string):
     """

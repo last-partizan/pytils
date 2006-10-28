@@ -86,5 +86,20 @@ class TranslitTestCase(unittest.TestCase):
         self.assertRaises(TypeError, pytils.translit.slugify, 25)
         self.assertRaises(ValueError, pytils.translit.slugify, "тест")
 
+    def testTranslifyAdditionalUnicodeSymbols(self):
+        """
+	Unit-test for testing additional unicode symbols
+	"""
+	self.ckTransl(u"«Вот так вот»", '"Vot tak vot"')
+	self.ckTransl(u"‘Или вот так’", "'Ili vot tak'")
+	self.ckTransl(u"– Да…", "- Da...")
+	
+
+    def testSlugifyIssue10(self):
+        """
+	Unit-test for testing that bug#10 fixed
+	"""
+	self.ckSlug(u"Проверка связи…", 'proverka-svyazi')
+
 if __name__ == '__main__':
     unittest.main()
