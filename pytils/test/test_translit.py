@@ -88,20 +88,19 @@ class TranslitTestCase(unittest.TestCase):
 
     def testTranslifyAdditionalUnicodeSymbols(self):
         """
-	Unit-test for testing additional unicode symbols
-	"""
-	self.ckTransl(u"«Вот так вот»", '"Vot tak vot"')
-	self.ckTransl(u"‘Или вот так’", "'Ili vot tak'")
-	self.ckTransl(u"– Да…", "- Da...")
-	
+        Unit-test for testing additional unicode symbols
+        """
+        self.ckTransl(u"«Вот так вот»", '"Vot tak vot"')
+        self.ckTransl(u"‘Или вот так’", "'Ili vot tak'")
+        self.ckTransl(u"– Да…", "- Da...")
 
     def testSlugifyIssue10(self):
         """
-	Unit-test for testing that bug#10 fixed
-	"""
-	self.ckSlug(u"Проверка связи…", 'proverka-svyazi')
+        Unit-test for testing that bug#10 fixed
+        """
+        self.ckSlug(u"Проверка связи…", 'proverka-svyazi')
         self.ckSlug(u"Проверка\x0aсвязи 2", 'proverka-svyazi-2')
-	self.ckSlug(u"Проверка\201связи 3", 'proverkasvyazi-3')
+        self.ckSlug(u"Проверка\201связи 3", 'proverkasvyazi-3')
 
 if __name__ == '__main__':
     unittest.main()
