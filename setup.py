@@ -8,7 +8,6 @@ except ImportError:
     use_setuptools = False
     from distutils.core import setup
 
-import os
 import pytils
 
 setup_data = {
