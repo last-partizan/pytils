@@ -77,10 +77,10 @@ def _get_float_remainder(fvalue, signs=9):
     Get remainder of float, i.e. 2.05 -> '05'
     
     @param fvalue: input value
-    @type fvalue: C{int} or C{float}
+    @type fvalue: C{int}, C{long} or C{float}
     
     @param signs: maximum number of signs
-    @type signs: C{int}
+    @type signs: C{int} or C{long}
 
     @return: remainder
     @rtype: C{str}
@@ -89,9 +89,9 @@ def _get_float_remainder(fvalue, signs=9):
     @raise ValueError: fvalue is negative    
     @raise ValueError: signs overflow
     """
-    utils.check_type('fvalue', (int, float))
+    utils.check_type('fvalue', (int, long, float))
     utils.check_positive('fvalue')
-    if isinstance(fvalue, int):
+    if isinstance(fvalue, (int, long)):
         return "0"
 
     signs = min(signs, len(FRACTIONS))
@@ -124,7 +124,7 @@ def choose_plural(amount, variants):
     Choose proper case depending on amount
     
     @param amount: amount of objects
-    @type amount: C{int}
+    @type amount: C{int} or C{long}
     
     @param variants: variants (forms) of object in such form: 
         (1 object, 2 objects, 5 objects).
@@ -138,7 +138,7 @@ def choose_plural(amount, variants):
     @raise ValueError: amount is negative
     @raise ValueError: variants' length lesser than 3
     """
-    utils.check_type('amount', int)
+    utils.check_type('amount', (int, long))
     utils.check_positive('amount')
     utils.check_type('variants', (list, tuple, unicode))
     
@@ -160,7 +160,7 @@ def rubles(amount, zero_for_kopeck=False):
     Get string for money
     
     @param amount: amount of money
-    @type amount: C{int} or C{float}
+    @type amount: C{int}, C{long} or C{float}
     
     @param zero_for_kopeck: If false, then zero kopecks ignored
     @type zero_for_kopeck: C{bool}
@@ -171,7 +171,7 @@ def rubles(amount, zero_for_kopeck=False):
     @raise TypeError: amount neither C{int}, no C{float}
     @raise ValueError: amount is negative
     """
-    utils.check_type('amount', (int, float))
+    utils.check_type('amount', (int, long, float))
     utils.check_positive('amount')
     
     pts = []
@@ -194,7 +194,7 @@ def in_words_int(amount, gender=1):
     Integer in words
 
     @param amount: numeral
-    @type amount: C{int}
+    @type amount: C{int} or C{long}
     
     @param gender: gender (male=1, female=2, neuter=3)
     @type gender: C{int}
@@ -205,7 +205,7 @@ def in_words_int(amount, gender=1):
     @raise TypeError: when amount is not C{int}
     @raise ValueError: amount is negative
     """
-    utils.check_type('amount', int)
+    utils.check_type('amount', (int, long))
     utils.check_positive('amount')
     
     return sum_string(amount, gender)
@@ -242,7 +242,7 @@ def in_words(amount, gender=None):
     Numeral in words
 
     @param amount: numeral
-    @type amount: C{int} or C{float}
+    @type amount: C{int}, C{long} or C{float}
     
     @param gender: gender (male=1, female=2, neuter=3)
     @type gender: C{int}
@@ -265,7 +265,7 @@ def in_words(amount, gender=None):
     else:
         args = (amount, gender)
     # если целое
-    if isinstance(amount, int):
+    if isinstance(amount, (int, long)):
         return in_words_int(*args)
     # если дробное
     elif isinstance(amount, float):
@@ -280,7 +280,7 @@ def sum_string(amount, gender, items=None):
     Get sum in words
 
     @param amount: amount of objects
-    @type amount: C{int}
+    @type amount: C{int} or C{long}
     
     @param gender: gender of object (male=1, female=2, neuter=3)
     @type gender: C{int}
@@ -310,7 +310,7 @@ def sum_string(amount, gender, items=None):
     except ValueError:
         raise ValueError("Items must be 3-element sequence")
 
-    utils.check_type('amount', int)
+    utils.check_type('amount', (int, long))
     utils.check_type('gender', int)
     utils.check_type('one_item', unicode)
     utils.check_type('two_items', unicode)
@@ -347,7 +347,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @type into: C{unicode}
     
     @param tmp_val: temporary value without lower orders
-    @type tmp_val: C{int} 
+    @type tmp_val: C{int} or C{long}
     
     @param gender: gender (male=1, female=2, neuter=3)
     @type gender: C{int}
@@ -365,7 +365,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
         items = (u"", u"", u"")
     one_item, two_items, five_items = items
     utils.check_type('into', unicode)
-    utils.check_type('tmp_val', int)
+    utils.check_type('tmp_val', (int, long))
     utils.check_type('gender', int)
     utils.check_type('one_item', unicode)
     utils.check_type('two_items', unicode)

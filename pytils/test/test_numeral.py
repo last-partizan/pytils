@@ -39,6 +39,7 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(5, u"гвоздей")
         self.checkChoosePlural(11, u"гвоздей")
         self.checkChoosePlural(109, u"гвоздей")
+        self.checkChoosePlural(109l, u"гвоздей")
 
     def testChoosePluralExceptions(self):
         """
@@ -110,6 +111,8 @@ class RublesTestCase(unittest.TestCase):
                           u"три рубля")
         self.assertEquals(pytils.numeral.rubles(3, True),
                           u"три рубля ноль копеек")
+        self.assertEquals(pytils.numeral.rubles(3l),
+                          u"три рубля")
 
     def testRublesExceptions(self):
         """
@@ -137,6 +140,7 @@ class InWordsTestCase(unittest.TestCase):
                           u"три тысячи пятьсот")
         self.assertEquals(pytils.numeral.in_words_int(5231000),
                           u"пять миллионов двести тридцать одна тысяча")
+        self.assertEquals(pytils.numeral.in_words_int(10l), u"десять")
 
     def testIntExceptions(self):
         """
@@ -183,7 +187,9 @@ class InWordsTestCase(unittest.TestCase):
                           u"двадцать одна целая ноль десятых")
         self.assertEquals(pytils.numeral.in_words(21.0, 3),
                           u"двадцать одна целая ноль десятых")
-        
+        self.assertEquals(pytils.numeral.in_words(21l, 1),
+                          u"двадцать один")
+
     def testCommon(self):
         """
         Unit-test for general in_words
@@ -205,6 +211,7 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна сотая")
         self.assertEquals(pytils.numeral.in_words(0.10),
                           u"ноль целых одна десятая")
+        self.assertEquals(pytils.numeral.in_words(10l), u"десять")
 
     def testCommonExceptions(self):
         """
@@ -256,6 +263,8 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemale(10, u"десять шляпок")
         self.ckFemale(2, u"две шляпки")
         self.ckFemale(31, u"тридцать одна шляпка")
+        
+        self.ckFemale(31l, u"тридцать одна шляпка")
 
         self.assertEquals(u"одиннадцать негритят",
                           pytils.numeral.sum_string(
