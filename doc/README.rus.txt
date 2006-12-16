@@ -16,6 +16,7 @@ PyTils - простой обработчик русского текста на 
 
  *  [Pythy на code.google.com](http://code.google.com/p/pythy/)
  *  [Пост о PyTils в блоге](http://gorod-omsk.ru/blog/pythy/2006/09/02/pytils/)
+ *  [Страница PyTils](http://gorod-omsk.ru/blog/pythy/projects/pytils/)
 
 Как установить
 --------------
@@ -62,9 +63,9 @@ PyTils умеет выбирать правильный падеж в завис
     u'две целых одна сотая'
     >>> pytils.numeral.rubles(2.01)
     u'два рубля одна копейка'
-    >>> pytils.numeral.sum_string(32, 1, (u"гвоздь", u"гвоздя", u"гвоздей"))
+    >>> pytils.numeral.sum_string(32, pytils.numeral.MALE, (u"гвоздь", u"гвоздя", u"гвоздей"))
     u'тридцать два гвоздя'
-    >>> pytils.numeral.sum_string(21, 2, (u"белка", u"белки", u"белок"))
+    >>> pytils.numeral.sum_string(21, pytils.numeral.FEMALE, (u"белка", u"белки", u"белок"))
     u'двадцать одна белка'
 
 Даты

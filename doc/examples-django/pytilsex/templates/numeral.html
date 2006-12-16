@@ -48,7 +48,7 @@
 <p>Рубли словами. К примеру, {{ params.rubles_value }} р. словами будет <em>{{ params.rubles_value|rubles }}</em>. У этого фильтра есть один 
 параметр, определяющий, нужно ли нулевые копейки "проговаривать". Если нужно - то True, по умолчанию <code>rubles</code> этого не делает. 
 Пример: {{ params.rubles_value2 }} р. словами будет <em>{{ params.rubles_value2|rubles }}</em>, а с копейками - 
-<em>{{ params.rubles_value2|rubles:True }}</em>.</p>
+<em>{{ params.rubles_value2|rubles:"True" }}</em>.</p>
 
 <p>В шаблоне этот фрагмент записан так:
 <code><pre>
@@ -57,7 +57,7 @@
 У этого фильтра есть один параметр, определяющий, нужно ли нулевые копейки "проговаривать". Если нужно - 
 то True, по умолчанию &lt;code&gt;rubles&lt;/code&gt; этого не делает. Пример: {% templatetag openvariable %} params.rubles_value2 {% templatetag closevariable %} р. 
 словами будет &lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles {% templatetag closevariable %}&lt;/em&gt;, а с копейками - 
-&lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles:True {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
+&lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles:"True" {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
@@ -66,8 +66,8 @@
 <h4>in_words</h4>
 <p>Число словами. Можно целые, можно дробные. Примеры: {{ params.int_value }} - 
 <em>{{ params.int_value|in_words }}</em>. У целых можно менять пол (по умолчанию - 
-мужской, 1): <em>{{ params.int_value|in_words:2 }}</em> (женский, 2),
-<em>{{ params.int_value|in_words:3 }}</em> (средний, 3).</p>
+мужской, MALE): <em>{{ params.int_value|in_words:"FEMALE" }}</em> (женский),
+<em>{{ params.int_value|in_words:"NEUTER" }}</em> (средний).</p>
 
 <p>У дробных почти то же самое, только пол всегда женский и не меняется (т.е. 
 параметр передавать можно, но он не будет влиять). {{ params.float_value }} 
@@ -77,8 +77,8 @@
 <code><pre>
 &lt;p&gt;Число словами. Можно целые, можно дробные. Примеры: {% templatetag openvariable %} params.int_value {% templatetag closevariable %} - 
 &lt;em&gt;{% templatetag openvariable %} params.int_value|in_words {% templatetag closevariable %}&lt;/em&gt;. У целых можно менять пол (по умолчанию - 
-мужской, 1): &lt;em&gt;{% templatetag openvariable %} params.int_value|in_words:2 {% templatetag closevariable %}&lt;/em&gt; (женский, 2),
-&lt;em&gt;{% templatetag openvariable %} params.int_value|in_words:3 {% templatetag closevariable %}&lt;/em&gt; (средний, 3).&lt;/p&gt;
+мужской, MALE): &lt;em&gt;{% templatetag openvariable %} params.int_value|in_words:"FEMALE" {% templatetag closevariable %}&lt;/em&gt; (женский),
+&lt;em&gt;{% templatetag openvariable %} params.int_value|in_words:"NEUTER" {% templatetag closevariable %}&lt;/em&gt; (средний).&lt;/p&gt;
 
 &lt;p&gt;У дробных почти то же самое, только пол всегда женский и не меняется (т.е. 
 параметр передавать можно, но он не будет влиять). {% templatetag openvariable %} params.float_value {% templatetag closevariable %} 

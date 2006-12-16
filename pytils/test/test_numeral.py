@@ -170,9 +170,9 @@ class InWordsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, pytils.numeral.in_words_float, 2)
         self.assertRaises(ValueError, pytils.numeral.in_words_float, -2.3)        
 
-    def testWithGender(self):
+    def testWithGenderOldStyle(self):
         """
-        Unit-test for in_words_float with gender
+        Unit-test for in_words_float with gender (old-style, i.e. ints)
         """
         self.assertEquals(pytils.numeral.in_words(21, 1),
                           u"двадцать один")
@@ -189,6 +189,27 @@ class InWordsTestCase(unittest.TestCase):
                           u"двадцать одна целая ноль десятых")
         self.assertEquals(pytils.numeral.in_words(21l, 1),
                           u"двадцать один")
+
+    def testWithGender(self):
+        """
+        Unit-test for in_words_float with gender (old-style, i.e. ints)
+        """
+        self.assertEquals(pytils.numeral.in_words(21, pytils.numeral.MALE),
+                          u"двадцать один")
+        self.assertEquals(pytils.numeral.in_words(21, pytils.numeral.FEMALE),
+                          u"двадцать одна")
+        self.assertEquals(pytils.numeral.in_words(21, pytils.numeral.NEUTER),
+                          u"двадцать одно")
+        # на дробные пол не должен влиять - всегда в женском роде
+        self.assertEquals(pytils.numeral.in_words(21.0, pytils.numeral.MALE),
+                          u"двадцать одна целая ноль десятых")
+        self.assertEquals(pytils.numeral.in_words(21.0, pytils.numeral.FEMALE),
+                          u"двадцать одна целая ноль десятых")
+        self.assertEquals(pytils.numeral.in_words(21.0, pytils.numeral.NEUTER),
+                          u"двадцать одна целая ноль десятых")
+        self.assertEquals(pytils.numeral.in_words(21l, pytils.numeral.MALE),
+                          u"двадцать один")
+
 
     def testCommon(self):
         """
@@ -235,13 +256,32 @@ class SumStringTestCase(unittest.TestCase):
         self.variants_male = (u"гвоздь", u"гвоздя", u"гвоздей")
         self.variants_female = (u"шляпка", u"шляпки", u"шляпок")
 
+    def ckMaleOldStyle(self, amount, estimated):
+        """
+        Checks sum_string with male gender with old-style genders (i.e. ints)
+        """
+        self.assertEquals(pytils.numeral.sum_string(amount,
+                                                    1,
+                                                    self.variants_male),
+                          estimated)
+
     def ckMale(self, amount, estimated):
         """
         Checks sum_string with male gender
         """
         self.assertEquals(pytils.numeral.sum_string(amount,
-                                                    1,
+                                                    pytils.numeral.MALE,
                                                     self.variants_male),
+                          estimated)
+
+
+    def ckFemaleOldStyle(self, amount, estimated):
+        """
+        Checks sum_string with female gender wuth old-style genders (i.e. ints)
+        """
+        self.assertEquals(pytils.numeral.sum_string(amount,
+                                                    2,
+                                                    self.variants_female),
                           estimated)
 
     def ckFemale(self, amount, estimated):
@@ -249,9 +289,29 @@ class SumStringTestCase(unittest.TestCase):
         Checks sum_string with female gender
         """
         self.assertEquals(pytils.numeral.sum_string(amount,
-                                                    2,
+                                                    pytils.numeral.FEMALE,
                                                     self.variants_female),
                           estimated)
+
+    def testSumStringOldStyle(self):
+        """
+        Unit-test for sum_string with old-style genders
+        """
+        self.ckMaleOldStyle(10, u"десять гвоздей")
+        self.ckMaleOldStyle(2, u"два гвоздя")
+        self.ckMaleOldStyle(31, u"тридцать один гвоздь")
+        self.ckFemaleOldStyle(10, u"десять шляпок")
+        self.ckFemaleOldStyle(2, u"две шляпки")
+        self.ckFemaleOldStyle(31, u"тридцать одна шляпка")
+        
+        self.ckFemaleOldStyle(31l, u"тридцать одна шляпка")
+
+        self.assertEquals(u"одиннадцать негритят",
+                          pytils.numeral.sum_string(
+                              11,
+                              1,
+                              u"негритенок,негритенка,негритят"
+                              ))
 
     def testSumString(self):
         """
@@ -269,7 +329,7 @@ class SumStringTestCase(unittest.TestCase):
         self.assertEquals(u"одиннадцать негритят",
                           pytils.numeral.sum_string(
                               11,
-                              1,
+                              pytils.numeral.MALE,
                               u"негритенок,негритенка,негритят"
                               ))
 
@@ -284,11 +344,11 @@ class SumStringTestCase(unittest.TestCase):
         self.assertRaises(TypeError, pytils.numeral.sum_string,
                                       1, "1", 23)
         self.assertRaises(TypeError, pytils.numeral.sum_string,
-                                      1, 1, (23,24,25))
+                                      1, pytils.numeral.MALE, (23,24,25))
         self.assertRaises(ValueError, pytils.numeral.sum_string,
-                                      1, 1, (23,))
+                                      1, pytils.numeral.MALE, (23,))
         self.assertRaises(ValueError, pytils.numeral.sum_string,
-                                      -1, 1, u"any,bene,raba")
+                                      -1, pytils.numeral.MALE, u"any,bene,raba")
 
 if __name__ == '__main__':
     unittest.main()

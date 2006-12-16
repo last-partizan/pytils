@@ -56,9 +56,9 @@ import pytils
 <h3>pytils.numeral.in_words</h3>
 <p>Число словами. Можно целые, можно дробные. Примеры: ${int_value} - 
 <em>${pytils.numeral.in_words(int_value)}</em>. У целых можно менять пол 
-(по умолчанию - мужской, 1): 
-<em>${pytils.numeral.in_words(int_value, gender=2)}</em> (женский, 2),
-<em>${pytils.numeral.in_words(int_value, gender=3)}</em> (средний, 3).</p>
+(по умолчанию - мужской, pytils.numeral.MALE): 
+<em>${pytils.numeral.in_words(int_value, gender=pytils.numeral.FEMALE)}</em> (женский),
+<em>${pytils.numeral.in_words(int_value, gender=pytils.numeral.NEUTER)}</em> (средний).</p>
 
 <p>У дробных почти то же самое, только пол женский и не меняется (т.е. параметр
 передавать можно, но он не будет влиять). ${float_value} словами будет
@@ -68,9 +68,9 @@ import pytils
 <code><pre>
 &lt;p&gt;Число словами. Можно целые, можно дробные. Примеры: $${int_value} - 
 &lt;em&gt;$${pytils.numeral.in_words(int_value)}&lt;/em&gt;. У целых можно менять пол 
-(по умолчанию - мужской, 1): 
-&lt;em&gt;$${pytils.numeral.in_words(int_value, gender=2)}&lt;/em&gt; (женский, 2),
-&lt;em&gt;$${pytils.numeral.in_words(int_value, gender=3)}&lt;/em&gt; (средний, 3).&lt;/p&gt;
+(по умолчанию - мужской, pytils.numeral.MALE): 
+&lt;em&gt;$${pytils.numeral.in_words(int_value, gender=pytils.numeral.FEMALE)}&lt;/em&gt; (женский),
+&lt;em&gt;$${pytils.numeral.in_words(int_value, gender=pytils.numeral.NEUTER)}&lt;/em&gt; (средний).&lt;/p&gt;
 
 &lt;p&gt;У дробных почти то же самое, только пол женский и не меняется (т.е. параметр
 передавать можно, но он не будет влиять). $${float_value} словами будет

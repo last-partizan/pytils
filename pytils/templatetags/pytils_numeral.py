@@ -81,15 +81,15 @@ def in_words(amount, gender=None):
     """
     In-words representation of amount.
 
-    Parameter is a gender: 1=male, 2=female, 3=neuter
+    Parameter is a gender: MALE, FEMALE or NEUTER
 
     Examples::
         {{ some_int|in_words }}
-        {{ some_other_int|in_words:2 }}
+        {{ some_other_int|in_words:FEMALE }}
     """
     try:
         res = utils.provide_str(
-            numeral.in_words(amount, gender),
+            numeral.in_words(amount, getattr(numeral, str(gender), None)),
             encoding,
             default=default_value
             )
@@ -113,17 +113,17 @@ def sum_string(amount, gender, items):
     choosing correct form of noun.
 
     First parameter is an amount of objects. Second is a
-    gender (1=male, 2=female, 3=neuter). Third is a variants
+    gender (MALE, FEMALE, NEUTER). Third is a variants
     of forms for object name.
 
     Examples::
-        {% sum_string some_int 1 "пример,примера,примеров" %}
-        {% sum_string some_other_int 2 "задача,задачи,задач" %}
+        {% sum_string some_int MALE "пример,примера,примеров" %}
+        {% sum_string some_other_int FEMALE "задача,задачи,задач" %}
     """
     try:
         uitems = [utils.provide_unicode(i, encoding, default_uvalue) for i in items]
         res = utils.provide_str(
-            numeral.sum_string(amount, gender, uitems),
+            numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems),
             encoding,
             default=default_value
             )
@@ -134,4 +134,4 @@ def sum_string(amount, gender, items):
 
 # -- register tags
 
-register.simple_tag(sum_string)    
+register.simple_tag(sum_string)

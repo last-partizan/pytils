@@ -71,6 +71,10 @@ HUNDREDS = {
     8: u"восемьсот",
     9: u"девятьсот",
     }  #: Hundreds
+    
+MALE = 1    #: sex - male
+FEMALE = 2  #: sex - female
+NEUTER = 3  #: sex - neuter
 
 def _get_float_remainder(fvalue, signs=9):
     """
@@ -189,14 +193,14 @@ def rubles(amount, zero_for_kopeck=False):
 
     return u" ".join(pts)
 
-def in_words_int(amount, gender=1):
+def in_words_int(amount, gender=MALE):
     """
     Integer in words
 
     @param amount: numeral
     @type amount: C{int} or C{long}
     
-    @param gender: gender (male=1, female=2, neuter=3)
+    @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
 
     @return: in-words reprsentation of numeral
@@ -210,7 +214,7 @@ def in_words_int(amount, gender=1):
     
     return sum_string(amount, gender)
 
-def in_words_float(amount, _gender=2):
+def in_words_float(amount, _gender=FEMALE):
     """
     Float in words
 
@@ -244,7 +248,7 @@ def in_words(amount, gender=None):
     @param amount: numeral
     @type amount: C{int}, C{long} or C{float}
     
-    @param gender: gender (male=1, female=2, neuter=3)
+    @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
 
     @return: in-words reprsentation of numeral
@@ -253,13 +257,13 @@ def in_words(amount, gender=None):
     raise TypeError: when amount not C{int} or C{float}
     raise ValueError: when amount is negative
     raise TypeError: when gender is not C{int} (and not None)
-    raise ValueError: if gender isn't in (1,2,3)
+    raise ValueError: if gender isn't in (MALE, FEMALE, NEUTER)
     """
     utils.check_positive('amount')
     gender is not None and utils.check_type('gender', int)
-    if not (gender is None or 1 <= gender <= 3):
-        raise ValueError("Gender must be male (1), female (2), " + \
-                         "neuter (3), not %d" % gender)
+    if not (gender is None or gender in (MALE, FEMALE, NEUTER)):
+        raise ValueError("Gender must be MALE, FEMALE or NEUTER, " + \
+                         "not %d" % gender)
     if gender is None:
         args = (amount,)
     else:
@@ -282,7 +286,7 @@ def sum_string(amount, gender, items=None):
     @param amount: amount of objects
     @type amount: C{int} or C{long}
     
-    @param gender: gender of object (male=1, female=2, neuter=3)
+    @param gender: gender of object (MALE, FEMALE or NEUTER)
     @type gender: C{int}
     
     @param items: variants of object in three forms: 
@@ -326,13 +330,13 @@ def sum_string(amount, gender, items=None):
     # единицы
     into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
     # тысячи
-    into, tmp_val = _sum_string_fn(into, tmp_val, 2,
+    into, tmp_val = _sum_string_fn(into, tmp_val, FEMALE,
                                     (u"тысяча", u"тысячи", u"тысяч"))
     # миллионы
-    into, tmp_val = _sum_string_fn(into, tmp_val, 1,
+    into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
                                     (u"миллион", u"миллиона", u"миллионов"))
     # миллиарды
-    into, tmp_val = _sum_string_fn(into, tmp_val, 1,
+    into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
                                     (u"миллиард", u"миллиарда", u"миллиардов"))
     if tmp_val == 0:
         return into
@@ -349,7 +353,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @param tmp_val: temporary value without lower orders
     @type tmp_val: C{int} or C{long}
     
-    @param gender: gender (male=1, female=2, neuter=3)
+    @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
     
     @param items: variants of objects

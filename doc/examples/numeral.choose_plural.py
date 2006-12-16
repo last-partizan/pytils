@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pytils
+from pytils import numeral
 
 # choose_plural нужен для выбора правильной формы
 # существительного
@@ -14,13 +14,13 @@ import pytils
 # (один, два, пять)
 # т.е. для 1, 2 и 5 объектов, например для слова "пример"
 # (пример, примера, примеров)
-print pytils.numeral.choose_plural(21, (u"пример", u"примера", u"примеров"))
+print numeral.choose_plural(21, (u"пример", u"примера", u"примеров"))
 #-> пример
-print pytils.numeral.choose_plural(12, (u"пример", u"примера", u"примеров"))
+print numeral.choose_plural(12, (u"пример", u"примера", u"примеров"))
 #-> примеров
-print pytils.numeral.choose_plural(32, (u"пример", u"примера", u"примеров"))
+print numeral.choose_plural(32, (u"пример", u"примера", u"примеров"))
 #-> примера
 
 # также можно задавать варианты в одну строку, разделенные запятой
-print pytils.numeral.choose_plural(32, u"пример,примера, примеров")
+print numeral.choose_plural(32, u"пример,примера, примеров")
 #-> примера

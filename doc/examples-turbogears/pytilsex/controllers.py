@@ -4,16 +4,24 @@ import time
 import datetime
 import cherrypy
 import turbogears
+import pkg_resources
 
 from turbogears import controllers, expose, validate, redirect
+from pytils import numeral, VERSION as pytils_version
 
 log = logging.getLogger("pytilsex.controllers")
+
+def get_tg_version():
+    return pkg_resources.get_distribution('TurboGears')._version
 
 class Root(controllers.RootController):
     @expose(template="pytilsex.templates.root")
     def index(self):
         log.debug("pytilsex root controller ready to go")
-        return {}
+        return {
+            'tg_version': get_tg_version(),
+            'pytils_version': pytils_version,
+        }
 
     @expose(template="pytilsex.templates.dt")
     def dt(self):
@@ -31,7 +39,7 @@ class Root(controllers.RootController):
         return {
             'comment_variants': (u"комментарий", u"комментария", u"комментариев"),
             'comment_number': 21,
-            'comment_gender': 1,
+            'comment_gender': numeral.MALE,
             'rubles_value': 23.152,
             'rubles_value2': 12,
             'int_value': 21,

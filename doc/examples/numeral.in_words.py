@@ -1,26 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pytils
+from pytils import numeral
 
 # in_words нужен для представления цифр словами
 
-print pytils.numeral.in_words(12)
+print numeral.in_words(12)
 #-> двенадцать
 
 # вторым параметром можно задать пол:
-# мужской=1, женский=2, срелний=3 (по умолчанию -- мужской)
-print pytils.numeral.in_words(21)
+# мужской=numeral.MALE, женский=numeral.FEMALE, срелний=numeral.NEUTER (по умолчанию -- мужской)
+print numeral.in_words(21)
 #-> двадцать один
-print pytils.numeral.in_words(21, gender=2)
+
+# можно передавать неименованным параметром:
+print numeral.in_words(21, numeral.FEMALE)
 #-> двадцать одна
-print pytils.numeral.in_words(21, gender=3)
+
+# можно именованным
+print numeral.in_words(21, gender=numeral.FEMALE)
+#-> двадцать одна
+print numeral.in_words(21, gender=numeral.NEUTER)
 #-> двадцать одно
 
 # можно и дробные
-print pytils.numeral.in_words(12.5)
+print numeral.in_words(12.5)
 #-> двенадцать целых пять десятых
 
 # причем "пишутся" только значимые цифры
-print pytils.numeral.in_words(5.30000)
+print numeral.in_words(5.30000)
 #-> пять целых три десятых

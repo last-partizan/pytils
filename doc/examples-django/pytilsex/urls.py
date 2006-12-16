@@ -4,7 +4,17 @@ import time
 import datetime
 
 from django.conf.urls.defaults import *
-from settings import MEDIA_ROOT
+import settings
+
+from pytils import VERSION as pytils_version
+from django import VERSION as _django_version
+
+def get_django_version(_ver):
+    suffix = _ver[-1]
+    ver = '.'.join([str(x) for x in _ver[:-1]])
+    if suffix is not None:
+        ver += suffix
+    return ver
 
 urlpatterns = patterns('django.views',
     (r'^dt/', 'generic.simple.direct_to_template',
@@ -21,7 +31,7 @@ urlpatterns = patterns('django.views',
          {'template': 'numeral.html',
           'comment_variants': ('комментарий', 'комментария', 'комментариев'),
           'comment_number': 21,
-          'comment_gender': 1,
+          'comment_gender': 'MALE',
           'rubles_value': 23.152,
           'rubles_value2': 12,
           'int_value': 21,
@@ -36,11 +46,13 @@ urlpatterns = patterns('django.views',
     ),
 
     (r'^static/(?P<path>.*)$', 'static.serve',
-         {'document_root': MEDIA_ROOT,
+         {'document_root': settings.MEDIA_ROOT,
           }   
     ),
     
     (r'^$', 'generic.simple.direct_to_template',
-        {'template': 'base.html'}
+        {'template': 'base.html',
+         'pytils_version': pytils_version,
+          'django_version': get_django_version(_django_version)}
     ),
 )
