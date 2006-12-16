@@ -34,7 +34,7 @@ ONES = {
     7: (u"семь",   u"семь",   u"семь"),
     8: (u"восемь", u"восемь", u"восемь"),
     9: (u"девять", u"девять", u"девять"),
-    }  #: Forms (1, 2, 5) for ones
+    }  #: Forms (MALE, FEMALE, NEUTER) for ones
 
 TENS = {
     0: u"",
