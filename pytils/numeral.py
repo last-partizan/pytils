@@ -71,18 +71,19 @@ HUNDREDS = {
     8: u"восемьсот",
     9: u"девятьсот",
     }  #: Hundreds
-    
+
 MALE = 1    #: sex - male
 FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
+
 def _get_float_remainder(fvalue, signs=9):
     """
     Get remainder of float, i.e. 2.05 -> '05'
-    
+
     @param fvalue: input value
     @type fvalue: C{int}, C{long} or C{float}
-    
+
     @param signs: maximum number of signs
     @type signs: C{int} or C{long}
 
@@ -90,7 +91,7 @@ def _get_float_remainder(fvalue, signs=9):
     @rtype: C{str}
 
     @raise TypeError: fvalue neither C{int}, no C{float}
-    @raise ValueError: fvalue is negative    
+    @raise ValueError: fvalue is negative
     @raise ValueError: signs overflow
     """
     utils.check_type('fvalue', (int, long, float))
@@ -126,11 +127,11 @@ def _get_float_remainder(fvalue, signs=9):
 def choose_plural(amount, variants):
     """
     Choose proper case depending on amount
-    
+
     @param amount: amount of objects
     @type amount: C{int} or C{long}
-    
-    @param variants: variants (forms) of object in such form: 
+
+    @param variants: variants (forms) of object in such form:
         (1 object, 2 objects, 5 objects).
     @type variants: 3-element C{sequence} of C{unicode}
         or C{unicode} (three variants with delimeter ',')
@@ -145,7 +146,7 @@ def choose_plural(amount, variants):
     utils.check_type('amount', (int, long))
     utils.check_positive('amount')
     utils.check_type('variants', (list, tuple, unicode))
-    
+
     if isinstance(variants, unicode):
         variants = [v.strip() for v in variants.split(',')]
     if amount % 10 == 1 and amount % 100 != 11:
@@ -159,13 +160,14 @@ def choose_plural(amount, variants):
     utils.check_length('variants', 3)
     return variants[variant]
 
+
 def rubles(amount, zero_for_kopeck=False):
     """
     Get string for money
-    
+
     @param amount: amount of money
     @type amount: C{int}, C{long} or C{float}
-    
+
     @param zero_for_kopeck: If false, then zero kopecks ignored
     @type zero_for_kopeck: C{bool}
 
@@ -177,13 +179,13 @@ def rubles(amount, zero_for_kopeck=False):
     """
     utils.check_type('amount', (int, long, float))
     utils.check_positive('amount')
-    
+
     pts = []
     amount = round(amount, 2)
     pts.append(sum_string(int(amount), 1, (u"рубль", u"рубля", u"рублей")))
     remainder = _get_float_remainder(amount, 2)
     iremainder = int(remainder)
-    
+
     if iremainder != 0 or zero_for_kopeck:
         # если 3.1, то это 10 копеек, а не одна
         if iremainder < 10 and len(remainder) == 1:
@@ -193,13 +195,14 @@ def rubles(amount, zero_for_kopeck=False):
 
     return u" ".join(pts)
 
+
 def in_words_int(amount, gender=MALE):
     """
     Integer in words
 
     @param amount: numeral
     @type amount: C{int} or C{long}
-    
+
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
 
@@ -211,8 +214,9 @@ def in_words_int(amount, gender=MALE):
     """
     utils.check_type('amount', (int, long))
     utils.check_positive('amount')
-    
+
     return sum_string(amount, gender)
+
 
 def in_words_float(amount, _gender=FEMALE):
     """
@@ -229,7 +233,7 @@ def in_words_float(amount, _gender=FEMALE):
     """
     utils.check_type('amount', float)
     utils.check_positive('amount')
-    
+
     pts = []
     # преобразуем целую часть
     pts.append(sum_string(int(amount), 2,
@@ -241,13 +245,14 @@ def in_words_float(amount, _gender=FEMALE):
 
     return u" ".join(pts)
 
+
 def in_words(amount, gender=None):
     """
     Numeral in words
 
     @param amount: numeral
     @type amount: C{int}, C{long} or C{float}
-    
+
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
 
@@ -279,17 +284,18 @@ def in_words(amount, gender=None):
         raise TypeError("Amount must be float or int, not %s" % \
                         type(amount))
 
+
 def sum_string(amount, gender, items=None):
     """
     Get sum in words
 
     @param amount: amount of objects
     @type amount: C{int} or C{long}
-    
+
     @param gender: gender of object (MALE, FEMALE or NEUTER)
     @type gender: C{int}
-    
-    @param items: variants of object in three forms: 
+
+    @param items: variants of object in three forms:
         for one object, for two objects and for five objects
     @type items: 3-element C{sequence} of C{unicode} or
         just C{unicode} (three variants with delimeter ',')
@@ -320,7 +326,7 @@ def sum_string(amount, gender, items=None):
     utils.check_type('two_items', unicode)
     utils.check_type('five_items', unicode)
     utils.check_positive('amount')
-    
+
     if amount == 0:
         return u"ноль %s" % five_items
 
@@ -343,19 +349,20 @@ def sum_string(amount, gender, items=None):
     else:
         raise ValueError("Cannot operand with numbers bigger than 10**11")
 
+
 def _sum_string_fn(into, tmp_val, gender, items=None):
     """
     Make in-words representation of single order
 
     @param into: in-words representation of lower orders
     @type into: C{unicode}
-    
+
     @param tmp_val: temporary value without lower orders
     @type tmp_val: C{int} or C{long}
-    
+
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
-    
+
     @param items: variants of objects
     @type items: 3-element C{sequence} of C{unicode}
 
@@ -418,4 +425,3 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
 
     # склеиваем и отдаем
     return u" ".join(words).strip(), tmp_val
-

@@ -11,16 +11,17 @@ __url__ = "$URL$"
 
 import sys
 
+
 def provide_unicode(stext, encoding, default=u"неизвестно"):
     """
     Provide Unicode from text
-    
+
     @param stext: text
     @type stext: C{str}
-    
+
     @param encoding: encoding if input text
     @type encoding: C{str}
-    
+
     @return: C{unicode}
     """
     try:
@@ -29,16 +30,17 @@ def provide_unicode(stext, encoding, default=u"неизвестно"):
         utext = default % {'error': err, 'value': u""}
     return utext
 
+
 def provide_str(utext, encoding, default="unknown"):
     """
     Provide text from Unicode
-    
+
     @param utext: unicode text
     @type utext: C{unicode}
-    
+
     @param encoding: encoding of output text
     @type encoding: C{str}
-    
+
     @return: C{str}
     """
     try:
@@ -46,6 +48,7 @@ def provide_str(utext, encoding, default="unknown"):
     except UnicodeEncodeError, err:
         stext = default % {'error': err, 'value': ""}
     return stext
+
 
 def get_value_by_name(variable_name, depth=1):
     """
@@ -65,7 +68,7 @@ def get_value_by_name(variable_name, depth=1):
         raise RuntimeError("Unable to fetch variable %s (depth %d)" % \
                            (variable_name, depth))
     return variable_value
-    
+
 
 def check_type(variable_name, typ):
     """
@@ -85,6 +88,7 @@ def check_type(variable_name, typ):
     if not isinstance(variable_value, typ):
         raise TypeError("%s must be %s, not %s" % \
                         (variable_name, str(typ), type(variable_value)))
+
 
 def check_length(variable_name, length):
     """
@@ -106,6 +110,7 @@ def check_length(variable_name, length):
         raise ValueError("%s's length must be %d, but it %d" % \
                          (variable_name, length, _length))
 
+
 def check_positive(variable_name, strict=False):
     """
     Checks if variable is positive
@@ -124,4 +129,3 @@ def check_positive(variable_name, strict=False):
     if strict and variable_value <= 0:
         raise ValueError("%s must be positive, not %s" % \
                          (variable_name, str(variable_value)))
-        

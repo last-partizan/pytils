@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# License: GNU GPL2 
+# License: GNU GPL2
 # Author: Pythy <the.pythy@gmail.com>
 """
 Simple processing for russian strings
@@ -17,6 +17,7 @@ VERSION_TINY = 0   #: Tiny version of PyTils (i.e. subrelease)
 VERSION = "%d.%d.%d" % (VERSION_MAJOR, VERSION_MINOR, VERSION_TINY)  #: Version's string
 
 REL_DATE = '20061029'  #: Release date
+
 
 def _get_svn_date_from_id(id_string):
     """Returns date of last update (extract from __id__)"""
@@ -47,5 +48,3 @@ SVN_DATE = max(_module_dates)  #: Last change in submodules
 # изменения файлов, но я пока не вижу в этом смысла.
 if SVN_DATE > REL_DATE:
     VERSION = "%s-svn%s" % (VERSION, SVN_DATE)  #: Version's string (with appended svndate)
-
-

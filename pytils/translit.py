@@ -29,7 +29,7 @@ TRANSTABLE = (
         # т.е. Sch
         # а вот если английский->русский, то вариант SCH и Sch --
         # оба пройдут
-        (u"Щ", u"SCH"), 
+        (u"Щ", u"SCH"),
         # двухбуквенные замены
         (u"Ё", u"Yo"),
         (u"Ё", u"YO"),
@@ -71,7 +71,7 @@ TRANSTABLE = (
         (u"Х", u"H"),
         (u"Э", u"E"),
         (u"Ъ", u"`"),
-        (u"Ь", u"'"),        
+        (u"Ь", u"'"),
         ## нижний регистр
         # трехбуквенные замены
         (u"щ", u"sch"),
@@ -143,7 +143,7 @@ def translify(in_string):
 
     @param in_string: input string
     @type in_string: C{unicode}
-    
+
     @return: transliterated string
     @rtype: C{str}
 
@@ -164,13 +164,14 @@ def translify(in_string):
 
     return translit
 
+
 def detranslify(in_string):
     """
     Detranslify
 
     @param in_string: input string
     @type in_string: C{basestring}
-    
+
     @return: detransliterated string
     @rtype: C{str}
 
@@ -192,6 +193,7 @@ def detranslify(in_string):
 
     return russian
 
+
 def slugify(in_string):
     """
     Prepare string for slug (i.e. URL or file/dir name)
@@ -212,23 +214,20 @@ def slugify(in_string):
         raise ValueError("We expects when in_string is str type," + \
                          "it is an ascii, but now it isn't. Use unicode " + \
                          "in this case.")
-    
-
-
     # convert & to "and"
     u_in_string = re.sub('\&amp\;|\&', ' and ', u_in_string)
     # replace spaces by hyphen
     u_in_string = re.sub('[-\s]+', '-', u_in_string)
     # remove symbols that not in alphabet
-    u_in_string = u''.join([symb for symb  in u_in_string if symb in ALPHABET])
+    u_in_string = u''.join([symb for symb in u_in_string if symb in ALPHABET])
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha
     return re.sub('[^\w\s-]', '', out_string).strip().lower()
-        
+
+
 def dirify(in_string):
     """
     Alias for L{slugify}
     """
     slugify(in_string)
-

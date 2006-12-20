@@ -16,7 +16,7 @@ from pytils import numeral, utils
 DAY_ALTERNATIVES = {
     1: (u"вчера", u"завтра"),
     2: (u"позавчера", u"послезавтра")
-    }  #: Day alternatives (i.e. one day ago -> yesterday) 
+    }  #: Day alternatives (i.e. one day ago -> yesterday)
 
 DAY_VARIANTS = (
     u"день",
@@ -86,7 +86,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     @raise ValueError: accuracy is lesser or equal zero
     """
     current = False
-    
+
     if to_time is None:
         current = True
         to_time = datetime.datetime.now()
@@ -107,8 +107,8 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     seconds_orig = int(abs(difference))
     minutes_orig = int(abs(difference)/60.0)
-    hours_orig   = int(abs(difference)/3600.0)
-    days_orig =    int(abs(difference)/86400.0)
+    hours_orig = int(abs(difference)/3600.0)
+    days_orig = int(abs(difference)/86400.0)
     in_future = from_time > to_time
 
     words = []
@@ -120,7 +120,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     words.append(u"%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
     values.append(days)
-    
+
     words.append(u"%d %s" % \
                   (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
     values.append(hours)
@@ -154,7 +154,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
         limit -= 1
 
     real_str = u" ".join(real_words)
-    
+
     # альтернативные варианты нужны только если в real_words одно значение
     # и, вдобавок, если используется текущее время
     alter_str = limit == 1 and current and \
@@ -176,7 +176,6 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
                     ((in_future and day_alternatives[1]) \
                                  or day_alternatives[0])
 
-    
     final_str = not real_words and zero_str or alternate_day or result_str
 
     return final_str
@@ -203,7 +202,7 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     utils.check_type('format', unicode)
 
     midx = inflected and 2 or 1
-    didx = inflected_day and 2 or 1 
+    didx = inflected_day and 2 or 1
 
     format = format.replace(u'%a', DAY_NAMES[date.weekday()][0])
     format = format.replace(u'%A', DAY_NAMES[date.weekday()][didx])
@@ -217,4 +216,3 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     u_res = s_res.decode("utf-8")
 
     return u_res
-    
