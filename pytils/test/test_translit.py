@@ -102,5 +102,12 @@ class TranslitTestCase(unittest.TestCase):
         self.ckSlug(u"Проверка\x0aсвязи 2", 'proverka-svyazi-2')
         self.ckSlug(u"Проверка\201связи 3", 'proverkasvyazi-3')
 
+    def testSlugifyIssue15(self):
+        """
+        Unit-test for testing that bug#15 fixed
+        """
+        self.ckSlug(u"World of Warcraft", "world-of-warcraft")
+
+
 if __name__ == '__main__':
     unittest.main()

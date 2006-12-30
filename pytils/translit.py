@@ -116,10 +116,7 @@ TRANSTABLE = (
         (u"q", u"q"),
         (u"y", u"y"),
         (u"x", u"x"),
-        (u"C", u"C"),
-        (u"Q", u"Q"),
-        (u"Y", u"Y"),
-        (u"X", u"X"),
+        (u"w", u"w"),
         (u"1", u"1"),
         (u"2", u"2"),
         (u"3", u"3"),
@@ -209,7 +206,7 @@ def slugify(in_string):
     """
     utils.check_type('in_string', basestring)
     try:
-        u_in_string = unicode(in_string)
+        u_in_string = unicode(in_string).lower()
     except UnicodeDecodeError:
         raise ValueError("We expects when in_string is str type," + \
                          "it is an ascii, but now it isn't. Use unicode " + \
