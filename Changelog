@@ -1,0 +1,25 @@
+pytils (0.2.1)
+
+  * fix bugs (#10, #14, #15) 
+  * improve gender manipulation in numeral (issue#13)
+  * add GPL header
+  * add unit-tests for templatetags
+
+ -- Yury Yurevich <the.pythy@gmail.com>  Mon, 19 Feb 2007 10:14:31 +0600
+
+pytils (0.2.0)
+
+  * integration with Django (templatetags)
+  * examples for Django and TurboGears 
+  * remove asserts
+  * add datatime.datetime type for distance_of_time_in_words
+  * improve docs
+  * make eggs
+
+ -- Yury Yurevich <the.pythy@gmail.com>  Sun, 29 Oct 2006 23:30:17 +0600 
+
+pytils (0.1.0)
+
+  * initial release
+
+ -- Yury Yurevich <the.pythy@gmail.com>  Sat,  2 Sep 2006 22:52:37 +0600
