@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- test-case-name: pytils.test.templatetags.test_translit -*-
 # PyTils - simple processing for russian strings
 # Copyright (C) 2006-2007  Yury Yurevich
 #

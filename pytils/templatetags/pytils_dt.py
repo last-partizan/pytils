@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- test-case-name: pytils.test.templatetags.test_dt -*- 
 # PyTils - simple processing for russian strings
 # Copyright (C) 2006-2007  Yury Yurevich
 #
@@ -97,7 +98,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False):
         try:
             default_date = date.strftime(format)
         except Exception:
-            default_date = ""
+            default_date = str(date)
         res = default_value % {'error': err, 'value': default_date}
     return res
 

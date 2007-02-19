@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- test-case-name: pytils.test.templatetags.test_numeral -*-
 # PyTils - simple processing for russian strings
 # Copyright (C) 2006-2007  Yury Yurevich
 #
@@ -70,7 +71,7 @@ def choose_plural(amount, variants):
     except Exception, err:
         # because filter must die silently
         try:
-            default_variant = variants[0]
+            default_variant = variants
         except Exception:
             default_variant = ""
         res = default_value % {'error': err, 'value': default_variant}
