@@ -10,6 +10,9 @@ except ImportError:
 
 import pytils
 
+rel_download_url = "http://pythy.googlecode.com/svn/tags/pytils/%s/dist/"
+tag_version = pytils.VERSION.replace('.', '_')
+
 setup_data = {
       'name': 'pytils',
       'version': pytils.VERSION,
@@ -20,7 +23,7 @@ setup_data = {
       'long_description': """Simple tools for processing string in russian 
 (choose proper form for plurals, in-words representation of numerals,
 dates in russian without locales, transliteration, etc)""",
-      'download_url': 'http://cheeseshop.python.org/pypi/pytils/',
+      'download_url': rel_download_url % tag_version,
       'packages': ['pytils', 'pytils.test', 'pytils.templatetags'],
       'license': "GPL",
       'platforms': "All",
