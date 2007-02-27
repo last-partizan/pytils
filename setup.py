@@ -16,7 +16,7 @@ tag_version = pytils.VERSION.replace('.', '_')
 setup_data = {
       'name': 'pytils',
       'version': pytils.VERSION,
-      'author': 'Pythy',
+      'author': 'Yury Yurevich',
       'author_email': 'the.pythy@gmail.com',
       'url': 'http://gorod-omsk.ru/blog/pythy/projects/pytils/',
       'description': 'Utils for easy processing string in russian.',
@@ -24,7 +24,7 @@ setup_data = {
 (choose proper form for plurals, in-words representation of numerals,
 dates in russian without locales, transliteration, etc)""",
       'download_url': rel_download_url % tag_version,
-      'packages': ['pytils', 'pytils.test', 'pytils.templatetags'],
+      'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags'],
       'license': "GPL",
       'platforms': "All",
       'classifiers': [
@@ -41,6 +41,7 @@ dates in russian without locales, transliteration, etc)""",
 setuptools_extensions = {
     'zip_safe': True,
     'test_suite': 'pytils.test.get_suite',
+    'include_package_data': True,
     }
 
 if use_setuptools:
