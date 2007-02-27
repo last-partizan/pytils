@@ -3,5 +3,6 @@ include AUTHORS
 include LICENSE
 include TODO
 include README
+include setup.cfg
 
 
