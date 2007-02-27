@@ -1,3 +1,25 @@
+# -*- coding: utf-8 -*-
+# PyTils - simple processing for russian strings
+# Copyright (C) 2006-2007  Yury Yurevich
+#
+# http://gorod-omsk.ru/blog/pythy/projects/pytils/
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation, version 2
+# of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+"""
+Helpers for templatetags' unit tests in Django webframework
+"""
+
+__id__ = __revision__ = "$Id$"
+__url__ = "$URL$"
+
 from django.conf import settings
 
 settings.configure(
@@ -14,8 +36,25 @@ import unittest
 
 
 class TemplateTagTestCase(unittest.TestCase):
-    
+    """
+    TestCase for testing template tags and filters
+    """
     def check_template_tag(self, template_name, template_string, context, result_string):
+        """
+        Method validates output of template tag or filter
+        
+        @param template_name: name of template
+        @type template_name: C{str}
+        
+        @param template_string: contents of template
+        @type template_string: C{str}
+
+        @param context: rendering context
+        @type context: C{dict}
+
+        @param result_string: reference output
+        @type result_string: C{str}
+        """
         
         def test_template_loader(template_name, template_dirs=None):
             return template_string, template_name
