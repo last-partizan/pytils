@@ -258,6 +258,17 @@ class RuStrftimeTestCase(unittest.TestCase):
         """
         self.assertRaises(TypeError, pytils.dt.ru_strftime, time.time())
         self.assertRaises(TypeError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
+
+    def testIssue20Fixed(self):
+        """
+        Unit-test for testing that Issue#20 is fixed (typo)
+        """
+        self.assertEquals(u"воскресенье",
+                          pytils.dt.ru_strftime(
+                              u"%A",
+                              datetime.date(2007,3,18),
+                              inflected_day=True)
+                         )
         
 
 if __name__ == '__main__':
