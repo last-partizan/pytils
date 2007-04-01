@@ -77,6 +77,37 @@ def choose_plural(amount, variants):
         res = default_value % {'error': err, 'value': default_variant}
     return res
 
+def get_plural(amount, variants):
+    """
+    Get proper form for plural and it value.
+
+    Value is a amount, parameters are forms of noun.
+    Forms are variants for 1, 2, 5 nouns. It may be tuple
+    of elements, or string where variants separates each other
+    by comma. You can append 'absence variant' after all over variants
+
+    Examples::
+        {{ some_int|get_plural:"пример,примера,примеров,нет примеров" }}
+    """
+    try:
+        if isinstance(variants, str):
+            uvariants = utils.provide_unicode(variants, encoding, default_value)
+        else:
+            uvariants = [utils.provide_unicode(v, encoding, default_uvalue) for v in variants]
+        res = utils.provide_str(
+            numeral._get_plural_legacy(amount, uvariants),
+            encoding,
+            default=default_value
+            )
+    except Exception, err:
+        # because filter must die silently
+        try:
+            default_variant = variants
+        except Exception:
+            default_variant = ""
+        res = default_value % {'error': err, 'value': default_variant}
+    return res
+
 def rubles(amount, zero_for_kopeck=False):
     """Converts float value to in-words representation (for money)"""
     try:
@@ -114,6 +145,7 @@ def in_words(amount, gender=None):
 # -- register filters
 
 register.filter('choose_plural', choose_plural)
+register.filter('get_plural', get_plural)
 register.filter('rubles', rubles)
 register.filter('in_words', in_words)
 

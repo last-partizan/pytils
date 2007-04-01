@@ -32,6 +32,20 @@ class NumeralDefaultTestCase(helpers.TemplateTagTestCase):
             '{% load pytils_numeral %}{{ val|choose_plural:"гвоздь,гвоздя,гвоздей" }}', 
             {'val': 10},
             'гвоздей')
+
+    def test_get_plural_filter(self):
+        self.check_template_tag('get_plural', 
+            '{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей" }}', 
+            {'val': 10},
+            '10 гвоздей')
+        self.check_template_tag('get_plural', 
+            '{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей" }}', 
+            {'val': 0},
+            '0 гвоздей')
+        self.check_template_tag('get_plural', 
+            '{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей,нет гвоздей" }}', 
+            {'val': 0},
+            'нет гвоздей')
     
     def test_rubles_filter(self):
         self.check_template_tag('rubles', 

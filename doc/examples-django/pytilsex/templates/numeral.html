@@ -14,7 +14,7 @@
 <h3>Фильтры</h3>
 <p>Для наглядности, текст подставленный фильтром выделен курсивом.</p>
 
-<h4>choose_plural</h4>
+<h4>choose_plural и get_plural</h4>
 <p>Выбор нужной формы множественного числа. Классический пример с количеством 
 комментариев: {{ params.comment_number }} <em>{{ params.comment_number|choose_plural:params.comment_variants }}</em>
 </p>
@@ -38,6 +38,27 @@
 {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
 &lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"комментарий, комментария, комментариев" {% templatetag closevariable %}&lt;/em&gt;
 - как Вам больше нравится.&lt;/p&gt;
+</pre></code></p>
+
+<p>Зачастую нужно показывать и число, и название объекта в правильной форме, а не только название
+объекта. В этом случае следует воспользоваться фильтром <code>get_plural</code>. Пример с теми же
+комментариями можно записать проще: 
+<em>{{ params.comment_number|get_plural:"комментарий,комментария,комментариев" }}</em>.
+<code>get_plural</code> удобен еще и тем, что можно указать вариант, когда значение равно нулю.
+Например, гораздо симпатичней "без комментариев", чем "0 комментариев". В этом случае к вариантам
+нужно просто добавить еще один - нуль-вариант. Пример: 
+<em>{{ params.zero|get_plural:"пример,примера,примеров,без примеров" }}.</em></p>
+
+<p>Сделано это так:
+<code><pre>
+&lt;p&gt;Зачастую нужно показывать и число, и название объекта в правильной форме, а не только название
+объекта. В этом случае следует воспользоваться фильтром &lt;code&gt;get_plural&lt;/em&gt;. Пример с теми же
+комментариями можно записать проще: 
+&lt;em&gt;{% templatetag openvariable %} params.comment_number|get_plural:"комментарий,комментария,комментариев" {% templatetag closevariable %}&lt;/em&gt;.
+&lt;code&gt;get_plural&lt;/code&gt; удобен еще и тем, что можно указать вариант, когда значение равно нулю.
+Например, гораздо симпатичней "без комментариев", чем "0 комментариев". В этом случае к вариантам
+нужно просто добавить еще один - нуль-вариант. Пример: 
+&lt;em&gt;{% templatetag openvariable %} params.zero|get_plural:"пример,примера,примеров,без примеров" {% templatetag closevariable %}.&lt;/em&gt;&lt;/p&gt;
 </pre></code></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 

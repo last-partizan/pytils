@@ -135,7 +135,6 @@ def _get_float_remainder(fvalue, signs=9):
 
     return remainder
 
-
 def choose_plural(amount, variants):
     """
     Choose proper case depending on amount
@@ -172,7 +171,58 @@ def choose_plural(amount, variants):
     utils.check_length('variants', 3)
     return variants[variant]
 
+def get_plural(amount, variants, absence=None):
+    """
+    Get proper case with value
 
+    @param amount: amount of objects
+    @type amount: C{int} or C{long}
+
+    @param variants: variants (forms) of object in such form:
+        (1 object, 2 objects, 5 objects).
+    @type variants: 3-element C{sequence} of C{unicode}
+        or C{unicode} (three variants with delimeter ',')
+
+    @param absence: if amount is zero will return it
+    @type absence: C{unicode}
+
+    @return: amount with proper variant
+    @rtype: C{unicode}
+    """
+    if absence is not None:
+        utils.check_type('absence', unicode)
+    
+    if amount or absence is None:
+        return u"%d %s" % (amount, choose_plural(amount, variants))
+    else:
+        return absence
+
+def _get_plural_legacy(amount, extra_variants):
+    """
+    Get proper case with value
+
+    @param amount: amount of objects
+    @type amount: C{int} or C{long}
+
+    @param variants: variants (forms) of object in such form:
+        (1 object, 2 objects, 5 objects, 0-object variant).
+        0-object variant is similar to C{absence} in C{get_plural}
+    @type variants: 3-element C{sequence} of C{unicode}
+        or C{unicode} (three variants with delimeter ',')
+
+    @return: amount with proper variant
+    @rtype: C{unicode}
+    """
+    absence = None
+    if isinstance(extra_variants, unicode):
+        extra_variants = [v.strip() for v in extra_variants.split(',')]
+    if len(extra_variants) == 4:
+        variants = extra_variants[:3]
+        absence = extra_variants[3]
+    else:
+        variants = extra_variants
+    return get_plural(amount, variants, absence)
+    
 def rubles(amount, zero_for_kopeck=False):
     """
     Get string for money

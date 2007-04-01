@@ -39,6 +39,7 @@ class Root(controllers.RootController):
         return {
             'comment_variants': (u"комментарий", u"комментария", u"комментариев"),
             'comment_number': 21,
+            'zero': 0,
             'comment_gender': numeral.MALE,
             'rubles_value': 23.152,
             'rubles_value2': 12,

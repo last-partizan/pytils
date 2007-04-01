@@ -67,9 +67,58 @@ class ChoosePluralTestCase(unittest.TestCase):
                           -25, u"any,bene,raba")
 
     def testChoosePluralVariantsInStr(self):
+        """
+        Tests new-style variants
+        """
         self.assertEquals(
             pytils.numeral.choose_plural(1,u"гвоздь,гвоздя, гвоздей"),
             u"гвоздь")
+
+class GetPluralTestCase(unittest.TestCase):
+    """
+    Test case for get_plural
+    """
+    def testGetPlural(self):
+        """
+        Test regular get_plural
+        """
+        self.assertEquals(
+            pytils.numeral.get_plural(1, u"комментарий, комментария, комментариев"),
+            u"1 комментарий")
+        self.assertEquals(
+            pytils.numeral.get_plural(0, u"комментарий, комментария, комментариев"),
+            u"0 комментариев")
+        
+    def testGetPluralAbsence(self):
+        """
+        Test get_plural with absence
+        """
+        self.assertEquals(
+            pytils.numeral.get_plural(1, u"комментарий, комментария, комментариев",
+                                      u"без комментариев"),
+            u"1 комментарий")
+        self.assertEquals(
+            pytils.numeral.get_plural(0, u"комментарий, комментария, комментариев",
+                                      u"без комментариев"),
+            u"без комментариев")
+
+    def testGetPluralLegacy(self):
+        """
+        Test _get_plural_legacy
+        """
+        self.assertEquals(
+            pytils.numeral._get_plural_legacy(1, u"комментарий, комментария, комментариев"),
+            u"1 комментарий")
+        self.assertEquals(
+            pytils.numeral._get_plural_legacy(0, u"комментарий, комментария, комментариев"),
+            u"0 комментариев")
+        self.assertEquals(
+            pytils.numeral._get_plural_legacy(1, u"комментарий, комментария, комментариев, без комментариев"),
+            u"1 комментарий")
+        self.assertEquals(
+            pytils.numeral._get_plural_legacy(0, u"комментарий, комментария, комментариев, без комментариев"),
+            u"без комментариев")
+        
 
 class GetFloatRemainderTestCase(unittest.TestCase):
     """
