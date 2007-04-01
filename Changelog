@@ -1,6 +1,6 @@
 pytils (0.2.1-svn)
 
-  * fix bugs (#20) 
+  * fix bugs (#20, #22) 
   * add get_plural to pytils.numeral (issue#19)
 
  -- Yury Yurevich <the.pythy@gmail.com>  Sun, 01 Apr 2007 21:38:02 +0700
