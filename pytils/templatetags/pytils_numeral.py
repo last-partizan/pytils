@@ -166,7 +166,10 @@ def sum_string(amount, gender, items):
         {% sum_string some_other_int FEMALE "задача,задачи,задач" %}
     """
     try:
-        uitems = [utils.provide_unicode(i, encoding, default_uvalue) for i in items]
+        if isinstance(items, str):
+            uitems = utils.provide_unicode(items, encoding, default_uvalue)
+        else:
+            uitems = [utils.provide_unicode(i, encoding, default_uvalue) for i in items]
         res = utils.provide_str(
             numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems),
             encoding,
