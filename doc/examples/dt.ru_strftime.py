@@ -33,6 +33,11 @@ print dt.ru_strftime(u"%d %B %Y", d, inflected=True)
 
 # ... и день (опция inflected_day)
 print dt.ru_strftime(u"%d.%m.%Y, в %A", d, inflected_day=True)
+# -> 15.09.2006, в пятницу
+
+# ... и добавлять правильный предлог (опция preposition)
+print dt.ru_strftime(u"%d.%m.%Y, %A", d, preposition=True)
+# -> 15.09.2006, в пятницу
 
 # второй параметр можно не передавать, будет использована текущая дата
 print dt.ru_strftime(u"%d %B %Y", inflected=True)

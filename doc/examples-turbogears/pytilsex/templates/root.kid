@@ -36,7 +36,7 @@ import pytils
 	<li><a href="/translit/">pytils.translit</a> - простая транслитерация</li>
 </ul></p>
 
-<p>Протестировано с TurboGears 1.0</p>
+<p>Протестировано с TurboGears 1.0 и 1.0.2</p>
 <p>Данный пример работает на TurboGears ${tg_version} с использованием PyTils ${pytils_version}</p>
 
 </div>

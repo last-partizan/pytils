@@ -55,7 +55,10 @@ $${fdate} будет &lt;em&gt;$${pytils.dt.distance_of_time_in_words(fdate)}&lt
 Согласитесь, выглядит не по-русски. Чтобы месяц склонялся, используйте опцию 
 <code>inflected</code>: <em>${pytils.dt.ru_strftime(u"%d %B %Y, %A", inflected=True)}</em>.
 Если же нужно чтобы и день склонялся, используйте опцию <code>inflected_day</code>:
-текущий тест был выполнен в <em>${pytils.dt.ru_strftime(u"%A, %d %B %Y", inflected=True, inflected_day=True)}</em>.</p>
+текущий тест был выполнен в <em>${pytils.dt.ru_strftime(u"%A, %d %B %Y", inflected=True, inflected_day=True)}</em>.
+Лучше же чтобы и предлог добавлялся автоматически: текущий тест выполнен 
+<em>${pytils.dt.ru_strftime(u"%A, %d %B %Y", inflected=True, preposition=True)}</em> (опция <code>preposition</code>).
+</p>
 
 <p>Не забудьте, что формат нужно передавать в unicode, а не в строке (как в обычном strftime).</p>
 
@@ -67,7 +70,11 @@ $${fdate} будет &lt;em&gt;$${pytils.dt.distance_of_time_in_words(fdate)}&lt
 &lt;code&gt;inflected&lt;/code&gt;: &lt;em&gt;$${pytils.dt.ru_strftime(u"%d %B %Y, %A", inflected=True)}&lt;/em&gt;&lt;/p&gt;. 
 Если же нужно чтобы и день склонялся, используйте опцию &lt;code&gt;inflected_day&lt;/code&gt;:
 текущий тест был выполнен в 
-&lt;em&gt;$${pytils.dt.ru_strftime(u"%A, %d %B %Y", inflected=True, inflected_day=True)}&lt;/em&gt;.&lt;/p&gt;
+&lt;em&gt;$${pytils.dt.ru_strftime(u"%A, %d %B %Y", inflected=True, inflected_day=True)}&lt;/em&gt;.
+Лучше же чтобы и предлог добавлялся автоматически: текущий тест выполнен 
+&lt;em&gt;$${pytils.dt.ru_strftime(u"%A, %d %B %Y", inflected=True, preposition=True)}&lt;/em&gt;
+(опция &lt;code&gt;preposition&lt;/code&gt;).
+&lt;/p&gt;
 </pre></code>
 </p>
 

@@ -218,25 +218,40 @@ class RuStrftimeTestCase(unittest.TestCase):
         """        
         self.date = datetime.date(2006, 8, 25)
     
-    def ck(self, format, estimates):
+    def ck(self, format, estimates, date=None):
         """
         Checks w/o inflected
         """
-        res = pytils.dt.ru_strftime(format, self.date)
+        if date is None:
+            date = self.date
+        res = pytils.dt.ru_strftime(format, date)
         self.assertEquals(res, estimates)
 
-    def ckInflected(self, format, estimates):
+    def ckInflected(self, format, estimates, date=None):
         """
         Checks with inflected
         """
+        if date is None:
+            date = self.date
         res = pytils.dt.ru_strftime(format, self.date, True)
         self.assertEquals(res, estimates)
 
-    def ckInflectedDay(self, format, estimates):
+    def ckInflectedDay(self, format, estimates, date=None):
         """
         Checks with inflected day
         """
-        res = pytils.dt.ru_strftime(format, self.date, inflected_day=True)
+        if date is None:
+            date = self.date
+        res = pytils.dt.ru_strftime(format, date, inflected_day=True)
+        self.assertEquals(res, estimates)
+
+    def ckPreposition(self, format, estimates, date=None):
+        """
+        Checks with inflected day
+        """
+        if date is None:
+            date = self.date
+        res = pytils.dt.ru_strftime(format, date, preposition=True)
         self.assertEquals(res, estimates)
 
     def testRuStrftime(self):
@@ -251,6 +266,14 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckInflected(u"тест выполнен %d %B %Y года",
                           u"тест выполнен 25 августа 2006 года")
         self.ckInflectedDay(u"тест выполнен в %A", u"тест выполнен в пятницу")
+    
+    def testRuStrftimeWithPreposition(self):
+        """
+        Unit-tests for pytils.dt.ru_strftime with preposition option
+        """
+        self.ckPreposition(u"тест %a", u"тест в\xa0пт")
+        self.ckPreposition(u"тест %A", u"тест в\xa0пятницу")
+        self.ckPreposition(u"тест %A", u"тест во\xa0вторник", datetime.date(2007, 6, 5))
 
     def testRuStrftimeExceptions(self):
         """

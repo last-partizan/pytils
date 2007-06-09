@@ -17,6 +17,7 @@ def get_tg_version():
     except AttributeError:
         # setuptools 0.6c5
         ver = pkg_resources.get_distribution('TurboGears').version
+    return ver
 
 class Root(controllers.RootController):
     @expose(template="pytilsex.templates.root")

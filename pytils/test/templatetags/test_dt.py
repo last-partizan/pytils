@@ -38,11 +38,17 @@ class DtDefaultTestCase(helpers.TemplateTagTestCase):
             {'val': self.date},
             '26 января 2007, пятница')
     
-    def testRuStrftimeInflected_filter(self):
+    def testRuStrftimeInflectedFilter(self):
         self.check_template_tag('ru_strftime_inflected_filter', 
             '{% load pytils_dt %}{{ val|ru_strftime_inflected:"в %A, %d %B %Y" }}', 
             {'val': self.date},
             'в пятницу, 26 января 2007')
+    
+    def testRuStrftimePrepositionFilter(self):
+        self.check_template_tag('ru_strftime_preposition_filter', 
+            '{% load pytils_dt %}{{ val|ru_strftime_preposition:"%A, %d %B %Y" }}', 
+            {'val': self.date},
+            'в\xc2\xa0пятницу, 26 января 2007')
     
     def testDistanceFilter(self):
         self.check_template_tag('distance_filter', 

@@ -83,4 +83,23 @@
 выполнить).
 </p>
 
+<h4>ru_strftime_preposition</h4>
+<p>Аналогично <code>ru_strftime_inflected</code>, только добавляется правильный предлог. Т.е. текущий тест был 
+выполнен <em>{{ params.cdate|ru_strftime_preposition:"%A, %d %B %Y" }}</em>
+
+<p>
+В шаблоне запись такова:
+<pre><code>
+&lt;p&gt;Аналогично &lt;code&gt;ru_strftime&lt;/code&gt;, только добавляется правильный предлог. Т.е. текущий тест был 
+выполнен &lt;em&gt;{% templatetag openvariable %} params.cdate|ru_strftime_preposition:"%A, %d %B %Y" {% templatetag closevariable %}&lt;/em&gt;
+</pre></code>
+</p>
+
+<p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
+будет отображена дата с использованием оригинального strftime (т.е. с 
+английскими днями/месяцами), либо пустая строка (если strftime не получилось 
+выполнить).
+</p>
+
+
 {% endblock %}

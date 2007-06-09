@@ -74,7 +74,7 @@ def distance_of_time(from_time, accuracy=1):
         res = default_value % {'error': err, 'value': default_distance}
     return res
 
-def ru_strftime(date, format="%d.%m.%Y", inflected_day=False):
+def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False):
     """
     Russian strftime, formats date with given format.
 
@@ -91,7 +91,8 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False):
         ures = dt.ru_strftime(uformat,
                               date,
                               inflected=True,
-                              inflected_day=inflected_day)
+                              inflected_day=inflected_day,
+                              preposition=preposition)
         res = utils.provide_str(ures, encoding)
     except Exception, err:
         # because filter must die silently
@@ -102,7 +103,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False):
         res = default_value % {'error': err, 'value': default_date}
     return res
 
-def ru_strftime_inflected(date, format="%d.%m.%Y", inflected_day=True):
+def ru_strftime_inflected(date, format="%d.%m.%Y"):
     """
     Russian strftime with inflected day, formats date
     with given format (similar to ru_strftime),
@@ -111,9 +112,23 @@ def ru_strftime_inflected(date, format="%d.%m.%Y", inflected_day=True):
     Examples::
         {{ some_date|ru_strftime_inflected:"in %A (%d %B %Y)"
     """
-    return ru_strftime(date, format, inflected_day)
+    return ru_strftime(date, format, inflected_day=True)
+
+def ru_strftime_preposition(date, format="%d.%m.%Y"):
+    """
+    Russian strftime with inflected day and correct preposition,
+    formats date with given format (similar to ru_strftime),
+    also inflects day in proper form and inserts correct 
+    preposition.
+
+    Examples::
+        {{ some_date|ru_strftime_prepoisiton:"%A (%d %B %Y)"
+    """
+    return ru_strftime(date, format, preposition=True)
+
 
 # -- register filters
 register.filter('distance_of_time', distance_of_time)
 register.filter('ru_strftime', ru_strftime)
 register.filter('ru_strftime_inflected', ru_strftime_inflected)
+register.filter('ru_strftime_preposition', ru_strftime_preposition)

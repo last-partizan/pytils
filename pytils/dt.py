@@ -67,14 +67,14 @@ MONTH_NAMES = (
     )  #: Month names (abbreviated, full, inflected)
 
 DAY_NAMES = (
-    (u"пн", u"понедельник", u"понедельник"),
-    (u"вт", u"вторник", u"вторник"),
-    (u"ср", u"среда", u"среду"),
-    (u"чт", u"четверг", u"четверг"),
-    (u"пт", u"пятница", u"пятницу"),
-    (u"сб", u"суббота", u"субботу"),
-    (u"вск", u"воскресенье", u"воскресенье")
-    )  #: Day names (abbreviated, full, inflected)
+    (u"пн", u"понедельник", u"понедельник", u"в\xa0"),
+    (u"вт", u"вторник", u"вторник", u"во\xa0"),
+    (u"ср", u"среда", u"среду", u"в\xa0"),
+    (u"чт", u"четверг", u"четверг", u"в\xa0"),
+    (u"пт", u"пятница", u"пятницу", u"в\xa0"),
+    (u"сб", u"суббота", u"субботу", u"в\xa0"),
+    (u"вск", u"воскресенье", u"воскресенье", u"в\xa0")
+    )  #: Day names (abbreviated, full, inflected, preposition)
 
 
 def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
@@ -193,7 +193,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     return final_str
 
 
-def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=False):
+def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=False, preposition=False):
     """
     Russian strftime without locale
 
@@ -202,6 +202,16 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
 
     @param date: date value, default=None translates to today
     @type date: C{datetime.date} or C{datetime.datetime}
+    
+    @param inflected: is month inflected, default False
+    @type inflected: C{bool}
+    
+    @param inflected_day: is day inflected, default False
+    @type inflected: C{bool}
+    
+    @param preposition: is preposition used, default False
+        preposition=True automatically implies inflected_day=True
+    @type preposition: C{bool}
 
     @return: strftime string
     @rtype: unicode
@@ -213,13 +223,18 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     utils.check_type('date', (datetime.date, datetime.datetime))
     utils.check_type('format', unicode)
 
-    midx = inflected and 2 or 1
-    didx = inflected_day and 2 or 1
+    weekday = date.weekday()
+    
+    prepos = preposition and DAY_NAMES[weekday][3] or u""
+    
+    month_idx = inflected and 2 or 1
+    day_idx = (inflected_day or preposition) and 2 or 1
+    
 
-    format = format.replace(u'%a', DAY_NAMES[date.weekday()][0])
-    format = format.replace(u'%A', DAY_NAMES[date.weekday()][didx])
+    format = format.replace(u'%a', prepos+DAY_NAMES[weekday][0])
+    format = format.replace(u'%A', prepos+DAY_NAMES[weekday][day_idx])
     format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
-    format = format.replace(u'%B', MONTH_NAMES[date.month-1][midx])
+    format = format.replace(u'%B', MONTH_NAMES[date.month-1][month_idx])
 
     # strftime must be str, so encode it to utf8:
     s_format = format.encode("utf-8")
