@@ -12,7 +12,11 @@ from pytils import numeral, VERSION as pytils_version
 log = logging.getLogger("pytilsex.controllers")
 
 def get_tg_version():
-    return pkg_resources.get_distribution('TurboGears')._version
+    try:
+        ver = pkg_resources.get_distribution('TurboGears')._version
+    except AttributeError:
+        # setuptools 0.6c5
+        ver = pkg_resources.get_distribution('TurboGears').version
 
 class Root(controllers.RootController):
     @expose(template="pytilsex.templates.root")
