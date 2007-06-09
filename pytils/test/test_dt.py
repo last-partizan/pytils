@@ -233,7 +233,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         """
         if date is None:
             date = self.date
-        res = pytils.dt.ru_strftime(format, self.date, True)
+        res = pytils.dt.ru_strftime(format, date, True)
         self.assertEquals(res, estimates)
 
     def ckInflectedDay(self, format, estimates, date=None):
@@ -274,6 +274,15 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckPreposition(u"тест %a", u"тест в\xa0пт")
         self.ckPreposition(u"тест %A", u"тест в\xa0пятницу")
         self.ckPreposition(u"тест %A", u"тест во\xa0вторник", datetime.date(2007, 6, 5))
+    
+    def testRuStrftimeZeros(self):
+        """
+        Unit-test for testing that Issue#24 is correctly implemented
+        
+        It means, 1 April 2007, but 01.04.2007
+        """
+        self.ck(u"%d.%m.%Y", u"01.04.2007", datetime.date(2007, 4, 1))
+        self.ckInflected(u"%d %B %Y", u"1 апреля 2007", datetime.date(2007, 4, 1))
 
     def testRuStrftimeExceptions(self):
         """

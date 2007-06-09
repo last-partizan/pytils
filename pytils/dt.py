@@ -230,6 +230,10 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     month_idx = inflected and 2 or 1
     day_idx = (inflected_day or preposition) and 2 or 1
     
+    # for russian typography standard,
+    # 1 April 2007, but 01.04.2007
+    if u'%b' in format or u'%B' in format:
+        format = format.replace(u'%d', unicode(date.day))
 
     format = format.replace(u'%a', prepos+DAY_NAMES[weekday][0])
     format = format.replace(u'%A', prepos+DAY_NAMES[weekday][day_idx])
