@@ -169,8 +169,10 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     # альтернативные варианты нужны только если в real_words одно значение
     # и, вдобавок, если используется текущее время
-    alter_str = limit == 1 and current and \
-                alternatives and alternatives[0]
+    alter_str = limit == 1 and current and alternatives and \
+                           not (days and hours==1) and \
+                           not (hours and minutes==1) and \
+                           alternatives[0]
     _result_str = alter_str or real_str
     result_str = in_future and u"%s %s" % (PREFIX_IN, _result_str) \
                            or u"%s %s" % (_result_str, SUFFIX_AGO)

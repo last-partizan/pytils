@@ -206,6 +206,23 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), "test")
         self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
         self.assertRaises(ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0)
+    
+    def testIssue25DaysFixed(self):
+        """
+        Unit-test for testing that Issue#25 is fixed (err when accuracy==1, days<>0, hours==1)
+        """
+        d_days = datetime.datetime.now() - datetime.timedelta(13, 3620)
+        self.assertEquals(pytils.dt.distance_of_time_in_words(d_days),
+                          u"13 дней назад")
+
+    def testIssue25HoursFixed(self):
+        """
+        Unit-test for testing that Issue#25 is fixed (err when accuracy==1, hours<>0, minutes==1)
+        """
+        d_hours = datetime.datetime.now() - datetime.timedelta(0, 46865)
+        self.assertEquals(pytils.dt.distance_of_time_in_words(d_hours),
+                          u"13 часов назад")
+        
 
 class RuStrftimeTestCase(unittest.TestCase):
     """
