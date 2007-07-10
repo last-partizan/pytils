@@ -162,6 +162,23 @@ class ChecksTestCase(unittest.TestCase):
             self.assertEquals("var3 must be positive or zero, not -2",
                               str(err))
 
+class SplitValuesTestCase(unittest.TestCase):
+    
+    def testClassicSplit(self):
+        """
+        Unit-test for pytils.utils.split_values, classic split
+        """
+        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u"Раз,Два,Три"))
+        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u"Раз, Два,Три"))
+        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u" Раз,   Два, Три  "))
+        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u" Раз, \nДва,\n Три  "))
+    
+    def testEscapedSplit(self):
+        """
+        Unit-test for pytils.utils.split_values, split with escaping
+        """
+        self.assertEquals((u"Раз,Два", u"Три,Четыре", u"Пять,Шесть"), pytils.utils.split_values(u"Раз\,Два,Три\,Четыре,Пять\,Шесть"))
+        self.assertEquals((u"Раз, Два", u"Три", u"Четыре"), pytils.utils.split_values(u"Раз\, Два, Три, Четыре"))
 
 if __name__ == '__main__':
     unittest.main()

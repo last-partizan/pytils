@@ -10,6 +10,9 @@ It's a regular Django-project, so just start it
 
 go to http://127.0.0.1:8000/ and look it...
 
+Warn: tested only on non-unicode Django
+(i.e. on 0.95, 0.96, 0.97-pre before 5609 revision)
+
 ------------------------------------
 
 Пример использования PyTils с Django.
@@ -22,5 +25,7 @@ Django (версии 0.95 и выше) и PyTils.
 
     python manage.py runserver
 
-заходите бразуером на http://127.0.0.1:8000/ и смотрите...
+заходите браузером на http://127.0.0.1:8000/ и смотрите...
 
+Внимание: протестировано только на неюникодном Django 
+(т.е. 0.95, 0.95.1, 0.96, 0.97-pre до ревизии 5609)

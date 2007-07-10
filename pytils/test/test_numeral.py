@@ -73,6 +73,9 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.assertEquals(
             pytils.numeral.choose_plural(1,u"гвоздь,гвоздя, гвоздей"),
             u"гвоздь")
+        self.assertEquals(
+            pytils.numeral.choose_plural(5,u"гвоздь, гвоздя, гвоздей\, шпунтов"),
+            u"гвоздей, шпунтов")
 
 class GetPluralTestCase(unittest.TestCase):
     """
@@ -354,7 +357,7 @@ class SumStringTestCase(unittest.TestCase):
                                                     self.variants_female),
                           estimated)
 
-    def testSumStringOldStyle(self):
+    def testSumStringOldStyleGender(self):
         """
         Unit-test for sum_string with old-style genders
         """

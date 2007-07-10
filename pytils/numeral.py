@@ -159,7 +159,7 @@ def choose_plural(amount, variants):
     utils.check_type('variants', (list, tuple, unicode))
 
     if isinstance(variants, unicode):
-        variants = [v.strip() for v in variants.split(',')]
+        variants = utils.split_values(variants)
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0
     elif amount % 10 >= 2 and amount % 10 <= 4 and \
@@ -199,7 +199,7 @@ def get_plural(amount, variants, absence=None):
 
 def _get_plural_legacy(amount, extra_variants):
     """
-    Get proper case with value
+    Get proper case with value (legacy variant, without absence)
 
     @param amount: amount of objects
     @type amount: C{int} or C{long}
@@ -215,7 +215,7 @@ def _get_plural_legacy(amount, extra_variants):
     """
     absence = None
     if isinstance(extra_variants, unicode):
-        extra_variants = [v.strip() for v in extra_variants.split(',')]
+        extra_variants = utils.split_values(extra_variants)
     if len(extra_variants) == 4:
         variants = extra_variants[:3]
         absence = extra_variants[3]
@@ -366,12 +366,12 @@ def sum_string(amount, gender, items=None):
     @rtype: C{unicode}
 
     @raise TypeError: input parameters' check failed
-    @raise ValueError: items isn't 3-element C{sequence}
+    @raise ValueError: items isn't 3-element C{sequence} or C{unicode}
     @raise ValueError: amount bigger than 10**11
     @raise ValueError: amount is negative
     """
     if isinstance(items, unicode):
-        items = [i.strip() for i in items.split(',')]
+        items = utils.split_values(items)
     if items is None:
         items = (u"", u"", u"")
 

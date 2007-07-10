@@ -141,3 +141,12 @@ def check_positive(variable_name, strict=False):
     if strict and variable_value <= 0:
         raise ValueError("%s must be positive, not %s" % \
                          (variable_name, str(variable_value)))
+
+def split_values(uvalue):
+    assert isinstance(uvalue, unicode), "uvalue must be unicode, not %s" % type(uvalue)
+    # в юникоде есть специальный символ, который в нормальном тексте не должен встречаться
+    # это маркер 0xffff
+    # им и будем помечать места, где есть экранированная запятая
+    uvalue_marked = uvalue.replace(u'\,', u'\uffff')
+    items = tuple([i.strip().replace(u'\uffff', ',') for i in uvalue_marked.split(',')])
+    return items
