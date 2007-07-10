@@ -56,6 +56,6 @@ class Root(controllers.RootController):
     def translit(self):
         log.debug("pytilsex root/translit controller ready to go")
         return {
-            'text': u'Пример транслитерации средствами PyTils',
+            'text': u'Пример транслитерации средствами pytils',
             'translit': 'Primer obratnoj transliteratsii',
             }

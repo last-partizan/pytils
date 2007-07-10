@@ -1,7 +1,7 @@
-Examples of usage PyTils with Django.
+Examples of usage pytils with Django.
 =====================================
 
-You need installed Django (0.95 and higher) and PyTils 
+You need installed Django (0.95 and higher) and pytils 
 for run it.
 
 It's a regular Django-project, so just start it
@@ -15,11 +15,11 @@ Warn: tested only on non-unicode Django
 
 ------------------------------------
 
-Пример использования PyTils с Django.
+Пример использования pytils с Django.
 ====================================
 
 Чтобы запустить примеры, Вам понадобятся установленные 
-Django (версии 0.95 и выше) и PyTils.
+Django (версии 0.95 и выше) и pytils.
 
 Это обычный Django-проект. Запускайте 
 

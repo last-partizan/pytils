@@ -41,7 +41,7 @@ urlpatterns = patterns('django.views',
     ),
     (r'^translit/', 'generic.simple.direct_to_template',
          {'template': 'translit.html',
-          'text': 'Пример траслитерации средствами PyTils',
+          'text': 'Пример траслитерации средствами pytils',
           'translit': 'Primer obratnoj transliteratsii',
           }   
     ),

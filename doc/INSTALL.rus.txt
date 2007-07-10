@@ -1,6 +1,6 @@
 ID: $Id$
 
-Установка PyTils
+Установка pytils
 ================
 
 Установка из исходных текстов
@@ -13,7 +13,7 @@ ID: $Id$
 Установка с использованием easy_install
 ---------------------------------------
 
-Вы также можете установить последнюю версию PyTils используя 
+Вы также можете установить последнюю версию pytils используя 
 [easy_install](http://peak.telecommunity.com/DevCenter/EasyInstall)
 
    easy_install pytils
@@ -21,11 +21,14 @@ ID: $Id$
 Установка разрабатываемой версии
 --------------------------------
 
-Если Вы хотите быть на пике изменений, то Вы можете взять PyTils с 
+Если Вы хотите быть на пике изменений, то Вы можете взять pytils с 
 репозитория:
 
   1. Установить один из [Subversion-клиентов](http://subversion.tigris.org/links.html#clients)
-  2. При помощи Subversion-клиента получить исходные тексты PyTils с репозитария
+  2. При помощи Subversion-клиента получить исходные тексты pytils с репозитария
      http://pythy.googlecode.com/svn/trunk/pytils/
   3. Поместить каталог pytils/pytils в PYTHONPATH
 
+Либо при помощи easy_install (Subversion должен быть установлен):
+
+    easy_install pytils==dev

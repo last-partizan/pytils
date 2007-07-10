@@ -23,7 +23,7 @@ setup_data = {
       'version': pytils.VERSION,
       'author': 'Yury Yurevich',
       'author_email': 'the.pythy@gmail.com',
-      'url': 'http://gorod-omsk.ru/blog/pythy/projects/pytils/',
+      'url': 'http://www.pyobject.ru/projects/pytils/',
       'description': 'Utils for easy processing string in russian.',
       'long_description': """Simple tools for processing string in russian 
 (choose proper form for plurals, in-words representation of numerals,

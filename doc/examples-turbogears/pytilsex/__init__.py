@@ -1,3 +1,3 @@
 """
-Example of usage PyTils with TurboGears
+Example of usage pytils with TurboGears
 """

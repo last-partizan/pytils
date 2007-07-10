@@ -1,6 +1,6 @@
 ID: $Id$
 
-PyTils installation
+pytils installation
 ===================
 
 Install the release version
@@ -13,7 +13,7 @@ Install the release version
 Install via easy_install
 ---------------------------------------
 
-You can also install the most recent PyTils version using 
+You can also install the most recent pytils version using 
 [easy_install](http://peak.telecommunity.com/DevCenter/EasyInstall)
 
    easy_install pytils
@@ -21,8 +21,13 @@ You can also install the most recent PyTils version using
 Install the development version
 --------------------------------
 
+If You want to be on a edge, You can use development version of pytils:
+
   1. Obtain one of [Subversion-clients](http://subversion.tigris.org/links.html#clients)
   2. Fetch sources via this Subversion-client from repository
      http://pythy.googlecode.com/svn/trunk/pytils/
   3. Put dir pytils/pytils into PYTHONPATH
 
+or via easy_install
+
+    easy_install pytils==dev

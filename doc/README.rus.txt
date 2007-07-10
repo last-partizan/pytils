@@ -1,22 +1,23 @@
 ID: $Id$
 
-PyTils - библиотека для простой обработки русского текста.
+pytils - простой обработчик русского текста.
 ==========================================================
 
 Кратко
 ------
 
-PyTils - простой обработчик русского текста на Python. Идея позаимствована у 
-[Julik](http://live.julik.nl) и его [RuTils](http://rutils.rubyforge.org/).
+pytils - простой обработчик русского текста, реализован на Python. 
+Идея позаимствована у [Julik](http://live.julik.nl) и его 
+[RuTils](http://rutils.rubyforge.org/).
 
-Автор PyTils - [Pythy](mailto:the.pythy@gmail.com).
+Автор pytils - [Юревич Юрий](mailto:the.pythy@gmail.com).
 
 Ссылки
 ------
 
  *  [Pythy на code.google.com](http://code.google.com/p/pythy/)
- *  [Пост о PyTils в блоге](http://gorod-omsk.ru/blog/pythy/2006/09/02/pytils/)
- *  [Страница PyTils](http://gorod-omsk.ru/blog/pythy/projects/pytils/)
+ *  [Пост о pytils в блоге](http://www.pyobject.ru/blog/post//pytils/)
+ *  [Страница pytils](http://www.pyobject.ru/projects/pytils/)
 
 Как установить
 --------------
@@ -30,7 +31,7 @@ PyTils - простой обработчик русского текста на 
 исключениями, о них ниже). В случае, если Вы передадите str, получите
 AssertionError.
 
-PyTils содержит следующие модули: 
+pytils содержит следующие модули: 
 
  1.  `numeral` - для обработки числительных
  2.  `dt` - русские даты без локалей
@@ -38,7 +39,7 @@ PyTils содержит следующие модули:
 
 API модулей смотрите в директории [api](api/index.html).
 
-PyTils легко интегрируется с популярными  Web-фреймворками (Django, TurboGears),
+pytils легко интегрируется с популярными  Web-фреймворками (Django, TurboGears),
 подробнее об этом смотрите в WEBFRAMEWORKS.rus.txt.
 
 Примеры смотрите в каталоге examples.
@@ -46,16 +47,32 @@ PyTils легко интегрируется с популярными  Web-фр
 Числительные
 ------------
 
-PyTils умеет выбирать правильный падеж в зависимости от числа
+pytils умеет выбирать правильный падеж в зависимости от числа
 
     >>> pytils.numeral.choose_plural(15, (u"гвоздь", u"гвоздя", u"гвоздей"))
     u'гвоздей'
 
-В качестве второго параметра передается кортеж с вариантами. Чтобы легко 
-запомнить, в каком порядке указывать варианты, пользуйтесь мнемоническим 
+    
+В качестве второго параметра передается кортеж с вариантами (либо строка, 
+где варианты перечисляются через запятую). Чтобы легко запомнить, 
+в каком порядке указывать варианты, пользуйтесь мнемоническим 
 правилом: один-два-пять - один гвоздь, два гвоздя, пять гвоздей.
 
-Также PyTils реализует числа прописью
+Часто нужен не просто вариант, а число вместе с текстом
+
+    >>> pytils.numeral.get_prural(15, u"гвоздь, гвоздя, гвоздей")
+    u'15 гвоздей'
+
+В get_plural можно еще передать вариант, когда число -- ноль. Т.е. чтобы
+было не '0 гвоздей', а 'гвоздей нет':
+
+    >>> pytils.numeral.get_plural(0, u"гвоздь, гвоздя, гвоздей")
+    u'0 гвоздей'
+    >>> pytils.numeral.get_plural(0, u"гвоздь, гвоздя, гвоздей", absence=u"гвоздей нет")
+    u'гвоздей нет'
+
+
+Также pytils реализует числа прописью
 
     >>> pytils.numeral.in_words(254)
     u'двести пятьдесят четыре'
@@ -65,28 +82,31 @@ PyTils умеет выбирать правильный падеж в завис
     u'два рубля одна копейка'
     >>> pytils.numeral.sum_string(32, pytils.numeral.MALE, (u"гвоздь", u"гвоздя", u"гвоздей"))
     u'тридцать два гвоздя'
-    >>> pytils.numeral.sum_string(21, pytils.numeral.FEMALE, (u"белка", u"белки", u"белок"))
+    >>> pytils.numeral.sum_string(21, pytils.numeral.FEMALE, u"белка, белки, белок")
     u'двадцать одна белка'
 
 Даты
 ----
 
-В PyTils можно получить русские даты без использования локалей.
+В pytils можно получить русские даты без использования локалей.
 
-    >>> pytils.dt.ru_strftime(u"сегодня - %d %B %Y, %A", inflected=True)
-    u'сегодня - 02 сентября 2006, суббота'
+    >>> pytils.dt.ru_strftime(u"сегодня - %d %B %Y, %A", inflected=True, date=datetime.date(2006, 9, 2))
+    u'сегодня - 2 сентября 2006, суббота'
 
-и получить величину периода:
+    >>> pytils.dt.ru_strftime(u"сделано %A, %d %B %Y", inflected=True, preposition=True)
+    u'сделано во вторник, 10 июля 2007'
+
+Есть возможность получить величину периода:
 
     >>> pytils.dt.distance_of_time_in_words(time.time()-10000)
     u'2 часа назад'
-    >>> pytils.dt.distance_of_time_in_words(time.time()+10000, accuracy=2)
+    >>> pytils.dt.distance_of_time_in_words(datetime.datetime.now()+datetime.timedelta(0,10000), accuracy=2)
     u'через 2 часа 46 минут'
 
 Транслитерация
 --------------
 
-При помощи PyTils можно сделать транслитерацию:
+При помощи pytils можно сделать транслитерацию:
 
     >>> print pytils.translit.translify(u"Проверка связи")
     'Proverka svyazi'

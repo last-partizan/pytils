@@ -6,12 +6,12 @@ import pytils
     py:extends="'master.kid'">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''"/>
-<title>PyTils Demo</title>
+<title>pytils demo</title>
 </head>
 <body>
 <div id="header">&nbsp;</div>
 <div id="main_content">
-	<h1><a href="/">PyTils Demo</a></h1>
+	<h1><a href="/">pytils demo</a></h1>
 
 <h2>pytils.numeral</h2>
 

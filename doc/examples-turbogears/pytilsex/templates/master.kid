@@ -27,7 +27,7 @@ import pytils
 	<!-- End of main_content -->
 <div id="footer">
   <p><a 
-href="http://gorod-omsk.ru/blog/pythy/projects/pytils/">PyTils</a> - простой обработчик русского текста</p>
+href="http://www.pyobject.ru/projects/pytils/">pytils</a> - простой обработчик русского текста</p>
 </div>
 </body>
 

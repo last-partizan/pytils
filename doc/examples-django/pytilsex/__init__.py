@@ -1,3 +1,3 @@
 """
-Example of usage PyTils with Django
+Example of usage pytils with Django
 """

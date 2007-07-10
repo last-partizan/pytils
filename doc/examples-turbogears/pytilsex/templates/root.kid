@@ -6,18 +6,18 @@ import pytils
     py:extends="'master.kid'">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" py:replace="''"/>
-<title>PyTils Demo</title>
+<title>pytils demo</title>
 </head>
 <body>
 <div id="header">&nbsp;</div>
 <div id="main_content">
-	<h1>PyTils Demo</h1>
-<p>Для того, чтобы воспользоваться PyTils в TurboGears, достаточно просто 
-поставить PyTils (см. файл INSTALL внутри архива с PyTils), 
-никаких дополнительных манипуляций не требуется - интеграция PyTils 
+	<h1>pytils demo</h1>
+<p>Для того, чтобы воспользоваться pytils в TurboGears, достаточно просто 
+поставить pytils (см. файл INSTALL внутри архива с pytils), 
+никаких дополнительных манипуляций не требуется - интеграция pytils 
 с TurboGears целиком на стороне шаблонов - Kid (или, например, Cheetah). 
 Достигается это простым способом: в указанных шаблонах можно выполнять 
-Python-код, так что примеры в Kid фактически повторяют Python-примеры PyTils
+Python-код, так что примеры в Kid фактически повторяют Python-примеры pytils
 (которые всё же стоит глянуть). Еще стоит помнить, что все передаваемые строки 
 должны быть unicode.
 </p>
@@ -29,7 +29,7 @@ import pytils
 ?&gt;
 </pre></code></p>
 
-<p>Примеры использования PyTils в TurboGears/Kid:
+<p>Примеры использования pytils в TurboGears/Kid:
 <ul>
 	<li><a href="/dt/">pytils.dt</a> - работа с датами</li>
 	<li><a href="/numeral/">pytils.numeral</a> - работа с числами</li>
@@ -37,7 +37,7 @@ import pytils
 </ul></p>
 
 <p>Протестировано с TurboGears 1.0 и 1.0.2</p>
-<p>Данный пример работает на TurboGears ${tg_version} с использованием PyTils ${pytils_version}</p>
+<p>Данный пример работает на TurboGears ${tg_version} с использованием pytils ${pytils_version}</p>
 
 </div>
 </body>

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# PyTils - simple processing for russian strings
+# pytils - simple processing for russian strings
 # Copyright (C) 2006-2007  Yury Yurevich
 #
-# http://gorod-omsk.ru/blog/pythy/projects/pytils/
+# http://www.pyobject.ru/projects/pytils/
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -22,10 +22,10 @@ __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 __all__ = ["numeral", "dt", "translit", "test", "utils"]
 
-# версия PyTils
-VERSION_MAJOR = 0  #: Major version of PyTils (i.e. branch)
-VERSION_MINOR = 2  #: Minor version of PyTils (i.e. release)
-VERSION_TINY = 1   #: Tiny version of PyTils (i.e. subrelease)
+# версия pytils
+VERSION_MAJOR = 0  #: Major version of pytils (i.e. branch)
+VERSION_MINOR = 2  #: Minor version of pytils (i.e. release)
+VERSION_TINY = 1   #: Tiny version of pytils (i.e. subrelease)
 
 VERSION = "%d.%d.%d" % (VERSION_MAJOR, VERSION_MINOR, VERSION_TINY)  #: Version's string
 

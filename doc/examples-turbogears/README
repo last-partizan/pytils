@@ -1,7 +1,7 @@
-Examples of usage PyTils with TurboGears.
+Examples of usage pytils with TurboGears.
 ========================================
 
-You need installed TurboGears (1.0b1 and higher) and PyTils 
+You need installed TurboGears (1.0b1 and higher) and pytils 
 for run it.
 
 It's a regular TG-project, so just start it
@@ -12,11 +12,11 @@ go to http://127.0.0.1:8080/ and look it...
 
 ------------------------------------
 
-Пример использования PyTils с TurboGears.
+Пример использования pytils с TurboGears.
 ========================================
 
 Чтобы запустить примеры, Вам понадобятся установленные 
-TurboGears (версии 1.0b1 и выше) и PyTils.
+TurboGears (версии 1.0b1 и выше) и pytils.
 
 Это обычный TG-проект. Запускайте 
 
