@@ -155,10 +155,10 @@ def split_values(ustring, sep=u','):
     
     @return: tuple of splitted elements
     """
-    assert isinstance(uvalue, unicode), "uvalue must be unicode, not %s" % type(uvalue)
+    assert isinstance(ustring, unicode), "uvalue must be unicode, not %s" % type(ustring)
     # в юникоде есть специальный символ, который в нормальном тексте не должен встречаться
     # это маркер 0xffff
     # им и будем помечать места, где есть экранированная запятая
-    uvalue_marked = ustring.replace(u'\,', u'\uffff')
-    items = tuple([i.strip().replace(u'\uffff', u',') for i in uvalue_marked.split(sep)])
+    ustring_marked = ustring.replace(u'\,', u'\uffff')
+    items = tuple([i.strip().replace(u'\uffff', u',') for i in ustring_marked.split(sep)])
     return items
