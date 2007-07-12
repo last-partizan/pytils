@@ -2,21 +2,17 @@
 # -*- coding: utf-8 -*-
 
 use_setuptools = True
-try:
-    from setuptools import setup
-except ImportError:
-    use_setuptools = False
+if use_setuptools:
+    try:
+        from setuptools import setup
+    except ImportError:
+        print "Cannot load setuptool, revert to distutils"
+        use_setuptools = False
+        from distutils.core import setup
+else:
     from distutils.core import setup
 
 import pytils
-
-rel_download_url = "http://pythy.googlecode.com/svn/tags/pytils/%s/dist/"
-tag_version = pytils.VERSION.replace('.', '_')
-
-if 'svn' in tag_version:
-    download_url = "http://pythy.googlecode.com/svn/trunk/pytils/"
-else:
-    download_url = rel_download_url % tag_version
 
 setup_data = {
       'name': 'pytils',
@@ -28,7 +24,6 @@ setup_data = {
       'long_description': """Simple tools for processing string in russian 
 (choose proper form for plurals, in-words representation of numerals,
 dates in russian without locales, transliteration, etc)""",
-      'download_url': download_url,
       'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags'],
       'license': "GPL",
       'platforms': "All",

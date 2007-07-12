@@ -4,5 +4,5 @@ include LICENSE
 include TODO
 include README
 include setup.cfg
-
+include Changelog
 

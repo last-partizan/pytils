@@ -25,11 +25,11 @@ __all__ = ["numeral", "dt", "translit", "test", "utils"]
 # версия pytils
 VERSION_MAJOR = 0  #: Major version of pytils (i.e. branch)
 VERSION_MINOR = 2  #: Minor version of pytils (i.e. release)
-VERSION_TINY = 1   #: Tiny version of pytils (i.e. subrelease)
+VERSION_TINY = 2   #: Tiny version of pytils (i.e. subrelease)
 
 VERSION = "%d.%d.%d" % (VERSION_MAJOR, VERSION_MINOR, VERSION_TINY)  #: Version's string
 
-REL_DATE = '20070227'  #: Release date
+REL_DATE = '20070712'  #: Release date
 
 
 def _get_svn_date_from_id(id_string):

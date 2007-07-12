@@ -142,11 +142,23 @@ def check_positive(variable_name, strict=False):
         raise ValueError("%s must be positive, not %s" % \
                          (variable_name, str(variable_value)))
 
-def split_values(uvalue):
+def split_values(ustring, sep=u','):
+    """
+    Splits unicode string with separator C{sep},
+    but skips escaped separator.
+    
+    @param ustring: string to split
+    @type ustring: C{unicode}
+    
+    @param sep: separator (default to u',')
+    @type sep: C{unicode}
+    
+    @return: tuple of splitted elements
+    """
     assert isinstance(uvalue, unicode), "uvalue must be unicode, not %s" % type(uvalue)
     # в юникоде есть специальный символ, который в нормальном тексте не должен встречаться
     # это маркер 0xffff
     # им и будем помечать места, где есть экранированная запятая
-    uvalue_marked = uvalue.replace(u'\,', u'\uffff')
-    items = tuple([i.strip().replace(u'\uffff', ',') for i in uvalue_marked.split(',')])
+    uvalue_marked = ustring.replace(u'\,', u'\uffff')
+    items = tuple([i.strip().replace(u'\uffff', u',') for i in uvalue_marked.split(sep)])
     return items
