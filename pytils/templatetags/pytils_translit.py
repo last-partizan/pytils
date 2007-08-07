@@ -23,39 +23,25 @@ __url__ = "$URL$"
 
 from django import template, conf
 from pytils import translit, utils
+from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
 show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Show values on errors (sets in Django project's settings)
 
-# Если отладка, то показываем 'unknown+сообщение об ошибке'.
-# Если отладка выключена, то можно чтобы при ошибках показывалось
-# значение, переданное фильтру (PYTILS_SHOW_VALUES_ON_ERROR=True)
-# либо пустая строка.
-
-if debug:
-    default_value = "unknown: %(error)s"
-    default_uvalue = u"unknown: %(error)s"
-elif show_value:
-    default_value = "%(value)s"
-    default_uvalue = u"%(value)s"
-else:
-    default_value = ""
-    default_uvalue = u""
-
+default_value, default_uvalue = init_defaults(debug, show_value)
 
 # -- filters --
 
 def translify(stext):
     """Translify russian text"""
     try:
-        res = translit.translify(
-            utils.provide_unicode(
-                stext,
-                encoding,
-                default=default_value
-                ))
+        utext = pseudo_unicode(
+                        stext,
+                        encoding,
+                        default_value)
+        res = translit.translify(utext)
     except Exception, err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}
@@ -64,10 +50,11 @@ def translify(stext):
 def detranslify(stext):
     """Detranslify russian text"""
     try:
-        res = utils.provide_str(
-            translit.detranslify(stext),
-            encoding,
-            default=default_uvalue)
+        ures = translit.detranslify(stext)
+        res = pseudo_str(
+                ures,
+                encoding,
+                default_uvalue)
     except Exception, err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}
@@ -76,15 +63,16 @@ def detranslify(stext):
 def slugify(stext):
     """Make slug from (russian) text"""
     try:
-        res = translit.slugify(
-            utils.provide_unicode(
+        utext = pseudo_unicode(
                 stext,
                 encoding,
-                default=default_value
-                ))
+                default_value)
+        res = translit.slugify(utext)
     except Exception, err:
+        print err
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}
+        print "so res = %r" % res
     return res
 
 # -- register filters

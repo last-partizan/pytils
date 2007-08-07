@@ -23,45 +23,6 @@ __url__ = "$URL$"
 
 import sys
 
-
-def provide_unicode(stext, encoding, default=u"неизвестно"):
-    """
-    Provide Unicode from text
-
-    @param stext: text
-    @type stext: C{str}
-
-    @param encoding: encoding if input text
-    @type encoding: C{str}
-
-    @return: C{unicode}
-    """
-    try:
-        utext = str(stext).decode(encoding)
-    except UnicodeDecodeError, err:
-        utext = default % {'error': err, 'value': u""}
-    return utext
-
-
-def provide_str(utext, encoding, default="unknown"):
-    """
-    Provide text from Unicode
-
-    @param utext: unicode text
-    @type utext: C{unicode}
-
-    @param encoding: encoding of output text
-    @type encoding: C{str}
-
-    @return: C{str}
-    """
-    try:
-        stext = unicode(utext).encode(encoding)
-    except UnicodeEncodeError, err:
-        stext = default % {'error': err, 'value': ""}
-    return stext
-
-
 def get_value_by_name(variable_name, depth=1):
     """
     Return value of variable by it's name

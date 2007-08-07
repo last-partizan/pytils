@@ -25,32 +25,35 @@ from pytils.test.templatetags import helpers
 class TranslitDefaultTestCase(helpers.TemplateTagTestCase):
     
     def testLoad(self):
-        self.check_template_tag('load_tag', '{% load pytils_translit %}', {}, '')
+        self.check_template_tag('load_tag', u'{% load pytils_translit %}', {}, u'')
     
     def testTranslifyFilter(self):
         self.check_template_tag('translify_filter', 
-            '{% load pytils_translit %}{{ val|translify }}', 
+            u'{% load pytils_translit %}{{ val|translify }}', 
             {'val': 'проверка'}, 
-            'proverka')
+            u'proverka')
     
     def testDetranslifyFilter(self):
         self.check_template_tag('detranslify_filter', 
-            '{% load pytils_translit %}{{ val|detranslify }}', 
+            u'{% load pytils_translit %}{{ val|detranslify }}', 
             {'val': 'proverka'}, 
-            'проверка')        
+            u'проверка')
 
     def testSlugifyFilter(self):
         self.check_template_tag('slugify_filter', 
-            '{% load pytils_translit %}{{ val|slugify }}', 
+            u'{% load pytils_translit %}{{ val|slugify }}', 
             {'val': 'Проверка связи'}, 
-            'proverka-svyazi')
+            u'proverka-svyazi')
     
     # без отладки, если ошибка -- по умолчанию пустая строка
     def testDetranslifyError(self):
-        self.check_template_tag('detranslify_error', 
-            '{% load pytils_translit %}{{ val|detranslify }}', 
-            {'val': 'Проверка связи'}, 
-            '')
+        # в юникод-режиме это не ошибка
+        from pytils.templatetags import unicode_aware
+        if not unicode_aware:
+            self.check_template_tag('detranslify_error', 
+                u'{% load pytils_translit %}{{ val|detranslify }}', 
+                {'val': 'Проверка связи'}, 
+                u'')
 
 
 if __name__ == '__main__':

@@ -193,7 +193,7 @@ def detranslify(in_string):
     try:
         russian = unicode(in_string)
     except UnicodeDecodeError:
-        raise ValueError("We expects when in_string is str type," + \
+        raise ValueError("We expects if in_string is str type," + \
                          "it is an ascii, but now it isn't. Use unicode " + \
                          "in this case.")
 

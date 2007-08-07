@@ -10,8 +10,7 @@ It's a regular Django-project, so just start it
 
 go to http://127.0.0.1:8000/ and look it...
 
-Warn: tested only on non-unicode Django
-(i.e. on 0.95, 0.96, 0.97-pre before 5609 revision)
+Warn: tested on Django 0.95, 0.95.1, 0.96, 0.97-pre
 
 ------------------------------------
 
@@ -27,5 +26,5 @@ Django (версии 0.95 и выше) и pytils.
 
 заходите браузером на http://127.0.0.1:8000/ и смотрите...
 
-Внимание: протестировано только на неюникодном Django 
-(т.е. 0.95, 0.95.1, 0.96, 0.97-pre до ревизии 5609)
+Внимание: протестировано на Django версий 0.95, 
+0.95.1, 0.96, 0.97-pre

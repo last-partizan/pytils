@@ -19,7 +19,7 @@ Unit tests for pytils' templatetags for Django web framework
 
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
-__all__ = ["test_numeral", "test_dt", "test_translit"]
+__all__ = ["test_common", "test_numeral", "test_dt", "test_translit"]
 
 import unittest
 

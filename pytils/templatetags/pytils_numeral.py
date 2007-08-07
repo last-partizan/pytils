@@ -23,27 +23,15 @@ __url__ = "$URL$"
 
 from django import template, conf
 from pytils import numeral, utils
+from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
 show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Show values on errors (sets in Django project's settings)
 
-# Если отладка, то показываем 'unknown+сообщение об ошибке'.
-# Если отладка выключена, то можно чтобы при ошибках показывалось
-# значение, переданное фильтру (PYTILS_SHOW_VALUES_ON_ERROR=True)
-# либо пустая строка.
+default_value, default_uvalue = init_defaults(debug, show_value)
 
-if debug:
-    default_value = "unknown: %(error)s"
-    default_uvalue = u"unknown: %(error)s"
-elif show_value:
-    default_value = "%(value)s"
-    default_uvalue = u"%(value)s"
-else:
-    default_value = ""
-    default_uvalue = u""
-    
 # -- filters
 
 def choose_plural(amount, variants):
@@ -59,15 +47,16 @@ def choose_plural(amount, variants):
         {{ some_int|choose_plural:"пример,примера,примеров" }}
     """
     try:
-        if isinstance(variants, str):
-            uvariants = utils.provide_unicode(variants, encoding, default_value)
+        if isinstance(variants, basestring):
+            uvariants = pseudo_unicode(variants, encoding, default_value)
         else:
-            uvariants = [utils.provide_unicode(v, encoding, default_uvalue) for v in variants]
-        res = utils.provide_str(
-            numeral.choose_plural(amount, uvariants),
-            encoding,
-            default=default_value
-            )
+            uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
+        ures = numeral.choose_plural(amount, uvariants)
+        res = pseudo_str(
+                ures,
+                encoding,
+                default_value
+                )
     except Exception, err:
         # because filter must die silently
         try:
@@ -90,14 +79,15 @@ def get_plural(amount, variants):
         {{ some_int|get_plural:"пример,примера,примеров,нет примеров" }}
     """
     try:
-        if isinstance(variants, str):
-            uvariants = utils.provide_unicode(variants, encoding, default_value)
+        if isinstance(variants, basestring):
+            uvariants = pseudo_unicode(variants, encoding, default_value)
         else:
-            uvariants = [utils.provide_unicode(v, encoding, default_uvalue) for v in variants]
-        res = utils.provide_str(
-            numeral._get_plural_legacy(amount, uvariants),
+            uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
+        ures = numeral._get_plural_legacy(amount, uvariants)
+        res = pseudo_str(
+            ures,
             encoding,
-            default=default_value
+            default_value
             )
     except Exception, err:
         # because filter must die silently
@@ -111,10 +101,11 @@ def get_plural(amount, variants):
 def rubles(amount, zero_for_kopeck=False):
     """Converts float value to in-words representation (for money)"""
     try:
-        res = utils.provide_str(
-            numeral.rubles(amount, zero_for_kopeck),
+        ures = numeral.rubles(amount, zero_for_kopeck)
+        res = pseudo_str(
+            ures,
             encoding,
-            default=default_value
+            default_value
             )
     except Exception, err:
         # because filter must die silently
@@ -132,10 +123,11 @@ def in_words(amount, gender=None):
         {{ some_other_int|in_words:FEMALE }}
     """
     try:
-        res = utils.provide_str(
-            numeral.in_words(amount, getattr(numeral, str(gender), None)),
-            encoding,
-            default=default_value
+        ures = numeral.in_words(amount, getattr(numeral, str(gender), None))
+        res = pseudo_str(
+                ures,
+                encoding,
+                default_value
             )
     except Exception, err:
         # because filter must die silently
@@ -166,14 +158,15 @@ def sum_string(amount, gender, items):
         {% sum_string some_other_int FEMALE "задача,задачи,задач" %}
     """
     try:
-        if isinstance(items, str):
-            uitems = utils.provide_unicode(items, encoding, default_uvalue)
+        if isinstance(items, basestring):
+            uitems = pseudo_unicode(items, encoding, default_uvalue)
         else:
-            uitems = [utils.provide_unicode(i, encoding, default_uvalue) for i in items]
-        res = utils.provide_str(
-            numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems),
-            encoding,
-            default=default_value
+            uitems = [pseudo_unicode(i, encoding, default_uvalue) for i in items]
+        ures = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
+        res = pseudo_str(
+                ures,
+                encoding,
+                default_value
             )
     except Exception, err:
         # because tag's renderer must die silently

@@ -22,73 +22,73 @@ __url__ = "$URL$"
 
 from pytils.test.templatetags import helpers
 
+
 class NumeralDefaultTestCase(helpers.TemplateTagTestCase):
 
     def testLoad(self):
-        self.check_template_tag('load_tag', '{% load pytils_numeral %}', {}, '')
+        self.check_template_tag('load_tag', u'{% load pytils_numeral %}', {}, u'')
     
     def testChoosePluralFilter(self):
         self.check_template_tag('choose_plural', 
-            '{% load pytils_numeral %}{{ val|choose_plural:"гвоздь,гвоздя,гвоздей" }}', 
+            u'{% load pytils_numeral %}{{ val|choose_plural:"гвоздь,гвоздя,гвоздей" }}', 
             {'val': 10},
-            'гвоздей')
+            u'гвоздей')
 
     def testGetPluralFilter(self):
         self.check_template_tag('get_plural', 
-            '{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей" }}', 
+            u'{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей" }}', 
             {'val': 10},
-            '10 гвоздей')
+            u'10 гвоздей')
         self.check_template_tag('get_plural', 
-            '{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей" }}', 
+            u'{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей" }}', 
             {'val': 0},
-            '0 гвоздей')
+            u'0 гвоздей')
         self.check_template_tag('get_plural', 
-            '{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей,нет гвоздей" }}', 
+            u'{% load pytils_numeral %}{{ val|get_plural:"гвоздь,гвоздя,гвоздей,нет гвоздей" }}', 
             {'val': 0},
-            'нет гвоздей')
+            u'нет гвоздей')
     
     def testRublesFilter(self):
         self.check_template_tag('rubles', 
-            '{% load pytils_numeral %}{{ val|rubles }}', 
+            u'{% load pytils_numeral %}{{ val|rubles }}', 
             {'val': 10.1},
-            'десять рублей десять копеек')
+            u'десять рублей десять копеек')
     
     def testInWordsFilter(self):
         self.check_template_tag('in_words', 
-            '{% load pytils_numeral %}{{ val|in_words }}', 
+            u'{% load pytils_numeral %}{{ val|in_words }}', 
             {'val': 21},
-            'двадцать один')
+            u'двадцать один')
 
         self.check_template_tag('in_words', 
-            '{% load pytils_numeral %}{{ val|in_words:"NEUTER" }}', 
+            u'{% load pytils_numeral %}{{ val|in_words:"NEUTER" }}', 
             {'val': 21},
-            'двадцать одно')
+            u'двадцать одно')
     
     def testSumStringTag(self):
         self.check_template_tag('sum_string', 
-            '{% load pytils_numeral %}{% sum_string val "MALE" "пример,пример,примеров" %}',
+            u'{% load pytils_numeral %}{% sum_string val "MALE" "пример,пример,примеров" %}',
             {'val': 21},
-            'двадцать один пример')
-        self.check_template_tag('sum_string', 
-            '{% load pytils_numeral %}{% sum_string val male variants %}',
+            u'двадцать один пример')
+        
+        self.check_template_tag('sum_string_w_gender', 
+            u'{% load pytils_numeral %}{% sum_string val male variants %}',
             {
              'val': 21,
              'male':'MALE',
              'variants': ('пример','пример','примеров')
              },
-            'двадцать один пример')
+            u'двадцать один пример')
 
     # без отладки, если ошибка -- по умолчанию пустая строка
     def testChoosePluralError(self):
         self.check_template_tag('choose_plural_error', 
-            '{% load pytils_numeral %}{{ val|choose_plural:"вариант" }}', 
+            u'{% load pytils_numeral %}{{ val|choose_plural:"вариант" }}', 
             {'val': 1}, 
-            '')
+            u'')
 
 
 if __name__ == '__main__':
     import unittest
     unittest.main()
-
-
 

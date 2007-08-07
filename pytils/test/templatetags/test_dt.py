@@ -30,44 +30,43 @@ class DtDefaultTestCase(helpers.TemplateTagTestCase):
         self.date_before = datetime.datetime.now() - datetime.timedelta(1, 2000)
     
     def testLoad(self):
-        self.check_template_tag('load_tag', '{% load pytils_dt %}', {}, '')
+        self.check_template_tag('load_tag', u'{% load pytils_dt %}', {}, u'')
     
     def testRuStrftimeFilter(self):
         self.check_template_tag('ru_strftime_filter', 
-            '{% load pytils_dt %}{{ val|ru_strftime:"%d %B %Y, %A" }}', 
+            u'{% load pytils_dt %}{{ val|ru_strftime:"%d %B %Y, %A" }}', 
             {'val': self.date},
-            '26 января 2007, пятница')
+            u'26 января 2007, пятница')
     
     def testRuStrftimeInflectedFilter(self):
         self.check_template_tag('ru_strftime_inflected_filter', 
-            '{% load pytils_dt %}{{ val|ru_strftime_inflected:"в %A, %d %B %Y" }}', 
+            u'{% load pytils_dt %}{{ val|ru_strftime_inflected:"в %A, %d %B %Y" }}', 
             {'val': self.date},
-            'в пятницу, 26 января 2007')
+            u'в пятницу, 26 января 2007')
     
     def testRuStrftimePrepositionFilter(self):
         self.check_template_tag('ru_strftime_preposition_filter', 
-            '{% load pytils_dt %}{{ val|ru_strftime_preposition:"%A, %d %B %Y" }}', 
+            u'{% load pytils_dt %}{{ val|ru_strftime_preposition:"%A, %d %B %Y" }}', 
             {'val': self.date},
-            'в\xc2\xa0пятницу, 26 января 2007')
+            u'в\xa0пятницу, 26 января 2007')
     
     def testDistanceFilter(self):
         self.check_template_tag('distance_filter', 
-            '{% load pytils_dt %}{{ val|distance_of_time }}', 
+            u'{% load pytils_dt %}{{ val|distance_of_time }}', 
             {'val': self.date_before},
-            'вчера')
+            u'вчера')
         
         self.check_template_tag('distance_filter', 
-            '{% load pytils_dt %}{{ val|distance_of_time:3 }}', 
+            u'{% load pytils_dt %}{{ val|distance_of_time:3 }}', 
             {'val': self.date_before},
-            '1 день 0 часов 33 минуты назад')
+            u'1 день 0 часов 33 минуты назад')
     
     # без отладки, если ошибка -- по умолчанию пустая строка
     def testRuStrftimeError(self):
         self.check_template_tag('ru_strftime_error', 
-            '{% load pytils_dt %}{{ val|ru_strftime:"%d %B %Y" }}', 
+            u'{% load pytils_dt %}{{ val|ru_strftime:"%d %B %Y" }}', 
             {'val': 1}, 
-            '')
-
+            u'')
 
 if __name__ == '__main__':
     import unittest

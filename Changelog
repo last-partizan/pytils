@@ -1,8 +1,9 @@
 pytils (0.2.2-svn)
 
+  * Add support for Django unicode branch (#27)
   * Make pytils.test to be optional package, not required (#26)
 
- -- Yury Yurevich <the.pythy@gmail.com>  Tue, 07 Aug 2007 19:05:10 +0700
+ -- Yury Yurevich <the.pythy@gmail.com>  Wed, 08 Aug 2007 00:26:40 +0700
 
 pytils (0.2.2)
 

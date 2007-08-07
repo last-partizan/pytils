@@ -24,26 +24,14 @@ __url__ = "$URL$"
 import time
 from django import template, conf
 from pytils import dt, utils
+from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
 show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Show values on errors (sets in Django project's settings)
 
-# Если отладка, то показываем 'unknown+сообщение об ошибке'.
-# Если отладка выключена, то можно чтобы при ошибках показывалось
-# значение, переданное фильтру (PYTILS_SHOW_VALUES_ON_ERROR=True)
-# либо пустая строка.
-
-if debug:
-    default_value = "unknown: %(error)s"
-    default_uvalue = u"unknown: %(error)s"
-elif show_value:
-    default_value = "%(value)s"
-    default_uvalue = u"%(value)s"
-else:
-    default_value = ""
-    default_uvalue = u""
+default_value, default_uvalue = init_defaults(debug, show_value)
 
 # -- filters --
 
@@ -61,10 +49,11 @@ def distance_of_time(from_time, accuracy=1):
         {{ some_dtime|distance_of_time:2 }}
     """
     try:
-        res = utils.provide_str(
-            dt.distance_of_time_in_words(from_time, accuracy),
-            encoding,
-            default=default_value)
+        ures = dt.distance_of_time_in_words(from_time, accuracy)
+        res = pseudo_str(
+                ures,
+                encoding,
+                default_value)
     except Exception, err:
         # because filter must die silently
         try:
@@ -87,13 +76,13 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
         {{ some_date|ru_strftime:"%d %B %Y, %A" }}
     """
     try:
-        uformat = utils.provide_unicode(format, encoding, default=u"%d.%m.%Y")
+        uformat = pseudo_unicode(format, encoding, u"%d.%m.%Y")
         ures = dt.ru_strftime(uformat,
                               date,
                               inflected=True,
                               inflected_day=inflected_day,
                               preposition=preposition)
-        res = utils.provide_str(ures, encoding)
+        res = pseudo_str(ures, encoding)
     except Exception, err:
         # because filter must die silently
         try:
