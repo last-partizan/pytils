@@ -23,6 +23,9 @@ __url__ = "$URL$"
 
 import sys
 
+from third.aspn426123 import takes, returns, optional, one_of, list_of, tuple_of, \
+                             nothing, anything
+
 def get_value_by_name(variable_name, depth=1):
     """
     Return value of variable by it's name
