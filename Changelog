@@ -4,8 +4,9 @@ pytils (0.2.2-svn)
   * Make pytils.test to be optional package, not required (#26)
   * Make checks of input parameters by decorators (#18)
   * Python-2.3 is not supported now (decorators are used)
+  * Add custom exception pytils.err.InputParameterError, inherited from TypeError
 
- -- Yury Yurevich <the.pythy@gmail.com>  Wed, 08 Aug 2007 00:26:40 +0700
+ -- Yury Yurevich <the.pythy@gmail.com>  Sun, 30 Sep 2007 23:38:44 +0700
 
 pytils (0.2.2)
 
