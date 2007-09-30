@@ -22,56 +22,19 @@ __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import sys
+import warnings
 
-from third.aspn426123 import takes, returns, optional, one_of, list_of, tuple_of, \
-                             nothing, anything
+from pytils.third.aspn426123 import takes, returns, optional, list_of, tuple_of, \
+                                    nothing, one_of
 
-def get_value_by_name(variable_name, depth=1):
+
+@takes((basestring, tuple, list), (int, long))
+def check_length(value, length):
     """
-    Return value of variable by it's name
+    Checks length of value
 
-    @param variable_name: name of variable
-    @type variable_name: C{str}
-
-    @param depth: stack depth
-    @type depth: C{int}
-
-    @raise RuntimeError: when unable to fetch variable
-    """
-    try:
-        variable_value = sys._getframe(depth).f_locals[variable_name]
-    except KeyError:
-        raise RuntimeError("Unable to fetch variable %s (depth %d)" % \
-                           (variable_name, depth))
-    return variable_value
-
-
-def check_type(variable_name, typ):
-    """
-    Checks type of variable
-
-    @param variable_name: name of variable
-    @type variable_name: C{str}
-
-    @param typ: type checking for
-    @type typ: C{type} or C{tuple} of types
-
-    @return: None when check successful
-
-    @raise TypeError: check failed
-    """
-    variable_value = get_value_by_name(variable_name, 2)
-    if not isinstance(variable_value, typ):
-        raise TypeError("%s must be %s, not %s" % \
-                        (variable_name, str(typ), type(variable_value)))
-
-
-def check_length(variable_name, length):
-    """
-    Checks length of variable's value
-
-    @param variable_name: name of variable
-    @type variable_name: C{str}
+    @param value: value to check
+    @type value: C{str}
 
     @param length: length checking for
     @type length: C{int}
@@ -80,32 +43,31 @@ def check_length(variable_name, length):
 
     @raise ValueError: check failed
     """
-    variable_value = get_value_by_name(variable_name, 2)
-    _length = len(variable_value)
+    _length = len(value)
     if _length != length:
-        raise ValueError("%s's length must be %d, but it %d" % \
-                         (variable_name, length, _length))
+        raise ValueError("length must be %d, not %d" % \
+                         (length, _length))
 
 
-def check_positive(variable_name, strict=False):
+@takes((int,long,float), optional(bool), strict=optional(bool))
+def check_positive(value, strict=False):
     """
     Checks if variable is positive
 
-    @param variable_name: name of variable
-    @type variable_name: C{str}
+    @param value: value to check
+    @type value: C{int}, C{long} or C{float}
 
     @return: None when check successful
 
     @raise ValueError: check failed
     """
-    variable_value = get_value_by_name(variable_name, 2)
-    if not strict and variable_value < 0:
-        raise ValueError("%s must be positive or zero, not %s" % \
-                         (variable_name, str(variable_value)))
-    if strict and variable_value <= 0:
-        raise ValueError("%s must be positive, not %s" % \
-                         (variable_name, str(variable_value)))
+    if not strict and value < 0:
+        raise ValueError("Value must be positive or zero, not %s" % str(value))
+    if strict and value <= 0:
+        raise ValueError("Value must be positive, not %s" % str(value))
 
+
+@takes(unicode, optional(unicode), sep=optional(unicode))
 def split_values(ustring, sep=u','):
     """
     Splits unicode string with separator C{sep},

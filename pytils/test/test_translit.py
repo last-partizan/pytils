@@ -63,6 +63,7 @@ class TranslitTestCase(unittest.TestCase):
         Unit-test for testing translify's exceptions
         """
         self.assertRaises(TypeError, pytils.translit.translify, 25)
+        self.assertRaises(pytils.err.InputParameterError, pytils.translit.translify, 25)
         self.assertRaises(ValueError, pytils.translit.translify, u'\u00bfHabla espa\u00f1ol?')
 
     def testDetransliteration(self):
@@ -80,6 +81,7 @@ class TranslitTestCase(unittest.TestCase):
         Unit-test for testing detranslify's exceptions
         """
         self.assertRaises(TypeError, pytils.translit.detranslify, 25)
+        self.assertRaises(pytils.err.InputParameterError, pytils.translit.detranslify, 25)
         self.assertRaises(ValueError, pytils.translit.detranslify, "тест")
 
     def testSlug(self):
@@ -96,6 +98,7 @@ class TranslitTestCase(unittest.TestCase):
         Unit-test for testing slugify's exceptions
         """
         self.assertRaises(TypeError, pytils.translit.slugify, 25)
+        self.assertRaises(pytils.err.InputParameterError, pytils.translit.slugify, 25)
         self.assertRaises(ValueError, pytils.translit.slugify, "тест")
 
     def testTranslifyAdditionalUnicodeSymbols(self):

@@ -2,6 +2,8 @@ pytils (0.2.2-svn)
 
   * Add support for Django unicode branch (#27)
   * Make pytils.test to be optional package, not required (#26)
+  * Make checks of input parameters by decorators (#18)
+  * Python-2.3 is not supported now (decorators are used)
 
  -- Yury Yurevich <the.pythy@gmail.com>  Wed, 08 Aug 2007 00:26:40 +0700
 

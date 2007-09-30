@@ -22,6 +22,8 @@ __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 from pytils import utils
+from pytils.utils import takes, returns, optional, list_of, tuple_of, \
+                         nothing, one_of, check_positive, check_length
 
 FRACTIONS = (
     (u"десятая", u"десятых", u"десятых"),
@@ -89,6 +91,9 @@ FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
 
+@takes((int, long, float),
+       optional(int),
+       signs=optional(int))
 def _get_float_remainder(fvalue, signs=9):
     """
     Get remainder of float, i.e. 2.05 -> '05'
@@ -102,12 +107,12 @@ def _get_float_remainder(fvalue, signs=9):
     @return: remainder
     @rtype: C{str}
 
-    @raise TypeError: fvalue neither C{int}, no C{float}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (fvalue neither C{int}, no C{float})
     @raise ValueError: fvalue is negative
     @raise ValueError: signs overflow
     """
-    utils.check_type('fvalue', (int, long, float))
-    utils.check_positive('fvalue')
+    check_positive(fvalue)
     if isinstance(fvalue, (int, long)):
         return "0"
 
@@ -135,6 +140,8 @@ def _get_float_remainder(fvalue, signs=9):
 
     return remainder
 
+
+@takes((int,long), (unicode, list_of(unicode), tuple_of(unicode)))
 def choose_plural(amount, variants):
     """
     Choose proper case depending on amount
@@ -150,16 +157,18 @@ def choose_plural(amount, variants):
     @return: proper variant
     @rtype: C{unicode}
 
-    @raise TypeError: amount isn't C{int}, variants isn't C{sequence}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (amount isn't C{int}, variants isn't C{sequence})
     @raise ValueError: amount is negative
     @raise ValueError: variants' length lesser than 3
     """
-    utils.check_type('amount', (int, long))
-    utils.check_positive('amount')
-    utils.check_type('variants', (list, tuple, unicode))
-
+    
     if isinstance(variants, unicode):
         variants = utils.split_values(variants)
+    
+    check_length(variants, 3)
+    check_positive(amount)
+    
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0
     elif amount % 10 >= 2 and amount % 10 <= 4 and \
@@ -167,10 +176,13 @@ def choose_plural(amount, variants):
         variant = 1
     else:
         variant = 2
-
-    utils.check_length('variants', 3)
+    
     return variants[variant]
 
+@takes((int,long),
+       (unicode, list_of(unicode), tuple_of(unicode)),
+        optional((nothing, unicode)),
+        absence=optional((nothing, unicode)))
 def get_plural(amount, variants, absence=None):
     """
     Get proper case with value
@@ -189,14 +201,13 @@ def get_plural(amount, variants, absence=None):
     @return: amount with proper variant
     @rtype: C{unicode}
     """
-    if absence is not None:
-        utils.check_type('absence', unicode)
-    
     if amount or absence is None:
         return u"%d %s" % (amount, choose_plural(amount, variants))
     else:
         return absence
 
+
+@takes((int,long), (unicode, list_of(unicode), tuple_of(unicode)))
 def _get_plural_legacy(amount, extra_variants):
     """
     Get proper case with value (legacy variant, without absence)
@@ -222,7 +233,8 @@ def _get_plural_legacy(amount, extra_variants):
     else:
         variants = extra_variants
     return get_plural(amount, variants, absence)
-    
+
+@takes((int, long, float), optional(bool), zero_for_kopeck=optional(bool))
 def rubles(amount, zero_for_kopeck=False):
     """
     Get string for money
@@ -236,11 +248,11 @@ def rubles(amount, zero_for_kopeck=False):
     @return: in-words representation of money's amount
     @rtype: C{unicode}
 
-    @raise TypeError: amount neither C{int}, no C{float}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (amount neither C{int}, no C{float})
     @raise ValueError: amount is negative
     """
-    utils.check_type('amount', (int, long, float))
-    utils.check_positive('amount')
+    check_positive(amount)
 
     pts = []
     amount = round(amount, 2)
@@ -258,6 +270,7 @@ def rubles(amount, zero_for_kopeck=False):
     return u" ".join(pts)
 
 
+@takes((int,long), optional(one_of(1,2,3)), gender=optional(one_of(1,2,3)))
 def in_words_int(amount, gender=MALE):
     """
     Integer in words
@@ -271,15 +284,15 @@ def in_words_int(amount, gender=MALE):
     @return: in-words reprsentation of numeral
     @rtype: C{unicode}
 
-    @raise TypeError: when amount is not C{int}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (when amount is not C{int})
     @raise ValueError: amount is negative
     """
-    utils.check_type('amount', (int, long))
-    utils.check_positive('amount')
+    check_positive(amount)
 
     return sum_string(amount, gender)
 
-
+@takes(float, optional(one_of(1,2,3)), _gender=optional(one_of(1,2,3)))
 def in_words_float(amount, _gender=FEMALE):
     """
     Float in words
@@ -290,11 +303,11 @@ def in_words_float(amount, _gender=FEMALE):
     @return: in-words reprsentation of float numeral
     @rtype: C{unicode}
 
-    @raise TypeError: when amount is not C{float}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (when amount is not C{float})
     @raise ValueError: when ammount is negative
     """
-    utils.check_type('amount', float)
-    utils.check_positive('amount')
+    utils.check_positive(amount)
 
     pts = []
     # преобразуем целую часть
@@ -307,7 +320,9 @@ def in_words_float(amount, _gender=FEMALE):
 
     return u" ".join(pts)
 
-
+@takes((int,long,float),
+       optional(one_of(None,1,2,3)),
+       gender=optional(one_of(None,1,2,3)))
 def in_words(amount, gender=None):
     """
     Numeral in words
@@ -321,16 +336,13 @@ def in_words(amount, gender=None):
     @return: in-words reprsentation of numeral
     @rtype: C{unicode}
 
-    raise TypeError: when amount not C{int} or C{float}
+    raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (when amount not C{int} or C{float}, gender is not C{int} (and not None),
+         gender isn't in (MALE, FEMALE, NEUTER))
     raise ValueError: when amount is negative
-    raise TypeError: when gender is not C{int} (and not None)
-    raise ValueError: if gender isn't in (MALE, FEMALE, NEUTER)
     """
-    utils.check_positive('amount')
-    gender is not None and utils.check_type('gender', int)
-    if not (gender is None or gender in (MALE, FEMALE, NEUTER)):
-        raise ValueError("Gender must be MALE, FEMALE or NEUTER, " + \
-                         "not %d" % gender)
+    check_positive(amount)
+    
     if gender is None:
         args = (amount,)
     else:
@@ -343,10 +355,13 @@ def in_words(amount, gender=None):
         return in_words_float(*args)
     # ни float, ни int
     else:
-        raise TypeError("Amount must be float or int, not %s" % \
-                        type(amount))
+        # до сюда не должно дойти
+        raise RuntimeError()
 
-
+@takes((int, long),
+       one_of(1, 2, 3),
+       optional((unicode, nothing, list_of(unicode), tuple_of(unicode))),
+       items=optional((unicode, nothing, list_of(unicode), tuple_of(unicode))))
 def sum_string(amount, gender, items=None):
     """
     Get sum in words
@@ -365,7 +380,7 @@ def sum_string(amount, gender, items=None):
     @return: in-words representation objects' amount
     @rtype: C{unicode}
 
-    @raise TypeError: input parameters' check failed
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
     @raise ValueError: items isn't 3-element C{sequence} or C{unicode}
     @raise ValueError: amount bigger than 10**11
     @raise ValueError: amount is negative
@@ -375,19 +390,12 @@ def sum_string(amount, gender, items=None):
     if items is None:
         items = (u"", u"", u"")
 
-    utils.check_type('items', (list, tuple))
-
     try:
         one_item, two_items, five_items = items
     except ValueError:
         raise ValueError("Items must be 3-element sequence")
 
-    utils.check_type('amount', (int, long))
-    utils.check_type('gender', int)
-    utils.check_type('one_item', unicode)
-    utils.check_type('two_items', unicode)
-    utils.check_type('five_items', unicode)
-    utils.check_positive('amount')
+    check_positive(amount)
 
     if amount == 0:
         return u"ноль %s" % five_items
@@ -411,7 +419,11 @@ def sum_string(amount, gender, items=None):
     else:
         raise ValueError("Cannot operand with numbers bigger than 10**11")
 
-
+@takes(unicode,
+       (int,long),
+       one_of(1,2,3),
+       optional((unicode, nothing, list_of(unicode), tuple_of(unicode))),
+       items=optional((unicode, nothing, list_of(unicode), tuple_of(unicode))))
 def _sum_string_fn(into, tmp_val, gender, items=None):
     """
     Make in-words representation of single order
@@ -431,19 +443,14 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @return: new into and tmp_val
     @rtype: C{tuple}
 
-    @raise TypeError: input parameters' check failed
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
     @raise ValueError: tmp_val is negative
     """
     if items is None:
         items = (u"", u"", u"")
     one_item, two_items, five_items = items
-    utils.check_type('into', unicode)
-    utils.check_type('tmp_val', (int, long))
-    utils.check_type('gender', int)
-    utils.check_type('one_item', unicode)
-    utils.check_type('two_items', unicode)
-    utils.check_type('five_items', unicode)
-    utils.check_positive('tmp_val')
+    
+    check_positive(tmp_val)
 
     if tmp_val == 0:
         return into, tmp_val

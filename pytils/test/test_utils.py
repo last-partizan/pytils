@@ -23,100 +23,96 @@ __url__ = "$URL$"
 import unittest
 import pytils 
 
+class ASPN426123TestCase(unittest.TestCase):
+    """
+    Test case for third-party library from ASPN cookbook recipe #426123
+    
+    This unit-test don't cover all code from recipe
+    """
+    
+    def testTakesPositional(self):
+        @pytils.utils.takes(int, basestring)
+        def func(i, s):
+            return i + len(s)
+        
+        self.assertEquals(func(2, 'var'), 5)
+        self.assertEquals(func(2, u'var'), 5)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
+        self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
+    
+    def testTakesNamed(self):
+        @pytils.utils.takes(int, s=basestring)
+        def func(i, s):
+            return i + len(s)
+        
+        self.assertEquals(func(2, s='var'), 5)
+        self.assertEquals(func(2, s=u'var'), 5)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, 'var')
+        self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
+        self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
+    
+    def testTakesOptional(self):
+        @pytils.utils.takes(int,
+                            pytils.utils.optional(basestring),
+                            s=pytils.utils.optional(basestring))
+        def func(i, s=''):
+            return i + len(s)
+        
+        self.assertEquals(func(2, 'var'), 5)
+        self.assertEquals(func(2, s='var'), 5)
+        self.assertEquals(func(2, s=u'var'), 5)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
+        self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
+    
+    def testTakesMultiplyTypesAndTupleOf(self):
+        @pytils.utils.takes((int, long),
+                            pytils.utils.tuple_of(basestring))
+        def func(i, t=tuple()):
+            return i + sum(len(s) for s in t)
+        
+        self.assertEquals(func(2, ('var', 'var2')), 9)
+        self.assertEquals(func(2L, (u'var', 'var2')), 9)
+        self.assertEquals(func(2, t=('var', 'var2')), 9)
+        self.assertEquals(func(2, t=(u'var', u'var2')), 9)
+        self.assertRaises(pytils.err.InputParameterError, func, 2, (2, 5))
+    
+    
 
 class ChecksTestCase(unittest.TestCase):
     """
     Test case for check_* utils
     """
-
-    def testGetValueByName(self):
-        """
-        Unit-test for pytils.utils.get_value_by_name
-        """
-        var1 = '25'
-        var2 = 25
-        self.assertEquals('25', pytils.utils.get_value_by_name('var1', depth=1))
-        self.assertEquals(25, pytils.utils.get_value_by_name('var2', depth=1))
-        self.assertRaises(RuntimeError, pytils.utils.get_value_by_name, 'var3')
         
-
-    def testCheckType(self):
-        """
-        Unit-test for pytils.utils.check_type
-        """
-        var = '25'
-        # нельзя assertRaises, потому что глубина стека вызовов тогда не 2,
-        # а гораздо больше
-        try:
-            pytils.utils.check_type('var', int)
-        except TypeError, err:
-            self.assertEquals("var must be <type 'int'>, not <type 'str'>",
-                              str(err))
-        try:
-            pytils.utils.check_type('var', (int, float))
-        except TypeError, err:
-            self.assertEquals("var must be (<type 'int'>, <type 'float'>), " + \
-                              "not <type 'str'>",
-                              str(err))
-        self.assertEquals(None, pytils.utils.check_type('var', str))
-        self.assertEquals(None, pytils.utils.check_type('var',
-                                                        (str, basestring)))
-
     def testCheckLength(self):
         """
         Unit-test for pytils.utils.check_length
         """
-        var = 'test'
-        self.assertEquals(None, pytils.utils.check_length('var', 4))
-        try:
-            pytils.utils.check_length('var', 5)
-        except ValueError, err:
-            self.assertEquals("var's length must be 5, but it 4",
-                              str(err))
+        self.assertEquals(pytils.utils.check_length("var", 3), None)
+        
+        self.assertRaises(ValueError, pytils.utils.check_length, "var", 4)
+        self.assertRaises(ValueError, pytils.utils.check_length, "var", 2)
+        self.assertRaises(ValueError, pytils.utils.check_length, (1,2), 3)
+        self.assertRaises(TypeError, pytils.utils.check_length, 5)
 
     def testCheckPositive(self):
         """
         Unit-test for pytils.utils.check_positive
         """
-        var1 = 1
-        var2 = 1.25
-        var3 = -2
-        var4 = -2.12
+        self.assertEquals(pytils.utils.check_positive(0), None)
+        self.assertEquals(pytils.utils.check_positive(1), None)
+        self.assertEquals(pytils.utils.check_positive(1, False), None)
+        self.assertEquals(pytils.utils.check_positive(1, strict=False), None)
+        self.assertEquals(pytils.utils.check_positive(1, True), None)
+        self.assertEquals(pytils.utils.check_positive(1, strict=True), None)
+        self.assertEquals(pytils.utils.check_positive(2.0), None)
+        
+        self.assertRaises(ValueError, pytils.utils.check_positive, -2)
+        self.assertRaises(ValueError, pytils.utils.check_positive, -2.0)
+        self.assertRaises(ValueError, pytils.utils.check_positive, 0, True)
 
-        self.assertEquals(None, pytils.utils.check_positive('var1'))
-        self.assertEquals(None, pytils.utils.check_positive('var2'))
-
-        try:
-            pytils.utils.check_positive('var3')
-        except ValueError, err:
-            self.assertEquals("var3 must be positive or zero, not -2",
-                              str(err))
-        try:
-            pytils.utils.check_positive('var4')
-        except ValueError, err:
-            self.assertEquals("var4 must be positive or zero, not -2.12",
-                              str(err))
-
-    def testCheckPositiveStrict(self):
-        """
-        Unit-test for pytils.utils.check_positive
-        """        
-        var1 = 1
-        var2 = 0
-        var3 = -2
-
-        self.assertEquals(None, pytils.utils.check_positive('var1', strict=True))
-
-        try:
-            pytils.utils.check_positive('var2', strict=True)
-        except ValueError, err:
-            self.assertEquals("var2 must be positive, not 0",
-                              str(err))
-        try:
-            pytils.utils.check_positive('var3')
-        except ValueError, err:
-            self.assertEquals("var3 must be positive or zero, not -2",
-                              str(err))
 
 class SplitValuesTestCase(unittest.TestCase):
     

@@ -20,7 +20,7 @@ Simple processing for russian strings
 
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
-__all__ = ["numeral", "dt", "translit", "utils"]
+__all__ = ["numeral", "dt", "translit", "utils", "err"]
 
 # версия pytils
 VERSION_MAJOR = 0  #: Major version of pytils (i.e. branch)

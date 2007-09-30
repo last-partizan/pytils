@@ -205,6 +205,9 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, "test")
         self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), "test")
         self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
+        self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, "test")
+        self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, time.time(), "test")
+        self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
         self.assertRaises(ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0)
     
     def testIssue25DaysFixed(self):
@@ -307,6 +310,8 @@ class RuStrftimeTestCase(unittest.TestCase):
         """
         self.assertRaises(TypeError, pytils.dt.ru_strftime, time.time())
         self.assertRaises(TypeError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
+        self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, time.time())
+        self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
 
     def testIssue20Fixed(self):
         """

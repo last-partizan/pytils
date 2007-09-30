@@ -22,7 +22,7 @@ __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
 import re
-from pytils import utils
+from pytils.utils import takes, returns
 
 TRANSTABLE = (
         (u"'", u"'"),
@@ -145,7 +145,8 @@ RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can transla
 EN_ALPHABET = [x[1] for x in TRANSTABLE] #: English alphabet that we can detransliterate
 ALPHABET = RU_ALPHABET + EN_ALPHABET #: Alphabet that we can (de)transliterate
 
-
+@takes(unicode)
+@returns(str)
 def translify(in_string):
     """
     Translify russian text
@@ -156,11 +157,10 @@ def translify(in_string):
     @return: transliterated string
     @rtype: C{str}
 
-    @raise TypeError: when in_string is not C{unicode}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (in_string is not C{unicode})
     @raise ValueError: when string doesn't transliterate completely
     """
-    utils.check_type('in_string', unicode)
-
     translit = in_string
     for symb_in, symb_out in TRANSTABLE:
         translit = translit.replace(symb_in, symb_out)
@@ -173,7 +173,8 @@ def translify(in_string):
 
     return translit
 
-
+@takes(basestring)
+@returns(unicode)
 def detranslify(in_string):
     """
     Detranslify
@@ -182,27 +183,27 @@ def detranslify(in_string):
     @type in_string: C{basestring}
 
     @return: detransliterated string
-    @rtype: C{str}
+    @rtype: C{unicode}
 
-    @raise TypeError: when in_string neither C{str}, no C{unicode}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (when in_string not C{basestring})
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    utils.check_type('in_string', basestring)
-
     # в unicode
     try:
         russian = unicode(in_string)
     except UnicodeDecodeError:
-        raise ValueError("We expects if in_string is str type," + \
-                         "it is an ascii, but now it isn't. Use unicode " + \
-                         "in this case.")
+        raise ValueError("We expects if in_string is 8-bit string," + \
+                         "then it consists only ASCII chars, but now it doesn't. " + \
+                         "Use unicode in this case.")
 
     for symb_out, symb_in in TRANSTABLE:
         russian = russian.replace(symb_in, symb_out)
 
     return russian
 
-
+@takes(basestring)
+@returns(str)
 def slugify(in_string):
     """
     Prepare string for slug (i.e. URL or file/dir name)
@@ -213,10 +214,10 @@ def slugify(in_string):
     @return: slug-string
     @rtype: C{str}
 
-    @raise TypeError: when in_string isn't C{unicode} or C{str}
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (when in_string isn't C{unicode} or C{str})
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    utils.check_type('in_string', basestring)
     try:
         u_in_string = unicode(in_string).lower()
     except UnicodeDecodeError:
