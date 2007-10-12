@@ -12,11 +12,11 @@ if use_setuptools:
 else:
     from distutils.core import setup
 
-import pytils
+version = "0.2.3"
 
 setup_data = {
       'name': 'pytils',
-      'version': pytils.VERSION,
+      'version': version,
       'author': 'Yury Yurevich',
       'author_email': 'the.pythy@gmail.com',
       'url': 'http://www.pyobject.ru/projects/pytils/',
