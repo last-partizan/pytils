@@ -24,7 +24,7 @@ setup_data = {
       'long_description': """Simple tools for processing string in russian 
 (choose proper form for plurals, in-words representation of numerals,
 dates in russian without locales, transliteration, etc)""",
-      'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags'],
+      'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags', 'pytils.third'],
       'license': "GPL",
       'platforms': "All",
       'classifiers': [
