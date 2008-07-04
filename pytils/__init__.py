@@ -21,4 +21,4 @@ Simple processing for russian strings
 __id__ = __revision__ = "$Id$"
 __url__ = "$URL$"
 
-from pytils import numeral, dt, translit, err
+from pytils import numeral, dt, translit, typo, err
