@@ -16,8 +16,7 @@
 """
 Unit tests for pytils
 """
-
-__all__ = ["test_numeral", "test_dt", "test_translit", "test_utils"]
+__all__ = ["test_numeral", "test_dt", "test_translit", "test_utils", "test_typo"]
 
 import unittest
 
