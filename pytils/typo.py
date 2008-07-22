@@ -18,16 +18,24 @@
 Russian typography
 """
 
-def testrule(x):
+## ---------- rules -------------
+# rules is a regular function, 
+# name convention is rl_RULENAME
+def rl_testrule(x):
     """
     Rule for tests. Do nothing.
     """
     return x
 
+## -------- rules end ----------
+
 def _get_rule_by_name(name):
-    f = testrule
-    f.__name__ = name
-    return f
+    rule = globals().get('rl_%s' % name)
+    if rule is None:
+        raise ValueError("Rule %s is not found" % name)
+    if not callable(rule):
+        raise ValueError("Rule with name %s is not callable" % name)
+    return rule
 
 def _resolve_rule_name(rule_or_name, forced_name=None):
     if isinstance(rule_or_name, str):
@@ -37,6 +45,10 @@ def _resolve_rule_name(rule_or_name, forced_name=None):
     elif callable(rule_or_name):
         # got rule
         name = rule_or_name.__name__
+        if name.startswith('rl_'):
+            # by rule name convention
+            # rule is a function with name rl_RULENAME
+            name = name[3:]
         rule = rule_or_name
     else:
         raise ValueError(
@@ -118,4 +130,18 @@ class Typography(object):
         for name, rule in (_resolve_rule_name(a, k) for k, a in expanded_kwargs.items()):
             self.rules[name] = rule
             self.rules_names.append(name)
+        
+        def apply_single_rule(self, rulename, text):
+            if rulename not in self.rules:
+                raise ValueError("Rule %s is not found in active rules" % rulename)
+            try:
+                res = self.rules[rulename](text)
+            except ValueError, e:
+                raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
+            return res
+        
+        def apply(self, text):
+            for rule in self.rules_names:
+                text = self.apply_single_rule(rule, text)
+            return text
 

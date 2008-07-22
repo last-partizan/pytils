@@ -32,7 +32,7 @@ class HelpersTestCase(unittest.TestCase):
         unit-test for pytils.typo._get_rule_by_name
         """
         self.assert_(callable(pytils.typo._get_rule_by_name('testrule')))
-        self.assertEquals(pytils.typo._get_rule_by_name('testrule').__name__, 'testrule')
+        self.assertEquals(pytils.typo._get_rule_by_name('testrule').__name__, 'rl_testrule')
     
     def testResolveRule(self):
         """
@@ -63,13 +63,13 @@ class TypographyApplierTestCase(unittest.TestCase):
             pytils.typo.Typography().rules_names)
     
     def testExpandSimpleStrArgs(self):
-        self.assertEquals({'testrule': pytils.typo.testrule}, 
+        self.assertEquals({'testrule': pytils.typo.rl_testrule}, 
             pytils.typo.Typography('testrule').rules)
         self.assertEquals(['testrule'], 
             pytils.typo.Typography('testrule').rules_names)
     
     def testExpandDictStrArgs(self):
-        self.assertEquals({'testrule': pytils.typo.testrule, 'newrule': pytils.typo.testrule}, 
+        self.assertEquals({'testrule': pytils.typo.rl_testrule, 'newrule': pytils.typo.rl_testrule}, 
             pytils.typo.Typography('testrule', {'newrule': 'testrule'}).rules)
         self.assertEquals(['testrule', 'newrule'], 
             pytils.typo.Typography('testrule', {'newrule': 'testrule'}).rules_names)
@@ -87,18 +87,18 @@ class TypographyApplierTestCase(unittest.TestCase):
             pytils.typo.Typography(cb_testrule, {'newrule': cb_testrule}).rules_names)
 
     def testExpandMixedArgs(self):
-        self.assertEquals({'cb_testrule': cb_testrule, 'newrule': pytils.typo.testrule},
+        self.assertEquals({'cb_testrule': cb_testrule, 'newrule': pytils.typo.rl_testrule},
             pytils.typo.Typography(cb_testrule, newrule='testrule').rules)
         self.assertEquals(['cb_testrule', 'newrule'],
             pytils.typo.Typography(cb_testrule, newrule='testrule').rules_names)
-        self.assertEquals({'cb_testrule': cb_testrule, 'testrule': pytils.typo.testrule},
+        self.assertEquals({'cb_testrule': cb_testrule, 'testrule': pytils.typo.rl_testrule},
             pytils.typo.Typography(cb_testrule, 'testrule').rules)
         self.assertEquals(['cb_testrule', 'testrule'],
             pytils.typo.Typography(cb_testrule, 'testrule').rules_names)
 
     def testRecommendedArgsStyle(self):
         lambdarule = lambda x: x
-        self.assertEquals({'cb_testrule': cb_testrule, 'testrule': pytils.typo.testrule, 'newrule': lambdarule},
+        self.assertEquals({'cb_testrule': cb_testrule, 'testrule': pytils.typo.rl_testrule, 'newrule': lambdarule},
             pytils.typo.Typography([cb_testrule], ['testrule'], {'newrule': lambdarule}).rules)
         self.assertEquals(['cb_testrule', 'testrule', 'newrule'],
             pytils.typo.Typography([cb_testrule], ['testrule'], {'newrule': lambdarule}).rules_names)
