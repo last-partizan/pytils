@@ -1,5 +1,3 @@
-ID: $Id$
-
 pytils - простой обработчик русского текста.
 ==========================================================
 
@@ -15,9 +13,9 @@ pytils - простой обработчик русского текста, ре
 Ссылки
 ------
 
- *  [Pythy на code.google.com](http://code.google.com/p/pythy/)
  *  [Пост о pytils в блоге](http://www.pyobject.ru/blog/post//pytils/)
  *  [Страница pytils](http://www.pyobject.ru/projects/pytils/)
+ *  [Mercurial-репозиторий](http://hg.pyobject.ru/pytils/)
 
 Как установить
 --------------
