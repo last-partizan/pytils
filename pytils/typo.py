@@ -17,6 +17,7 @@
 """
 Russian typography
 """
+import re
 
 ## ---------- rules -------------
 # rules is a regular function, 
@@ -27,9 +28,28 @@ def rl_testrule(x):
     """
     return x
 
+def rl_cleanspaces(x):
+    """
+    Clean double spaces, trailing spaces, heading spaces,
+    spaces before punctuations 
+    """
+    patterns = [
+        # аргументы для re.sub: pattern и repl
+        (r' +([\.,?!]+)', r'\1'), # удаляем пробел перед знаками препинания
+        (r'([\.,?!]+)(\S+)', r'\1 \2'), # добавляем пробел после знака препинания
+        (r' +', r' '), # удаляем двойные пробелы
+        (re.compile(r'^ +(\S+)', re.MULTILINE), r'\1'), # удаляем начальные пробелы
+        (re.compile(r'(\S+) +$', re.MULTILINE), r'\1'), # удаляем конечные пробелы
+    ]
+    for pattern, repl in patterns:
+        x = re.sub(pattern, repl, x)
+    return x
+
 ## -------- rules end ----------
+STANDARD_RULES = ('cleanspaces', )
 
 def _get_rule_by_name(name):
+
     rule = globals().get('rl_%s' % name)
     if rule is None:
         raise ValueError("Rule %s is not found" % name)
@@ -131,17 +151,24 @@ class Typography(object):
             self.rules[name] = rule
             self.rules_names.append(name)
         
-        def apply_single_rule(self, rulename, text):
-            if rulename not in self.rules:
-                raise ValueError("Rule %s is not found in active rules" % rulename)
-            try:
-                res = self.rules[rulename](text)
-            except ValueError, e:
-                raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
-            return res
+    def apply_single_rule(self, rulename, text):
+        if rulename not in self.rules:
+            raise ValueError("Rule %s is not found in active rules" % rulename)
+        try:
+            res = self.rules[rulename](text)
+        except ValueError, e:
+            raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
+        return res
+    
+    def apply(self, text):
+        for rule in self.rules_names:
+            text = self.apply_single_rule(rule, text)
+        return text
         
-        def apply(self, text):
-            for rule in self.rules_names:
-                text = self.apply_single_rule(rule, text)
-            return text
+    def __call__(self, text):
+        return self.apply(text)
+
+def typography(text):
+    t = Typography(STANDARD_RULES)
+    return t.apply(text)
 

@@ -179,6 +179,19 @@ class TypographyApplierTestCase(unittest.TestCase):
             typo.Typography([cb_testrule], ['testrule'], {'newrule': lambdarule}).rules_names
         )
 
+class RulesTestCase(unittest.TestCase):
+    def testCleanspaces(self):
+        self.assertEquals(
+            u"Точка, точка, запятая, вышла рожица кривая.",
+            typo._get_rule_by_name('cleanspaces')(
+                u" Точка ,точка , запятая, вышла рожица  кривая . "
+            ))
+        self.assertEquals(
+            u"Точка, точка,\nзапятая,\nвышла рожица кривая.",
+            typo._get_rule_by_name('cleanspaces')(
+                u" Точка ,точка , \nзапятая,\n вышла рожица  кривая . "
+            ))
+
 if __name__ == '__main__':
     unittest.main()
 
