@@ -17,9 +17,6 @@
 Helpers for templatetags' unit tests in Django webframework
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 from django.conf import settings
 
 encoding = 'utf-8'

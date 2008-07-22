@@ -18,9 +18,6 @@
 Simple transliteration
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import re
 from pytils.utils import takes, returns
 

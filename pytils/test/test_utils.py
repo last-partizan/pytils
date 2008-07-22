@@ -17,9 +17,6 @@
 Unit-tests for pytils.utils
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import unittest
 import pytils 
 

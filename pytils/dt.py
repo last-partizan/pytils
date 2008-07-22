@@ -18,9 +18,6 @@
 Russian dates without locales
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import datetime
 
 from pytils import numeral

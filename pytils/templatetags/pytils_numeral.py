@@ -18,9 +18,6 @@
 pytils.numeral templatetags for Django web-framework
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 from django import template, conf
 from pytils import numeral, utils
 from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults

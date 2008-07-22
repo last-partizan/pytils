@@ -17,9 +17,6 @@
 Unit-tests for pytils.dt
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import datetime
 import time
 import unittest

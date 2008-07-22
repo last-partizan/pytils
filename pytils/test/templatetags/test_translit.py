@@ -17,9 +17,6 @@
 Unit tests for pytils' translit templatetags for Django web framework
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 from pytils.test.templatetags import helpers
 
 class TranslitDefaultTestCase(helpers.TemplateTagTestCase):

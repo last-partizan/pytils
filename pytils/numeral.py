@@ -18,9 +18,6 @@
 Plural forms and in-word representation for numerals.
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 from pytils import utils
 from pytils.utils import takes, returns, optional, list_of, tuple_of, \
                          nothing, one_of, check_positive, check_length

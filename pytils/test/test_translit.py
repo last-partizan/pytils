@@ -17,10 +17,6 @@
 Unit-tests for pytils.translit
 """
 
-
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import unittest
 
 import pytils

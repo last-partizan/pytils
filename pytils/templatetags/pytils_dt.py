@@ -18,9 +18,6 @@
 pytils.dt templatetags for Django web-framework
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import time
 from django import template, conf
 from pytils import dt, utils

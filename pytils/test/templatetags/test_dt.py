@@ -17,9 +17,6 @@
 Unit tests for pytils' dt templatetags for Django web framework
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import datetime
 from pytils.test.templatetags import helpers
 

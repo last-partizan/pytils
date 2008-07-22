@@ -17,8 +17,6 @@
 """
 Simple processing for russian strings
 """
-
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
+VERSION = '0.2.3dev'
 
 from pytils import numeral, dt, translit, err

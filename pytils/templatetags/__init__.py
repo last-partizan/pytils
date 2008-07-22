@@ -17,9 +17,6 @@
 Pytils templatetags for Django web-framework
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import warnings
 import django
 

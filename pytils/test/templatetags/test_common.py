@@ -17,9 +17,6 @@
 Unit tests for pytils' templatetags common things
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import unittest
 
 from pytils import templatetags as tt

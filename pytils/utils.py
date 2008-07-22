@@ -18,9 +18,6 @@
 Misc utils for internal use
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
 import sys
 import warnings
 

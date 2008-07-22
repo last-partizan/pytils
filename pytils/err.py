@@ -18,9 +18,5 @@
 Custom exceptions for pytils
 """
 
-__id__ = __revision__ = "$Id$"
-__url__ = "$URL$"
-
-
 # TypeError children
 from pytils.third.aspn426123 import InputParameterError
