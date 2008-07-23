@@ -18,6 +18,7 @@
 Russian typography
 """
 import re
+import os
 
 def _sub_patterns(patterns, text):
     """
@@ -45,11 +46,12 @@ def rl_cleanspaces(x):
         # arguments for re.sub: pattern and repl
         (r' +([\.,?!]+)', r'\1'), # удаляем пробел перед знаками препинания
         (r'([\.,?!]+)(\S+)', r'\1 \2'), # добавляем пробел после знака препинания
-        (r' +', r' '), # удаляем двойные пробелы
-        (re.compile(r'^ +(\S+)', re.MULTILINE), r'\1'), # удаляем начальные пробелы
-        (re.compile(r'(\S+) +$', re.MULTILINE), r'\1'), # удаляем конечные пробелы
     )
-    return _sub_patterns(patterns, x)
+    # удаляем двойные, начальные и конечные пробелы
+    return os.linesep.join(
+        ' '.join(part for part in line.split(' ') if part)
+        for line in _sub_patterns(patterns, x).split(os.linesep)
+    )
 
 def rl_ellipsis(x):
     """

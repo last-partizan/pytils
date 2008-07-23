@@ -18,6 +18,7 @@ Unit-tests for pytils.typo
 """
 
 import unittest
+import os
 from pytils import typo
 
 def cb_testrule(x):
@@ -201,8 +202,8 @@ class RulesTestCase(unittest.TestCase):
         )
         self.checkRule(
             'cleanspaces',
-            u" Точка ,точка , \nзапятая,\n вышла рожица  кривая . ",
-            u"Точка, точка,\nзапятая,\nвышла рожица кривая."
+            u" Точка ,точка , %(n)sзапятая,%(n)s вышла рожица  кривая . " % {'n': os.linesep},
+            u"Точка, точка,%(n)sзапятая,%(n)sвышла рожица кривая." % {'n': os.linesep}
         )
 
     def testEllipsis(self):
@@ -211,8 +212,8 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'ellipsis',
-            u"Быть или не быть, вот в чем вопрос...\n\nШекспир",
-            u"Быть или не быть, вот в чем вопрос…\n\nШекспир"
+            u"Быть или не быть, вот в чем вопрос...%(n)s%(n)sШекспир" % {'n': os.linesep},
+            u"Быть или не быть, вот в чем вопрос…%(n)s%(n)sШекспир" % {'n': os.linesep}
         )
         self.checkRule(
             'ellipsis',
@@ -236,8 +237,8 @@ class RulesTestCase(unittest.TestCase):
         )
         self.checkRule(
             'initials',
-            u'1. В.И.Иванов\n2. С.П.Васечкин',
-            u'1. В.И.\u2009Иванов\n2. С.П.\u2009Васечкин'
+            u'1. В.И.Иванов%(n)s2. С.П.Васечкин'% {'n': os.linesep},
+            u'1. В.И.\u2009Иванов%(n)s2. С.П.\u2009Васечкин' % {'n': os.linesep}
         )
         self.checkRule(
             'initials',
