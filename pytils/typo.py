@@ -19,6 +19,14 @@ Russian typography
 """
 import re
 
+def _sub_patterns(patterns, text):
+    """
+    Apply re.sub to bunch of (pattern, repl)
+    """
+    for pattern, repl in patterns:
+        text = re.sub(pattern, repl, text)
+    return text    
+
 ## ---------- rules -------------
 # rules is a regular function, 
 # name convention is rl_RULENAME
@@ -33,20 +41,37 @@ def rl_cleanspaces(x):
     Clean double spaces, trailing spaces, heading spaces,
     spaces before punctuations 
     """
-    patterns = [
-        # аргументы для re.sub: pattern и repl
+    patterns = (
+        # arguments for re.sub: pattern and repl
         (r' +([\.,?!]+)', r'\1'), # удаляем пробел перед знаками препинания
         (r'([\.,?!]+)(\S+)', r'\1 \2'), # добавляем пробел после знака препинания
         (r' +', r' '), # удаляем двойные пробелы
         (re.compile(r'^ +(\S+)', re.MULTILINE), r'\1'), # удаляем начальные пробелы
         (re.compile(r'(\S+) +$', re.MULTILINE), r'\1'), # удаляем конечные пробелы
-    ]
-    for pattern, repl in patterns:
-        x = re.sub(pattern, repl, x)
-    return x
+    )
+    return _sub_patterns(patterns, x)
+
+def rl_ellipsis(x):
+    """
+    Replace three dots to ellipsis
+    """
+    # если больше трех точек, то не заменяем на троеточие
+    # чтобы не было глупых .....->…..
+    return re.sub(r'([^\.]+)\.\.\.([^\.]|$)', u'\\1…\\2', x)
+
+def rl_initials(x):
+    """
+    Replace space between initials and surname by thin space
+    """
+    return re.sub(
+        re.compile(u'([А-Я])\\.\\s*([А-Я])\\.\\s*([А-Я][а-я]+)', re.UNICODE),
+        u'\\1.\\2.\u2009\\3',
+        x
+    )
+
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', )
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials')
 
 def _get_rule_by_name(name):
 

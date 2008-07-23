@@ -180,17 +180,72 @@ class TypographyApplierTestCase(unittest.TestCase):
         )
 
 class RulesTestCase(unittest.TestCase):
+
+    def checkRule(self, name, input_value, expected_result):
+        """
+        Check how rule is acted on input_value with expected_result
+        """
+        self.assertEquals(
+            expected_result,
+            typo._get_rule_by_name(name)(input_value)
+        )
+    
     def testCleanspaces(self):
-        self.assertEquals(
-            u"Точка, точка, запятая, вышла рожица кривая.",
-            typo._get_rule_by_name('cleanspaces')(
-                u" Точка ,точка , запятая, вышла рожица  кривая . "
-            ))
-        self.assertEquals(
-            u"Точка, точка,\nзапятая,\nвышла рожица кривая.",
-            typo._get_rule_by_name('cleanspaces')(
-                u" Точка ,точка , \nзапятая,\n вышла рожица  кривая . "
-            ))
+        """
+        Unit-test for cleanspaces rule
+        """
+        self.checkRule(
+            'cleanspaces',
+            u" Точка ,точка , запятая, вышла рожица  кривая . ",
+            u"Точка, точка, запятая, вышла рожица кривая."
+        )
+        self.checkRule(
+            'cleanspaces',
+            u" Точка ,точка , \nзапятая,\n вышла рожица  кривая . ",
+            u"Точка, точка,\nзапятая,\nвышла рожица кривая."
+        )
+
+    def testEllipsis(self):
+        """
+        Unit-test for ellipsis rule
+        """
+        self.checkRule(
+            'ellipsis',
+            u"Быть или не быть, вот в чем вопрос...\n\nШекспир",
+            u"Быть или не быть, вот в чем вопрос…\n\nШекспир"
+        )
+        self.checkRule(
+            'ellipsis',
+            u"Мдя..... могло быть лучше",
+            u"Мдя..... могло быть лучше"
+        )
+    
+    def testInitials(self):
+        """
+        Unit-test for initials rule
+        """
+        self.checkRule(
+            'initials',
+            u'Председатель В.И.Иванов выступил на собрании',
+            u'Председатель В.И.\u2009Иванов выступил на собрании',
+        )
+        self.checkRule(
+            'initials',
+            u'Председатель В.И. Иванов выступил на собрании',
+            u'Председатель В.И.\u2009Иванов выступил на собрании',
+        )
+        self.checkRule(
+            'initials',
+            u'1. В.И.Иванов\n2. С.П.Васечкин',
+            u'1. В.И.\u2009Иванов\n2. С.П.\u2009Васечкин'
+        )
+        self.checkRule(
+            'initials',
+            u'Комиссия в составе директора В.И.Иванова и главного бухгалтера С.П.Васечкина постановила',
+            u'Комиссия в составе директора В.И.\u2009Иванова и главного бухгалтера С.П.\u2009Васечкина постановила'
+        )
+        
+        
 
 if __name__ == '__main__':
     unittest.main()
