@@ -71,6 +71,18 @@ def rl_initials(x):
         x
     )
 
+def rl_dashes(x):
+    """
+    Replace dash to long/medium dashes
+    """
+    patterns = (
+        # тире
+        (re.compile(r'(^|(.\s))\-\-?((\s.)|$)', re.MULTILINE), u'\\1\u2014\\3'),
+        # диапазоны между цифрами - en dash
+        (re.compile(r'(\d\s*)\-(\s*\d)', re.MULTILINE), u'\\1\u2013\\2'),
+        # TODO: а что с минусом?
+    )
+    return _sub_patterns(patterns, x)
 
 ## -------- rules end ----------
 STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials')
