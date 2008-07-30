@@ -281,9 +281,14 @@ class RulesTestCase(unittest.TestCase):
             u'Вроде\u202fбы\u202fон\u202fсогласен',
         )
 
-class ComplexTestCase(unittest.TestCase):
-    
+class TypographyTestCase(unittest.TestCase):
+    """
+    Tests for pytils.typo.typography
+    """
     def testPupkin(self):
+        """
+        Unit-test on pupkin-text
+        """
         #Исходно:
         u"""...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F."""
         # Должно быть:
