@@ -84,6 +84,24 @@ def rl_dashes(x):
     )
     return _sub_patterns(patterns, x)
 
+def rl_wordglue(x):
+    """
+    Glue (set nonbreakable space) short words with word before/after
+    """
+    # лучше это делать после всех правил, которые работают с пробелами
+    # поскольку остальные правила работают с \s, а он не воспринимает
+    # юникодные символы "непереносимый пробел" \u202f как пробел
+    patterns = (
+        # частицы склеиваем с предыдущим словом
+        (re.compile(u'(\\s+)(же|ли|ль|бы|б|ж|ка)([\\.,!\\?:;]?\\s+)', re.UNICODE), u'\u202f\\2\\3'),
+        # склеиваем короткие слова со следующим словом
+        (re.compile(u'([\\s\u202f]+)(\\w{1,3})([\\s\u202f]+)', re.UNICODE), u'\\1\\2\u202f'),
+        # склеиваем два последних слова в абзаце между собой
+        # полагается, что абзацы будут передаваться отдельной строкой
+        (re.compile(u'([^\\s\u202f]+)\s+([^\\s\u202f]+)$', re.UNICODE), u'\\1\u202f\\2'),
+    )
+    return _sub_patterns(patterns, x)
+
 ## -------- rules end ----------
 STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials')
 
@@ -211,3 +229,7 @@ def typography(text):
     t = Typography(STANDARD_RULES)
     return t.apply(text)
 
+if __name__ == '__main__':
+    from pytils.test import run_tests_from_module, test_typo
+    run_tests_from_module(test_typo, verbosity=2)
+    

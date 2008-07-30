@@ -270,7 +270,24 @@ class RulesTestCase(unittest.TestCase):
             u'Диапазон: 9-15',
             u'Диапазон: 9\u201315',
         )
-        
+
+    def testWordglue(self):
+        """
+        Unit-test for wordglue rule
+        """
+        self.checkRule(
+            'wordglue',
+            u'Вроде бы он согласен',
+            u'Вроде\u202fбы\u202fон\u202fсогласен',
+        )
+
+class ComplexTestCase(unittest.TestCase):
+    
+    def testPupkin(self):
+        #Исходно:
+        u"""...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F."""
+        # Должно быть:
+        u"""…Когда В.\u2009И.\u2009Пупкин увидел в\u202fгазете (это была «Сермяжная правда» № 45) рубрику Weather Forecast®, он\u202fне\u202fповерил своим глазам\u202f\u2014 температуру обещали\u202f±451 °F."""
 
 if __name__ == '__main__':
     unittest.main()
