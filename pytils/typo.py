@@ -102,7 +102,7 @@ def rl_wordglue(x):
     return _sub_patterns(patterns, x)
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'wordglue')
 
 def _get_rule_by_name(name):
 
