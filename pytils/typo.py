@@ -66,7 +66,7 @@ def rl_initials(x):
     Replace space between initials and surname by thin space
     """
     return re.sub(
-        re.compile(u'([А-Я])\\.\\s*([А-Я])\\.\\s*([А-Я][а-я]+)', re.UNICODE),
+        re.compile(u'([А-Я])\\.[\\s\u202f]*([А-Я])\\.[\\s\u202f]*([А-Я][а-я]+)', re.UNICODE),
         u'\\1.\\2.\u2009\\3',
         x
     )
@@ -77,9 +77,9 @@ def rl_dashes(x):
     """
     patterns = (
         # тире
-        (re.compile(r'(^|(.\s))\-\-?((\s.)|$)', re.MULTILINE), u'\\1\u2014\\3'),
+        (re.compile(u'(^|(.[\\s\u202f]))\\-\\-?(([\\s\u202f].)|$)', re.MULTILINE), u'\\1\u2014\\3'),
         # диапазоны между цифрами - en dash
-        (re.compile(r'(\d\s*)\-(\s*\d)', re.MULTILINE), u'\\1\u2013\\2'),
+        (re.compile(u'(\\d[\\s\u202f\u2009]*)\\-([\\s\u202f\u2009]*\d)', re.MULTILINE), u'\\1\u2013\\2'),
         # TODO: а что с минусом?
     )
     return _sub_patterns(patterns, x)
@@ -88,14 +88,13 @@ def rl_wordglue(x):
     """
     Glue (set nonbreakable space) short words with word before/after
     """
-    # лучше это делать после всех правил, которые работают с пробелами
-    # поскольку остальные правила работают с \s, а он не воспринимает
-    # юникодные символы "непереносимый пробел" \u202f как пробел
     patterns = (
         # частицы склеиваем с предыдущим словом
         (re.compile(u'(\\s+)(же|ли|ль|бы|б|ж|ка)([\\.,!\\?:;]?\\s+)', re.UNICODE), u'\u202f\\2\\3'),
         # склеиваем короткие слова со следующим словом
-        (re.compile(u'([\\s\u202f]+)(\\w{1,3})([\\s\u202f]+)', re.UNICODE), u'\\1\\2\u202f'),
+        (re.compile(u'([\\s\u202f]+)(\\w{1,3})([\\s]+)', re.UNICODE), u'\\1\\2\u202f'),
+        # склеиваем тире с предыдущим словом 
+        (re.compile(u'([\\s]+)([\u2014\-]+)([\\s]+)', re.UNICODE), u'\u202f\\2\\3'),
         # склеиваем два последних слова в абзаце между собой
         # полагается, что абзацы будут передаваться отдельной строкой
         (re.compile(u'([^\\s\u202f]+)\s+([^\\s\u202f]+)$', re.UNICODE), u'\\1\u202f\\2'),

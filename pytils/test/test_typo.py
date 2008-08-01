@@ -262,6 +262,11 @@ class RulesTestCase(unittest.TestCase):
         )
         self.checkRule(
             'dashes',
+            u'-- Я пошел домой…\u202f-- Может останешься?\u202f-- Нет, ухожу.',
+            u'\u2014 Я пошел домой…\u202f\u2014 Может останешься?\u202f\u2014 Нет, ухожу.'
+        )
+        self.checkRule(
+            'dashes',
             u'Ползать по-пластунски',
             u'Ползать по-пластунски',
         )
@@ -279,6 +284,16 @@ class RulesTestCase(unittest.TestCase):
             'wordglue',
             u'Вроде бы он согласен',
             u'Вроде\u202fбы\u202fон\u202fсогласен',
+        )
+        self.checkRule(
+            'wordglue',
+            u'Это - великий и ужасный Гудвин',
+            u'Это\u202f- великий и\u202fужасный\u202fГудвин',
+        )
+        self.checkRule(
+            'wordglue',
+            u'Это \u2014 великий и ужасный Гудвин',
+            u'Это\u202f\u2014 великий и\u202fужасный\u202fГудвин',
         )
 
 class TypographyTestCase(unittest.TestCase):
