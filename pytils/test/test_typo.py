@@ -220,6 +220,12 @@ class RulesTestCase(unittest.TestCase):
             u"Мдя..... могло быть лучше",
             u"Мдя..... могло быть лучше"
         )
+        self.checkRule(
+            'ellipsis',
+            u"...Дааааа",
+            u"…Дааааа"
+        )
+        
     
     def testInitials(self):
         """
