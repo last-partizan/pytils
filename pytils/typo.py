@@ -101,8 +101,35 @@ def rl_wordglue(x):
     )
     return _sub_patterns(patterns, x)
 
+def rl_marks(x):
+    """
+    Replace +-, (c), (tm), (r), (p), etc by its typographic eqivalents
+    """
+    patterns = (
+        # копирайт ставится до года: © 2008 Юрий Юревич
+        (re.compile(u'\\([cCсС]\\)[\\s\u202f]*(\\d+)', re.UNICODE), u'\u00a9\u202f\\1'),
+        (r'([^+])(\+\-|\-\+)', u'\\1\u00b1'), # ±
+        # градусы с минусом
+        (u'\\-(\\d+)[\\s\u202f]*([FCС][^\\w])', u'\u2212\\1\202f\u00b0\\2'), # −12 °C, −53 °F
+        # градусы без минуса
+        (u'(\\d+)[\\s\u202f]*([FCС][^\\w])', u'\\1\u202f\u00b0\\2'), # 12 °C, 53 °F
+    )
+    # простые замены, можно без регулярок
+    replacements = (
+        (u'(r)', u'\u00ae'), # ®
+        (u'(R)', u'\u00ae'), # ®
+        (u'(p)', u'\u00a7'), # §
+        (u'(P)', u'\u00a7'), # §
+        (u'(tm)', u'\u2122'), # ™
+        (u'(TM)', u'\u2122'), # ™
+    )
+    for what, to in replacements:
+        x = x.replace(what, to)
+    return _sub_patterns(patterns, x)
+    
+
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'wordglue')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'wordglue')
 
 def _get_rule_by_name(name):
 

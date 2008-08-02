@@ -307,6 +307,31 @@ class RulesTestCase(unittest.TestCase):
             u'-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.'
         )
 
+    def testMarks(self):
+        """
+        Unit-test for marks rule
+        """
+        self.checkRule(
+            'marks',
+            u"Когда В. И. Пупкин увидел в газете рубрику Weather Forecast(r), он не поверил своим глазам \u2014 температуру обещали +-451F.",
+            u"Когда В. И. Пупкин увидел в газете рубрику Weather Forecast®, он не поверил своим глазам \u2014 температуру обещали ±451\u202f°F."
+        )
+        self.checkRule(
+            'marks',
+            u"14 Foo",
+            u"14 Foo"
+        )
+        self.checkRule(
+            'marks',
+            u"Coca-cola(tm)",
+            u"Coca-cola™"
+        )
+        self.checkRule(
+            'marks',
+            u'(c) 2008 Юрий Юревич',
+            u'©\u202f2008 Юрий Юревич'
+        )
+
 class TypographyTestCase(unittest.TestCase):
     """
     Tests for pytils.typo.typography
