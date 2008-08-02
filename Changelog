@@ -12,7 +12,7 @@ pytils (0.2.2)
 
   * fix zeros in dates (#24)
   * add 'preposition' option to dt.ru_strftime (#23)
-  * fix bugs (#20, #22, #25) 
+  * fix bugs (#20, #22, #25)
   * add get_plural to pytils.numeral (#19)
   * add escaping in variants (#21)
 
@@ -20,7 +20,7 @@ pytils (0.2.2)
 
 pytils (0.2.1)
 
-  * fix bugs (#10, #14, #15) 
+  * fix bugs (#10, #14, #15)
   * improve gender manipulation in numeral (issue#13)
   * add GPL header
   * add unit-tests for templatetags
@@ -30,7 +30,7 @@ pytils (0.2.1)
 pytils (0.2.0)
 
   * integration with Django (templatetags)
-  * examples for Django and TurboGears 
+  * examples for Django and TurboGears
   * remove asserts
   * add datatime.datetime type for distance_of_time_in_words
   * improve docs

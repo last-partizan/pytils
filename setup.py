@@ -21,7 +21,7 @@ setup_data = {
       'author_email': 'the.pythy@gmail.com',
       'url': 'http://www.pyobject.ru/projects/pytils/',
       'description': 'Utils for easy processing string in russian.',
-      'long_description': """Simple tools for processing string in russian 
+      'long_description': """Simple tools for processing string in russian
 (choose proper form for plurals, in-words representation of numerals,
 dates in russian without locales, transliteration, etc)""",
       'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags', 'pytils.third'],
