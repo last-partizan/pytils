@@ -44,8 +44,12 @@ def rl_cleanspaces(x):
     """
     patterns = (
         # arguments for re.sub: pattern and repl
-        (r' +([\.,?!]+)', r'\1'), # удаляем пробел перед знаками препинания
-        (r'([\.,?!]+)(\S+)', r'\1 \2'), # добавляем пробел после знака препинания
+        # удаляем пробел перед знаками препинания
+        (r' +([\.,?!\)]+)', r'\1'),
+        # добавляем пробел после знака препинания
+        (r'([\.,?!\)]+)(\S+)', r'\1 \2'),
+        # убираем пробел после открывающей скобки
+        (r'(\S+)\s*(\()\s*(\S+)', r'\1 (\3'),
     )
     # удаляем двойные, начальные и конечные пробелы
     return os.linesep.join(
@@ -59,21 +63,77 @@ def rl_ellipsis(x):
     """
     # если больше трех точек, то не заменяем на троеточие
     # чтобы не было глупых .....->…..
-    return re.sub(r'([^\.]+)\.\.\.([^\.]|$)', u'\\1…\\2', x)
+    return re.sub(r'([^\.]|^)\.\.\.([^\.]|$)', u'\\1…\\2', x)
 
 def rl_initials(x):
     """
     Replace space between initials and surname by thin space
     """
     return re.sub(
-        re.compile(u'([А-Я])\\.\\s*([А-Я])\\.\\s*([А-Я][а-я]+)', re.UNICODE),
+        re.compile(u'([А-Я])\\.[\\s\u202f]*([А-Я])\\.[\\s\u202f]*([А-Я][а-я]+)', re.UNICODE),
         u'\\1.\\2.\u2009\\3',
         x
     )
 
+def rl_dashes(x):
+    """
+    Replace dash to long/medium dashes
+    """
+    patterns = (
+        # тире
+        (re.compile(u'(^|(.[\\s\u202f]))\\-\\-?(([\\s\u202f].)|$)', re.MULTILINE), u'\\1\u2014\\3'),
+        # диапазоны между цифрами - en dash
+        (re.compile(u'(\\d[\\s\u202f\u2009]*)\\-([\\s\u202f\u2009]*\d)', re.MULTILINE), u'\\1\u2013\\2'),
+        # TODO: а что с минусом?
+    )
+    return _sub_patterns(patterns, x)
+
+def rl_wordglue(x):
+    """
+    Glue (set nonbreakable space) short words with word before/after
+    """
+    patterns = (
+        # частицы склеиваем с предыдущим словом
+        (re.compile(u'(\\s+)(же|ли|ль|бы|б|ж|ка)([\\.,!\\?:;]?\\s+)', re.UNICODE), u'\u202f\\2\\3'),
+        # склеиваем короткие слова со следующим словом
+        (re.compile(u'([\\s\u202f]+)(\\w{1,3})([\\s]+)', re.UNICODE), u'\\1\\2\u202f'),
+        # склеиваем тире с предыдущим словом 
+        (re.compile(u'([\\s]+)([\u2014\-]+)([\\s]+)', re.UNICODE), u'\u202f\\2\\3'),
+        # склеиваем два последних слова в абзаце между собой
+        # полагается, что абзацы будут передаваться отдельной строкой
+        (re.compile(u'([^\\s\u202f]+)\s+([^\\s\u202f]+)$', re.UNICODE), u'\\1\u202f\\2'),
+    )
+    return _sub_patterns(patterns, x)
+
+def rl_marks(x):
+    """
+    Replace +-, (c), (tm), (r), (p), etc by its typographic eqivalents
+    """
+    patterns = (
+        # копирайт ставится до года: © 2008 Юрий Юревич
+        (re.compile(u'\\([cCсС]\\)[\\s\u202f]*(\\d+)', re.UNICODE), u'\u00a9\u202f\\1'),
+        (r'([^+])(\+\-|\-\+)', u'\\1\u00b1'), # ±
+        # градусы с минусом
+        (u'\\-(\\d+)[\\s\u202f]*([FCС][^\\w])', u'\u2212\\1\202f\u00b0\\2'), # −12 °C, −53 °F
+        # градусы без минуса
+        (u'(\\d+)[\\s\u202f]*([FCС][^\\w])', u'\\1\u202f\u00b0\\2'), # 12 °C, 53 °F
+    )
+    # простые замены, можно без регулярок
+    replacements = (
+        (u'(r)', u'\u00ae'), # ®
+        (u'(R)', u'\u00ae'), # ®
+        (u'(p)', u'\u00a7'), # §
+        (u'(P)', u'\u00a7'), # §
+        (u'(tm)', u'\u2122'), # ™
+        (u'(TM)', u'\u2122'), # ™
+    )
+    for what, to in replacements:
+        x = x.replace(what, to)
+    return _sub_patterns(patterns, x)
+    
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'wordglue')
 
 def _get_rule_by_name(name):
 
@@ -199,3 +259,7 @@ def typography(text):
     t = Typography(STANDARD_RULES)
     return t.apply(text)
 
+if __name__ == '__main__':
+    from pytils.test import run_tests_from_module, test_typo
+    run_tests_from_module(test_typo, verbosity=2)
+    

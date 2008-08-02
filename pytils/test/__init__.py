@@ -44,6 +44,12 @@ def get_suite():
 
     return suite
 
+def run_tests_from_module(module, verbosity=1):
+    """Run unit-tests for single module"""
+    suite = unittest.TestSuite()
+    loader = unittest.defaultTestLoader
+    suite.addTest(loader.loadTestsFromModule(module))
+    unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
 def run(verbosity=1):
     """Run all unit-test of pytils"""
@@ -52,3 +58,4 @@ def run(verbosity=1):
 
 if __name__ == '__main__':
     run(2)
+

@@ -205,6 +205,11 @@ class RulesTestCase(unittest.TestCase):
             u" Точка ,точка , %(n)sзапятая,%(n)s вышла рожица  кривая . " % {'n': os.linesep},
             u"Точка, точка,%(n)sзапятая,%(n)sвышла рожица кривая." % {'n': os.linesep}
         )
+        self.checkRule(
+            'cleanspaces',
+            u"Газета ( ее принес мальчишка утром ) всё еще лежала на столе.",
+            u"Газета (ее принес мальчишка утром) всё еще лежала на столе.",
+        )
 
     def testEllipsis(self):
         """
@@ -220,6 +225,12 @@ class RulesTestCase(unittest.TestCase):
             u"Мдя..... могло быть лучше",
             u"Мдя..... могло быть лучше"
         )
+        self.checkRule(
+            'ellipsis',
+            u"...Дааааа",
+            u"…Дааааа"
+        )
+        
     
     def testInitials(self):
         """
@@ -245,8 +256,99 @@ class RulesTestCase(unittest.TestCase):
             u'Комиссия в составе директора В.И.Иванова и главного бухгалтера С.П.Васечкина постановила',
             u'Комиссия в составе директора В.И.\u2009Иванова и главного бухгалтера С.П.\u2009Васечкина постановила'
         )
-        
-        
+
+    def testDashes(self):
+        """
+        Unit-test for dashes rule
+        """
+        self.checkRule(
+            'dashes',
+            u'- Я пошел домой... - Может останешься? - Нет, ухожу.',
+            u'\u2014 Я пошел домой... \u2014 Может останешься? \u2014 Нет, ухожу.'
+        )
+        self.checkRule(
+            'dashes',
+            u'-- Я пошел домой... -- Может останешься? -- Нет, ухожу.',
+            u'\u2014 Я пошел домой... \u2014 Может останешься? \u2014 Нет, ухожу.'
+        )
+        self.checkRule(
+            'dashes',
+            u'-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.',
+            u'\u2014 Я\u202fпошел домой…\u202f\u2014 Может останешься?\u202f\u2014 Нет,\u202fухожу.'
+        )
+        self.checkRule(
+            'dashes',
+            u'Ползать по-пластунски',
+            u'Ползать по-пластунски',
+        )
+        self.checkRule(
+            'dashes',
+            u'Диапазон: 9-15',
+            u'Диапазон: 9\u201315',
+        )
+
+    def testWordglue(self):
+        """
+        Unit-test for wordglue rule
+        """
+        self.checkRule(
+            'wordglue',
+            u'Вроде бы он согласен',
+            u'Вроде\u202fбы\u202fон\u202fсогласен',
+        )
+        self.checkRule(
+            'wordglue',
+            u'Это - великий и ужасный Гудвин',
+            u'Это\u202f- великий и\u202fужасный\u202fГудвин',
+        )
+        self.checkRule(
+            'wordglue',
+            u'Это \u2014 великий и ужасный Гудвин',
+            u'Это\u202f\u2014 великий и\u202fужасный\u202fГудвин',
+        )
+        self.checkRule(
+            'wordglue',
+            u'-- Я пошел домой… -- Может останешься? -- Нет, ухожу.',
+            u'-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.'
+        )
+
+    def testMarks(self):
+        """
+        Unit-test for marks rule
+        """
+        self.checkRule(
+            'marks',
+            u"Когда В. И. Пупкин увидел в газете рубрику Weather Forecast(r), он не поверил своим глазам \u2014 температуру обещали +-451F.",
+            u"Когда В. И. Пупкин увидел в газете рубрику Weather Forecast®, он не поверил своим глазам \u2014 температуру обещали ±451\u202f°F."
+        )
+        self.checkRule(
+            'marks',
+            u"14 Foo",
+            u"14 Foo"
+        )
+        self.checkRule(
+            'marks',
+            u"Coca-cola(tm)",
+            u"Coca-cola™"
+        )
+        self.checkRule(
+            'marks',
+            u'(c) 2008 Юрий Юревич',
+            u'©\u202f2008 Юрий Юревич'
+        )
+
+class TypographyTestCase(unittest.TestCase):
+    """
+    Tests for pytils.typo.typography
+    """
+    def testPupkin(self):
+        """
+        Unit-test on pupkin-text
+        """
+        #Исходно:
+        u"""...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F."""
+        # Должно быть:
+        u"""…Когда В.\u2009И.\u2009Пупкин увидел в\u202fгазете (это была «Сермяжная правда» № 45) рубрику Weather Forecast®, он\u202fне\u202fповерил своим глазам\u202f\u2014 температуру обещали\u202f±451\u202f°F."""
 
 if __name__ == '__main__':
     unittest.main()
