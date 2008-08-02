@@ -205,6 +205,11 @@ class RulesTestCase(unittest.TestCase):
             u" Точка ,точка , %(n)sзапятая,%(n)s вышла рожица  кривая . " % {'n': os.linesep},
             u"Точка, точка,%(n)sзапятая,%(n)sвышла рожица кривая." % {'n': os.linesep}
         )
+        self.checkRule(
+            'cleanspaces',
+            u"Газета ( ее принес мальчишка утром ) всё еще лежала на столе.",
+            u"Газета (ее принес мальчишка утром) всё еще лежала на столе.",
+        )
 
     def testEllipsis(self):
         """
