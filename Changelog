@@ -1,4 +1,4 @@
-pytils (0.2.2-svn)
+pytils (0.2.3dev)
 
   * Add support for Django unicode branch (#27)
   * Make pytils.test to be optional package, not required (#26)

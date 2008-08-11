@@ -1,5 +1,13 @@
-See docs in 'doc' subdir.
+Pytils is a Russian-specific string utils
+(transliteration, numeral is words,
+russian dates, etc)
+
+See additional docs in doc subdir.
 
 -----
+
+Pytils это инструменты для работы 
+с русскими строками (транслитерация,
+числительные слоами, русские даты и т.д.)
 
 Документацию смотрите в каталоге doc
