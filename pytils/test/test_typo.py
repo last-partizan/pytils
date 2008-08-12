@@ -230,6 +230,11 @@ class RulesTestCase(unittest.TestCase):
             u"...Дааааа",
             u"…Дааааа"
         )
+        self.checkRule(
+            'ellipsis',
+            u"... Дааааа",
+            u"…Дааааа"
+        )
         
     
     def testInitials(self):
