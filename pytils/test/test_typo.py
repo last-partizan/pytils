@@ -303,6 +303,11 @@ class RulesTestCase(unittest.TestCase):
         )
         self.checkRule(
             'wordglue',
+            u'Он не поверил своим глазам',
+            u'Он\u202fне\u202fповерил своим\u202fглазам',
+        )
+        self.checkRule(
+            'wordglue',
             u'Это - великий и ужасный Гудвин',
             u'Это\u202f- великий и\u202fужасный\u202fГудвин',
         )
