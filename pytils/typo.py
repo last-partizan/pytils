@@ -90,9 +90,9 @@ def rl_dashes(x):
     """
     patterns = (
         # тире
-        (re.compile(u'(^|(.[\\s\u202f]))\\-\\-?(([\\s\u202f].)|$)', re.MULTILINE), u'\\1\u2014\\3'),
+        (re.compile(u'(^|(.[\\s\u202f]))\\-\\-?(([\\s\u202f].)|$)', re.MULTILINE|re.UNICODE), u'\\1\u2014\\3'),
         # диапазоны между цифрами - en dash
-        (re.compile(u'(\\d[\\s\u202f\u2009]*)\\-([\\s\u202f\u2009]*\d)', re.MULTILINE), u'\\1\u2013\\2'),
+        (re.compile(u'(\\d[\\s\u202f\u2009]*)\\-([\\s\u202f\u2009]*\d)', re.MULTILINE|re.UNICODE), u'\\1\u2013\\2'),
         # TODO: а что с минусом?
     )
     return _sub_patterns(patterns, x)
@@ -169,7 +169,7 @@ def rl_quotes(x):
     
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'wordglue', 'quotes')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue', 'quotes')
 
 def _get_rule_by_name(name):
 
