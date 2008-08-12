@@ -130,10 +130,30 @@ def rl_marks(x):
     for what, to in replacements:
         x = x.replace(what, to)
     return _sub_patterns(patterns, x)
+
+def rl_quotes(x):
+    """
+    Replace quotes by typographic quotes
+    """
+    patterns = (
+        # открывающие кавычки ставятся обычно вплотную к слову слева
+        # а закрывающие -- вплотную справа
+        # открывающие русские кавычки-ёлочки
+        (re.compile(u'(^|\\s|\u202f|\\()\\"([А-Яа-я0-9,\\-:\\/\\.])', re.UNICODE), u'\\1\xab\\2'),
+        # закрывающие русские кавычки-ёлочки
+        # ищем открывающую кавычку-ёлочку и следующую закрывающую кавычку
+        (re.compile(u'\xab([^\\"])([А-Яа-яA-Za-z0-9,\\-:\\/\\.\\?\\!\\s\u202f]+)\\"', re.UNICODE), u'\xab\\1\\2\xbb'),
+        # открывающие кавычки-лапки
+        (re.compile(u'(^|\\s|\u202f|\\()\\"([A-Za-z0-9,\\-:\\/\\.\\?\\!\\&])', re.UNICODE), u'\\1\u201c\\2'),
+        # закрывающие русские кавычки-лапки
+        # ищем открывающую кавычку-лапку и следующую закрывающую кавычку
+        (re.compile(u'\u201c([^\\"])([A-Za-zА-Яа-я0-9,\\-:\\/\\.\\?\\!\\&\\s\u202f]+)\\"', re.UNICODE), u'\u201c\\1\\2\u201d'),
+    )
+    return _sub_patterns(patterns, x)
     
 
 ## -------- rules end ----------
-STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'wordglue')
+STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'wordglue', 'quotes')
 
 def _get_rule_by_name(name):
 

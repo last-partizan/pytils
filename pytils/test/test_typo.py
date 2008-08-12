@@ -337,6 +337,46 @@ class RulesTestCase(unittest.TestCase):
             u'©\u202f2008 Юрий Юревич'
         )
 
+    def testQuotes(self):
+        """
+        Unit-test for quotes rule
+        """
+        self.checkRule(
+            'quotes',
+            u"ООО \"МСК \"Аско-Забота\"",
+            u"ООО «МСК «Аско-Забота»"
+        )
+        self.checkRule(
+            'quotes',
+            u"ООО\u202f\"МСК\u202f\"Аско-Забота\"",
+            u"ООО\u202f«МСК\u202f«Аско-Забота»"
+        )
+        self.checkRule(
+            'quotes',
+            u"Двигатели \"Pratt&Whitney\"",
+            u"Двигатели “Pratt&Whitney”"
+        )
+        self.checkRule(
+            'quotes',
+            u"«Вложенные «кавычки» - бич всех типографик», не правда ли",
+            u"«Вложенные «кавычки» - бич всех типографик», не правда ли",
+        )
+        self.checkRule(
+            'quotes',
+            u"Двигатели \"Pratt&Whitney\" никогда не использовались на самолетах \"Аэрофлота\"",
+            u"Двигатели “Pratt&Whitney” никогда не использовались на самолетах «Аэрофлота»"
+        )
+        self.checkRule(
+            'quotes',
+            u"Двигатели \"Pratt & Whitney\" никогда не использовались на самолетах \"Аэрофлота\"",
+            u"Двигатели “Pratt & Whitney” никогда не использовались на самолетах «Аэрофлота»"
+        )
+        self.checkRule(
+            'quotes',
+            u"Двигатели \"Pratt, Whitney и сыновья\" никогда не использовались на самолетах \"Аэрофлота\"",
+            u"Двигатели “Pratt, Whitney и сыновья” никогда не использовались на самолетах «Аэрофлота»"
+        )
+
 class TypographyTestCase(unittest.TestCase):
     """
     Tests for pytils.typo.typography
