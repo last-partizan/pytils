@@ -341,6 +341,11 @@ class RulesTestCase(unittest.TestCase):
             u'(c) 2008 Юрий Юревич',
             u'©\u202f2008 Юрий Юревич'
         )
+        self.checkRule(
+            'marks',
+            u"Microsoft (R) Windows (tm)",
+            u"Microsoft® Windows™"
+        )        
 
     def testQuotes(self):
         """
