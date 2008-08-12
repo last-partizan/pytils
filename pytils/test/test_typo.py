@@ -406,14 +406,19 @@ class TypographyTestCase(unittest.TestCase):
     """
     Tests for pytils.typo.typography
     """
+    def checkTypo(self, input_value, expected_value):
+        """
+        Helper for checking typo.typography
+        """
+        self.assertEquals(expected_value, typo.typography(input_value))
+    
     def testPupkin(self):
         """
         Unit-test on pupkin-text
         """
-        #Исходно:
-        u"""...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F."""
-        # Должно быть:
-        u"""…Когда В.\u2009И.\u2009Пупкин увидел в\u202fгазете (это была «Сермяжная правда» № 45) рубрику Weather Forecast®, он\u202fне\u202fповерил своим глазам\u202f\u2014 температуру обещали\u202f±451\u202f°F."""
+        self.checkTypo(
+        u"""...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F.""",
+        u"""…Когда В.И.\u2009Пупкин увидел в\u202fгазете (это была «Сермяжная правда» № 45) рубрику Weather Forecast®, он\u202fне\u202fповерил своим глазам\u202f\u2014 температуру обещали ±451\u202f°F.""")
 
 if __name__ == '__main__':
     unittest.main()
