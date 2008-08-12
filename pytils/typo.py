@@ -141,6 +141,8 @@ def rl_marks(x):
         (u'(\\d+)[\\s\u202f]*([FCС][^\\w])', u'\\1\u202f\u00b0\\2'), # 12 °C, 53 °F
         # ® и ™ приклеиваются к предыдущему слову, без пробела
         (re.compile(u'([A-Za-zА-Яа-я\\!\\?])[\\s\u202f]*(\xae|\u2122)', re.UNICODE), u'\\1\\2'),
+        # No5 -> № 5
+        (re.compile(u'([\\s\u202f])(No|no|NO|\u2116)[\\s\u202f\u2009]*(\\d+)', re.UNICODE), u'\\1\u2116\u2009\\3'),
     )
 
     for what, to in replacements:
