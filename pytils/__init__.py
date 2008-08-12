@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# pytils - simple processing for russian strings
-# Copyright (C) 2006-2007  Yury Yurevich
+# pytils - russian-specific string utils
+# Copyright (C) 2006-2008  Yury Yurevich
 #
 # http://www.pyobject.ru/projects/pytils/
 #
