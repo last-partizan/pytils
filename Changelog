@@ -1,4 +1,4 @@
-pytils (0.2.3dev)
+pytils (0.2.3)
 
   * Add support for Django unicode branch (#27)
   * Make pytils.test to be optional package, not required (#26)
@@ -6,7 +6,7 @@ pytils (0.2.3dev)
   * Python-2.3 is not supported now (decorators are used)
   * Add custom exception pytils.err.InputParameterError, inherited from TypeError
 
- -- Yury Yurevich <the.pythy@gmail.com>  Sun, 30 Sep 2007 23:38:44 +0700
+ -- Yury Yurevich <the.pythy@gmail.com>  Fri, 15 Aug 2008 20:45:12 +0700
 
 pytils (0.2.2)
 
