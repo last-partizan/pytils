@@ -119,6 +119,15 @@ class TranslitTestCase(unittest.TestCase):
         """
         self.ckSlug(u"World of Warcraft", "world-of-warcraft")
 
+    def testAdditionalDashesAndQuotes(self):
+        """
+        Unit-test for testing additional dashes (figure and em-dash) 
+        and quotes
+        """
+        self.ckSlug(u"Юнит-тесты — наше всё", 'yunit-testyi---nashe-vsyo')
+        self.ckSlug(u"Юнит-тесты ‒ наше всё", 'yunit-testyi---nashe-vsyo')
+        self.ckSlug(u"95−34", '95-34')
+        self.ckTransl(u"Двигатель “Pratt&Whitney”", 'Dvigatel\' "Pratt&Whitney"')
 
 if __name__ == '__main__':
     unittest.main()
