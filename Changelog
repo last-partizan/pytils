@@ -1,3 +1,9 @@
+pytils (0.2.4dev)
+
+  * Add typography
+
+ -- Yury Yurevich <the.pythy@gmail.com>  Fri, 02 Jan 2009 23:33:43 +0600
+
 pytils (0.2.3)
 
   * Add support for Django unicode branch (#27)

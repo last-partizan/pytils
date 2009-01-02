@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # pytils - russian-specific string utils
-# Copyright (C) 2006-2008  Yury Yurevich
+# Copyright (C) 2006-2009  Yury Yurevich
 #
-# http://www.pyobject.ru/pythy/projects/pytils/
+# http://pyobject.ru/pythy/projects/pytils/
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
