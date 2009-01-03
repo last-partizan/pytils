@@ -10,7 +10,7 @@ It's a regular Django-project, so just start it
 
 go to http://127.0.0.1:8000/ and look it...
 
-Warn: tested on Django 0.95, 0.95.1, 0.96, 0.97-pre
+Warn: tested on Django 0.95, 0.96, 1.0 and 1.1pre-alpha
 
 ------------------------------------
 
@@ -26,5 +26,4 @@ Django (версии 0.95 и выше) и pytils.
 
 заходите браузером на http://127.0.0.1:8000/ и смотрите...
 
-Внимание: протестировано на Django версий 0.95, 
-0.95.1, 0.96, 0.97-pre
+Внимание: протестировано на Django версий 0.95, 0.96, 1.0 и 1.1pre-alpha

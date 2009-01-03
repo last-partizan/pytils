@@ -2,6 +2,7 @@
 
 import time
 import datetime
+import sys
 
 from django.conf.urls.defaults import *
 import settings
@@ -9,11 +10,14 @@ import settings
 from pytils import VERSION as pytils_version
 from django import VERSION as _django_version
 
+def get_python_version():
+    return '.'.join(str(v) for v in sys.version_info[:3])
+
 def get_django_version(_ver):
     suffix = _ver[-1]
     ver = '.'.join([str(x) for x in _ver[:-1]])
     if suffix is not None:
-        ver += suffix
+        ver += str(suffix)
     return ver
 
 urlpatterns = patterns('django.views',
@@ -54,6 +58,8 @@ urlpatterns = patterns('django.views',
     (r'^$', 'generic.simple.direct_to_template',
         {'template': 'base.html',
          'pytils_version': pytils_version,
-          'django_version': get_django_version(_django_version)}
+         'django_version': get_django_version(_django_version),
+         'python_version': get_python_version(),
+        }
     ),
 )
