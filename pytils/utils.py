@@ -79,9 +79,8 @@ def split_values(ustring, sep=u','):
     @return: tuple of splitted elements
     """
     assert isinstance(ustring, unicode), "uvalue must be unicode, not %s" % type(ustring)
-    # в юникоде есть специальный символ, который в нормальном тексте не должен встречаться
-    # это маркер 0xffff
-    # им и будем помечать места, где есть экранированная запятая
+    # unicode have special mark symbol 0xffff which cannot be used in a regular text,
+    # so we use it to mark a place where escaped column was
     ustring_marked = ustring.replace(u'\,', u'\uffff')
     items = tuple([i.strip().replace(u'\uffff', u',') for i in ustring_marked.split(sep)])
     return items

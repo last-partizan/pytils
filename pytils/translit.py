@@ -36,15 +36,14 @@ TRANSTABLE = (
         (u"−", u"-"),  # minus
         (u"…", u"..."),
         (u"№", u"#"),
-        ## верхний регистр
-        # трехбуквенные замены
+        ## upper
+        # three-symbols replacements
         (u"Щ", u"Sch"),
-        # при замене русский->английский будет первая замена,
-        # т.е. Sch
-        # а вот если английский->русский, то вариант SCH и Sch --
-        # оба пройдут
+        # on russian->english translation only first replacement will be done
+        # i.e. Sch
+        # but on english->russian translation both variants (Sch and SCH) will play
         (u"Щ", u"SCH"),
-        # двухбуквенные замены
+        # two-symbol replacements
         (u"Ё", u"Yo"),
         (u"Ё", u"YO"),
         (u"Ж", u"Zh"),
@@ -61,7 +60,7 @@ TRANSTABLE = (
         (u"Ю", u"YU"),
         (u"Я", u"Ya"),
         (u"Я", u"YA"),
-        # однобуквенные замены
+        # one-symbol replacements
         (u"А", u"A"),
         (u"Б", u"B"),
         (u"В", u"V"),
@@ -86,10 +85,10 @@ TRANSTABLE = (
         (u"Э", u"E"),
         (u"Ъ", u"`"),
         (u"Ь", u"'"),
-        ## нижний регистр
-        # трехбуквенные замены
+        ## lower
+        # three-symbols replacements
         (u"щ", u"sch"),
-        # двухбуквенные замены
+        # two-symbols replacements
         (u"ё", u"yo"),
         (u"ж", u"zh"),
         (u"ц", u"ts"),
@@ -98,7 +97,7 @@ TRANSTABLE = (
         (u"ы", u"yi"),
         (u"ю", u"yu"),
         (u"я", u"ya"),
-        # однобуквенные замены
+        # one-symbol replacements
         (u"а", u"a"),
         (u"б", u"b"),
         (u"в", u"v"),
@@ -123,9 +122,9 @@ TRANSTABLE = (
         (u"э", u"e"),
         (u"ъ", u"`"),
         (u"ь", u"'"),
-        # для полноты английского алфавит (в slugify)
-        # дополняем английскими буквами, которых
-        # не в парах
+        # Make english alphabet full: append english-english pairs
+        # for symbols which is not used in russian-english
+        # translations. Used in slugify.
         (u"c", u"c"),
         (u"q", u"q"),
         (u"y", u"y"),
