@@ -18,7 +18,7 @@ Unit-tests for pytils.utils
 """
 
 import unittest
-import pytils 
+import pytils
 
 class ASPN426123TestCase(unittest.TestCase):
     """

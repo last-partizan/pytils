@@ -73,7 +73,7 @@ class HelpersTestCase(unittest.TestCase):
             callable(typo._resolve_rule_name(cb_testrule, 'newrule')[1]
         ))
         self.assertEquals(
-            'newrule', 
+            'newrule',
             typo._resolve_rule_name('testrule', 'newrule')[0]
         )
         self.assertEquals(
@@ -97,7 +97,7 @@ class TypographyApplierTestCase(unittest.TestCase):
     
     def testExpandSimpleStrArgs(self):
         self.assertEquals(
-            {'testrule': typo.rl_testrule}, 
+            {'testrule': typo.rl_testrule},
             typo.Typography('testrule').rules
         )
         self.assertEquals(
@@ -108,7 +108,7 @@ class TypographyApplierTestCase(unittest.TestCase):
     def testExpandDictStrArgs(self):
         self.assertEquals(
             {
-                'testrule': typo.rl_testrule, 
+                'testrule': typo.rl_testrule,
                 'newrule':  typo.rl_testrule
             },
             typo.Typography('testrule', {'newrule': 'testrule'}).rules
@@ -133,7 +133,7 @@ class TypographyApplierTestCase(unittest.TestCase):
             {
                 'cb_testrule': cb_testrule,
                 'newrule': cb_testrule
-            }, 
+            },
             typo.Typography(cb_testrule, {'newrule': cb_testrule}).rules
         )
         self.assertEquals(

@@ -121,7 +121,7 @@ class TranslitTestCase(unittest.TestCase):
 
     def testAdditionalDashesAndQuotes(self):
         """
-        Unit-test for testing additional dashes (figure and em-dash) 
+        Unit-test for testing additional dashes (figure and em-dash)
         and quotes
         """
         self.ckSlug(u"Юнит-тесты — наше всё", 'yunit-testyi---nashe-vsyo')

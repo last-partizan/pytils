@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# -*- test-case-name: pytils.test.templatetags.test_dt -*- 
+# -*- test-case-name: pytils.test.templatetags.test_dt -*-
 # pytils - russian-specific string utils
 # Copyright (C) 2006-2009  Yury Yurevich
 #
@@ -104,7 +104,7 @@ def ru_strftime_preposition(date, format="%d.%m.%Y"):
     """
     Russian strftime with inflected day and correct preposition,
     formats date with given format (similar to ru_strftime),
-    also inflects day in proper form and inserts correct 
+    also inflects day in proper form and inserts correct
     preposition.
 
     Examples::

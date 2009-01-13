@@ -132,7 +132,7 @@ class GetFloatRemainderTestCase(unittest.TestCase):
     def testFloatRemainder(self):
         """
         Unit-test for _get_float_remainder
-        """        
+        """
         self.assertEquals(pytils.numeral._get_float_remainder(1.3),
                           '3')
         self.assertEquals(pytils.numeral._get_float_remainder(2.35, 1),
@@ -164,7 +164,7 @@ class RublesTestCase(unittest.TestCase):
     def testRubles(self):
         """
         Unit-test for rubles
-        """        
+        """
         self.assertEquals(pytils.numeral.rubles(10.01),
                           u"десять рублей одна копейка")
         self.assertEquals(pytils.numeral.rubles(10.10),
@@ -197,7 +197,7 @@ class InWordsTestCase(unittest.TestCase):
     def testInt(self):
         """
         Unit-test for in_words_int
-        """                
+        """
         self.assertEquals(pytils.numeral.in_words_int(10), u"десять")
         self.assertEquals(pytils.numeral.in_words_int(5), u"пять")
         self.assertEquals(pytils.numeral.in_words_int(102), u"сто два")
@@ -220,7 +220,7 @@ class InWordsTestCase(unittest.TestCase):
     def testFloat(self):
         """
         Unit-test for in_words_float
-        """                
+        """
         self.assertEquals(pytils.numeral.in_words_float(10.0),
                           u"десять целых ноль десятых")
         self.assertEquals(pytils.numeral.in_words_float(2.25),
@@ -238,7 +238,7 @@ class InWordsTestCase(unittest.TestCase):
         self.assertRaises(TypeError, pytils.numeral.in_words_float, 2)
         self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words_float, '2')
         self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words_float, 2)
-        self.assertRaises(ValueError, pytils.numeral.in_words_float, -2.3)        
+        self.assertRaises(ValueError, pytils.numeral.in_words_float, -2.3)
 
     def testWithGenderOldStyle(self):
         """
@@ -284,7 +284,7 @@ class InWordsTestCase(unittest.TestCase):
     def testCommon(self):
         """
         Unit-test for general in_words
-        """                
+        """
         self.assertEquals(pytils.numeral.in_words(10), u"десять")
         self.assertEquals(pytils.numeral.in_words(5), u"пять")
         self.assertEquals(pytils.numeral.in_words(102), u"сто два")

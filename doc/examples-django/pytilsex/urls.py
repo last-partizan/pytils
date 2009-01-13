@@ -29,7 +29,7 @@ urlpatterns = patterns('django.views',
           'cdate': datetime.datetime.now(),
           'odate': datetime.datetime.now() - datetime.timedelta(0, 100000),
           'fdate': datetime.datetime.now() + datetime.timedelta(0, 100000),
-          }   
+          }
     ),
     (r'^numeral/', 'generic.simple.direct_to_template',
          {'template': 'numeral.html',
@@ -41,18 +41,18 @@ urlpatterns = patterns('django.views',
           'rubles_value2': 12,
           'int_value': 21,
           'float_value': 31.385,
-          }   
+          }
     ),
     (r'^translit/', 'generic.simple.direct_to_template',
          {'template': 'translit.html',
           'text': 'Пример траслитерации средствами pytils',
           'translit': 'Primer obratnoj transliteratsii',
-          }   
+          }
     ),
 
     (r'^static/(?P<path>.*)$', 'static.serve',
          {'document_root': settings.MEDIA_ROOT,
-          }   
+          }
     ),
     
     (r'^$', 'generic.simple.direct_to_template',

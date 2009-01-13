@@ -55,7 +55,7 @@ def pseudo_unicode(stext, encoding, default_value=u''):
     decode from encoding otherwise.
     
     It raises UnicodeDecodeError when such error occures
-    and default_value is None. Otherwise (i.e. 
+    and default_value is None. Otherwise (i.e.
     default_value is not None), it return default_value.
     
     """
@@ -79,7 +79,7 @@ def pseudo_str(utext, encoding, default_value=''):
     encode to encoding otherwise
 
     It raises UnicodeEncodeError when such error occures
-    and default_value is None. Otherwise (i.e. 
+    and default_value is None. Otherwise (i.e.
     default_value is not None), it return default_value.
     """
     if unicode_aware and isinstance(utext, unicode):

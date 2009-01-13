@@ -21,7 +21,7 @@ import datetime
 import time
 import unittest
 
-import pytils 
+import pytils
 
 class DistanceOfTimeInWordsTestCase(unittest.TestCase):
     """
@@ -232,7 +232,7 @@ class RuStrftimeTestCase(unittest.TestCase):
     def setUp(self):
         """
         Setting up environment for tests
-        """        
+        """
         self.date = datetime.date(2006, 8, 25)
     
     def ck(self, format, estimates, date=None):

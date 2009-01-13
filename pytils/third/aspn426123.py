@@ -12,7 +12,7 @@
 #
 # @takes(int, str) # takes int, str, upon a problem throws InputParameterError
 # @returns(int)    # returns int, upon a problem throws ReturnValueError
-# def foo(i, s): 
+# def foo(i, s):
 #     return i + len(s)
 #
 # @takes((int, long), by_regex("^[0-9]+$")) # int or long, numerical string
@@ -25,7 +25,7 @@
 #
 # Note: @takes for positional arguments, @takes for keyword arguments and @returns
 # all support the same checker syntax, for example for the following declaration
-# 
+#
 # @takes(C)
 # def foo(x):
 #     ...
@@ -69,7 +69,7 @@
 #     @takes("foo", int)            # foo, and int if presents in args,
 #     def bar(self, *args):         # if args is empty, the check passes ok
 #         ...
-#     @takes("foo")                 
+#     @takes("foo")
 #     @returns(object)              # returns foo which is fine, because
 #     def biz(self):                # foo is an object
 #         return self
@@ -77,11 +77,11 @@
 #     @takes(type)                  # go same way
 #     def baz(cls):
 #         ...
-#    
+#
 # @takes(int)
 # @returns(optional("int", foo))    # returns either int, foo or NoneType
 # def bar(i):                       # "int" (rather than just int) is for fun
-#     if i > 0: 
+#     if i > 0:
 #         return i
 #     elif i == 0:
 #         return foo()              # otherwise returns NoneType
@@ -133,7 +133,7 @@
 #
 ################################################################################
 
-__all__ = [ "takes", "InputParameterError", "returns", "ReturnValueError", 
+__all__ = [ "takes", "InputParameterError", "returns", "ReturnValueError",
             "optional", "nothing", "anything", "list_of", "tuple_of", "dict_of",
             "by_regex", "with_attr", "one_of" ]
 
@@ -210,7 +210,7 @@ class TupleChecker(Checker):
 
 Checker._registered.append((lambda x: isinstance(x, tuple) and not
                                       filter(lambda y: Checker.create(y) is None,
-                                             x), 
+                                             x),
                             TupleChecker))
 
 optional = lambda *args: args + (NoneType, )
@@ -222,7 +222,7 @@ class FunctionChecker(Checker):
     def check(self, value):
         return self.reference(value)
 
-Checker._registered.append((lambda x: isfunction(x) or isbuiltin(x), 
+Checker._registered.append((lambda x: isfunction(x) or isbuiltin(x),
                             FunctionChecker))
 
 anything = lambda *args: True
@@ -330,7 +330,7 @@ def takes(*args, **kwargs):
     if no_check: # no type checking is performed, return decorated method itself
 
         def takes_proxy(method):
-            return method        
+            return method
 
     else:
 
@@ -350,14 +350,14 @@ def takes(*args, **kwargs):
                     if not checker.check(arg):
                         raise InputParameterError("%s() got invalid parameter "
                                                   "%d of type %s" %
-                                                  (method.__name__, i + 1, 
+                                                  (method.__name__, i + 1,
                                                    type_name(arg)))
 
                 for kwname, checker in kwcheckers.iteritems():
                     if not checker.check(kwargs.get(kwname, None)):
                         raise InputParameterError("%s() got invalid parameter "
                                                   "%s of type %s" %
-                                                  (method.__name__, kwname, 
+                                                  (method.__name__, kwname,
                                                    type_name(kwargs.get(kwname, None))))
                 return method(*args, **kwargs)
 
@@ -395,7 +395,7 @@ def returns(sometype):
                 
                 if not checker.check(result):
                     raise ReturnValueError("%s() has returned an invalid "
-                                           "value of type %s" % 
+                                           "value of type %s" %
                                            (method.__name__, type_name(result)))
 
                 return result

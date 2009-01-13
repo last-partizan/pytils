@@ -14,7 +14,7 @@ import sys
 # look for setup.py in this directory. If it's not there, this script is
 # probably installed
 if len(sys.argv) > 1:
-    turbogears.update_config(configfile=sys.argv[1], 
+    turbogears.update_config(configfile=sys.argv[1],
         modulename="pytilsex.config")
 elif exists(join(dirname(__file__), "setup.py")):
     turbogears.update_config(configfile="dev.cfg",

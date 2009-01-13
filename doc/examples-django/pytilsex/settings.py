@@ -71,7 +71,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = []
 
 INSTALLED_APPS = (
-# -- install pytils  
+# -- install pytils
     'pytils',
 )
 

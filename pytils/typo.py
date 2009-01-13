@@ -26,10 +26,10 @@ def _sub_patterns(patterns, text):
     """
     for pattern, repl in patterns:
         text = re.sub(pattern, repl, text)
-    return text    
+    return text
 
 ## ---------- rules -------------
-# rules is a regular function, 
+# rules is a regular function,
 # name convention is rl_RULENAME
 def rl_testrule(x):
     """
@@ -40,7 +40,7 @@ def rl_testrule(x):
 def rl_cleanspaces(x):
     """
     Clean double spaces, trailing spaces, heading spaces,
-    spaces before punctuations 
+    spaces before punctuations
     """
     patterns = (
         # arguments for re.sub: pattern and repl
@@ -106,7 +106,7 @@ def rl_wordglue(x):
         (re.compile(u'(\\s+)(же|ли|ль|бы|б|ж|ка)([\\.,!\\?:;]?\\s+)', re.UNICODE), u'\u202f\\2\\3'),
         # склеиваем короткие слова со следующим словом
         (re.compile(u'\\b([a-zA-ZА-Яа-я]{1,3})(\\s+)', re.UNICODE), u'\\1\u202f'),
-        # склеиваем тире с предыдущим словом 
+        # склеиваем тире с предыдущим словом
         (re.compile(u'(\\s+)([\u2014\\-]+)(\\s+)', re.UNICODE), u'\u202f\\2\\3'),
         # склеиваем два последних слова в абзаце между собой
         # полагается, что абзацы будут передаваться отдельной строкой
@@ -192,7 +192,7 @@ def _resolve_rule_name(rule_or_name, forced_name=None):
         rule = rule_or_name
     else:
         raise ValueError(
-            "Cannot resolve %r: neither rule, nor name" % 
+            "Cannot resolve %r: neither rule, nor name" %
             rule_or_name)
     if forced_name is not None:
         name = forced_name
@@ -216,17 +216,17 @@ class Typography(object):
             as list:
                 Typography(['first_rule', cb_second_rule])
             as keyword args:
-                Typography(rule_name='first_rule', 
+                Typography(rule_name='first_rule',
                            another_rule=cb_second_rule)
             as dict (order of rule execution is not the same):
-                Typography({'rule name': 'first_rule', 
+                Typography({'rule name': 'first_rule',
                             'another_rule': cb_second_rule})
         
         For standard rules it is recommended to use list of rules
         names.
             Typography(['first_rule', 'second_rule'])
         
-        For custom rules which are named functions, 
+        For custom rules which are named functions,
         it is recommended to use list of callables:
             Typography([cb_first_rule, cb_second_rule])
         
@@ -238,7 +238,7 @@ class Typography(object):
             Typography(['standard_rule_1', 'standard_rule_2'],
                        [cb_custom_rule1, cb_custom_rule_2],
                        {'custom_lambda_rule': lambda x: x})
-        """     
+        """
         self.rules = {}
         self.rules_names = []
         # first of all, expand args-lists and args-dicts
@@ -254,7 +254,7 @@ class Typography(object):
             else:
                 raise TypeError(
                     "Cannot expand arg %r, must be tuple, list,"\
-                    " dict, str or callable, not" % 
+                    " dict, str or callable, not" %
                     (arg, type(arg).__name__))
         for kw, arg in kwargs.items():
             if isinstance(arg, str) or callable(arg):
