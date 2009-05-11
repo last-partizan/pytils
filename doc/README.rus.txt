@@ -13,9 +13,9 @@ pytils - простой обработчик русского текста, ре
 Ссылки
 ------
 
- *  [Пост о pytils в блоге](http://www.pyobject.ru/blog/post//pytils/)
- *  [Страница pytils](http://www.pyobject.ru/projects/pytils/)
- *  [Mercurial-репозиторий](http://hg.pyobject.ru/pytils/)
+ *  [Страница pytils](http://pyobject.ru/projects/pytils/)
+ *  [pytils на BitBucket](http://bitbucket.org/j2a/pytils)
+ *  [pytils на Ohloh](http://ohloh.net/p/pytils)
 
 Как установить
 --------------
@@ -48,7 +48,7 @@ pytils умеет выбирать правильный падеж в завис
     >>> pytils.numeral.choose_plural(15, (u"гвоздь", u"гвоздя", u"гвоздей"))
     u'гвоздей'
 
-    
+
 В качестве второго параметра передается кортеж с вариантами (либо строка, 
 где варианты перечисляются через запятую). Чтобы легко запомнить, 
 в каком порядке указывать варианты, пользуйтесь мнемоническим 
