@@ -20,7 +20,7 @@ Misc utils for internal use
 
 import sys
 import warnings
-
+from decimal import Decimal
 from pytils.third.aspn426123 import takes, returns, optional, list_of, tuple_of, \
                                     nothing, one_of
 
@@ -46,13 +46,13 @@ def check_length(value, length):
                          (length, _length))
 
 
-@takes((int,long,float), optional(bool), strict=optional(bool))
+@takes((int,long,float,Decimal), optional(bool), strict=optional(bool))
 def check_positive(value, strict=False):
     """
     Checks if variable is positive
 
     @param value: value to check
-    @type value: C{int}, C{long} or C{float}
+    @type value: C{int}, C{long}, C{float} or C{Decimal}
 
     @return: None when check successful
 

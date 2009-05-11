@@ -18,6 +18,7 @@ Unit-tests for pytils.numeral
 """
 
 import unittest
+import decimal
 import pytils
 
 class ChoosePluralTestCase(unittest.TestCase):
@@ -146,6 +147,24 @@ class GetFloatRemainderTestCase(unittest.TestCase):
         self.assertEquals(pytils.numeral._get_float_remainder(5),
                           '0')
 
+    def testFloatRemainderDecimal(self):
+        """
+        Unit-test for _get_float_remainder with decimal type
+        """
+        D = decimal.Decimal
+        self.assertEquals(pytils.numeral._get_float_remainder(D("1.3")),
+                          '3')
+        self.assertEquals(pytils.numeral._get_float_remainder(D("2.35"), 1),
+                          '4')
+        self.assertEquals(pytils.numeral._get_float_remainder(D("123.1234567891")),
+                          '123456789')
+        self.assertEquals(pytils.numeral._get_float_remainder(D("2.353"), 2),
+                          '35')
+        self.assertEquals(pytils.numeral._get_float_remainder(D("0.01")),
+                          '01')
+        self.assertEquals(pytils.numeral._get_float_remainder(D("5")),
+                          '0')
+
     def testFloatRemainderExceptions(self):
         """
         Unit-test for testing _get_float_remainder's exceptions
@@ -179,6 +198,22 @@ class RublesTestCase(unittest.TestCase):
                           u"три рубля ноль копеек")
         self.assertEquals(pytils.numeral.rubles(3l),
                           u"три рубля")
+
+    def testRublesDecimal(self):
+        """
+        Test for rubles with decimal instead of float/integer
+        """
+        D = decimal.Decimal
+        self.assertEquals(pytils.numeral.rubles(D("10.01")),
+                          u"десять рублей одна копейка")
+        self.assertEquals(pytils.numeral.rubles(D("10.10")),
+                          u"десять рублей десять копеек")
+        self.assertEquals(pytils.numeral.rubles(D("2.35")),
+                          u"два рубля тридцать пять копеек")
+        self.assertEquals(pytils.numeral.rubles(D(3)),
+                          u"три рубля")
+        self.assertEquals(pytils.numeral.rubles(D(3), True),
+                          u"три рубля ноль копеек")
 
     def testRublesExceptions(self):
         """
@@ -229,6 +264,23 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна сотая")
         self.assertEquals(pytils.numeral.in_words_float(0.10),
                           u"ноль целых одна десятая")
+
+    def testDecimal(self):
+        """
+        Unit-test for in_words_float with decimal type
+        """
+        D = decimal.Decimal
+        self.assertEquals(pytils.numeral.in_words_float(D("10.0")),
+                          u"десять целых ноль десятых")
+        self.assertEquals(pytils.numeral.in_words_float(D("2.25")),
+                          u"две целых двадцать пять сотых")
+        self.assertEquals(pytils.numeral.in_words_float(D("0.01")),
+                          u"ноль целых одна сотая")
+        # поскольку это Decimal, то здесь нет незначащих нулей
+        # т.е. нули определяют точность, поэтому десять сотых,
+        # а не одна десятая
+        self.assertEquals(pytils.numeral.in_words_float(D("0.10")),
+                          u"ноль целых десять сотых")
 
     def testFloatExceptions(self):
         """
@@ -285,6 +337,7 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for general in_words
         """
+        D = decimal.Decimal
         self.assertEquals(pytils.numeral.in_words(10), u"десять")
         self.assertEquals(pytils.numeral.in_words(5), u"пять")
         self.assertEquals(pytils.numeral.in_words(102), u"сто два")
@@ -303,6 +356,13 @@ class InWordsTestCase(unittest.TestCase):
         self.assertEquals(pytils.numeral.in_words(0.10),
                           u"ноль целых одна десятая")
         self.assertEquals(pytils.numeral.in_words(10l), u"десять")
+        self.assertEquals(pytils.numeral.in_words(D("2.25")),
+                          u"две целых двадцать пять сотых")
+        self.assertEquals(pytils.numeral.in_words(D("0.01")),
+                          u"ноль целых одна сотая")
+        self.assertEquals(pytils.numeral.in_words(D("0.10")),
+                          u"ноль целых десять сотых")
+        self.assertEquals(pytils.numeral.in_words(D("10")), u"десять")
 
     def testCommonExceptions(self):
         """

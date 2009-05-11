@@ -19,6 +19,7 @@ Unit-tests for pytils.utils
 
 import unittest
 import pytils
+import decimal
 
 class ASPN426123TestCase(unittest.TestCase):
     """
@@ -104,10 +105,12 @@ class ChecksTestCase(unittest.TestCase):
         self.assertEquals(pytils.utils.check_positive(1, strict=False), None)
         self.assertEquals(pytils.utils.check_positive(1, True), None)
         self.assertEquals(pytils.utils.check_positive(1, strict=True), None)
+        self.assertEquals(pytils.utils.check_positive(decimal.Decimal("2.0")), None)
         self.assertEquals(pytils.utils.check_positive(2.0), None)
         
         self.assertRaises(ValueError, pytils.utils.check_positive, -2)
         self.assertRaises(ValueError, pytils.utils.check_positive, -2.0)
+        self.assertRaises(ValueError, pytils.utils.check_positive, decimal.Decimal("-2.0"))
         self.assertRaises(ValueError, pytils.utils.check_positive, 0, True)
 
 
