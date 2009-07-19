@@ -23,8 +23,6 @@ import datetime
 from pytils import numeral
 from pytils.utils import takes, returns, optional, check_positive
 
-import utils
-
 DAY_ALTERNATIVES = {
     1: (u"вчера", u"завтра"),
     2: (u"позавчера", u"послезавтра")

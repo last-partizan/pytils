@@ -20,8 +20,6 @@ Pytils templatetags for Django web-framework
 import warnings
 import django
 
-from pytils import utils
-
 def is_django_unicode_aware():
     if django.VERSION[:2] > (0, 96):
         return True

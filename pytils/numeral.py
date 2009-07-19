@@ -19,7 +19,7 @@ Plural forms and in-word representation for numerals.
 """
 from decimal import Decimal
 from pytils import utils
-from pytils.utils import takes, returns, optional, list_of, tuple_of, \
+from pytils.utils import takes, optional, list_of, tuple_of, \
                          nothing, one_of, check_positive, check_length
 
 FRACTIONS = (

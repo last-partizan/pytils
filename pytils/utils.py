@@ -18,8 +18,6 @@
 Misc utils for internal use
 """
 
-import sys
-import warnings
 from decimal import Decimal
 from pytils.third.aspn426123 import takes, returns, optional, list_of, tuple_of, \
                                     nothing, one_of

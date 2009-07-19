@@ -20,7 +20,7 @@ pytils.dt templatetags for Django web-framework
 
 import time
 from django import template, conf
-from pytils import dt, utils
+from pytils import dt
 from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator

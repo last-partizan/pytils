@@ -19,7 +19,7 @@ pytils.numeral templatetags for Django web-framework
 """
 
 from django import template, conf
-from pytils import numeral, utils
+from pytils import numeral
 from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
