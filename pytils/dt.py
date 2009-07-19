@@ -117,7 +117,6 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     dt_delta = to_time - from_time
     difference = dt_delta.days*86400 + dt_delta.seconds
 
-    seconds_orig = int(abs(difference))
     minutes_orig = int(abs(difference)/60.0)
     hours_orig = int(abs(difference)/3600.0)
     days_orig = int(abs(difference)/86400.0)
