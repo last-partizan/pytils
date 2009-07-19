@@ -460,7 +460,6 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     if tmp_val == 0:
         return into, tmp_val
 
-    rest = rest1 = end_word = None
     words = []
 
     rest = tmp_val % 1000

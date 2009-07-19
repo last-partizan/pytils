@@ -146,7 +146,6 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     minutes == 1 and current and alternatives.append(u"минуту")
 
-    real_words = words
     # убираем из values и words конечные нули
     while values and not values[-1]:
         values.pop()
