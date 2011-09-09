@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_numeral -*-
 # pytils - russian-specific string utils
-# Copyright (C) 2006-2009  Yury Yurevich
+# Copyright (C) 2006-2008  Yury Yurevich
 #
-# http://pyobject.ru/projects/pytils/
+# http://www.pyobject.ru/projects/pytils/
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,9 +17,9 @@
 """
 Plural forms and in-word representation for numerals.
 """
-from decimal import Decimal
+
 from pytils import utils
-from pytils.utils import takes, optional, list_of, tuple_of, \
+from pytils.utils import takes, returns, optional, list_of, tuple_of, \
                          nothing, one_of, check_positive, check_length
 
 FRACTIONS = (
@@ -88,7 +88,7 @@ FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
 
-@takes((int, long, float, Decimal),
+@takes((int, long, float),
        optional(int),
        signs=optional(int))
 def _get_float_remainder(fvalue, signs=9):
@@ -96,7 +96,7 @@ def _get_float_remainder(fvalue, signs=9):
     Get remainder of float, i.e. 2.05 -> '05'
 
     @param fvalue: input value
-    @type fvalue: C{int}, C{long}, C{float} or C{Decimal}
+    @type fvalue: C{int}, C{long} or C{float}
 
     @param signs: maximum number of signs
     @type signs: C{int} or C{long}
@@ -111,10 +111,6 @@ def _get_float_remainder(fvalue, signs=9):
     """
     check_positive(fvalue)
     if isinstance(fvalue, (int, long)):
-        return "0"
-    if isinstance(fvalue, Decimal) and fvalue.as_tuple()[2] == 0:
-        # Decimal.as_tuple() -> (sign, digit_tuple, exponent)
-        # если экспонента "0" -- значит дробной части нет
         return "0"
 
     signs = min(signs, len(FRACTIONS))
@@ -235,13 +231,13 @@ def _get_plural_legacy(amount, extra_variants):
         variants = extra_variants
     return get_plural(amount, variants, absence)
 
-@takes((int, long, float, Decimal), optional(bool), zero_for_kopeck=optional(bool))
+@takes((int, long, float), optional(bool), zero_for_kopeck=optional(bool))
 def rubles(amount, zero_for_kopeck=False):
     """
     Get string for money
 
     @param amount: amount of money
-    @type amount: C{int}, C{long}, C{float} or C{Decimal}
+    @type amount: C{int}, C{long} or C{float}
 
     @param zero_for_kopeck: If false, then zero kopecks ignored
     @type zero_for_kopeck: C{bool}
@@ -293,13 +289,13 @@ def in_words_int(amount, gender=MALE):
 
     return sum_string(amount, gender)
 
-@takes((float, Decimal), optional(one_of(1,2,3)), _gender=optional(one_of(1,2,3)))
+@takes(float, optional(one_of(1,2,3)), _gender=optional(one_of(1,2,3)))
 def in_words_float(amount, _gender=FEMALE):
     """
     Float in words
 
     @param amount: float numeral
-    @type amount: C{float} or C{Decimal}
+    @type amount: C{float}
 
     @return: in-words reprsentation of float numeral
     @rtype: C{unicode}
@@ -321,7 +317,7 @@ def in_words_float(amount, _gender=FEMALE):
 
     return u" ".join(pts)
 
-@takes((int,long,float,Decimal),
+@takes((int,long,float),
        optional(one_of(None,1,2,3)),
        gender=optional(one_of(None,1,2,3)))
 def in_words(amount, gender=None):
@@ -329,7 +325,7 @@ def in_words(amount, gender=None):
     Numeral in words
 
     @param amount: numeral
-    @type amount: C{int}, C{long}, C{float} or C{Decimal}
+    @type amount: C{int}, C{long} or C{float}
 
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
@@ -343,11 +339,7 @@ def in_words(amount, gender=None):
     raise ValueError: when amount is negative
     """
     check_positive(amount)
-    if isinstance(amount, Decimal) and amount.as_tuple()[2] == 0:
-        # если целое,
-        # т.е. Decimal.as_tuple -> (sign, digits tuple, exponent), exponent=0
-        # то как целое
-        amount = int(amount)
+    
     if gender is None:
         args = (amount,)
     else:
@@ -356,9 +348,9 @@ def in_words(amount, gender=None):
     if isinstance(amount, (int, long)):
         return in_words_int(*args)
     # если дробное
-    elif isinstance(amount, (float, Decimal)):
+    elif isinstance(amount, float):
         return in_words_float(*args)
-    # ни float, ни int, ни Decimal
+    # ни float, ни int
     else:
         # до сюда не должно дойти
         raise RuntimeError()
@@ -460,6 +452,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     if tmp_val == 0:
         return into, tmp_val
 
+    rest = rest1 = end_word = None
     words = []
 
     rest = tmp_val % 1000
@@ -498,3 +491,130 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
 
     # склеиваем и отдаем
     return u" ".join(words).strip(), tmp_val
+
+# порядковые числительные
+ORDINALS = {
+    0: (u"нулевой", u"нулевая", u"нулевое"),
+    1: (u"первый", u"первая", u"первое"),
+    2: (u"второй", u"вторая", u"второе"),
+    3: (u"третий", u"третья", u"третье"),
+    4: (u"четвёртый", u"четвёртая", u"четвертое"),
+    5: (u"пятый",   u"пятая",   u"пятое"),
+    6: (u"шестой",  u"шестая",  u"шестое"),
+    7: (u"седьмой",   u"седьмая",   u"седьмой"),
+    8: (u"восьмой", u"восьмая", u"восьмое"),
+    9: (u"девятый", u"девятая", u"девятое"),
+    10: (u"десятый", u"десятая", u"десятое"),
+    11: (u"одиннадцатый", u"одиннадцатая", u"одиннадцатое"),
+    12: (u"двенадцатый", u"двенадцатая", u"двенадцатое"),
+    13: (u"тринадцатый", u"тринадцатая", u"тринадцатое"),
+    14: (u"четырнадцатый", u"четырнадцатая", u"четырнадцатое"),
+    15: (u"пятнадцатый", u"пятнадцатая", u"пятнадцатое"),
+    16: (u"шестнадцатый", u"шестнадцатая", u"шестнадцатое"),
+    17: (u"семнадцатый", u"семнадцатая", u"семнадцатое"),
+    18: (u"восемнадцатый", u"восемнадцатая", u"восемнадцатое"),
+    19: (u"девятнадцатый", u"девятнадцатая", u"девятнадцатое"),
+    20: (u"двадцатый", u"двадцатая", u"двадцатое"),
+    30: (u"тридцатый", u"тридцатая", u"тридцатое"),
+    40: (u"сороковой", u"сороковая", u"сороковое"),
+    50: (u"пятидесятый", u"пятидесятая", u"пятидесятое"),
+    60: (u"шестидесятый", u"шестидесятая", u"шестидесятое"),
+    70: (u"семидесятый", u"семидесятая", u"семидесятое"),
+    80: (u"восьмидесятый", u"восьмидесятая", u"восьмидесятое"),
+    90: (u"девяностый", u"девяностая", u"девяностое"),
+    100: (u"сотый", u"сотая", u"сотое"),
+    200: (u"двухсотый", u"двухсотая", u"двухсотое"),
+    300: (u"трёхсотый", u"трёхсотая", u"трёхсотое"),
+    400: (u"четырёхсотый", u"четырёхсотая", u"четырёхсотое"),
+    500: (u"пятисотый", u"пятисотая", u"пятисотое"),
+    600: (u"шестисотый", u"шестисотая", u"шестисотое"),
+    700: (u"семисотый", u"семисотая", u"семисотое"),
+    800: (u"восьмисотый", u"восьмисотая", u"восьмисотое"),
+    900: (u"девятисотый", u"девятисотая", u"девятисотое"),
+    1000: (u"тысячный", u"тысячная", u"тысячное"),
+    2000: (u"двухтысячный", u"двухтысячная", u"двухтысячное"),
+    3000: (u"трёхтысячный", u"трёхтысячная", u"трёхтысячное"),
+    4000: (u"четырёхтысячный", u"четырёхтысячная", u"четырёхтысячное"),
+    5000: (u"пятитысячный", u"пятитысячная", u"пятитысячное"),
+    6000: (u"шеститысячный", u"шеститысячная", u"шеститысячное"),
+    7000: (u"семитысячный", u"семитысячная", u"семитысячное"),
+    8000: (u"восьмитысячный", u"восьмитысячная", u"восьмитысячное"),
+    9000: (u"девятитысячный", u"девятитысячная", u"девятитысячное"),
+    }  #: Forms (MALE, FEMALE, NEUTER) for ones
+
+@takes((int), optional(one_of(None,1,2,3)), gender=optional(one_of(None,1,2,3)))
+def in_words_ordinal (amount, gender=None):
+    """
+    Integer in words (ordinal numbers)
+
+    @param amount: numeral
+    @type amount: C{int}
+
+    @param gender: gender (MALE, FEMALE or NEUTER)
+    @type gender: C{int}
+
+    @return: in-words reprsentation of ordinal numbers
+    @rtype: C{unicode}
+
+    @raise L{pytils.err.InputParameterError}: input parameters' check failed
+        (when amount is not C{int})
+    @raise ValueError: amount is negative
+    """
+
+    #
+    if gender == None: gender = MALE
+   
+    # всё просто
+    if amount == 0:  
+        return ORDINALS[0][gender-1]
+    elif amount < 0 or amount > 9999:
+        raise ValueError("Cannot operand with numbers less than zero or bigger than 9999")
+
+    #
+    words = []
+
+    # единицы
+    a = amount % 10
+    a2 = amount % 100
+
+    # всё, что до 20 включительно -- особый случай
+    if 0 < a2 < 20:
+        words.append(ORDINALS[a2][gender-1])
+    elif a > 0:
+        words.append(ORDINALS[a][gender-1])
+
+    # десятки 
+    b = int(amount/10) % 10
+
+    # единиц не было -- особые десятки
+    if a == 0 and b > 1:
+        words.append(ORDINALS[b*10][gender-1])
+    # обычные десятки
+    elif b > 1:
+        words.append(TENS[b])
+
+    # сотни
+    c = int(amount/100) % 10
+
+    # единиц и десятков не было -- особые сотни
+    if a == 0 and b == 0 and c > 0:
+        words.append(ORDINALS[c*100][gender-1])
+    # обычные сотни
+    elif c > 0:
+        words.append(HUNDREDS[c])
+
+    # тысячи
+    d = int(amount/1000) % 10
+
+    # единиц, десятков и сотен не было -- особые тысячи
+    if a == 0 and b == 0 and c == 0 and d > 0:
+      words.append(ORDINALS[d*1000][gender-1])
+    # обычные тысячи
+    elif d > 0:
+      s, i = _sum_string_fn(u"", d, FEMALE, (u"тысяча", u"тысячи", u"тысяч"))
+      words.append(s)
+
+
+    return u" ".join(words[::-1])
+
+
