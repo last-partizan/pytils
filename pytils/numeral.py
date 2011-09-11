@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_numeral -*-
 # pytils - russian-specific string utils
-# Copyright (C) 2006-2008  Yury Yurevich
+# Copyright (C) 2006-2009  Yury Yurevich
 #
-# http://www.pyobject.ru/projects/pytils/
+# http://pyobject.ru/projects/pytils/
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,9 +17,9 @@
 """
 Plural forms and in-word representation for numerals.
 """
-
+from decimal import Decimal
 from pytils import utils
-from pytils.utils import takes, returns, optional, list_of, tuple_of, \
+from pytils.utils import takes, optional, list_of, tuple_of, \
                          nothing, one_of, check_positive, check_length
 
 FRACTIONS = (
@@ -88,7 +88,7 @@ FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
 
-@takes((int, long, float),
+@takes((int, long, float, Decimal),
        optional(int),
        signs=optional(int))
 def _get_float_remainder(fvalue, signs=9):
@@ -96,7 +96,7 @@ def _get_float_remainder(fvalue, signs=9):
     Get remainder of float, i.e. 2.05 -> '05'
 
     @param fvalue: input value
-    @type fvalue: C{int}, C{long} or C{float}
+    @type fvalue: C{int}, C{long}, C{float} or C{Decimal}
 
     @param signs: maximum number of signs
     @type signs: C{int} or C{long}
@@ -111,6 +111,10 @@ def _get_float_remainder(fvalue, signs=9):
     """
     check_positive(fvalue)
     if isinstance(fvalue, (int, long)):
+        return "0"
+    if isinstance(fvalue, Decimal) and fvalue.as_tuple()[2] == 0:
+        # Decimal.as_tuple() -> (sign, digit_tuple, exponent)
+        # если экспонента "0" -- значит дробной части нет
         return "0"
 
     signs = min(signs, len(FRACTIONS))
@@ -231,13 +235,13 @@ def _get_plural_legacy(amount, extra_variants):
         variants = extra_variants
     return get_plural(amount, variants, absence)
 
-@takes((int, long, float), optional(bool), zero_for_kopeck=optional(bool))
+@takes((int, long, float, Decimal), optional(bool), zero_for_kopeck=optional(bool))
 def rubles(amount, zero_for_kopeck=False):
     """
     Get string for money
 
     @param amount: amount of money
-    @type amount: C{int}, C{long} or C{float}
+    @type amount: C{int}, C{long}, C{float} or C{Decimal}
 
     @param zero_for_kopeck: If false, then zero kopecks ignored
     @type zero_for_kopeck: C{bool}
@@ -289,13 +293,13 @@ def in_words_int(amount, gender=MALE):
 
     return sum_string(amount, gender)
 
-@takes(float, optional(one_of(1,2,3)), _gender=optional(one_of(1,2,3)))
+@takes((float, Decimal), optional(one_of(1,2,3)), _gender=optional(one_of(1,2,3)))
 def in_words_float(amount, _gender=FEMALE):
     """
     Float in words
 
     @param amount: float numeral
-    @type amount: C{float}
+    @type amount: C{float} or C{Decimal}
 
     @return: in-words reprsentation of float numeral
     @rtype: C{unicode}
@@ -317,7 +321,7 @@ def in_words_float(amount, _gender=FEMALE):
 
     return u" ".join(pts)
 
-@takes((int,long,float),
+@takes((int,long,float,Decimal),
        optional(one_of(None,1,2,3)),
        gender=optional(one_of(None,1,2,3)))
 def in_words(amount, gender=None):
@@ -325,7 +329,7 @@ def in_words(amount, gender=None):
     Numeral in words
 
     @param amount: numeral
-    @type amount: C{int}, C{long} or C{float}
+    @type amount: C{int}, C{long}, C{float} or C{Decimal}
 
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
@@ -339,7 +343,11 @@ def in_words(amount, gender=None):
     raise ValueError: when amount is negative
     """
     check_positive(amount)
-    
+    if isinstance(amount, Decimal) and amount.as_tuple()[2] == 0:
+        # если целое,
+        # т.е. Decimal.as_tuple -> (sign, digits tuple, exponent), exponent=0
+        # то как целое
+        amount = int(amount)
     if gender is None:
         args = (amount,)
     else:
@@ -348,9 +356,9 @@ def in_words(amount, gender=None):
     if isinstance(amount, (int, long)):
         return in_words_int(*args)
     # если дробное
-    elif isinstance(amount, float):
+    elif isinstance(amount, (float, Decimal)):
         return in_words_float(*args)
-    # ни float, ни int
+    # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти
         raise RuntimeError()
@@ -452,7 +460,6 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     if tmp_val == 0:
         return into, tmp_val
 
-    rest = rest1 = end_word = None
     words = []
 
     rest = tmp_val % 1000
@@ -498,7 +505,7 @@ ORDINALS = {
     1: (u"первый", u"первая", u"первое"),
     2: (u"второй", u"вторая", u"второе"),
     3: (u"третий", u"третья", u"третье"),
-    4: (u"четвёртый", u"четвёртая", u"четвертое"),
+    4: (u"четвёртый", u"четвёртая", u"четвёртое"),
     5: (u"пятый",   u"пятая",   u"пятое"),
     6: (u"шестой",  u"шестая",  u"шестое"),
     7: (u"седьмой",   u"седьмая",   u"седьмой"),
@@ -614,7 +621,4 @@ def in_words_ordinal (amount, gender=None):
       s, i = _sum_string_fn(u"", d, FEMALE, (u"тысяча", u"тысячи", u"тысяч"))
       words.append(s)
 
-
     return u" ".join(words[::-1])
-
-
