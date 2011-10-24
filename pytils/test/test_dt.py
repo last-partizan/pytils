@@ -130,7 +130,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_1day", 1, u"завтра")
         self.ckDefaultToTime("in_1day1hr", 1, u"завтра")
         self.ckDefaultToTime("in_2day", 1, u"послезавтра")
-        
+
     def testDOTIWDefaultToTimeAcc2(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=2
@@ -153,7 +153,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_1day", 2, u"завтра")
         self.ckDefaultToTime("in_1day1hr", 2, u"через 1 день 1 час")
         self.ckDefaultToTime("in_2day", 2, u"послезавтра")
-        
+
     def testDOTIWDefaultToTimeAcc3(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=3
@@ -206,7 +206,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, time.time(), "test")
         self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
         self.assertRaises(ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0)
-    
+
     def testIssue25DaysFixed(self):
         """
         Unit-test for testing that Issue#25 is fixed (err when accuracy==1, days<>0, hours==1)
@@ -222,7 +222,36 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         d_hours = datetime.datetime.now() - datetime.timedelta(0, 46865)
         self.assertEquals(pytils.dt.distance_of_time_in_words(d_hours),
                           u"13 часов назад")
-        
+
+    def testFormatResultStr(self):
+        """
+        Unit-test for testing format result str
+        """
+        from_time = datetime.datetime.now() - datetime.timedelta(seconds=1200)
+        standard_format = pytils.dt.DistanceCounter()
+        class CustomCounter(pytils.dt.DistanceCounter):
+            def format_result_str(self, in_future, result_str):
+                suffix = in_future and u'раньше' or u'позже'
+                return u'на %s %s' % (result_str, suffix)
+        custom_format = CustomCounter()
+        self.assertEqual(
+            standard_format.distance_of_time_in_words(from_time),
+            u'20 минут назад'
+        )
+        self.assertEqual(
+            custom_format.distance_of_time_in_words(from_time),
+            u'на 20 минут позже'
+        )
+        from_time = datetime.datetime.now() + datetime.timedelta(seconds=1210)
+        self.assertEqual(
+            standard_format.distance_of_time_in_words(from_time),
+            u'через 20 минут'
+        )
+        self.assertEqual(
+            custom_format.distance_of_time_in_words(from_time),
+            u'на 20 минут раньше'
+        )
+
 
 class RuStrftimeTestCase(unittest.TestCase):
     """
@@ -234,7 +263,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         Setting up environment for tests
         """
         self.date = datetime.date(2006, 8, 25)
-    
+
     def ck(self, format, estimates, date=None):
         """
         Checks w/o inflected
@@ -283,7 +312,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckInflected(u"тест выполнен %d %B %Y года",
                           u"тест выполнен 25 августа 2006 года")
         self.ckInflectedDay(u"тест выполнен в %A", u"тест выполнен в пятницу")
-    
+
     def testRuStrftimeWithPreposition(self):
         """
         Unit-tests for pytils.dt.ru_strftime with preposition option
@@ -291,11 +320,11 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckPreposition(u"тест %a", u"тест в\xa0пт")
         self.ckPreposition(u"тест %A", u"тест в\xa0пятницу")
         self.ckPreposition(u"тест %A", u"тест во\xa0вторник", datetime.date(2007, 6, 5))
-    
+
     def testRuStrftimeZeros(self):
         """
         Unit-test for testing that Issue#24 is correctly implemented
-        
+
         It means, 1 April 2007, but 01.04.2007
         """
         self.ck(u"%d.%m.%Y", u"01.04.2007", datetime.date(2007, 4, 1))
@@ -320,7 +349,7 @@ class RuStrftimeTestCase(unittest.TestCase):
                               datetime.date(2007,3,18),
                               inflected_day=True)
                          )
-        
+
 
 if __name__ == '__main__':
     unittest.main()
