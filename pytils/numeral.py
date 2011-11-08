@@ -387,7 +387,7 @@ def sum_string(amount, gender, items=None):
 
     @raise L{pytils.err.InputParameterError}: input parameters' check failed
     @raise ValueError: items isn't 3-element C{sequence} or C{unicode}
-    @raise ValueError: amount bigger than 10**11
+    @raise ValueError: amount bigger than 10**36-1
     @raise ValueError: amount is negative
     """
     if isinstance(items, unicode):
@@ -410,19 +410,24 @@ def sum_string(amount, gender, items=None):
 
     # единицы
     into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
-    # тысячи
-    into, tmp_val = _sum_string_fn(into, tmp_val, FEMALE,
-                                    (u"тысяча", u"тысячи", u"тысяч"))
-    # миллионы
-    into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
-                                    (u"миллион", u"миллиона", u"миллионов"))
-    # миллиарды
-    into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
-                                    (u"миллиард", u"миллиарда", u"миллиардов"))
-    if tmp_val == 0:
-        return into
-    else:
-        raise ValueError("Cannot operand with numbers bigger than 10**11")
+    names = (
+        (FEMALE, (u"тысяча", u"тысячи", u"тысяч")), # тысячи
+        (MALE,   (u"миллион", u"миллиона", u"миллионов")), # миллионы
+        (MALE,   (u"миллиард", u"миллиарда", u"миллиардов")), # миллиарды
+        (MALE,   (u"триллион", u"триллиона", u"триллионов")), # триллионы
+        (MALE,   (u"квадриллион", u"квадриллиона", u"квадриллионов")), # квадриллионы
+        (MALE,   (u"квинтиллион", u"квинтиллиона", u"квинтиллионов")), # квинтиллион
+        (MALE,   (u"секстилион", u"секстилиона", u"секстилионов")), # секстилион
+        (MALE,   (u"септиллион", u"септиллиона", u"септиллионов")), # септиллион
+        (MALE,   (u"октиллион", u"октиллиона", u"октиллионов")), # октиллион
+        (MALE,   (u"нониллион", u"нониллиона", u"нониллионов")), # нониллион
+        (MALE,   (u"дециллион", u"дециллиона", u"дециллионов")), # дециллион
+    )
+    for name in names:
+        into, tmp_val = _sum_string_fn(into, tmp_val, *name)
+        if tmp_val == 0:
+            return into
+    raise ValueError("Cannot operand with numbers bigger than 10**36-1")
 
 @takes(unicode,
        (int,long),
