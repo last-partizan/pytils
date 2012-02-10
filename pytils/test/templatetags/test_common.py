@@ -43,26 +43,6 @@ class TemplateTagsCommonsTestCase(unittest.TestCase):
         self.assertEquals(tt.pseudo_unicode('тест', 'ascii', 'опа'), 'опа')
         self.assertRaises(UnicodeDecodeError, tt.pseudo_unicode, 'тест', 'ascii', None)
 
-    def testPseudoStr(self):
-        """
-        Unit-tests for pytils.templatetags.pseudo_str
-        """
-        # in django unicode-branch either str() must return unicode
-        # this test depends on Django unicode awareness
-        if tt.unicode_aware:
-            self.assertEquals(tt.pseudo_str('тест', 'utf-8'), 'тест')
-            self.assertEquals(tt.pseudo_str('тест', 'utf-8'), 'тест')
-            self.assertEquals(tt.pseudo_str('тест', 'utf-8'), '')
-            self.assertEquals(tt.pseudo_str('тест', 'utf-8', 'опа'), 'опа')
-            self.assertEquals(tt.pseudo_str('тест', 'ascii'), 'тест')
-            self.assertEquals(tt.pseudo_str('тест', 'ascii', 'опа'), 'тест')
-        else:
-            self.assertEquals(tt.pseudo_str('тест', 'utf-8'), 'тест')
-            self.assertEquals(tt.pseudo_str('тест', 'utf-8'), '')
-            self.assertEquals(tt.pseudo_str('тест', 'ascii'), '')
-            self.assertEquals(tt.pseudo_str('тест', 'ascii', 'опа'), 'опа')
-            self.assertRaises(UnicodeEncodeError, tt.pseudo_str, 'тест', 'ascii', None)
-
 
 if __name__ == '__main__':
     unittest.main()

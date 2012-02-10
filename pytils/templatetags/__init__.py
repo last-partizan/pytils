@@ -67,27 +67,9 @@ def pseudo_unicode(stext, encoding, default_value=''):
             utext = unicode(stext, encoding)
         except UnicodeDecodeError, err:
             if default_value is None:
-                raise UnicodeDecodeError, err
+                # XXX: disabled at py3 
+                #raise UnicodeDecodeError, err
+                raise
             utext = default_value % {'error': err, 'value': ""}
     return utext
 
-
-def pseudo_str(utext, encoding, default_value=''):
-    """
-    Return (unicode) utext if Django is unicode-aware,
-    encode to encoding otherwise
-
-    It raises UnicodeEncodeError when such error occures
-    and default_value is None. Otherwise (i.e.
-    default_value is not None), it return default_value.
-    """
-    if unicode_aware and isinstance(utext, unicode):
-        stext = utext
-    else:
-        try:
-            stext = unicode(utext).encode(encoding)
-        except (UnicodeEncodeError, UnicodeDecodeError), err:
-            if default_value is None:
-                raise UnicodeEncodeError, err
-            stext = default_value % {'error': err, 'value': ""}
-    return stext

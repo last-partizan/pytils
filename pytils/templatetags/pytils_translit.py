@@ -21,7 +21,7 @@ pytils.translit templatetags for Django web-framework
 from __future__ import print_function, absolute_import, division, unicode_literals
 from django import template, conf
 from pytils import translit
-from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
+from pytils.templatetags import pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -49,7 +49,7 @@ def detranslify(stext):
     """Detranslify russian text"""
     try:
         ures = translit.detranslify(stext)
-        res = pseudo_str(
+        res = pseudo_unicode(
                 ures,
                 encoding,
                 default_uvalue)

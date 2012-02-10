@@ -22,7 +22,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 import time
 from django import template, conf
 from pytils import dt
-from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
+from pytils.templatetags import pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -48,7 +48,7 @@ def distance_of_time(from_time, accuracy=1):
     """
     try:
         ures = dt.distance_of_time_in_words(from_time, accuracy)
-        res = pseudo_str(
+        res = pseudo_unicode(
                 ures,
                 encoding,
                 default_value)
@@ -80,7 +80,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
                               inflected=True,
                               inflected_day=inflected_day,
                               preposition=preposition)
-        res = pseudo_str(ures, encoding)
+        res = pseudo_unicode(ures, encoding)
     except Exception, err:
         # because filter must die silently
         try:

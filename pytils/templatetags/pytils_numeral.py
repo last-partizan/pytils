@@ -21,7 +21,7 @@ pytils.numeral templatetags for Django web-framework
 from __future__ import print_function, absolute_import, division, unicode_literals
 from django import template, conf
 from pytils import numeral
-from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
+from pytils.templatetags import pseudo_unicode, init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -50,7 +50,7 @@ def choose_plural(amount, variants):
         else:
             uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
         ures = numeral.choose_plural(amount, uvariants)
-        res = pseudo_str(
+        res = pseudo_unicode(
                 ures,
                 encoding,
                 default_value
@@ -82,7 +82,7 @@ def get_plural(amount, variants):
         else:
             uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
         ures = numeral._get_plural_legacy(amount, uvariants)
-        res = pseudo_str(
+        res = pseudo_unicode(
             ures,
             encoding,
             default_value
@@ -100,7 +100,7 @@ def rubles(amount, zero_for_kopeck=False):
     """Converts float value to in-words representation (for money)"""
     try:
         ures = numeral.rubles(amount, zero_for_kopeck)
-        res = pseudo_str(
+        res = pseudo_unicode(
             ures,
             encoding,
             default_value
@@ -122,7 +122,7 @@ def in_words(amount, gender=None):
     """
     try:
         ures = numeral.in_words(amount, getattr(numeral, str(gender), None))
-        res = pseudo_str(
+        res = pseudo_unicode(
                 ures,
                 encoding,
                 default_value
@@ -161,7 +161,7 @@ def sum_string(amount, gender, items):
         else:
             uitems = [pseudo_unicode(i, encoding, default_uvalue) for i in items]
         ures = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
-        res = pseudo_str(
+        res = pseudo_unicode(
                 ures,
                 encoding,
                 default_value
