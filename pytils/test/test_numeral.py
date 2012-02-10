@@ -51,6 +51,13 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(109, u"гвоздей")
         self.checkChoosePlural(109l, u"гвоздей")
 
+    def testChoosePluralNegativeBug9(self):
+        """
+        Test handling of negative numbers
+        """
+        self.checkChoosePlural(-5, u"гвоздей")
+        self.checkChoosePlural(-2, u"гвоздя")
+
     def testChoosePluralExceptions(self):
         """
         Unit-test for testing choos_plural's exceptions
@@ -65,8 +72,6 @@ class ChoosePluralTestCase(unittest.TestCase):
                           25, 30)
         self.assertRaises(ValueError, pytils.numeral.choose_plural,
                           25, u"any,bene")
-        self.assertRaises(ValueError, pytils.numeral.choose_plural,
-                          -25, u"any,bene,raba")
 
     def testChoosePluralVariantsInStr(self):
         """

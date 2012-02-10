@@ -160,15 +160,13 @@ def choose_plural(amount, variants):
 
     @raise L{pytils.err.InputParameterError}: input parameters' check failed
         (amount isn't C{int}, variants isn't C{sequence})
-    @raise ValueError: amount is negative
     @raise ValueError: variants' length lesser than 3
     """
     
     if isinstance(variants, unicode):
         variants = utils.split_values(variants)
-    
     check_length(variants, 3)
-    check_positive(amount)
+    amount = abs(amount)
     
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0
