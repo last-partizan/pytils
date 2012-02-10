@@ -16,6 +16,8 @@
 """
 Unit tests for pytils
 """
+from __future__ import print_function, absolute_import, division, unicode_literals
+
 __all__ = ["test_numeral", "test_dt", "test_translit", "test_utils", "test_typo"]
 
 import unittest
