@@ -100,97 +100,105 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     @raise L{pytils.err.InputParameterError}: input parameters' check failed
     @raise ValueError: accuracy is lesser or equal zero
     """
-    current = False
+    return DistanceCounter().distance_of_time_in_words(from_time, accuracy, to_time)
 
-    if to_time is None:
-        current = True
-        to_time = datetime.datetime.now()
+class DistanceCounter(object):
 
-    check_positive(accuracy, strict=True)
+    def distance_of_time_in_words(self, from_time, accuracy=1, to_time=None):
+        current = False
 
-    if not isinstance(from_time, datetime.datetime):
-        from_time = datetime.datetime.fromtimestamp(from_time)
+        if to_time is None:
+            current = True
+            to_time = datetime.datetime.now()
 
-    if not isinstance(to_time, datetime.datetime):
-        to_time = datetime.datetime.fromtimestamp(to_time)
+        check_positive(accuracy, strict=True)
 
-    dt_delta = to_time - from_time
-    difference = dt_delta.days*86400 + dt_delta.seconds
+        if not isinstance(from_time, datetime.datetime):
+            from_time = datetime.datetime.fromtimestamp(from_time)
 
-    minutes_orig = int(abs(difference)/60.0)
-    hours_orig = int(abs(difference)/3600.0)
-    days_orig = int(abs(difference)/86400.0)
-    in_future = from_time > to_time
+        if not isinstance(to_time, datetime.datetime):
+            to_time = datetime.datetime.fromtimestamp(to_time)
 
-    words = []
-    values = []
-    alternatives = []
+        dt_delta = to_time - from_time
+        difference = dt_delta.days*86400 + dt_delta.seconds
 
-    days = days_orig
-    hours = hours_orig - days_orig*24
+        minutes_orig = int(abs(difference)/60.0)
+        hours_orig = int(abs(difference)/3600.0)
+        days_orig = int(abs(difference)/86400.0)
+        in_future = from_time > to_time
 
-    words.append(u"%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
-    values.append(days)
+        words = []
+        values = []
+        alternatives = []
 
-    words.append(u"%d %s" % \
-                  (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
-    values.append(hours)
+        days = days_orig
+        hours = hours_orig - days_orig*24
 
-    hours == 1 and current and alternatives.append(u"час")
+        words.append(u"%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
+        values.append(days)
 
-    minutes = minutes_orig - hours_orig*60
+        words.append(u"%d %s" % \
+                      (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
+        values.append(hours)
 
-    words.append(u"%d %s" % (minutes,
-                              numeral.choose_plural(minutes, MINUTE_VARIANTS)))
-    values.append(minutes)
+        hours == 1 and current and alternatives.append(u"час")
 
-    minutes == 1 and current and alternatives.append(u"минуту")
+        minutes = minutes_orig - hours_orig*60
 
-    # убираем из values и words конечные нули
-    while values and not values[-1]:
-        values.pop()
-        words.pop()
-    # убираем из values и words начальные нули
-    while values and not values[0]:
-        values.pop(0)
-        words.pop(0)
-    limit = min(accuracy, len(words))
-    real_words = words[:limit]
-    real_values = values[:limit]
-    # снова убираем конечные нули
-    while real_values and not real_values[-1]:
-        real_values.pop()
-        real_words.pop()
-        limit -= 1
+        words.append(u"%d %s" % (minutes,
+                                  numeral.choose_plural(minutes, MINUTE_VARIANTS)))
+        values.append(minutes)
 
-    real_str = u" ".join(real_words)
+        minutes == 1 and current and alternatives.append(u"минуту")
 
-    # альтернативные варианты нужны только если в real_words одно значение
-    # и, вдобавок, если используется текущее время
-    alter_str = limit == 1 and current and alternatives and \
-                           not (days and hours==1) and \
-                           not (hours and minutes==1) and \
-                           alternatives[0]
-    _result_str = alter_str or real_str
-    result_str = in_future and u"%s %s" % (PREFIX_IN, _result_str) \
-                           or u"%s %s" % (_result_str, SUFFIX_AGO)
+        # убираем из values и words конечные нули
+        while values and not values[-1]:
+            values.pop()
+            words.pop()
+        # убираем из values и words начальные нули
+        while values and not values[0]:
+            values.pop(0)
+            words.pop(0)
+        limit = min(accuracy, len(words))
+        real_words = words[:limit]
+        real_values = values[:limit]
+        # снова убираем конечные нули
+        while real_values and not real_values[-1]:
+            real_values.pop()
+            real_words.pop()
+            limit -= 1
 
-    # если же прошло менее минуты, то real_words -- пустой, и поэтому
-    # нужно брать alternatives[0], а не result_str
-    zero_str = minutes == 0 and not real_words and \
-            (in_future and u"менее чем через минуту" \
-                        or u"менее минуты назад")
+        real_str = u" ".join(real_words)
 
-    # нужно использовать вчера/позавчера/завтра/послезавтра
-    # если days 1..2 и в real_words одно значение
-    day_alternatives = DAY_ALTERNATIVES.get(days, False)
-    alternate_day = day_alternatives and current and limit == 1 and \
-                    ((in_future and day_alternatives[1]) \
-                                 or day_alternatives[0])
+        # альтернативные варианты нужны только если в real_words одно значение
+        # и, вдобавок, если используется текущее время
+        alter_str = limit == 1 and current and alternatives and \
+                               not (days and hours==1) and \
+                               not (hours and minutes==1) and \
+                               alternatives[0]
+        result_str = alter_str or real_str
+        result_str = self.format_result_str(in_future, result_str)
 
-    final_str = not real_words and zero_str or alternate_day or result_str
+        # если же прошло менее минуты, то real_words -- пустой, и поэтому
+        # нужно брать alternatives[0], а не result_str
+        zero_str = minutes == 0 and not real_words and \
+                (in_future and u"менее чем через минуту" \
+                            or u"менее минуты назад")
 
-    return final_str
+        # нужно использовать вчера/позавчера/завтра/послезавтра
+        # если days 1..2 и в real_words одно значение
+        day_alternatives = DAY_ALTERNATIVES.get(days, False)
+        alternate_day = day_alternatives and current and limit == 1 and \
+                        ((in_future and day_alternatives[1]) \
+                                     or day_alternatives[0])
+
+        final_str = not real_words and zero_str or alternate_day or result_str
+
+        return final_str
+
+    def format_result_str(self, in_future, result_str):
+        return in_future and u"%s %s" % (PREFIX_IN, result_str) \
+                               or u"%s %s" % (result_str, SUFFIX_AGO)
 
 @takes(optional(unicode),
        optional((datetime.date, datetime.datetime)),
@@ -212,13 +220,13 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
 
     @param date: date value, default=None translates to today
     @type date: C{datetime.date} or C{datetime.datetime}
-    
+
     @param inflected: is month inflected, default False
     @type inflected: C{bool}
-    
+
     @param inflected_day: is day inflected, default False
     @type inflected: C{bool}
-    
+
     @param preposition: is preposition used, default False
         preposition=True automatically implies inflected_day=True
     @type preposition: C{bool}
@@ -232,12 +240,12 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
         date = datetime.datetime.today()
 
     weekday = date.weekday()
-    
+
     prepos = preposition and DAY_NAMES[weekday][3] or u""
-    
+
     month_idx = inflected and 2 or 1
     day_idx = (inflected_day or preposition) and 2 or 1
-    
+
     # for russian typography standard,
     # 1 April 2007, but 01.04.2007
     if u'%b' in format or u'%B' in format:
