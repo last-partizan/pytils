@@ -236,7 +236,8 @@ def slugify(in_string):
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha
-    return re.sub('[^\w\s-]', '', out_string).strip().lower()
+    res = re.sub('[^\w\s-]', '', out_string).strip().lower()
+    return text_type(res)
 
 
 def dirify(in_string):
