@@ -141,6 +141,7 @@ no_check = False # set this to True to turn all checks off
 
 ################################################################################
 
+from __future__ import print_function, absolute_import, division, unicode_literals
 from inspect import getargspec, isfunction, isbuiltin, isclass
 from types import NoneType
 from re import compile as regex

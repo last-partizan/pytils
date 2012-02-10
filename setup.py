@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function, absolute_import, division, unicode_literals
 use_setuptools = True
 if use_setuptools:
     try:
