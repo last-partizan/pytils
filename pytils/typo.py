@@ -20,6 +20,7 @@ Russian typography
 """
 import re
 import os
+import six
 
 def _sub_patterns(patterns, text):
     """
@@ -170,8 +171,10 @@ def rl_quotes(x):
 STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue', 'quotes')
 
 def _get_rule_by_name(name):
-
-    rule = globals().get('rl_%s' % name)
+    rl_name = 'rl_%s' % name
+    if not six.PY3:
+        rl_name = rl_name.encode('utf-8')
+    rule = globals().get(rl_name)
     if rule is None:
         raise ValueError("Rule %s is not found" % name)
     if not callable(rule):
@@ -179,7 +182,7 @@ def _get_rule_by_name(name):
     return rule
 
 def _resolve_rule_name(rule_or_name, forced_name=None):
-    if isinstance(rule_or_name, str):
+    if isinstance(rule_or_name, six.string_types):
         # got name
         name = rule_or_name
         rule = _get_rule_by_name(name)
