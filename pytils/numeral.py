@@ -464,7 +464,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     words = []
 
     rest = tmp_val % 1000
-    tmp_val = tmp_val / 1000
+    tmp_val = tmp_val // 1000
     if rest == 0:
         # последние три знака нулевые
         if into == u"":
