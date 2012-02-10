@@ -18,7 +18,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 """
 Plural forms and in-word representation for numerals.
 """
-import six
+from pytils.third import six
 from decimal import Decimal
 from pytils import utils
 from pytils.utils import takes, optional, list_of, tuple_of, \

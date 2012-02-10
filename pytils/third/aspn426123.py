@@ -138,8 +138,9 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 __all__ = [ "takes", "InputParameterError", "returns", "ReturnValueError",
             "optional", "nothing", "anything", "list_of", "tuple_of", "dict_of",
             "by_regex", "with_attr", "one_of" ]
-import six
-from six.moves import reduce
+from pytils.third import six
+if six.PY3:
+    from functools import reduce
 no_check = False # set this to True to turn all checks off
 
 ################################################################################

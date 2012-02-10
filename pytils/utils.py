@@ -18,7 +18,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 """
 Misc utils for internal use
 """
-import six
+from pytils.third import six
 from decimal import Decimal
 from pytils.third.aspn426123 import takes, returns, optional, list_of, tuple_of, \
                                     nothing, one_of

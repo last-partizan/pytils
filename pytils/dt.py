@@ -20,7 +20,7 @@ Russian dates without locales
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 import datetime
-import six
+from pytils.third import six
 
 from pytils import numeral
 from pytils.utils import takes, returns, optional, check_positive

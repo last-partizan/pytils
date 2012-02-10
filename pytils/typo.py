@@ -20,7 +20,7 @@ Russian typography
 """
 import re
 import os
-import six
+from pytils.third import six
 
 def _sub_patterns(patterns, text):
     """

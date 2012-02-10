@@ -19,7 +19,7 @@ pytils.numeral templatetags for Django web-framework
 """
 
 from __future__ import print_function, absolute_import, division, unicode_literals
-import six
+from pytils.third import six
 from django import template, conf
 from pytils import numeral
 from pytils.templatetags import pseudo_unicode, init_defaults

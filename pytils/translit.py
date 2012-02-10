@@ -18,7 +18,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 """
 Simple transliteration
 """
-import six
+from pytils.third import six
 import re
 from pytils.utils import takes, returns
 
