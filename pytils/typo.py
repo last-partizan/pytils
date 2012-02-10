@@ -253,7 +253,7 @@ class Typography(object):
                 expanded_args += list(arg)
             elif isinstance(arg, dict):
                 expanded_kwargs.update(arg)
-            elif isinstance(arg, str) or callable(arg):
+            elif isinstance(arg, six.string_types) or callable(arg):
                 expanded_args.append(arg)
             else:
                 raise TypeError(
@@ -261,7 +261,7 @@ class Typography(object):
                     " dict, str or callable, not" %
                     (arg, type(arg).__name__))
         for kw, arg in kwargs.items():
-            if isinstance(arg, str) or callable(arg):
+            if isinstance(arg, six.string_types) or callable(arg):
                 expanded_kwargs[kw] = arg
             else:
                 raise TypeError(
