@@ -16,6 +16,7 @@
 """
 Unit-tests for pytils.numeral
 """
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 import unittest
 import decimal

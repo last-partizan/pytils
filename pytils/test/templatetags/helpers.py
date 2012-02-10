@@ -16,6 +16,7 @@
 """
 Helpers for templatetags' unit tests in Django webframework
 """
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 from django.conf import settings
 

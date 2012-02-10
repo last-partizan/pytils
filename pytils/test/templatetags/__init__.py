@@ -16,6 +16,7 @@
 """
 Unit tests for pytils' templatetags for Django web framework
 """
+from __future__ import print_function, absolute_import, division, unicode_literals
 
 __all__ = ["test_common", "test_numeral", "test_dt", "test_translit"]
 
