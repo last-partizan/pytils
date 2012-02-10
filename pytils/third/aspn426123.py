@@ -321,7 +321,7 @@ def takes(*args, **kwargs):
         checkers.append(checker)
 
     kwcheckers = {}
-    for kwname, kwarg in kwargs.iteritems():
+    for kwname, kwarg in kwargs.items():
         checker = Checker.create(kwarg)
         if checker is None:
             raise TypeError("@takes decorator got parameter %s of unsupported "
@@ -354,7 +354,7 @@ def takes(*args, **kwargs):
                                                   (method.__name__, i + 1,
                                                    type_name(arg)))
 
-                for kwname, checker in kwcheckers.iteritems():
+                for kwname, checker in kwcheckers.items():
                     if not checker.check(kwargs.get(kwname, None)):
                         raise InputParameterError("%s() got invalid parameter "
                                                   "%s of type %s" %
