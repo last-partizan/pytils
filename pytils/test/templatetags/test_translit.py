@@ -21,16 +21,16 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 from pytils.test.templatetags import helpers
 
 class TranslitDefaultTestCase(helpers.TemplateTagTestCase):
-    
+
     def testLoad(self):
         self.check_template_tag('load_tag', '{% load pytils_translit %}', {}, '')
-    
+
     def testTranslifyFilter(self):
         self.check_template_tag('translify_filter',
             '{% load pytils_translit %}{{ val|translify }}',
             {'val': 'проверка'},
             'proverka')
-    
+
     def testDetranslifyFilter(self):
         self.check_template_tag('detranslify_filter',
             '{% load pytils_translit %}{{ val|detranslify }}',
@@ -42,7 +42,7 @@ class TranslitDefaultTestCase(helpers.TemplateTagTestCase):
             '{% load pytils_translit %}{{ val|slugify }}',
             {'val': 'Проверка связи'},
             'proverka-svyazi')
-    
+
     # без отладки, если ошибка -- по умолчанию пустая строка
     def testDetranslifyError(self):
         # в юникод-режиме это не ошибка

@@ -18,13 +18,13 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 """
 Misc utils for internal use
 """
-
+import six
 from decimal import Decimal
 from pytils.third.aspn426123 import takes, returns, optional, list_of, tuple_of, \
                                     nothing, one_of
 
 
-@takes((basestring, tuple, list), (int, long))
+@takes((tuple, list) + six.string_types, (int, ))
 def check_length(value, length):
     """
     Checks length of value
@@ -45,7 +45,7 @@ def check_length(value, length):
                          (length, _length))
 
 
-@takes((int,long,float,Decimal), optional(bool), strict=optional(bool))
+@takes((float,Decimal) + six.integer_types, optional(bool), strict=optional(bool))
 def check_positive(value, strict=False):
     """
     Checks if variable is positive
@@ -68,13 +68,13 @@ def split_values(ustring, sep=','):
     """
     Splits unicode string with separator C{sep},
     but skips escaped separator.
-    
+
     @param ustring: string to split
     @type ustring: C{unicode}
-    
+
     @param sep: separator (default to ',')
     @type sep: C{unicode}
-    
+
     @return: tuple of splitted elements
     """
     assert isinstance(ustring, unicode), "uvalue must be unicode, not %s" % type(ustring)

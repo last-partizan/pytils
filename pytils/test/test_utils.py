@@ -19,78 +19,79 @@ Unit-tests for pytils.utils
 from __future__ import print_function, absolute_import, division, unicode_literals
 
 import unittest
+import six
 import pytils
 import decimal
 
 class ASPN426123TestCase(unittest.TestCase):
     """
     Test case for third-party library from ASPN cookbook recipe #426123
-    
+
     This unit-test don't cover all code from recipe
     """
-    
+
     def testTakesPositional(self):
-        @pytils.utils.takes(int, basestring)
+        @pytils.utils.takes(int, six.string_types)
         def func(i, s):
             return i + len(s)
-        
+
         self.assertEquals(func(2, 'var'), 5)
         self.assertEquals(func(2, 'var'), 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
         self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
-    
+
     def testTakesNamed(self):
-        @pytils.utils.takes(int, s=basestring)
+        @pytils.utils.takes(int, s=six.text_type)
         def func(i, s):
             return i + len(s)
-        
+
         self.assertEquals(func(2, s='var'), 5)
         self.assertEquals(func(2, s='var'), 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, 'var')
         self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
         self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
-    
+
     def testTakesOptional(self):
         @pytils.utils.takes(int,
-                            pytils.utils.optional(basestring),
-                            s=pytils.utils.optional(basestring))
+                            pytils.utils.optional(six.string_types),
+                            s=pytils.utils.optional(six.string_types))
         def func(i, s=''):
             return i + len(s)
-        
+
         self.assertEquals(func(2, 'var'), 5)
         self.assertEquals(func(2, s='var'), 5)
         self.assertEquals(func(2, s='var'), 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
         self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
-    
+
     def testTakesMultiplyTypesAndTupleOf(self):
         @pytils.utils.takes((int, long),
-                            pytils.utils.tuple_of(basestring))
+                            pytils.utils.tuple_of(six.text_type))
         def func(i, t=tuple()):
             return i + sum(len(s) for s in t)
-        
+
         self.assertEquals(func(2, ('var', 'var2')), 9)
         self.assertEquals(func(2L, ('var', 'var2')), 9)
         self.assertEquals(func(2, t=('var', 'var2')), 9)
         self.assertEquals(func(2, t=('var', 'var2')), 9)
         self.assertRaises(pytils.err.InputParameterError, func, 2, (2, 5))
-    
-    
+
+
 
 class ChecksTestCase(unittest.TestCase):
     """
     Test case for check_* utils
     """
-        
+
     def testCheckLength(self):
         """
         Unit-test for pytils.utils.check_length
         """
         self.assertEquals(pytils.utils.check_length("var", 3), None)
-        
+
         self.assertRaises(ValueError, pytils.utils.check_length, "var", 4)
         self.assertRaises(ValueError, pytils.utils.check_length, "var", 2)
         self.assertRaises(ValueError, pytils.utils.check_length, (1,2), 3)
@@ -108,7 +109,7 @@ class ChecksTestCase(unittest.TestCase):
         self.assertEquals(pytils.utils.check_positive(1, strict=True), None)
         self.assertEquals(pytils.utils.check_positive(decimal.Decimal("2.0")), None)
         self.assertEquals(pytils.utils.check_positive(2.0), None)
-        
+
         self.assertRaises(ValueError, pytils.utils.check_positive, -2)
         self.assertRaises(ValueError, pytils.utils.check_positive, -2.0)
         self.assertRaises(ValueError, pytils.utils.check_positive, decimal.Decimal("-2.0"))
@@ -116,7 +117,7 @@ class ChecksTestCase(unittest.TestCase):
 
 
 class SplitValuesTestCase(unittest.TestCase):
-    
+
     def testClassicSplit(self):
         """
         Unit-test for pytils.utils.split_values, classic split
@@ -125,7 +126,7 @@ class SplitValuesTestCase(unittest.TestCase):
         self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values("Раз, Два,Три"))
         self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values(" Раз,   Два, Три  "))
         self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values(" Раз, \nДва,\n Три  "))
-    
+
     def testEscapedSplit(self):
         """
         Unit-test for pytils.utils.split_values, split with escaping

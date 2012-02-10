@@ -19,6 +19,7 @@ pytils.numeral templatetags for Django web-framework
 """
 
 from __future__ import print_function, absolute_import, division, unicode_literals
+import six
 from django import template, conf
 from pytils import numeral
 from pytils.templatetags import pseudo_unicode, init_defaults
@@ -45,7 +46,7 @@ def choose_plural(amount, variants):
         {{ some_int|choose_plural:"пример,примера,примеров" }}
     """
     try:
-        if isinstance(variants, basestring):
+        if isinstance(variants, six.string_types):
             uvariants = pseudo_unicode(variants, encoding, default_value)
         else:
             uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
@@ -77,7 +78,7 @@ def get_plural(amount, variants):
         {{ some_int|get_plural:"пример,примера,примеров,нет примеров" }}
     """
     try:
-        if isinstance(variants, basestring):
+        if isinstance(variants, six.string_types):
             uvariants = pseudo_unicode(variants, encoding, default_value)
         else:
             uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
@@ -156,7 +157,7 @@ def sum_string(amount, gender, items):
         {% sum_string some_other_int FEMALE "задача,задачи,задач" %}
     """
     try:
-        if isinstance(items, basestring):
+        if isinstance(items, six.string_types):
             uitems = pseudo_unicode(items, encoding, default_uvalue)
         else:
             uitems = [pseudo_unicode(i, encoding, default_uvalue) for i in items]

@@ -18,8 +18,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 """
 Simple transliteration
 """
-
-from six import text_type
+import six
 import re
 from pytils.utils import takes, returns
 
@@ -176,7 +175,7 @@ def translify(in_string):
 
     return translit
 
-@takes(basestring)
+@takes(six.string_types)
 @returns(unicode)
 def detranslify(in_string):
     """
@@ -205,8 +204,8 @@ def detranslify(in_string):
 
     return russian
 
-@takes(basestring)
-@returns(text_type)
+@takes(six.string_types)
+@returns(six.text_type)
 def slugify(in_string):
     """
     Prepare string for slug (i.e. URL or file/dir name)
@@ -237,7 +236,7 @@ def slugify(in_string):
     out_string = translify(u_in_string)
     # remove non-alpha
     res = re.sub('[^\w\s-]', '', out_string).strip().lower()
-    return text_type(res)
+    return six.text_type(res)
 
 
 def dirify(in_string):
