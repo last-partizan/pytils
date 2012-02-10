@@ -475,11 +475,11 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     end_word = five_items
 
     # сотни
-    words.append(HUNDREDS[rest / 100])
+    words.append(HUNDREDS[rest // 100])
 
     # десятки
     rest = rest % 100
-    rest1 = rest / 10
+    rest1 = rest // 10
     # особый случай -- tens=1
     tens = rest1 == 1 and TENS[rest] or TENS[rest1]
     words.append(tens)
