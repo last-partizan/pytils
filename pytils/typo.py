@@ -72,7 +72,7 @@ def rl_ellipsis(x):
         # это цитата, пробел между троеточием и первым
         # словом нужно убрать
         (re.compile('(^|\\"|\u201c|\xab)\\s*\u2026\\s*([А-Яа-яA-Za-z])', re.UNICODE), '\\1\u2026\\2'),
-        
+
     )
     return _sub_patterns(patterns, x)
 
@@ -151,7 +151,7 @@ def rl_quotes(x):
     """
     Replace quotes by typographic quotes
     """
-    
+
     patterns = (
         # открывающие кавычки ставятся обычно вплотную к слову слева
         # а закрывающие -- вплотную справа
@@ -165,7 +165,7 @@ def rl_quotes(x):
 	(re.compile(r'(\S)(\')((?u))', re.UNICODE), '\\1\u201d\\3'),
     )
     return _sub_patterns(patterns, x)
-    
+
 
 ## -------- rules end ----------
 STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue', 'quotes')
@@ -209,7 +209,7 @@ class Typography(object):
     def __init__(self, *args, **kwargs):
         """
         Typography applier constructor:
-        
+
         possible variations of constructing rules chain:
             rules by it's names:
                 Typography('first_rule', 'second_rule')
@@ -225,19 +225,19 @@ class Typography(object):
             as dict (order of rule execution is not the same):
                 Typography({'rule name': 'first_rule',
                             'another_rule': cb_second_rule})
-        
+
         For standard rules it is recommended to use list of rules
         names.
             Typography(['first_rule', 'second_rule'])
-        
+
         For custom rules which are named functions,
         it is recommended to use list of callables:
             Typography([cb_first_rule, cb_second_rule])
-        
+
         For custom rules which are lambda-functions,
         it is recommended to use dict:
             Typography({'rule_name': lambda x: x})
-            
+
         I.e. the recommended usage is:
             Typography(['standard_rule_1', 'standard_rule_2'],
                        [cb_custom_rule1, cb_custom_rule_2],
@@ -274,21 +274,21 @@ class Typography(object):
         for name, rule in (_resolve_rule_name(a, k) for k, a in expanded_kwargs.items()):
             self.rules[name] = rule
             self.rules_names.append(name)
-        
+
     def apply_single_rule(self, rulename, text):
         if rulename not in self.rules:
             raise ValueError("Rule %s is not found in active rules" % rulename)
         try:
             res = self.rules[rulename](text)
-        except ValueError, e:
+        except ValueError as e:
             raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
         return res
-    
+
     def apply(self, text):
         for rule in self.rules_names:
             text = self.apply_single_rule(rule, text)
         return text
-        
+
     def __call__(self, text):
         return self.apply(text)
 
@@ -299,4 +299,4 @@ def typography(text):
 if __name__ == '__main__':
     from pytils.test import run_tests_from_module, test_typo
     run_tests_from_module(test_typo, verbosity=2)
-    
+

@@ -74,7 +74,8 @@ class ASPN426123TestCase(unittest.TestCase):
             return i + sum(len(s) for s in t)
 
         self.assertEquals(func(2, ('var', 'var2')), 9)
-        self.assertEquals(func(2L, ('var', 'var2')), 9)
+        if not six.PY3:
+            self.assertEquals(func(long(2), ('var', 'var2')), 9)
         self.assertEquals(func(2, t=('var', 'var2')), 9)
         self.assertEquals(func(2, t=('var', 'var2')), 9)
         self.assertRaises(pytils.err.InputParameterError, func, 2, (2, 5))
