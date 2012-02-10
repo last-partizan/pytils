@@ -136,7 +136,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
                   (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
     values.append(hours)
 
-    hours == 1 and current and alternatives.append(u"час")
+    days == 0 and hours == 1 and current and alternatives.append(u"час")
 
     minutes = minutes_orig - hours_orig*60
 
@@ -144,7 +144,9 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
                               numeral.choose_plural(minutes, MINUTE_VARIANTS)))
     values.append(minutes)
 
-    minutes == 1 and current and alternatives.append(u"минуту")
+    days == 0 and hours == 0 and minutes == 1 and current and \
+        alternatives.append(u"минуту")
+
 
     # убираем из values и words конечные нули
     while values and not values[-1]:

@@ -46,6 +46,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.dtime['1day_ago'] = _time - 87600
         self.dtime['1day1hr_ago'] = _time - 90600
         self.dtime['2day_ago'] = _time - 87600*2
+        self.dtime['4day1min_ago'] = _time - 87600*4 - 60
 
         self.dtime['in_10sec'] = _time + 10
         self.dtime['in_1min'] = _time + 61
@@ -66,6 +67,21 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         # ---
         t1 = self.dtime[typ]
         res = pytils.dt.distance_of_time_in_words(from_time=t1, to_time=t0)
+        # --- revert state to original value
+        self.updateTime(self.time)
+        # ---
+        self.assertEquals(res, estimated)
+
+    def ckDefaultTimeAndAccuracy(self, typ, estimated):
+        """
+        Checks with default accuracy and default time
+        """
+        t0 = time.time()
+        # --- change state !!! attention
+        self.updateTime(t0)
+        # ---
+        t1 = self.dtime[typ]
+        res = pytils.dt.distance_of_time_in_words(t1)
         # --- revert state to original value
         self.updateTime(self.time)
         # ---
@@ -107,6 +123,36 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultAccuracy("in_1day", u"через 1 день")
         self.ckDefaultAccuracy("in_1day1hr", u"через 1 день")
         self.ckDefaultAccuracy("in_2day", u"через 2 дня")
+
+    def testDOTIWDefaultAccuracyDayAndMinute(self):
+        self.ckDefaultTimeAndAccuracy("4day1min_ago", u"4 дня назад")
+
+        self.ckDefaultTimeAndAccuracy("10sec_ago", u"менее минуты назад")
+        self.ckDefaultTimeAndAccuracy("1min_ago", u"минуту назад")
+        self.ckDefaultTimeAndAccuracy("10min_ago", u"10 минут назад")
+        self.ckDefaultTimeAndAccuracy("1hr_ago", u"час назад")
+        self.ckDefaultTimeAndAccuracy("10hr_ago", u"10 часов назад")
+        self.ckDefaultTimeAndAccuracy("1day_ago", u"вчера")
+        self.ckDefaultTimeAndAccuracy("1day1hr_ago", u"вчера")
+        self.ckDefaultTimeAndAccuracy("2day_ago", u"позавчера")
+
+        self.ckDefaultTimeAndAccuracy("in_10sec", u"менее чем через минуту")
+        self.ckDefaultTimeAndAccuracy("in_1min", u"через минуту")
+        self.ckDefaultTimeAndAccuracy("in_10min", u"через 10 минут")
+        self.ckDefaultTimeAndAccuracy("in_1hr", u"через час")
+        self.ckDefaultTimeAndAccuracy("in_10hr", u"через 10 часов")
+        self.ckDefaultTimeAndAccuracy("in_1day", u"завтра")
+        self.ckDefaultTimeAndAccuracy("in_1day1hr", u"завтра")
+        self.ckDefaultTimeAndAccuracy("in_2day", u"послезавтра")
+
+    def test4Days1MinuteDaytimeBug2(self):
+        from_time = datetime.datetime.now() - \
+            datetime.timedelta(days=4, minutes=1)
+        res = pytils.dt.distance_of_time_in_words(from_time)
+        self.assertEquals(
+            res,
+            u"4 дня назад")
+
 
     def testDOTIWDefaultToTimeAcc1(self):
         """
