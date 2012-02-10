@@ -35,7 +35,7 @@ class ASPN426123TestCase(unittest.TestCase):
             return i + len(s)
         
         self.assertEquals(func(2, 'var'), 5)
-        self.assertEquals(func(2, u'var'), 5)
+        self.assertEquals(func(2, 'var'), 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
         self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
@@ -46,7 +46,7 @@ class ASPN426123TestCase(unittest.TestCase):
             return i + len(s)
         
         self.assertEquals(func(2, s='var'), 5)
-        self.assertEquals(func(2, s=u'var'), 5)
+        self.assertEquals(func(2, s='var'), 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, 'var')
         self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
@@ -61,7 +61,7 @@ class ASPN426123TestCase(unittest.TestCase):
         
         self.assertEquals(func(2, 'var'), 5)
         self.assertEquals(func(2, s='var'), 5)
-        self.assertEquals(func(2, s=u'var'), 5)
+        self.assertEquals(func(2, s='var'), 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
         self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
         self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
@@ -73,9 +73,9 @@ class ASPN426123TestCase(unittest.TestCase):
             return i + sum(len(s) for s in t)
         
         self.assertEquals(func(2, ('var', 'var2')), 9)
-        self.assertEquals(func(2L, (u'var', 'var2')), 9)
+        self.assertEquals(func(2L, ('var', 'var2')), 9)
         self.assertEquals(func(2, t=('var', 'var2')), 9)
-        self.assertEquals(func(2, t=(u'var', u'var2')), 9)
+        self.assertEquals(func(2, t=('var', 'var2')), 9)
         self.assertRaises(pytils.err.InputParameterError, func, 2, (2, 5))
     
     
@@ -121,17 +121,17 @@ class SplitValuesTestCase(unittest.TestCase):
         """
         Unit-test for pytils.utils.split_values, classic split
         """
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u"Раз,Два,Три"))
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u"Раз, Два,Три"))
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u" Раз,   Два, Три  "))
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u" Раз, \nДва,\n Три  "))
+        self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values("Раз,Два,Три"))
+        self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values("Раз, Два,Три"))
+        self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values(" Раз,   Два, Три  "))
+        self.assertEquals(("Раз", "Два", "Три"), pytils.utils.split_values(" Раз, \nДва,\n Три  "))
     
     def testEscapedSplit(self):
         """
         Unit-test for pytils.utils.split_values, split with escaping
         """
-        self.assertEquals((u"Раз,Два", u"Три,Четыре", u"Пять,Шесть"), pytils.utils.split_values(u"Раз\,Два,Три\,Четыре,Пять\,Шесть"))
-        self.assertEquals((u"Раз, Два", u"Три", u"Четыре"), pytils.utils.split_values(u"Раз\, Два, Три, Четыре"))
+        self.assertEquals(("Раз,Два", "Три,Четыре", "Пять,Шесть"), pytils.utils.split_values("Раз\,Два,Три\,Четыре,Пять\,Шесть"))
+        self.assertEquals(("Раз, Два", "Три", "Четыре"), pytils.utils.split_values("Раз\, Два, Три, Четыре"))
 
 if __name__ == '__main__':
     unittest.main()

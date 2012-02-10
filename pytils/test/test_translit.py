@@ -49,11 +49,11 @@ class TranslitTestCase(unittest.TestCase):
         """
         Unit-test for transliterations
         """
-        self.ckTransl(u"тест", 'test')
-        self.ckTransl(u"проверка", 'proverka')
-        self.ckTransl(u"транслит", 'translit')
-        self.ckTransl(u"правда ли это", 'pravda li eto')
-        self.ckTransl(u"Щука", 'Schuka')
+        self.ckTransl("тест", 'test')
+        self.ckTransl("проверка", 'proverka')
+        self.ckTransl("транслит", 'translit')
+        self.ckTransl("правда ли это", 'pravda li eto')
+        self.ckTransl("Щука", 'Schuka')
 
     def testTransliterationExceptions(self):
         """
@@ -61,17 +61,17 @@ class TranslitTestCase(unittest.TestCase):
         """
         self.assertRaises(TypeError, pytils.translit.translify, 25)
         self.assertRaises(pytils.err.InputParameterError, pytils.translit.translify, 25)
-        self.assertRaises(ValueError, pytils.translit.translify, u'\u00bfHabla espa\u00f1ol?')
+        self.assertRaises(ValueError, pytils.translit.translify, '\u00bfHabla espa\u00f1ol?')
 
     def testDetransliteration(self):
         """
         Unit-test for detransliterations
         """
-        self.ckDetransl('test', u"тест")
-        self.ckDetransl('proverka', u"проверка")
-        self.ckDetransl('translit', u"транслит")
-        self.ckDetransl('SCHuka', u"Щука")
-        self.ckDetransl('Schuka', u"Щука")
+        self.ckDetransl('test', "тест")
+        self.ckDetransl('proverka', "проверка")
+        self.ckDetransl('translit', "транслит")
+        self.ckDetransl('SCHuka', "Щука")
+        self.ckDetransl('Schuka', "Щука")
 
     def testDetransliterationExceptions(self):
         """
@@ -85,10 +85,10 @@ class TranslitTestCase(unittest.TestCase):
         """
         Unit-test for slugs
         """
-        self.ckSlug(u"ТеСт", 'test')
-        self.ckSlug(u"Проверка связи", 'proverka-svyazi')
-        self.ckSlug(u"me&you", 'me-and-you')
-        self.ckSlug(u"и еще один тест", 'i-esche-odin-test')
+        self.ckSlug("ТеСт", 'test')
+        self.ckSlug("Проверка связи", 'proverka-svyazi')
+        self.ckSlug("me&yo", 'me-and-yo')
+        self.ckSlug("и еще один тест", 'i-esche-odin-test')
 
     def testSlugExceptions(self):
         """
@@ -102,33 +102,33 @@ class TranslitTestCase(unittest.TestCase):
         """
         Unit-test for testing additional unicode symbols
         """
-        self.ckTransl(u"«Вот так вот»", '"Vot tak vot"')
-        self.ckTransl(u"‘Или вот так’", "'Ili vot tak'")
-        self.ckTransl(u"– Да…", "- Da...")
+        self.ckTransl("«Вот так вот»", '"Vot tak vot"')
+        self.ckTransl("‘Или вот так’", "'Ili vot tak'")
+        self.ckTransl("– Да…", "- Da...")
 
     def testSlugifyIssue10(self):
         """
         Unit-test for testing that bug#10 fixed
         """
-        self.ckSlug(u"Проверка связи…", 'proverka-svyazi')
-        self.ckSlug(u"Проверка\x0aсвязи 2", 'proverka-svyazi-2')
-        self.ckSlug(u"Проверка\201связи 3", 'proverkasvyazi-3')
+        self.ckSlug("Проверка связи…", 'proverka-svyazi')
+        self.ckSlug("Проверка\x0aсвязи 2", 'proverka-svyazi-2')
+        self.ckSlug("Проверка\201связи 3", 'proverkasvyazi-3')
 
     def testSlugifyIssue15(self):
         """
         Unit-test for testing that bug#15 fixed
         """
-        self.ckSlug(u"World of Warcraft", "world-of-warcraft")
+        self.ckSlug("World of Warcraft", "world-of-warcraft")
 
     def testAdditionalDashesAndQuotes(self):
         """
         Unit-test for testing additional dashes (figure and em-dash)
         and quotes
         """
-        self.ckSlug(u"Юнит-тесты — наше всё", 'yunit-testyi---nashe-vsyo')
-        self.ckSlug(u"Юнит-тесты ‒ наше всё", 'yunit-testyi---nashe-vsyo')
-        self.ckSlug(u"95−34", '95-34')
-        self.ckTransl(u"Двигатель “Pratt&Whitney”", 'Dvigatel\' "Pratt&Whitney"')
+        self.ckSlug("Юнит-тесты — наше всё", 'yunit-testyi---nashe-vsyo')
+        self.ckSlug("Юнит-тесты ‒ наше всё", 'yunit-testyi---nashe-vsyo')
+        self.ckSlug("95−34", '95-34')
+        self.ckTransl("Двигатель “Pratt&Whitney”", 'Dvigatel\' "Pratt&Whitney"')
 
 if __name__ == '__main__':
     unittest.main()

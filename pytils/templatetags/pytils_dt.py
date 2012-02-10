@@ -73,7 +73,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
         {{ some_date|ru_strftime:"%d %B %Y, %A" }}
     """
     try:
-        uformat = pseudo_unicode(format, encoding, u"%d.%m.%Y")
+        uformat = pseudo_unicode(format, encoding, "%d.%m.%Y")
         ures = dt.ru_strftime(uformat,
                               date,
                               inflected=True,

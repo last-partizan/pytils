@@ -91,98 +91,98 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         """
         Unit-test for distance_of_time_in_words with default accuracy
         """
-        self.ckDefaultAccuracy("10sec_ago", u"менее минуты назад")
-        self.ckDefaultAccuracy("1min_ago", u"1 минуту назад")
-        self.ckDefaultAccuracy("10min_ago", u"10 минут назад")
-        self.ckDefaultAccuracy("1hr_ago", u"1 час назад")
-        self.ckDefaultAccuracy("10hr_ago", u"10 часов назад")
-        self.ckDefaultAccuracy("1day_ago", u"1 день назад")
-        self.ckDefaultAccuracy("1day1hr_ago", u"1 день назад")
-        self.ckDefaultAccuracy("2day_ago", u"2 дня назад")
+        self.ckDefaultAccuracy("10sec_ago", "менее минуты назад")
+        self.ckDefaultAccuracy("1min_ago", "1 минуту назад")
+        self.ckDefaultAccuracy("10min_ago", "10 минут назад")
+        self.ckDefaultAccuracy("1hr_ago", "1 час назад")
+        self.ckDefaultAccuracy("10hr_ago", "10 часов назад")
+        self.ckDefaultAccuracy("1day_ago", "1 день назад")
+        self.ckDefaultAccuracy("1day1hr_ago", "1 день назад")
+        self.ckDefaultAccuracy("2day_ago", "2 дня назад")
 
-        self.ckDefaultAccuracy("in_10sec", u"менее чем через минуту")
-        self.ckDefaultAccuracy("in_1min", u"через 1 минуту")
-        self.ckDefaultAccuracy("in_10min", u"через 10 минут")
-        self.ckDefaultAccuracy("in_1hr", u"через 1 час")
-        self.ckDefaultAccuracy("in_10hr", u"через 10 часов")
-        self.ckDefaultAccuracy("in_1day", u"через 1 день")
-        self.ckDefaultAccuracy("in_1day1hr", u"через 1 день")
-        self.ckDefaultAccuracy("in_2day", u"через 2 дня")
+        self.ckDefaultAccuracy("in_10sec", "менее чем через минуту")
+        self.ckDefaultAccuracy("in_1min", "через 1 минуту")
+        self.ckDefaultAccuracy("in_10min", "через 10 минут")
+        self.ckDefaultAccuracy("in_1hr", "через 1 час")
+        self.ckDefaultAccuracy("in_10hr", "через 10 часов")
+        self.ckDefaultAccuracy("in_1day", "через 1 день")
+        self.ckDefaultAccuracy("in_1day1hr", "через 1 день")
+        self.ckDefaultAccuracy("in_2day", "через 2 дня")
 
     def testDOTIWDefaultToTimeAcc1(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=1
         """
         # accuracy = 1
-        self.ckDefaultToTime("10sec_ago", 1, u"менее минуты назад")
-        self.ckDefaultToTime("1min_ago", 1, u"минуту назад")
-        self.ckDefaultToTime("10min_ago", 1,  u"10 минут назад")
-        self.ckDefaultToTime("1hr_ago", 1, u"час назад")
-        self.ckDefaultToTime("10hr_ago", 1, u"10 часов назад")
-        self.ckDefaultToTime("1day_ago", 1, u"вчера")
-        self.ckDefaultToTime("1day1hr_ago", 1, u"вчера")
-        self.ckDefaultToTime("2day_ago", 1, u"позавчера")
+        self.ckDefaultToTime("10sec_ago", 1, "менее минуты назад")
+        self.ckDefaultToTime("1min_ago", 1, "минуту назад")
+        self.ckDefaultToTime("10min_ago", 1,  "10 минут назад")
+        self.ckDefaultToTime("1hr_ago", 1, "час назад")
+        self.ckDefaultToTime("10hr_ago", 1, "10 часов назад")
+        self.ckDefaultToTime("1day_ago", 1, "вчера")
+        self.ckDefaultToTime("1day1hr_ago", 1, "вчера")
+        self.ckDefaultToTime("2day_ago", 1, "позавчера")
 
-        self.ckDefaultToTime("in_10sec", 1, u"менее чем через минуту")
-        self.ckDefaultToTime("in_1min", 1, u"через минуту")
-        self.ckDefaultToTime("in_10min", 1, u"через 10 минут")
-        self.ckDefaultToTime("in_1hr", 1, u"через час")
-        self.ckDefaultToTime("in_10hr", 1, u"через 10 часов")
-        self.ckDefaultToTime("in_1day", 1, u"завтра")
-        self.ckDefaultToTime("in_1day1hr", 1, u"завтра")
-        self.ckDefaultToTime("in_2day", 1, u"послезавтра")
+        self.ckDefaultToTime("in_10sec", 1, "менее чем через минуту")
+        self.ckDefaultToTime("in_1min", 1, "через минуту")
+        self.ckDefaultToTime("in_10min", 1, "через 10 минут")
+        self.ckDefaultToTime("in_1hr", 1, "через час")
+        self.ckDefaultToTime("in_10hr", 1, "через 10 часов")
+        self.ckDefaultToTime("in_1day", 1, "завтра")
+        self.ckDefaultToTime("in_1day1hr", 1, "завтра")
+        self.ckDefaultToTime("in_2day", 1, "послезавтра")
         
     def testDOTIWDefaultToTimeAcc2(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=2
         """
         # accuracy = 2
-        self.ckDefaultToTime("10sec_ago", 2, u"менее минуты назад")
-        self.ckDefaultToTime("1min_ago", 2, u"минуту назад")
-        self.ckDefaultToTime("10min_ago", 2,  u"10 минут назад")
-        self.ckDefaultToTime("1hr_ago", 2, u"1 час 2 минуты назад")
-        self.ckDefaultToTime("10hr_ago", 2, u"10 часов 10 минут назад")
-        self.ckDefaultToTime("1day_ago", 2, u"вчера")
-        self.ckDefaultToTime("1day1hr_ago", 2, u"1 день 1 час назад")
-        self.ckDefaultToTime("2day_ago", 2, u"позавчера")
+        self.ckDefaultToTime("10sec_ago", 2, "менее минуты назад")
+        self.ckDefaultToTime("1min_ago", 2, "минуту назад")
+        self.ckDefaultToTime("10min_ago", 2,  "10 минут назад")
+        self.ckDefaultToTime("1hr_ago", 2, "1 час 2 минуты назад")
+        self.ckDefaultToTime("10hr_ago", 2, "10 часов 10 минут назад")
+        self.ckDefaultToTime("1day_ago", 2, "вчера")
+        self.ckDefaultToTime("1day1hr_ago", 2, "1 день 1 час назад")
+        self.ckDefaultToTime("2day_ago", 2, "позавчера")
 
-        self.ckDefaultToTime("in_10sec", 2, u"менее чем через минуту")
-        self.ckDefaultToTime("in_1min", 2, u"через минуту")
-        self.ckDefaultToTime("in_10min", 2, u"через 10 минут")
-        self.ckDefaultToTime("in_1hr", 2, u"через 1 час 2 минуты")
-        self.ckDefaultToTime("in_10hr", 2, u"через 10 часов 10 минут")
-        self.ckDefaultToTime("in_1day", 2, u"завтра")
-        self.ckDefaultToTime("in_1day1hr", 2, u"через 1 день 1 час")
-        self.ckDefaultToTime("in_2day", 2, u"послезавтра")
+        self.ckDefaultToTime("in_10sec", 2, "менее чем через минуту")
+        self.ckDefaultToTime("in_1min", 2, "через минуту")
+        self.ckDefaultToTime("in_10min", 2, "через 10 минут")
+        self.ckDefaultToTime("in_1hr", 2, "через 1 час 2 минуты")
+        self.ckDefaultToTime("in_10hr", 2, "через 10 часов 10 минут")
+        self.ckDefaultToTime("in_1day", 2, "завтра")
+        self.ckDefaultToTime("in_1day1hr", 2, "через 1 день 1 час")
+        self.ckDefaultToTime("in_2day", 2, "послезавтра")
         
     def testDOTIWDefaultToTimeAcc3(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=3
         """
         # accuracy = 3
-        self.ckDefaultToTime("10sec_ago", 3, u"менее минуты назад")
-        self.ckDefaultToTime("1min_ago", 3, u"минуту назад")
-        self.ckDefaultToTime("10min_ago", 3,  u"10 минут назад")
-        self.ckDefaultToTime("1hr_ago", 3, u"1 час 2 минуты назад")
-        self.ckDefaultToTime("10hr_ago", 3, u"10 часов 10 минут назад")
+        self.ckDefaultToTime("10sec_ago", 3, "менее минуты назад")
+        self.ckDefaultToTime("1min_ago", 3, "минуту назад")
+        self.ckDefaultToTime("10min_ago", 3,  "10 минут назад")
+        self.ckDefaultToTime("1hr_ago", 3, "1 час 2 минуты назад")
+        self.ckDefaultToTime("10hr_ago", 3, "10 часов 10 минут назад")
         self.ckDefaultToTime("1day_ago", 3,
-                                u"1 день 0 часов 20 минут назад")
+                                "1 день 0 часов 20 минут назад")
         self.ckDefaultToTime("1day1hr_ago", 3,
-                                u"1 день 1 час 10 минут назад")
+                                "1 день 1 час 10 минут назад")
         self.ckDefaultToTime("2day_ago", 3,
-                                u"2 дня 0 часов 40 минут назад")
+                                "2 дня 0 часов 40 минут назад")
 
-        self.ckDefaultToTime("in_10sec", 3, u"менее чем через минуту")
-        self.ckDefaultToTime("in_1min", 3, u"через минуту")
-        self.ckDefaultToTime("in_10min", 3, u"через 10 минут")
-        self.ckDefaultToTime("in_1hr", 3, u"через 1 час 2 минуты")
-        self.ckDefaultToTime("in_10hr", 3, u"через 10 часов 10 минут")
+        self.ckDefaultToTime("in_10sec", 3, "менее чем через минуту")
+        self.ckDefaultToTime("in_1min", 3, "через минуту")
+        self.ckDefaultToTime("in_10min", 3, "через 10 минут")
+        self.ckDefaultToTime("in_1hr", 3, "через 1 час 2 минуты")
+        self.ckDefaultToTime("in_10hr", 3, "через 10 часов 10 минут")
         self.ckDefaultToTime("in_1day", 3,
-                                u"через 1 день 0 часов 20 минут")
+                                "через 1 день 0 часов 20 минут")
         self.ckDefaultToTime("in_1day1hr", 3,
-                                u"через 1 день 1 час 10 минут")
+                                "через 1 день 1 час 10 минут")
         self.ckDefaultToTime("in_2day", 3,
-                                u"через 2 дня 0 часов 40 минут")
+                                "через 2 дня 0 часов 40 минут")
 
     def testDOTWDatetimeType(self):
         """
@@ -194,7 +194,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
             from_time=first_time,
             accuracy=1,
             to_time=second_time),
-                          u"16 минут назад")
+                          "16 минут назад")
 
     def testDOTIWExceptions(self):
         """
@@ -214,7 +214,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         """
         d_days = datetime.datetime.now() - datetime.timedelta(13, 3620)
         self.assertEquals(pytils.dt.distance_of_time_in_words(d_days),
-                          u"13 дней назад")
+                          "13 дней назад")
 
     def testIssue25HoursFixed(self):
         """
@@ -222,7 +222,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         """
         d_hours = datetime.datetime.now() - datetime.timedelta(0, 46865)
         self.assertEquals(pytils.dt.distance_of_time_in_words(d_hours),
-                          u"13 часов назад")
+                          "13 часов назад")
         
 
 class RuStrftimeTestCase(unittest.TestCase):
@@ -276,22 +276,22 @@ class RuStrftimeTestCase(unittest.TestCase):
         """
         Unit-tests for pytils.dt.ru_strftime
         """
-        self.ck(u"тест %a", u"тест пт")
-        self.ck(u"тест %A", u"тест пятница")
-        self.ck(u"тест %b", u"тест авг")
-        self.ck(u"тест %B", u"тест август")
-        self.ckInflected(u"тест %B", u"тест августа")
-        self.ckInflected(u"тест выполнен %d %B %Y года",
-                          u"тест выполнен 25 августа 2006 года")
-        self.ckInflectedDay(u"тест выполнен в %A", u"тест выполнен в пятницу")
+        self.ck("тест %a", "тест пт")
+        self.ck("тест %A", "тест пятница")
+        self.ck("тест %b", "тест авг")
+        self.ck("тест %B", "тест август")
+        self.ckInflected("тест %B", "тест августа")
+        self.ckInflected("тест выполнен %d %B %Y года",
+                          "тест выполнен 25 августа 2006 года")
+        self.ckInflectedDay("тест выполнен в %A", "тест выполнен в пятницу")
     
     def testRuStrftimeWithPreposition(self):
         """
         Unit-tests for pytils.dt.ru_strftime with preposition option
         """
-        self.ckPreposition(u"тест %a", u"тест в\xa0пт")
-        self.ckPreposition(u"тест %A", u"тест в\xa0пятницу")
-        self.ckPreposition(u"тест %A", u"тест во\xa0вторник", datetime.date(2007, 6, 5))
+        self.ckPreposition("тест %a", "тест в\xa0пт")
+        self.ckPreposition("тест %A", "тест в\xa0пятницу")
+        self.ckPreposition("тест %A", "тест во\xa0вторник", datetime.date(2007, 6, 5))
     
     def testRuStrftimeZeros(self):
         """
@@ -299,25 +299,25 @@ class RuStrftimeTestCase(unittest.TestCase):
         
         It means, 1 April 2007, but 01.04.2007
         """
-        self.ck(u"%d.%m.%Y", u"01.04.2007", datetime.date(2007, 4, 1))
-        self.ckInflected(u"%d %B %Y", u"1 апреля 2007", datetime.date(2007, 4, 1))
+        self.ck("%d.%m.%Y", "01.04.2007", datetime.date(2007, 4, 1))
+        self.ckInflected("%d %B %Y", "1 апреля 2007", datetime.date(2007, 4, 1))
 
     def testRuStrftimeExceptions(self):
         """
         Unit-tests for testing pytils.dt.ru_strftime's exceptions
         """
         self.assertRaises(TypeError, pytils.dt.ru_strftime, time.time())
-        self.assertRaises(TypeError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
+        self.assertRaises(TypeError, pytils.dt.ru_strftime, "%Y.%m.%d%", time.time())
         self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, time.time())
-        self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
+        self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, "%Y.%m.%d%", time.time())
 
     def testIssue20Fixed(self):
         """
         Unit-test for testing that Issue#20 is fixed (typo)
         """
-        self.assertEquals(u"воскресенье",
+        self.assertEquals("воскресенье",
                           pytils.dt.ru_strftime(
-                              u"%A",
+                              "%A",
                               datetime.date(2007,3,18),
                               inflected_day=True)
                          )
