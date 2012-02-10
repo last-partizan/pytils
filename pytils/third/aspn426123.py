@@ -132,7 +132,7 @@
 # http://www.targeted.org/python/recipes/typecheck.py
 #
 ################################################################################
-
+from __future__ import print_function, absolute_import, division, unicode_literals
 __all__ = [ "takes", "InputParameterError", "returns", "ReturnValueError",
             "optional", "nothing", "anything", "list_of", "tuple_of", "dict_of",
             "by_regex", "with_attr", "one_of" ]
@@ -141,7 +141,6 @@ no_check = False # set this to True to turn all checks off
 
 ################################################################################
 
-from __future__ import print_function, absolute_import, division, unicode_literals
 from inspect import getargspec, isfunction, isbuiltin, isclass
 from types import NoneType
 from re import compile as regex
