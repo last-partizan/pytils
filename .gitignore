@@ -1,0 +1,4 @@
+*.py[oc]
+.idea/
+.tox/
+pytils.egg-info/
