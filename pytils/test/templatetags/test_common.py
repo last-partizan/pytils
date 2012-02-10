@@ -37,11 +37,12 @@ class TemplateTagsCommonsTestCase(unittest.TestCase):
         """
         Unit-tests for pytils.templatetags.pseudo_unicode
         """
-        self.assertEquals(tt.pseudo_unicode('тест', 'utf-8'), 'тест')
-        self.assertEquals(tt.pseudo_unicode('тест', 'utf-8'), 'тест')
-        self.assertEquals(tt.pseudo_unicode('тест', 'ascii'), '')
-        self.assertEquals(tt.pseudo_unicode('тест', 'ascii', 'опа'), 'опа')
-        self.assertRaises(UnicodeDecodeError, tt.pseudo_unicode, 'тест', 'ascii', None)
+        str_value = 'тест'.encode('utf-8')
+        self.assertEquals(tt.pseudo_unicode(str_value, 'utf-8'), 'тест')
+        self.assertEquals(tt.pseudo_unicode(str_value, 'utf-8'), 'тест')
+        self.assertEquals(tt.pseudo_unicode(str_value, 'ascii'), '')
+        self.assertEquals(tt.pseudo_unicode(str_value, 'ascii', 'опа'), 'опа')
+        self.assertRaises(UnicodeDecodeError, tt.pseudo_unicode, str_value, 'ascii', None)
 
 
 if __name__ == '__main__':
