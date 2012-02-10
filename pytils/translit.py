@@ -19,6 +19,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 Simple transliteration
 """
 
+from six import text_type
 import re
 from pytils.utils import takes, returns
 
@@ -205,7 +206,7 @@ def detranslify(in_string):
     return russian
 
 @takes(basestring)
-@returns(str)
+@returns(text_type)
 def slugify(in_string):
     """
     Prepare string for slug (i.e. URL or file/dir name)
