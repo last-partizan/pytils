@@ -19,6 +19,7 @@ Unit-tests for pytils.translit
 from __future__ import print_function, absolute_import, division, unicode_literals
 
 import unittest
+import six
 
 import pytils
 
@@ -79,7 +80,8 @@ class TranslitTestCase(unittest.TestCase):
         """
         self.assertRaises(TypeError, pytils.translit.detranslify, 25)
         self.assertRaises(pytils.err.InputParameterError, pytils.translit.detranslify, 25)
-        self.assertRaises(ValueError, pytils.translit.detranslify, "тест".encode('utf-8'))
+        if not six.PY3:
+            self.assertRaises(ValueError, pytils.translit.detranslify, "тест".encode('utf-8'))
 
     def testSlug(self):
         """
@@ -96,7 +98,8 @@ class TranslitTestCase(unittest.TestCase):
         """
         self.assertRaises(TypeError, pytils.translit.slugify, 25)
         self.assertRaises(pytils.err.InputParameterError, pytils.translit.slugify, 25)
-        self.assertRaises(ValueError, pytils.translit.slugify, "тест".encode('utf-8'))
+        if not six.PY3:
+            self.assertRaises(ValueError, pytils.translit.slugify, "тест".encode('utf-8'))
 
     def testTranslifyAdditionalUnicodeSymbols(self):
         """

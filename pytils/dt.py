@@ -250,10 +250,14 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False, inflected_day=Fal
     format = format.replace('%b', MONTH_NAMES[date.month-1][0])
     format = format.replace('%B', MONTH_NAMES[date.month-1][month_idx])
 
-    # strftime must be str, so encode it to utf8:
-    s_format = format.encode("utf-8")
-    s_res = date.strftime(s_format)
-    # and back to unicode
-    u_res = s_res.decode("utf-8")
+
+    # Python 2.x: strftime must be str, so encode it to utf8:
+    if not six.PY3:
+        s_format = format.encode("utf-8")
+        s_res = date.strftime(s_format)
+        # and back to unicode
+        u_res = s_res.decode("utf-8")
+    else:
+        u_res = date.strftime(format)
 
     return u_res

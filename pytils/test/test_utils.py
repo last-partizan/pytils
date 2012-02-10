@@ -68,7 +68,7 @@ class ASPN426123TestCase(unittest.TestCase):
         self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
 
     def testTakesMultiplyTypesAndTupleOf(self):
-        @pytils.utils.takes((int, long),
+        @pytils.utils.takes(six.integer_types,
                             pytils.utils.tuple_of(six.text_type))
         def func(i, t=tuple()):
             return i + sum(len(s) for s in t)

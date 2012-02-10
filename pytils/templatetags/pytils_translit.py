@@ -40,7 +40,7 @@ def translify(stext):
                         encoding,
                         default_value)
         res = translit.translify(utext)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}
     return res
@@ -53,7 +53,7 @@ def detranslify(stext):
                 ures,
                 encoding,
                 default_uvalue)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}
     return res
@@ -66,7 +66,7 @@ def slugify(stext):
                 encoding,
                 default_value)
         res = translit.slugify(utext)
-    except Exception, err:
+    except Exception as err:
         print(err)
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}

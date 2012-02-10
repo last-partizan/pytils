@@ -139,6 +139,7 @@ __all__ = [ "takes", "InputParameterError", "returns", "ReturnValueError",
             "optional", "nothing", "anything", "list_of", "tuple_of", "dict_of",
             "by_regex", "with_attr", "one_of" ]
 import six
+from six.moves import reduce
 no_check = False # set this to True to turn all checks off
 
 ################################################################################

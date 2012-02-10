@@ -56,7 +56,7 @@ def choose_plural(amount, variants):
                 encoding,
                 default_value
                 )
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         try:
             default_variant = variants
@@ -88,7 +88,7 @@ def get_plural(amount, variants):
             encoding,
             default_value
             )
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         try:
             default_variant = variants
@@ -106,7 +106,7 @@ def rubles(amount, zero_for_kopeck=False):
             encoding,
             default_value
             )
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': str(amount)}
     return res
@@ -128,7 +128,7 @@ def in_words(amount, gender=None):
                 encoding,
                 default_value
             )
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': str(amount)}
     return res
@@ -167,7 +167,7 @@ def sum_string(amount, gender, items):
                 encoding,
                 default_value
             )
-    except Exception, err:
+    except Exception as err:
         # because tag's renderer must die silently
         res = default_value % {'error': err, 'value': str(amount)}
     return res

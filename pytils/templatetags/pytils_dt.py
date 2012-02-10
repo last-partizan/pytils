@@ -52,7 +52,7 @@ def distance_of_time(from_time, accuracy=1):
                 ures,
                 encoding,
                 default_value)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         try:
             default_distance = "%s seconds" % str(int(time.time() - from_time))
@@ -81,7 +81,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
                               inflected_day=inflected_day,
                               preposition=preposition)
         res = pseudo_unicode(ures, encoding)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         try:
             default_date = date.strftime(format)

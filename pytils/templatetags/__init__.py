@@ -19,6 +19,7 @@ Pytils templatetags for Django web-framework
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 import warnings
+import six
 import django
 
 def is_django_unicode_aware():
@@ -58,13 +59,13 @@ def pseudo_unicode(stext, encoding, default_value=''):
     default_value is not None), it return default_value.
 
     """
-    if unicode_aware and isinstance(stext, unicode):
+    if unicode_aware and isinstance(stext, six.text_type):
         utext = stext
-    elif isinstance(stext, unicode):
+    elif isinstance(stext, six.text_type):
         utext = stext
     else:
         try:
-            utext = unicode(stext, encoding)
+            utext = six.text_type(stext, encoding)
         except UnicodeDecodeError as err:
             if default_value is None:
                 raise
