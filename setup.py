@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function, absolute_import, division, unicode_literals
+from __future__ import print_function
 use_setuptools = True
 if use_setuptools:
     try:
         from setuptools import setup
     except ImportError:
-        print "Cannot load setuptool, revert to distutils"
+        print("Cannot load setuptool, revert to distutils")
         use_setuptools = False
         from distutils.core import setup
 else:
