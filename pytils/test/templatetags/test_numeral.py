@@ -17,6 +17,7 @@
 Unit tests for pytils' numeral templatetags for Django web framework
 """
 
+from __future__ import print_function, absolute_import, division, unicode_literals
 from pytils.test.templatetags import helpers
 
 

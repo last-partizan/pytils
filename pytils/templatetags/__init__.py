@@ -17,6 +17,7 @@
 Pytils templatetags for Django web-framework
 """
 
+from __future__ import print_function, absolute_import, division, unicode_literals
 import warnings
 import django
 

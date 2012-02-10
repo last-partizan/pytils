@@ -18,6 +18,7 @@
 pytils.translit templatetags for Django web-framework
 """
 
+from __future__ import print_function, absolute_import, division, unicode_literals
 from django import template, conf
 from pytils import translit
 from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
