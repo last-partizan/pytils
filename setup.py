@@ -36,6 +36,10 @@ dates in russian without locales, transliteration, etc)""",
           'Natural Language :: Russian',
           'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 2.5',
+          'Programming Language :: Python :: 2.6',
+          'Programming Language :: Python :: 2.7',
         ],
     }
 setuptools_extensions = {

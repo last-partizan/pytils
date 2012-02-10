@@ -25,7 +25,7 @@ def get_django_suite():
         import django
     except ImportError:
         return unittest.TestSuite()
-    
+
     import pytils.test.templatetags
     return pytils.test.templatetags.get_suite()
 
@@ -37,7 +37,7 @@ def get_suite():
                                        globals(),
                                        locals(),
                                        ["pytils.test"])
-        
+
         loader = unittest.defaultTestLoader
         suite.addTest(loader.loadTestsFromModule(imported_module))
         suite.addTest(get_django_suite())
@@ -57,5 +57,5 @@ def run(verbosity=1):
     unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
 if __name__ == '__main__':
-    run(2)
+    run()
 
