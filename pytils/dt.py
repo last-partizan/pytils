@@ -20,6 +20,7 @@ Russian dates without locales
 
 from __future__ import print_function, absolute_import, division, unicode_literals
 import datetime
+import six
 
 from pytils import numeral
 from pytils.utils import takes, returns, optional, check_positive
@@ -80,7 +81,7 @@ DAY_NAMES = (
        optional((int, float, datetime.datetime)),
        accuracy=optional(int),
        to_time=optional((int, float, datetime.datetime)))
-@returns(unicode)
+@returns(six.text_type)
 def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     """
     Represents distance of time in words
@@ -193,17 +194,17 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     return final_str
 
-@takes(optional(unicode),
+@takes(optional(six.text_type),
        optional((datetime.date, datetime.datetime)),
        optional(bool),
        optional(bool),
        optional(bool),
-       format=optional(unicode),
+       format=optional(six.text_type),
        date=optional((datetime.date, datetime.datetime)),
        inflected=optional(bool),
        inflected_day=optional(bool),
        preposition=optional(bool))
-@returns(unicode)
+@returns(six.text_type)
 def ru_strftime(format="%d.%m.%Y", date=None, inflected=False, inflected_day=False, preposition=False):
     """
     Russian strftime without locale
@@ -213,13 +214,13 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False, inflected_day=Fal
 
     @param date: date value, default=None translates to today
     @type date: C{datetime.date} or C{datetime.datetime}
-    
+
     @param inflected: is month inflected, default False
     @type inflected: C{bool}
-    
+
     @param inflected_day: is day inflected, default False
     @type inflected: C{bool}
-    
+
     @param preposition: is preposition used, default False
         preposition=True automatically implies inflected_day=True
     @type preposition: C{bool}
@@ -233,16 +234,16 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False, inflected_day=Fal
         date = datetime.datetime.today()
 
     weekday = date.weekday()
-    
+
     prepos = preposition and DAY_NAMES[weekday][3] or ""
-    
+
     month_idx = inflected and 2 or 1
     day_idx = (inflected_day or preposition) and 2 or 1
-    
+
     # for russian typography standard,
     # 1 April 2007, but 01.04.2007
     if '%b' in format or '%B' in format:
-        format = format.replace('%d', unicode(date.day))
+        format = format.replace('%d', six.text_type(date.day))
 
     format = format.replace('%a', prepos+DAY_NAMES[weekday][0])
     format = format.replace('%A', prepos+DAY_NAMES[weekday][day_idx])

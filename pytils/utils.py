@@ -63,7 +63,7 @@ def check_positive(value, strict=False):
         raise ValueError("Value must be positive, not %s" % str(value))
 
 
-@takes(unicode, optional(unicode), sep=optional(unicode))
+@takes(six.text_type, optional(six.text_type), sep=optional(six.text_type))
 def split_values(ustring, sep=','):
     """
     Splits unicode string with separator C{sep},
@@ -77,7 +77,7 @@ def split_values(ustring, sep=','):
 
     @return: tuple of splitted elements
     """
-    assert isinstance(ustring, unicode), "uvalue must be unicode, not %s" % type(ustring)
+    assert isinstance(ustring, six.text_type), "uvalue must be unicode, not %s" % type(ustring)
     # unicode have special mark symbol 0xffff which cannot be used in a regular text,
     # so we use it to mark a place where escaped column was
     ustring_marked = ustring.replace('\,', '\uffff')

@@ -18,6 +18,7 @@ from __future__ import print_function, absolute_import, division, unicode_litera
 """
 Plural forms and in-word representation for numerals.
 """
+import six
 from decimal import Decimal
 from pytils import utils
 from pytils.utils import takes, optional, list_of, tuple_of, \
@@ -89,7 +90,7 @@ FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
 
-@takes((int, long, float, Decimal),
+@takes((float, Decimal) + six.integer_types,
        optional(int),
        signs=optional(int))
 def _get_float_remainder(fvalue, signs=9):
@@ -111,7 +112,7 @@ def _get_float_remainder(fvalue, signs=9):
     @raise ValueError: signs overflow
     """
     check_positive(fvalue)
-    if isinstance(fvalue, (int, long)):
+    if isinstance(fvalue, six.integer_types):
         return "0"
     if isinstance(fvalue, Decimal) and fvalue.as_tuple()[2] == 0:
         # Decimal.as_tuple() -> (sign, digit_tuple, exponent)
@@ -143,7 +144,7 @@ def _get_float_remainder(fvalue, signs=9):
     return remainder
 
 
-@takes((int,long), (unicode, list_of(unicode), tuple_of(unicode)))
+@takes(six.integer_types, (six.text_type, list_of(six.text_type), tuple_of(six.text_type)))
 def choose_plural(amount, variants):
     """
     Choose proper case depending on amount
@@ -164,13 +165,13 @@ def choose_plural(amount, variants):
     @raise ValueError: amount is negative
     @raise ValueError: variants' length lesser than 3
     """
-    
-    if isinstance(variants, unicode):
+
+    if isinstance(variants, six.text_type):
         variants = utils.split_values(variants)
-    
+
     check_length(variants, 3)
     check_positive(amount)
-    
+
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0
     elif amount % 10 >= 2 and amount % 10 <= 4 and \
@@ -178,13 +179,13 @@ def choose_plural(amount, variants):
         variant = 1
     else:
         variant = 2
-    
+
     return variants[variant]
 
-@takes((int,long),
-       (unicode, list_of(unicode), tuple_of(unicode)),
-        optional((nothing, unicode)),
-        absence=optional((nothing, unicode)))
+@takes(six.integer_types,
+       (six.text_type, list_of(six.text_type), tuple_of(six.text_type)),
+        optional((nothing, six.text_type)),
+        absence=optional((nothing, six.text_type)))
 def get_plural(amount, variants, absence=None):
     """
     Get proper case with value
@@ -209,7 +210,7 @@ def get_plural(amount, variants, absence=None):
         return absence
 
 
-@takes((int,long), (unicode, list_of(unicode), tuple_of(unicode)))
+@takes(six.integer_types, (six.text_type, list_of(six.text_type), tuple_of(six.text_type)))
 def _get_plural_legacy(amount, extra_variants):
     """
     Get proper case with value (legacy variant, without absence)
@@ -227,7 +228,7 @@ def _get_plural_legacy(amount, extra_variants):
     @rtype: C{unicode}
     """
     absence = None
-    if isinstance(extra_variants, unicode):
+    if isinstance(extra_variants, six.text_type):
         extra_variants = utils.split_values(extra_variants)
     if len(extra_variants) == 4:
         variants = extra_variants[:3]
@@ -236,7 +237,7 @@ def _get_plural_legacy(amount, extra_variants):
         variants = extra_variants
     return get_plural(amount, variants, absence)
 
-@takes((int, long, float, Decimal), optional(bool), zero_for_kopeck=optional(bool))
+@takes((float, Decimal)+six.integer_types, optional(bool), zero_for_kopeck=optional(bool))
 def rubles(amount, zero_for_kopeck=False):
     """
     Get string for money
@@ -272,7 +273,7 @@ def rubles(amount, zero_for_kopeck=False):
     return " ".join(pts)
 
 
-@takes((int,long), optional(one_of(1,2,3)), gender=optional(one_of(1,2,3)))
+@takes(six.integer_types, optional(one_of(1,2,3)), gender=optional(one_of(1,2,3)))
 def in_words_int(amount, gender=MALE):
     """
     Integer in words
@@ -322,7 +323,7 @@ def in_words_float(amount, _gender=FEMALE):
 
     return " ".join(pts)
 
-@takes((int,long,float,Decimal),
+@takes((float,Decimal) + six.integer_types,
        optional(one_of(None,1,2,3)),
        gender=optional(one_of(None,1,2,3)))
 def in_words(amount, gender=None):
@@ -354,7 +355,7 @@ def in_words(amount, gender=None):
     else:
         args = (amount, gender)
     # если целое
-    if isinstance(amount, (int, long)):
+    if isinstance(amount, six.integer_types):
         return in_words_int(*args)
     # если дробное
     elif isinstance(amount, (float, Decimal)):
@@ -364,10 +365,10 @@ def in_words(amount, gender=None):
         # до сюда не должно дойти
         raise RuntimeError()
 
-@takes((int, long),
+@takes(six.integer_types,
        one_of(1, 2, 3),
-       optional((unicode, nothing, list_of(unicode), tuple_of(unicode))),
-       items=optional((unicode, nothing, list_of(unicode), tuple_of(unicode))))
+       optional((six.text_type, nothing, list_of(six.text_type), tuple_of(six.text_type))),
+       items=optional((six.text_type, nothing, list_of(six.text_type), tuple_of(six.text_type))))
 def sum_string(amount, gender, items=None):
     """
     Get sum in words
@@ -391,7 +392,7 @@ def sum_string(amount, gender, items=None):
     @raise ValueError: amount bigger than 10**11
     @raise ValueError: amount is negative
     """
-    if isinstance(items, unicode):
+    if isinstance(items, six.text_type):
         items = utils.split_values(items)
     if items is None:
         items = ("", "", "")
@@ -425,11 +426,11 @@ def sum_string(amount, gender, items=None):
     else:
         raise ValueError("Cannot operand with numbers bigger than 10**11")
 
-@takes(unicode,
-       (int,long),
+@takes(six.text_type,
+       six.integer_types,
        one_of(1,2,3),
-       optional((unicode, nothing, list_of(unicode), tuple_of(unicode))),
-       items=optional((unicode, nothing, list_of(unicode), tuple_of(unicode))))
+       optional((six.text_type, nothing, list_of(six.text_type), tuple_of(six.text_type))),
+       items=optional((six.text_type, nothing, list_of(six.text_type), tuple_of(six.text_type))))
 def _sum_string_fn(into, tmp_val, gender, items=None):
     """
     Make in-words representation of single order
@@ -455,7 +456,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     if items is None:
         items = ("", "", "")
     one_item, two_items, five_items = items
-    
+
     check_positive(tmp_val)
 
     if tmp_val == 0:
