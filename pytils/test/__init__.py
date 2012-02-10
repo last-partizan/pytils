@@ -60,6 +60,7 @@ def run(verbosity=1):
     return unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
 if __name__ == '__main__':
-    status = run()
+    result = run()
+    status = not int(result.wasSuccessful())
     sys.exit(status)
 
