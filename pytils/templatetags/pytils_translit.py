@@ -66,10 +66,8 @@ def slugify(stext):
                 default_value)
         res = translit.slugify(utext)
     except Exception, err:
-        print err
         # because filter must die silently
         res = default_value % {'error': err, 'value': stext}
-        print "so res = %r" % res
     return res
 
 # -- register filters
