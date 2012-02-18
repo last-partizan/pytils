@@ -2,8 +2,9 @@ pytils (0.2.4dev)
 
   * Add typography
   * License updated to MIT
+  * Remove support for old non-unicode Django
 
- -- Yury Yurevich <the.pythy@gmail.com>  Sun, 02 Jan 2012 01:07:43 +0700
+ -- Yury Yurevich <the.pythy@gmail.com>  Sun, 18 Feb 2012 23:43:12 +0700
 
 pytils (0.2.3)
 

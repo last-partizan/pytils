@@ -4,6 +4,7 @@ Helpers for templatetags' unit tests in Django webframework
 """
 
 from django.conf import settings
+from django.utils.encoding import smart_str
 
 encoding = 'utf-8'
 
@@ -17,16 +18,10 @@ settings.configure(
 
 from django import template
 from django.template import loader
-from pytils.templatetags import pseudo_str
 
 import unittest
 
 
-def pstr(ustr):
-    """
-    Provide/Pseudo unicode
-    """
-    return pseudo_str(ustr, encoding, None)
 
 
 class TemplateTagTestCase(unittest.TestCase):
@@ -51,10 +46,10 @@ class TemplateTagTestCase(unittest.TestCase):
         """
         
         def test_template_loader(template_name, template_dirs=None):
-            return pstr(template_string), template_name
+            return smart_str(template_string), template_name
         
         loader.template_source_loaders = [test_template_loader,]
         
         output = loader.get_template(template_name).render(template.Context(context))
-        self.assertEquals(output, pstr(result_string))
+        self.assertEquals(output, result_string)
 

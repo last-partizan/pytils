@@ -7,10 +7,9 @@ pytils.dt templatetags for Django web-framework
 import time
 from django import template, conf
 from pytils import dt
-from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
+from pytils.templatetags import init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
-encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
 show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Show values on errors (sets in Django project's settings)
 
@@ -32,11 +31,7 @@ def distance_of_time(from_time, accuracy=1):
         {{ some_dtime|distance_of_time:2 }}
     """
     try:
-        ures = dt.distance_of_time_in_words(from_time, accuracy)
-        res = pseudo_str(
-                ures,
-                encoding,
-                default_value)
+        res = dt.distance_of_time_in_words(from_time, accuracy)
     except Exception, err:
         # because filter must die silently
         try:
@@ -59,13 +54,11 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
         {{ some_date|ru_strftime:"%d %B %Y, %A" }}
     """
     try:
-        uformat = pseudo_unicode(format, encoding, u"%d.%m.%Y")
-        ures = dt.ru_strftime(uformat,
-                              date,
-                              inflected=True,
-                              inflected_day=inflected_day,
-                              preposition=preposition)
-        res = pseudo_str(ures, encoding)
+        res = dt.ru_strftime(format,
+                             date,
+                             inflected=True,
+                             inflected_day=inflected_day,
+                             preposition=preposition)
     except Exception, err:
         # because filter must die silently
         try:

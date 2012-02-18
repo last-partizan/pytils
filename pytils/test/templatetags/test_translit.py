@@ -27,16 +27,6 @@ class TranslitDefaultTestCase(helpers.TemplateTagTestCase):
             u'{% load pytils_translit %}{{ val|slugify }}',
             {'val': 'Проверка связи'},
             u'proverka-svyazi')
-    
-    # без отладки, если ошибка -- по умолчанию пустая строка
-    def testDetranslifyError(self):
-        # в юникод-режиме это не ошибка
-        from pytils.templatetags import unicode_aware
-        if not unicode_aware:
-            self.check_template_tag('detranslify_error',
-                u'{% load pytils_translit %}{{ val|detranslify }}',
-                {'val': 'Проверка связи'},
-                u'')
 
 
 if __name__ == '__main__':
