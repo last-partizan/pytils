@@ -1,8 +1,13 @@
+Pytils
+------
+
 Pytils is a Russian-specific string utils
 (transliteration, numeral is words,
 russian dates, etc)
 
 See additional docs in doc subdir.
+
+CI status: [![Build Status](https://secure.travis-ci.org/j2a/pytils.png?branch=master)](http://travis-ci.org/j2a/pytils)
 
 -----
 
