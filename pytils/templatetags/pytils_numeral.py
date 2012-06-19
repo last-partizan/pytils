@@ -1,26 +1,13 @@
 # -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.templatetags.test_numeral -*-
-# pytils - russian-specific string utils
-# Copyright (C) 2006-2009  Yury Yurevich
-#
-# http://pyobject.ru/projects/pytils/
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation, version 2
-# of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
 """
 pytils.numeral templatetags for Django web-framework
 """
 
 from django import template, conf
+from django.utils.encoding import smart_unicode
 from pytils import numeral
-from pytils.templatetags import pseudo_str, pseudo_unicode, init_defaults
+from pytils.templatetags import init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -45,15 +32,10 @@ def choose_plural(amount, variants):
     """
     try:
         if isinstance(variants, basestring):
-            uvariants = pseudo_unicode(variants, encoding, default_value)
+            uvariants = smart_unicode(variants, encoding)
         else:
-            uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
-        ures = numeral.choose_plural(amount, uvariants)
-        res = pseudo_str(
-                ures,
-                encoding,
-                default_value
-                )
+            uvariants = [smart_unicode(v, encoding) for v in variants]
+        res = numeral.choose_plural(amount, uvariants)
     except Exception, err:
         # because filter must die silently
         try:
@@ -77,15 +59,10 @@ def get_plural(amount, variants):
     """
     try:
         if isinstance(variants, basestring):
-            uvariants = pseudo_unicode(variants, encoding, default_value)
+            uvariants = smart_unicode(variants, encoding)
         else:
-            uvariants = [pseudo_unicode(v, encoding, default_uvalue) for v in variants]
-        ures = numeral._get_plural_legacy(amount, uvariants)
-        res = pseudo_str(
-            ures,
-            encoding,
-            default_value
-            )
+            uvariants = [smart_unicode(v, encoding) for v in variants]
+        res = numeral._get_plural_legacy(amount, uvariants)
     except Exception, err:
         # because filter must die silently
         try:
@@ -98,12 +75,7 @@ def get_plural(amount, variants):
 def rubles(amount, zero_for_kopeck=False):
     """Converts float value to in-words representation (for money)"""
     try:
-        ures = numeral.rubles(amount, zero_for_kopeck)
-        res = pseudo_str(
-            ures,
-            encoding,
-            default_value
-            )
+        res = numeral.rubles(amount, zero_for_kopeck)
     except Exception, err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': str(amount)}
@@ -120,12 +92,7 @@ def in_words(amount, gender=None):
         {{ some_other_int|in_words:FEMALE }}
     """
     try:
-        ures = numeral.in_words(amount, getattr(numeral, str(gender), None))
-        res = pseudo_str(
-                ures,
-                encoding,
-                default_value
-            )
+        res = numeral.in_words(amount, getattr(numeral, str(gender), None))
     except Exception, err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': str(amount)}
@@ -156,15 +123,10 @@ def sum_string(amount, gender, items):
     """
     try:
         if isinstance(items, basestring):
-            uitems = pseudo_unicode(items, encoding, default_uvalue)
+            uitems = smart_unicode(items, encoding, default_uvalue)
         else:
-            uitems = [pseudo_unicode(i, encoding, default_uvalue) for i in items]
-        ures = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
-        res = pseudo_str(
-                ures,
-                encoding,
-                default_value
-            )
+            uitems = [smart_unicode(i, encoding) for i in items]
+        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
     except Exception, err:
         # because tag's renderer must die silently
         res = default_value % {'error': err, 'value': str(amount)}

@@ -1,19 +1,5 @@
 # -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_dt -*-
-# pytils - russian-specific string utils
-# Copyright (C) 2006-2009  Yury Yurevich
-#
-# http://pyobject.ru/projects/pytils/
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation, version 2
-# of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
 """
 Russian dates without locales
 """
@@ -136,7 +122,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
                   (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
     values.append(hours)
 
-    hours == 1 and current and alternatives.append(u"час")
+    days == 0 and hours == 1 and current and alternatives.append(u"час")
 
     minutes = minutes_orig - hours_orig*60
 
@@ -144,7 +130,9 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
                               numeral.choose_plural(minutes, MINUTE_VARIANTS)))
     values.append(minutes)
 
-    minutes == 1 and current and alternatives.append(u"минуту")
+    days == 0 and hours == 0 and minutes == 1 and current and \
+        alternatives.append(u"минуту")
+
 
     # убираем из values и words конечные нули
     while values and not values[-1]:

@@ -1,19 +1,5 @@
 # -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_numeral -*-
-# pytils - russian-specific string utils
-# Copyright (C) 2006-2009  Yury Yurevich
-#
-# http://pyobject.ru/projects/pytils/
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation, version 2
-# of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
 """
 Plural forms and in-word representation for numerals.
 """
@@ -160,15 +146,13 @@ def choose_plural(amount, variants):
 
     @raise L{pytils.err.InputParameterError}: input parameters' check failed
         (amount isn't C{int}, variants isn't C{sequence})
-    @raise ValueError: amount is negative
     @raise ValueError: variants' length lesser than 3
     """
     
     if isinstance(variants, unicode):
         variants = utils.split_values(variants)
-    
     check_length(variants, 3)
-    check_positive(amount)
+    amount = abs(amount)
     
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0

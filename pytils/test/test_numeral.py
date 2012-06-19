@@ -1,18 +1,4 @@
 # -*- coding: utf-8 -*-
-# pytils - russian-specific string utils
-# Copyright (C) 2006-2009  Yury Yurevich
-#
-# http://pyobject.ru/projects/pytils/
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation, version 2
-# of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
 """
 Unit-tests for pytils.numeral
 """
@@ -51,6 +37,13 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(109, u"гвоздей")
         self.checkChoosePlural(109l, u"гвоздей")
 
+    def testChoosePluralNegativeBug9(self):
+        """
+        Test handling of negative numbers
+        """
+        self.checkChoosePlural(-5, u"гвоздей")
+        self.checkChoosePlural(-2, u"гвоздя")
+
     def testChoosePluralExceptions(self):
         """
         Unit-test for testing choos_plural's exceptions
@@ -65,8 +58,6 @@ class ChoosePluralTestCase(unittest.TestCase):
                           25, 30)
         self.assertRaises(ValueError, pytils.numeral.choose_plural,
                           25, u"any,bene")
-        self.assertRaises(ValueError, pytils.numeral.choose_plural,
-                          -25, u"any,bene,raba")
 
     def testChoosePluralVariantsInStr(self):
         """
