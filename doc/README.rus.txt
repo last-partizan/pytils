@@ -104,7 +104,7 @@ pytils умеет выбирать правильный падеж в завис
 
 При помощи pytils можно сделать транслитерацию:
 
-    >>> print pytils.translit.translify(u"Проверка связи")
+    >>> print(pytils.translit.translify(u"Проверка связи"))
     'Proverka svyazi'
     >>> pytils.translit.detranslify("Proverka svyazi")
     u'Проверка связи'

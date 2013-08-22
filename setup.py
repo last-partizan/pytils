@@ -6,7 +6,7 @@ if use_setuptools:
     try:
         from setuptools import setup
     except ImportError:
-        print "Cannot load setuptool, revert to distutils"
+        print("Cannot load setuptool, revert to distutils")
         use_setuptools = False
         from distutils.core import setup
 else:
