@@ -32,7 +32,7 @@ def distance_of_time(from_time, accuracy=1):
     """
     try:
         res = dt.distance_of_time_in_words(from_time, accuracy)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         try:
             default_distance = "%s seconds" % str(int(time.time() - from_time))
@@ -59,7 +59,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
                              inflected=True,
                              inflected_day=inflected_day,
                              preposition=preposition)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         try:
             default_date = date.strftime(format)

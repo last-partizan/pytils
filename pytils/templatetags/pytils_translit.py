@@ -22,7 +22,7 @@ def translify(text):
     """Translify russian text"""
     try:
         res = translit.translify(smart_unicode(text, encoding))
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res
@@ -31,7 +31,7 @@ def detranslify(text):
     """Detranslify russian text"""
     try:
         res = translit.detranslify(text)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res
@@ -40,7 +40,7 @@ def slugify(text):
     """Make slug from (russian) text"""
     try:
         res = translit.slugify(smart_unicode(text, encoding))
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res

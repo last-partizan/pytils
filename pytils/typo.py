@@ -262,7 +262,7 @@ class Typography(object):
             raise ValueError("Rule %s is not found in active rules" % rulename)
         try:
             res = self.rules[rulename](text)
-        except ValueError, e:
+        except ValueError as e:
             raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
         return res
     
