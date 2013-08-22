@@ -5,7 +5,6 @@ Simple transliteration
 """
 
 import re
-from pytils.utils import takes, returns
 
 TRANSTABLE = (
         (u"'", u"'"),
@@ -132,8 +131,6 @@ RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can transla
 EN_ALPHABET = [x[1] for x in TRANSTABLE] #: English alphabet that we can detransliterate
 ALPHABET = RU_ALPHABET + EN_ALPHABET #: Alphabet that we can (de)transliterate
 
-@takes(unicode)
-@returns(str)
 def translify(in_string):
     """
     Translify russian text
@@ -144,8 +141,6 @@ def translify(in_string):
     @return: transliterated string
     @rtype: C{str}
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
-        (in_string is not C{unicode})
     @raise ValueError: when string doesn't transliterate completely
     """
     translit = in_string
@@ -160,8 +155,6 @@ def translify(in_string):
 
     return translit
 
-@takes(basestring)
-@returns(unicode)
 def detranslify(in_string):
     """
     Detranslify
@@ -172,8 +165,6 @@ def detranslify(in_string):
     @return: detransliterated string
     @rtype: C{unicode}
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
-        (when in_string not C{basestring})
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     # в unicode
@@ -189,8 +180,6 @@ def detranslify(in_string):
 
     return russian
 
-@takes(basestring)
-@returns(str)
 def slugify(in_string):
     """
     Prepare string for slug (i.e. URL or file/dir name)
@@ -201,8 +190,6 @@ def slugify(in_string):
     @return: slug-string
     @rtype: C{str}
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
-        (when in_string isn't C{unicode} or C{str})
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:

@@ -7,62 +7,6 @@ import unittest
 import pytils
 import decimal
 
-class ASPN426123TestCase(unittest.TestCase):
-    """
-    Test case for third-party library from ASPN cookbook recipe #426123
-    
-    This unit-test don't cover all code from recipe
-    """
-    
-    def testTakesPositional(self):
-        @pytils.utils.takes(int, basestring)
-        def func(i, s):
-            return i + len(s)
-        
-        self.assertEquals(func(2, 'var'), 5)
-        self.assertEquals(func(2, u'var'), 5)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
-        self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
-    
-    def testTakesNamed(self):
-        @pytils.utils.takes(int, s=basestring)
-        def func(i, s):
-            return i + len(s)
-        
-        self.assertEquals(func(2, s='var'), 5)
-        self.assertEquals(func(2, s=u'var'), 5)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, 'var')
-        self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
-        self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
-    
-    def testTakesOptional(self):
-        @pytils.utils.takes(int,
-                            pytils.utils.optional(basestring),
-                            s=pytils.utils.optional(basestring))
-        def func(i, s=''):
-            return i + len(s)
-        
-        self.assertEquals(func(2, 'var'), 5)
-        self.assertEquals(func(2, s='var'), 5)
-        self.assertEquals(func(2, s=u'var'), 5)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, 5)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, ('var',))
-        self.assertRaises(pytils.err.InputParameterError, func, 'var', 5)
-    
-    def testTakesMultiplyTypesAndTupleOf(self):
-        @pytils.utils.takes((int, long),
-                            pytils.utils.tuple_of(basestring))
-        def func(i, t=tuple()):
-            return i + sum(len(s) for s in t)
-        
-        self.assertEquals(func(2, ('var', 'var2')), 9)
-        self.assertEquals(func(2L, (u'var', 'var2')), 9)
-        self.assertEquals(func(2, t=('var', 'var2')), 9)
-        self.assertEquals(func(2, t=(u'var', u'var2')), 9)
-        self.assertRaises(pytils.err.InputParameterError, func, 2, (2, 5))
-    
     
 
 class ChecksTestCase(unittest.TestCase):
@@ -79,7 +23,6 @@ class ChecksTestCase(unittest.TestCase):
         self.assertRaises(ValueError, pytils.utils.check_length, "var", 4)
         self.assertRaises(ValueError, pytils.utils.check_length, "var", 2)
         self.assertRaises(ValueError, pytils.utils.check_length, (1,2), 3)
-        self.assertRaises(TypeError, pytils.utils.check_length, 5)
 
     def testCheckPositive(self):
         """

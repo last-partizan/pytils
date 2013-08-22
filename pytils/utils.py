@@ -4,12 +4,7 @@
 Misc utils for internal use
 """
 
-from decimal import Decimal
-from pytils.third.aspn426123 import takes, returns, optional, list_of, tuple_of, \
-                                    nothing, one_of
 
-
-@takes((basestring, tuple, list), (int, long))
 def check_length(value, length):
     """
     Checks length of value
@@ -30,7 +25,6 @@ def check_length(value, length):
                          (length, _length))
 
 
-@takes((int,long,float,Decimal), optional(bool), strict=optional(bool))
 def check_positive(value, strict=False):
     """
     Checks if variable is positive
@@ -48,7 +42,6 @@ def check_positive(value, strict=False):
         raise ValueError("Value must be positive, not %s" % str(value))
 
 
-@takes(unicode, optional(unicode), sep=optional(unicode))
 def split_values(ustring, sep=u','):
     """
     Splits unicode string with separator C{sep},

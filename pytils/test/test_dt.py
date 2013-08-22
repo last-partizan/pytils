@@ -270,12 +270,6 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         """
         Unit-tests for testings distance_of_time_in_words' exceptions
         """
-        self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, "test")
-        self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), "test")
-        self.assertRaises(TypeError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
-        self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, "test")
-        self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, time.time(), "test")
-        self.assertRaises(pytils.err.InputParameterError, pytils.dt.distance_of_time_in_words, time.time(), 2, "test")
         self.assertRaises(ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0)
     
     def testIssue25DaysFixed(self):
@@ -372,14 +366,6 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ck(u"%d.%m.%Y", u"01.04.2007", datetime.date(2007, 4, 1))
         self.ckInflected(u"%d %B %Y", u"1 апреля 2007", datetime.date(2007, 4, 1))
 
-    def testRuStrftimeExceptions(self):
-        """
-        Unit-tests for testing pytils.dt.ru_strftime's exceptions
-        """
-        self.assertRaises(TypeError, pytils.dt.ru_strftime, time.time())
-        self.assertRaises(TypeError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
-        self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, time.time())
-        self.assertRaises(pytils.err.InputParameterError, pytils.dt.ru_strftime, u"%Y.%m.%d%", time.time())
 
     def testIssue20Fixed(self):
         """
