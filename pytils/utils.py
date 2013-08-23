@@ -32,7 +32,7 @@ def check_positive(value, strict=False):
     Checks if variable is positive
 
     @param value: value to check
-    @type value: C{int}, C{long}, C{float} or C{Decimal}
+    @type value: C{integer types}, C{float} or C{Decimal}
 
     @return: None when check successful
 

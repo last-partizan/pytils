@@ -78,10 +78,10 @@ def _get_float_remainder(fvalue, signs=9):
     Get remainder of float, i.e. 2.05 -> '05'
 
     @param fvalue: input value
-    @type fvalue: C{int}, C{long}, C{float} or C{Decimal}
+    @type fvalue: C{integer types}, C{float} or C{Decimal}
 
     @param signs: maximum number of signs
-    @type signs: C{int} or C{long}
+    @type signs: C{integer types}
 
     @return: remainder
     @rtype: C{str}
@@ -90,7 +90,7 @@ def _get_float_remainder(fvalue, signs=9):
     @raise ValueError: signs overflow
     """
     check_positive(fvalue)
-    if isinstance(fvalue, (int, long)):
+    if isinstance(fvalue, six.integer_types):
         return "0"
     if isinstance(fvalue, Decimal) and fvalue.as_tuple()[2] == 0:
         # Decimal.as_tuple() -> (sign, digit_tuple, exponent)
@@ -127,7 +127,7 @@ def choose_plural(amount, variants):
     Choose proper case depending on amount
 
     @param amount: amount of objects
-    @type amount: C{int} or C{long}
+    @type amount: C{integer types}
 
     @param variants: variants (forms) of object in such form:
         (1 object, 2 objects, 5 objects).
@@ -161,7 +161,7 @@ def get_plural(amount, variants, absence=None):
     Get proper case with value
 
     @param amount: amount of objects
-    @type amount: C{int} or C{long}
+    @type amount: C{integer types}
 
     @param variants: variants (forms) of object in such form:
         (1 object, 2 objects, 5 objects).
@@ -185,7 +185,7 @@ def _get_plural_legacy(amount, extra_variants):
     Get proper case with value (legacy variant, without absence)
 
     @param amount: amount of objects
-    @type amount: C{int} or C{long}
+    @type amount: C{integer types}
 
     @param variants: variants (forms) of object in such form:
         (1 object, 2 objects, 5 objects, 0-object variant).
@@ -212,7 +212,7 @@ def rubles(amount, zero_for_kopeck=False):
     Get string for money
 
     @param amount: amount of money
-    @type amount: C{int}, C{long}, C{float} or C{Decimal}
+    @type amount: C{integer types}, C{float} or C{Decimal}
 
     @param zero_for_kopeck: If false, then zero kopecks ignored
     @type zero_for_kopeck: C{bool}
@@ -245,7 +245,7 @@ def in_words_int(amount, gender=MALE):
     Integer in words
 
     @param amount: numeral
-    @type amount: C{int} or C{long}
+    @type amount: C{integer types}
 
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
@@ -290,7 +290,7 @@ def in_words(amount, gender=None):
     Numeral in words
 
     @param amount: numeral
-    @type amount: C{int}, C{long}, C{float} or C{Decimal}
+    @type amount: C{integer types}, C{float} or C{Decimal}
 
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
@@ -311,7 +311,7 @@ def in_words(amount, gender=None):
     else:
         args = (amount, gender)
     # если целое
-    if isinstance(amount, (int, long)):
+    if isinstance(amount, six.integer_types):
         return in_words_int(*args)
     # если дробное
     elif isinstance(amount, (float, Decimal)):
@@ -329,7 +329,7 @@ def sum_string(amount, gender, items=None):
     Get sum in words
 
     @param amount: amount of objects
-    @type amount: C{int} or C{long}
+    @type amount: C{integer types}
 
     @param gender: gender of object (MALE, FEMALE or NEUTER)
     @type gender: C{int}
@@ -389,7 +389,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @type into: C{unicode}
 
     @param tmp_val: temporary value without lower orders
-    @type tmp_val: C{int} or C{long}
+    @type tmp_val: C{integer types}
 
     @param gender: gender (MALE, FEMALE or NEUTER)
     @type gender: C{int}
