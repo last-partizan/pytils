@@ -4,8 +4,7 @@
 Plural forms and in-word representation for numerals.
 """
 from decimal import Decimal
-from pytils import utils
-from pytils.utils import check_positive, check_length
+from pytils.utils import check_positive, check_length, split_values
 
 FRACTIONS = (
     (u"десятая", u"десятых", u"десятых"),
@@ -141,7 +140,7 @@ def choose_plural(amount, variants):
     """
     
     if isinstance(variants, unicode):
-        variants = utils.split_values(variants)
+        variants = split_values(variants)
     check_length(variants, 3)
     amount = abs(amount)
     
@@ -198,7 +197,7 @@ def _get_plural_legacy(amount, extra_variants):
     """
     absence = None
     if isinstance(extra_variants, unicode):
-        extra_variants = utils.split_values(extra_variants)
+        extra_variants = split_values(extra_variants)
     if len(extra_variants) == 4:
         variants = extra_variants[:3]
         absence = extra_variants[3]
@@ -271,7 +270,7 @@ def in_words_float(amount, _gender=FEMALE):
 
     @raise ValueError: when ammount is negative
     """
-    utils.check_positive(amount)
+    check_positive(amount)
 
     pts = []
     # преобразуем целую часть
@@ -347,7 +346,7 @@ def sum_string(amount, gender, items=None):
     @raise ValueError: amount is negative
     """
     if isinstance(items, unicode):
-        items = utils.split_values(items)
+        items = split_values(items)
     if items is None:
         items = (u"", u"", u"")
 
