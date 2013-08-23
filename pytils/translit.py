@@ -5,6 +5,7 @@ Simple transliteration
 """
 
 import re
+from pytils.third import six
 
 TRANSTABLE = (
         (u"'", u"'"),
@@ -169,7 +170,7 @@ def detranslify(in_string):
     """
     # в unicode
     try:
-        russian = unicode(in_string)
+        russian = six.text_type(in_string)
     except UnicodeDecodeError:
         raise ValueError("We expects if in_string is 8-bit string," + \
                          "then it consists only ASCII chars, but now it doesn't. " + \
@@ -193,7 +194,7 @@ def slugify(in_string):
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:
-        u_in_string = unicode(in_string).lower()
+        u_in_string = six.text_type(in_string).lower()
     except UnicodeDecodeError:
         raise ValueError("We expects when in_string is str type," + \
                          "it is an ascii, but now it isn't. Use unicode " + \

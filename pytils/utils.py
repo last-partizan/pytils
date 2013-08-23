@@ -4,6 +4,8 @@
 Misc utils for internal use
 """
 
+from pytils.third import six
+
 
 def check_length(value, length):
     """
@@ -55,7 +57,7 @@ def split_values(ustring, sep=u','):
     
     @return: tuple of splitted elements
     """
-    assert isinstance(ustring, unicode), "uvalue must be unicode, not %s" % type(ustring)
+    assert isinstance(ustring, six.text_type), "uvalue must be unicode, not %s" % type(ustring)
     # unicode have special mark symbol 0xffff which cannot be used in a regular text,
     # so we use it to mark a place where escaped column was
     ustring_marked = ustring.replace(u'\,', u'\uffff')

@@ -5,6 +5,7 @@ Plural forms and in-word representation for numerals.
 """
 from decimal import Decimal
 from pytils.utils import check_positive, check_length, split_values
+from pytils.third import six
 
 FRACTIONS = (
     (u"десятая", u"десятых", u"десятых"),
@@ -139,7 +140,7 @@ def choose_plural(amount, variants):
     @raise ValueError: variants' length lesser than 3
     """
     
-    if isinstance(variants, unicode):
+    if isinstance(variants, six.text_type):
         variants = split_values(variants)
     check_length(variants, 3)
     amount = abs(amount)
@@ -196,7 +197,7 @@ def _get_plural_legacy(amount, extra_variants):
     @rtype: C{unicode}
     """
     absence = None
-    if isinstance(extra_variants, unicode):
+    if isinstance(extra_variants, six.text_type):
         extra_variants = split_values(extra_variants)
     if len(extra_variants) == 4:
         variants = extra_variants[:3]
@@ -345,7 +346,7 @@ def sum_string(amount, gender, items=None):
     @raise ValueError: amount bigger than 10**11
     @raise ValueError: amount is negative
     """
-    if isinstance(items, unicode):
+    if isinstance(items, six.text_type):
         items = split_values(items)
     if items is None:
         items = (u"", u"", u"")
