@@ -5,9 +5,16 @@ pytils.numeral templatetags for Django web-framework
 """
 
 from django import template, conf
-from django.utils.encoding import smart_unicode
+
 from pytils import numeral
 from pytils.templatetags import init_defaults
+
+try:
+    # Django 1.4+
+    from django.utils.encoding import smart_text
+except ImportError:
+    from django.utils.encoding import smart_unicode
+    smart_text = smart_unicode
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -32,9 +39,9 @@ def choose_plural(amount, variants):
     """
     try:
         if isinstance(variants, basestring):
-            uvariants = smart_unicode(variants, encoding)
+            uvariants = smart_text(variants, encoding)
         else:
-            uvariants = [smart_unicode(v, encoding) for v in variants]
+            uvariants = [smart_text(v, encoding) for v in variants]
         res = numeral.choose_plural(amount, uvariants)
     except Exception as err:
         # because filter must die silently
@@ -59,9 +66,9 @@ def get_plural(amount, variants):
     """
     try:
         if isinstance(variants, basestring):
-            uvariants = smart_unicode(variants, encoding)
+            uvariants = smart_text(variants, encoding)
         else:
-            uvariants = [smart_unicode(v, encoding) for v in variants]
+            uvariants = [smart_text(v, encoding) for v in variants]
         res = numeral._get_plural_legacy(amount, uvariants)
     except Exception as err:
         # because filter must die silently
@@ -123,9 +130,9 @@ def sum_string(amount, gender, items):
     """
     try:
         if isinstance(items, basestring):
-            uitems = smart_unicode(items, encoding, default_uvalue)
+            uitems = smart_text(items, encoding, default_uvalue)
         else:
-            uitems = [smart_unicode(i, encoding) for i in items]
+            uitems = [smart_text(i, encoding) for i in items]
         res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
     except Exception as err:
         # because tag's renderer must die silently
