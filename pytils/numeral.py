@@ -3,6 +3,7 @@
 """
 Plural forms and in-word representation for numerals.
 """
+from __future__ import division
 from decimal import Decimal
 from pytils.utils import check_positive, check_length, split_values
 from pytils.third import six
@@ -414,7 +415,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     words = []
 
     rest = tmp_val % 1000
-    tmp_val = tmp_val / 1000
+    tmp_val = tmp_val // 1000
     if rest == 0:
         # последние три знака нулевые
         if into == u"":
@@ -425,11 +426,11 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     end_word = five_items
 
     # сотни
-    words.append(HUNDREDS[rest / 100])
+    words.append(HUNDREDS[rest // 100])
 
     # десятки
     rest = rest % 100
-    rest1 = rest / 10
+    rest1 = rest // 10
     # особый случай -- tens=1
     tens = rest1 == 1 and TENS[rest] or TENS[rest1]
     words.append(tens)
