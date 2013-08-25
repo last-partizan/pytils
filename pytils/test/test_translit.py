@@ -4,8 +4,8 @@ Unit-tests for pytils.translit
 """
 
 import unittest
-
 import pytils
+from pytils.third import six
 
 class TranslitTestCase(unittest.TestCase):
     """
@@ -60,7 +60,9 @@ class TranslitTestCase(unittest.TestCase):
         """
         Unit-test for testing detranslify's exceptions
         """
-        self.assertRaises(ValueError, pytils.translit.detranslify, "тест")
+        # for Python 2.x non-unicode detranslify should raise exception
+        if not six.PY3:
+            self.assertRaises(ValueError, pytils.translit.detranslify, "тест")
 
     def testSlug(self):
         """
@@ -75,7 +77,9 @@ class TranslitTestCase(unittest.TestCase):
         """
         Unit-test for testing slugify's exceptions
         """
-        self.assertRaises(ValueError, pytils.translit.slugify, "тест")
+        # for Python 2.x non-unicode slugify should raise exception
+        if not six.PY3:
+            self.assertRaises(ValueError, pytils.translit.slugify, "тест")
 
     def testTranslifyAdditionalUnicodeSymbols(self):
         """

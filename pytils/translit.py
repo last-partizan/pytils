@@ -132,25 +132,29 @@ RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can transla
 EN_ALPHABET = [x[1] for x in TRANSTABLE] #: English alphabet that we can detransliterate
 ALPHABET = RU_ALPHABET + EN_ALPHABET #: Alphabet that we can (de)transliterate
 
-def translify(in_string):
+
+def translify(in_string, strict=True):
     """
     Translify russian text
 
     @param in_string: input string
     @type in_string: C{unicode}
 
+    @param strict: raise error if transliteration is incomplete.
+        (True by default)
+    @type strict: C{bool}
+
     @return: transliterated string
     @rtype: C{str}
 
-    @raise ValueError: when string doesn't transliterate completely
+    @raise ValueError: when string doesn't transliterate completely.
+        Raised only if strict=True
     """
     translit = in_string
     for symb_in, symb_out in TRANSTABLE:
         translit = translit.replace(symb_in, symb_out)
 
-    try:
-        translit = str(translit)
-    except UnicodeEncodeError:
+    if strict and any(ord(symb) > 128 for symb in translit):
         raise ValueError("Unicode string doesn't transliterate completely, " + \
                          "is it russian?")
 
@@ -168,7 +172,6 @@ def detranslify(in_string):
 
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    # в unicode
     try:
         russian = six.text_type(in_string)
     except UnicodeDecodeError:
