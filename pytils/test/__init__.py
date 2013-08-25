@@ -5,6 +5,7 @@ Unit tests for pytils
 __all__ = ["test_numeral", "test_dt", "test_translit", "test_utils", "test_typo"]
 
 import unittest
+import sys
 
 def get_django_suite():
     try:
@@ -40,7 +41,9 @@ def run_tests_from_module(module, verbosity=1):
 def run(verbosity=1):
     """Run all unit-test of pytils"""
     suite = get_suite()
-    unittest.TextTestRunner(verbosity=verbosity).run(suite)
+    res = unittest.TextTestRunner(verbosity=verbosity).run(suite)
+    if res.errors or res.failures:
+        sys.exit(1)
 
 if __name__ == '__main__':
     run(2)
