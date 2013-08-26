@@ -2,7 +2,7 @@
 
 # find current path
 import os
-CURRPATH = os.path.abspath('.')
+CURRPATH = os.path.dirname(os.path.normpath(os.path.abspath(__file__)))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -34,7 +34,7 @@ SITE_ID = 1
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = CURRPATH+'/static/'
+MEDIA_ROOT = os.path.join(CURRPATH, 'static')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -45,19 +45,18 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+STATICFILES_DIRS = (
+	MEDIA_ROOT,
+)
+
+STATIC_URL = '/static/'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-)^ay7gz76#9!j=ssycphb7*(gg74zhx9h-(j_1k7!wfr7j(o^'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
-)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.doc.XViewMiddleware',
 )
 
 ROOT_URLCONF = 'pytilsex.urls'
@@ -65,8 +64,9 @@ ROOT_URLCONF = 'pytilsex.urls'
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates".
     # Always use forward slashes, even on Windows.
-    CURRPATH+'/templates',
+    os.path.join(CURRPATH, 'templates'),
 )
+
 
 TEMPLATE_CONTEXT_PROCESSORS = []
 
