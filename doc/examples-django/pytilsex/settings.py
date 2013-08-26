@@ -12,18 +12,18 @@ ADMINS = (
      ('Pythy', 'the.pythy@gmail.com'),
 )
 
-MANAGERS = ADMINS
+DATABASES = {
+    'default': {
+        'NAME': 'pytils_example',
+        'ENGINE': 'django.db.backends.sqlite3'
+    }
+}
 
-DATABASE_ENGINE = ''           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+MANAGERS = ADMINS
 
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
-TIME_ZONE = 'Asia/Omsk'
+TIME_ZONE = 'UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
@@ -71,9 +71,12 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = []
 
 INSTALLED_APPS = (
+    'django_nose',
 # -- install pytils
     'pytils',
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # is value will shown at error in pytils (default - False)
 # PYTILS_SHOW_VALUES_ON_ERROR = True
