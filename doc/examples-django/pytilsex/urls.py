@@ -4,7 +4,12 @@ import time
 import datetime
 import sys
 
-from django.conf.urls.defaults import patterns, url
+try:
+    from django.conf.urls import patterns, url
+except ImportError:
+    # Django 1.3
+    from django.conf.urls.defaults import patterns, url
+
 from django.views.generic.base import TemplateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
