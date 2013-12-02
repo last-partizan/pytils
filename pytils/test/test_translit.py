@@ -61,7 +61,7 @@ class TranslitTestCase(unittest.TestCase):
         Unit-test for testing detranslify's exceptions
         """
         # for Python 2.x non-unicode detranslify should raise exception
-        if not six.PY3:
+        if six.PY2:
             self.assertRaises(ValueError, pytils.translit.detranslify, "тест")
 
     def testSlug(self):
@@ -78,7 +78,7 @@ class TranslitTestCase(unittest.TestCase):
         Unit-test for testing slugify's exceptions
         """
         # for Python 2.x non-unicode slugify should raise exception
-        if not six.PY3:
+        if six.PY2:
             self.assertRaises(ValueError, pytils.translit.slugify, "тест")
 
     def testTranslifyAdditionalUnicodeSymbols(self):

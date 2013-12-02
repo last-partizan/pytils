@@ -219,7 +219,7 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
 
     # Python 2: strftime's argument must be str
     # Python 3: strftime's argument str, not a bitestring
-    if not six.PY3:
+    if six.PY2:
         # strftime must be str, so encode it to utf8:
         s_format = format.encode("utf-8")
         s_res = date.strftime(s_format)
