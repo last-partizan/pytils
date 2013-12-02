@@ -182,6 +182,9 @@ def detranslify(in_string):
     for symb_out, symb_in in TRANSTABLE:
         russian = russian.replace(symb_in, symb_out)
 
+    # TODO: выбрать правильный регистр для ь и ъ
+    # твердый и мягкий знак в dentranslify всегда будут в верхнем регистре
+    # потому что ` и ' не несут информацию о регистре
     return russian
 
 def slugify(in_string):
