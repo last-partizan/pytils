@@ -12,7 +12,7 @@ if use_setuptools:
 else:
     from distutils.core import setup
 
-version = "0.3"
+version = "0.3.1"
 
 setup_data = {
       'name': 'pytils',
