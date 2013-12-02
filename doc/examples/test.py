@@ -2,14 +2,66 @@
 # -*- coding: utf-8 -*-
 import subprocess
 import sys
+import os
+from pytils.third import six
 
-def test_python_version():
-    """Verify that /usr/bin/env python is pointing out to the current python"""
-    python_version = subprocess.check_output(['python', '--version'], stderr=subprocess.STDOUT).strip()
-    python, version = python_version.split()
-    assert sys.version.split()[0] == version.decode('utf-8')
+name_to_path = lambda x: os.path.join(os.path.normpath(os.path.abspath(os.path.dirname(__file__))), x)
+sanitize_output = lambda x: x.replace('#->', '').replace('# ->', '').strip()
+
+def safe_file_iterator(fh, encoding='UTF-8'):
+    # Py2.x file iterator returns strings, not unicode
+    # Py3 file iterator returns not a bytestrings but string
+    # therefore we should decode for Py2.x and leave as is for Py3
+    for line in fh:
+        if six.PY3:
+            yield line
+        else:
+            yield line.decode(encoding)
 
 
+def grab_expected_output(name):
+    with open(name_to_path(name)) as fh:
+        return [sanitize_output(x) for x in safe_file_iterator(fh)
+            if x.replace(' ', '').startswith('#->')]
+
+
+def run_example_and_collect_output(name):
+    return [
+    x.decode('UTF-8') for x in
+    subprocess.check_output(
+        ['python', name_to_path(name)], stderr=subprocess.STDOUT).strip().splitlines()]
+
+
+
+class ExampleFileTestSuite(object):
+    def __init__(self, name):
+        self.name = name
+        self.expected_output = list(grab_expected_output(name))
+        self.real_output = list(run_example_and_collect_output(name))
+        assert len(self.real_output) == len(self.expected_output)
+        assert len(self.real_output) > 0
+        # assert isinstance(self.real_output[0], six.text_type)
+        # assert isinstance(self.expected_output[0], six.text_type)
+ 
+    def test_cases(self):
+        return range(len(self.real_output))
+
+    def run_test(self, name, i):
+        assert name == self.name
+        # assert isinstance(self.real_output[i], six.text_type)
+        # assert isinstance(self.expected_output[i], six.text_type)
+        assert self.real_output[i] == self.expected_output[i], \
+            "Real output %s doesn't match to expected %s for example #%s" % (self.real_output[i], self.expected_output[i], i)
+
+
+def test_example():
+    for example in ['dt.distance_of_time_in_words.py']:
+        runner = ExampleFileTestSuite(example)
+        # we want to have granular test, one test case per line
+        # nose show each test as "executable, arg1, arg2", that's
+        # why we want pass example name again, even test runner already knows it
+        for i in runner.test_cases():
+            yield runner.run_test, example, i
 
 if __name__ == '__main__':
     import nose, sys
