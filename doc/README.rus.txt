@@ -8,14 +8,10 @@ pytils - простой обработчик русского текста, ре
 Идея позаимствована у [Julik](http://live.julik.nl) и его 
 [RuTils](http://rutils.rubyforge.org/).
 
-Автор pytils - [Юревич Юрий](mailto:the.pythy@gmail.com).
-
 Ссылки
 ------
 
- *  [Страница pytils](http://pyobject.ru/projects/pytils/)
- *  [pytils на BitBucket](http://bitbucket.org/j2a/pytils)
- *  [pytils на Ohloh](http://ohloh.net/p/pytils)
+ *  [pytils на github](http://github.com/j2a/pytils/)
 
 Как установить
 --------------
@@ -35,7 +31,7 @@ pytils содержит следующие модули:
  2.  `dt` - русские даты без локалей
  3.  `translit` - транслитерация
 
-pytils легко интегрируется с популярными  Web-фреймворками (Django, TurboGears),
+pytils легко интегрируется с популярными  Web-фреймворками (Django, Flask),
 подробнее об этом смотрите в WEBFRAMEWORKS.rus.txt.
 
 Примеры смотрите в каталоге examples.
