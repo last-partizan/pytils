@@ -4,8 +4,14 @@ import time
 import datetime
 import sys
 
-from django.conf.urls.defaults import *
-import settings
+try:
+    from django.conf.urls import patterns, url
+except ImportError:
+    # Django 1.3
+    from django.conf.urls.defaults import patterns, url
+
+from django.views.generic.base import TemplateView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from pytils import VERSION as pytils_version
 from django import VERSION as _django_version
@@ -14,25 +20,31 @@ def get_python_version():
     return '.'.join(str(v) for v in sys.version_info[:3])
 
 def get_django_version(_ver):
-    suffix = _ver[-1]
-    ver = '.'.join([str(x) for x in _ver[:-1]])
-    if suffix is not None:
-        ver += str(suffix)
+    ver = '.'.join([str(x) for x in _ver[:-2]])
     return ver
 
-urlpatterns = patterns('django.views',
-    (r'^dt/', 'generic.simple.direct_to_template',
-         {'template': 'dt.html',
+class DtView(TemplateView):
+    template_name = 'dt.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DtView, self).get_context_data(**kwargs)
+        context.update({
           'ctime': time.time(),
           'otime': time.time() - 100000,
           'ftime': time.time() + 100000,
           'cdate': datetime.datetime.now(),
           'odate': datetime.datetime.now() - datetime.timedelta(0, 100000),
           'fdate': datetime.datetime.now() + datetime.timedelta(0, 100000),
-          }
-    ),
-    (r'^numeral/', 'generic.simple.direct_to_template',
-         {'template': 'numeral.html',
+         })
+        return context
+
+
+class NumeralView(TemplateView):
+    template_name = 'numeral.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(NumeralView, self).get_context_data(**kwargs)
+        context.update({
           'comment_variants': ('комментарий', 'комментария', 'комментариев'),
           'comment_number': 21,
           'zero': 0,
@@ -41,25 +53,38 @@ urlpatterns = patterns('django.views',
           'rubles_value2': 12,
           'int_value': 21,
           'float_value': 31.385,
-          }
-    ),
-    (r'^translit/', 'generic.simple.direct_to_template',
-         {'template': 'translit.html',
+        })
+        return context
+
+
+class TranslitView(TemplateView):
+    template_name = 'translit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TranslitView, self).get_context_data(**kwargs)
+        context.update({
           'text': 'Пример траслитерации средствами pytils',
           'translit': 'Primer obratnoj transliteratsii',
-          }
-    ),
+        })
+        return context
 
-    (r'^static/(?P<path>.*)$', 'static.serve',
-         {'document_root': settings.MEDIA_ROOT,
-          }
-    ),
-    
-    (r'^$', 'generic.simple.direct_to_template',
-        {'template': 'base.html',
-         'pytils_version': pytils_version,
-         'django_version': get_django_version(_django_version),
-         'python_version': get_python_version(),
-        }
-    ),
+class IndexView(TemplateView):
+    template_name = 'base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context.update({
+          'pytils_version': pytils_version,
+          'django_version': get_django_version(_django_version),
+          'python_version': get_python_version(),
+        })
+        return context
+
+urlpatterns = patterns('',
+    url(r'^dt/', DtView.as_view(), name='pytils_dt_example'),
+    url(r'^numeral/', NumeralView.as_view(), name='pytils_numeral_example'),
+    url(r'^translit/', TranslitView.as_view(), name='pytils_translit_example'),
+    url(r'^$', IndexView.as_view(), name='pytils_example'),
 )
+
+urlpatterns += staticfiles_urlpatterns()

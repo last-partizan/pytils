@@ -7,6 +7,14 @@ import unittest
 import decimal
 import pytils
 
+# Python3 doesn't have long type
+# it has only int
+from pytils.third import six
+
+if six.PY3:
+    long = int
+
+
 class ChoosePluralTestCase(unittest.TestCase):
     """
     Test case for pytils.numeral.choose_plural
@@ -35,7 +43,7 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(5, u"гвоздей")
         self.checkChoosePlural(11, u"гвоздей")
         self.checkChoosePlural(109, u"гвоздей")
-        self.checkChoosePlural(109l, u"гвоздей")
+        self.checkChoosePlural(long(109), u"гвоздей")
 
     def testChoosePluralNegativeBug9(self):
         """
@@ -48,14 +56,6 @@ class ChoosePluralTestCase(unittest.TestCase):
         """
         Unit-test for testing choos_plural's exceptions
         """
-        self.assertRaises(TypeError, pytils.numeral.choose_plural,
-                          "25", u"any,bene,raba")
-        self.assertRaises(TypeError, pytils.numeral.choose_plural,
-                          25, 30)
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.choose_plural,
-                          "25", u"any,bene,raba")
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.choose_plural,
-                          25, 30)
         self.assertRaises(ValueError, pytils.numeral.choose_plural,
                           25, u"any,bene")
 
@@ -162,8 +162,6 @@ class GetFloatRemainderTestCase(unittest.TestCase):
         """
         self.assertRaises(ValueError, pytils.numeral._get_float_remainder,
                           2.998, 2)
-        self.assertRaises(TypeError, pytils.numeral._get_float_remainder, "1.23")
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral._get_float_remainder, "1.23")
         self.assertRaises(ValueError, pytils.numeral._get_float_remainder, -1.23)
 
 class RublesTestCase(unittest.TestCase):
@@ -187,7 +185,7 @@ class RublesTestCase(unittest.TestCase):
                           u"три рубля")
         self.assertEquals(pytils.numeral.rubles(3, True),
                           u"три рубля ноль копеек")
-        self.assertEquals(pytils.numeral.rubles(3l),
+        self.assertEquals(pytils.numeral.rubles(long(3)),
                           u"три рубля")
 
     def testRublesDecimal(self):
@@ -210,8 +208,6 @@ class RublesTestCase(unittest.TestCase):
         """
         Unit-test for testing rubles' exceptions
         """
-        self.assertRaises(TypeError, pytils.numeral.rubles, "3")
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.rubles, "3")
         self.assertRaises(ValueError, pytils.numeral.rubles, -15)
         
 
@@ -233,14 +229,12 @@ class InWordsTestCase(unittest.TestCase):
                           u"три тысячи пятьсот")
         self.assertEquals(pytils.numeral.in_words_int(5231000),
                           u"пять миллионов двести тридцать одна тысяча")
-        self.assertEquals(pytils.numeral.in_words_int(10l), u"десять")
+        self.assertEquals(pytils.numeral.in_words_int(long(10)), u"десять")
 
     def testIntExceptions(self):
         """
         Unit-test for testing in_words_int's exceptions
         """
-        self.assertRaises(TypeError, pytils.numeral.in_words_int, 2.5)
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words_int, 2.5)
         self.assertRaises(ValueError, pytils.numeral.in_words_int, -3)
 
     def testFloat(self):
@@ -277,10 +271,6 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for testing in_words_float's exceptions
         """
-        self.assertRaises(TypeError, pytils.numeral.in_words_float, '2')
-        self.assertRaises(TypeError, pytils.numeral.in_words_float, 2)
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words_float, '2')
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words_float, 2)
         self.assertRaises(ValueError, pytils.numeral.in_words_float, -2.3)
 
     def testWithGenderOldStyle(self):
@@ -300,7 +290,7 @@ class InWordsTestCase(unittest.TestCase):
                           u"двадцать одна целая ноль десятых")
         self.assertEquals(pytils.numeral.in_words(21.0, 3),
                           u"двадцать одна целая ноль десятых")
-        self.assertEquals(pytils.numeral.in_words(21l, 1),
+        self.assertEquals(pytils.numeral.in_words(long(21), 1),
                           u"двадцать один")
 
     def testWithGender(self):
@@ -320,7 +310,7 @@ class InWordsTestCase(unittest.TestCase):
                           u"двадцать одна целая ноль десятых")
         self.assertEquals(pytils.numeral.in_words(21.0, pytils.numeral.NEUTER),
                           u"двадцать одна целая ноль десятых")
-        self.assertEquals(pytils.numeral.in_words(21l, pytils.numeral.MALE),
+        self.assertEquals(pytils.numeral.in_words(long(21), pytils.numeral.MALE),
                           u"двадцать один")
 
 
@@ -346,7 +336,7 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна сотая")
         self.assertEquals(pytils.numeral.in_words(0.10),
                           u"ноль целых одна десятая")
-        self.assertEquals(pytils.numeral.in_words(10l), u"десять")
+        self.assertEquals(pytils.numeral.in_words(long(10)), u"десять")
         self.assertEquals(pytils.numeral.in_words(D("2.25")),
                           u"две целых двадцать пять сотых")
         self.assertEquals(pytils.numeral.in_words(D("0.01")),
@@ -359,14 +349,9 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for testing in_words' exceptions
         """
-        self.assertRaises(TypeError, pytils.numeral.in_words, "0.2")
-        self.assertRaises(TypeError, pytils.numeral.in_words, 0.2, "1")
-        self.assertRaises(TypeError, pytils.numeral.in_words, 0.2, 5)
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words, "0.2")
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words, 0.2, "1")
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.in_words, 0.2, 5)
         self.assertRaises(ValueError, pytils.numeral.in_words, -2)
-        
+        self.assertRaises(ValueError, pytils.numeral.in_words, -2.5)
+
 
 class SumStringTestCase(unittest.TestCase):
     """
@@ -428,7 +413,7 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemaleOldStyle(2, u"две шляпки")
         self.ckFemaleOldStyle(31, u"тридцать одна шляпка")
         
-        self.ckFemaleOldStyle(31l, u"тридцать одна шляпка")
+        self.ckFemaleOldStyle(long(31), u"тридцать одна шляпка")
 
         self.assertEquals(u"одиннадцать негритят",
                           pytils.numeral.sum_string(
@@ -448,7 +433,7 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemale(2, u"две шляпки")
         self.ckFemale(31, u"тридцать одна шляпка")
         
-        self.ckFemale(31l, u"тридцать одна шляпка")
+        self.ckFemale(long(31), u"тридцать одна шляпка")
 
         self.assertEquals(u"одиннадцать негритят",
                           pytils.numeral.sum_string(
@@ -461,26 +446,6 @@ class SumStringTestCase(unittest.TestCase):
         """
         Unit-test for testing sum_string's exceptions
         """
-        self.assertRaises(TypeError, pytils.numeral.sum_string,
-                                      "1", 1)
-        self.assertRaises(TypeError, pytils.numeral.sum_string,
-                                      1, "1")
-        self.assertRaises(TypeError, pytils.numeral.sum_string,
-                                      1, "1", 23)
-        self.assertRaises(TypeError, pytils.numeral.sum_string,
-                                      1, pytils.numeral.MALE, (23,24,25))
-        self.assertRaises(TypeError, pytils.numeral.sum_string,
-                                      1, pytils.numeral.MALE, (23,))
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.sum_string,
-                                      "1", 1)
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.sum_string,
-                                      1, "1")
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.sum_string,
-                                      1, "1", 23)
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.sum_string,
-                                      1, pytils.numeral.MALE, (23,24,25))
-        self.assertRaises(pytils.err.InputParameterError, pytils.numeral.sum_string,
-                                      1, pytils.numeral.MALE, (23,))
         self.assertRaises(ValueError, pytils.numeral.sum_string,
                                       -1, pytils.numeral.MALE, u"any,bene,raba")
 

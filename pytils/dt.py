@@ -7,7 +7,8 @@ Russian dates without locales
 import datetime
 
 from pytils import numeral
-from pytils.utils import takes, returns, optional, check_positive
+from pytils.utils import check_positive
+from pytils.third import six
 
 DAY_ALTERNATIVES = {
     1: (u"вчера", u"завтра"),
@@ -60,12 +61,7 @@ DAY_NAMES = (
     (u"вск", u"воскресенье", u"воскресенье", u"в\xa0")
     )  #: Day names (abbreviated, full, inflected, preposition)
 
-@takes((int, float, datetime.datetime),
-       optional(int),
-       optional((int, float, datetime.datetime)),
-       accuracy=optional(int),
-       to_time=optional((int, float, datetime.datetime)))
-@returns(unicode)
+
 def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     """
     Represents distance of time in words
@@ -83,7 +79,6 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     @return: distance of time in words
     @rtype: unicode
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
     @raise ValueError: accuracy is lesser or equal zero
     """
     current = False
@@ -178,17 +173,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
     return final_str
 
-@takes(optional(unicode),
-       optional((datetime.date, datetime.datetime)),
-       optional(bool),
-       optional(bool),
-       optional(bool),
-       format=optional(unicode),
-       date=optional((datetime.date, datetime.datetime)),
-       inflected=optional(bool),
-       inflected_day=optional(bool),
-       preposition=optional(bool))
-@returns(unicode)
+
 def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=False, preposition=False):
     """
     Russian strftime without locale
@@ -211,8 +196,6 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
 
     @return: strftime string
     @rtype: unicode
-
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
     """
     if date is None:
         date = datetime.datetime.today()
@@ -227,17 +210,21 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False, inflected_day=Fa
     # for russian typography standard,
     # 1 April 2007, but 01.04.2007
     if u'%b' in format or u'%B' in format:
-        format = format.replace(u'%d', unicode(date.day))
+        format = format.replace(u'%d', six.text_type(date.day))
 
     format = format.replace(u'%a', prepos+DAY_NAMES[weekday][0])
     format = format.replace(u'%A', prepos+DAY_NAMES[weekday][day_idx])
     format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
     format = format.replace(u'%B', MONTH_NAMES[date.month-1][month_idx])
 
-    # strftime must be str, so encode it to utf8:
-    s_format = format.encode("utf-8")
-    s_res = date.strftime(s_format)
-    # and back to unicode
-    u_res = s_res.decode("utf-8")
-
+    # Python 2: strftime's argument must be str
+    # Python 3: strftime's argument str, not a bitestring
+    if six.PY2:
+        # strftime must be str, so encode it to utf8:
+        s_format = format.encode("utf-8")
+        s_res = date.strftime(s_format)
+        # and back to unicode
+        u_res = s_res.decode("utf-8")
+    else:
+        u_res = date.strftime(format)
     return u_res

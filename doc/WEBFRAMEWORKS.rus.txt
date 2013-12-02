@@ -1,5 +1,4 @@
 Полнофункциональные примеры смотрите:
 
   * для Django в examples-django
-  * для TurboGears в examples-turbogears
 

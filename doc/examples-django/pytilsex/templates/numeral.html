@@ -16,49 +16,49 @@
 
 <h4>choose_plural и get_plural</h4>
 <p>Выбор нужной формы множественного числа. Классический пример с количеством 
-комментариев: {{ params.comment_number }} <em>{{ params.comment_number|choose_plural:params.comment_variants }}</em>
+комментариев: {{ comment_number }} <em>{{ comment_number|choose_plural:comment_variants }}</em>
 </p>
 
 <p>В качестве аргумента можно передавать не только список вариантов, но и 
-варианты в одну строку, например: так {{ params.comment_number }} 
-комментари<em>{{ params.comment_number|choose_plural:"й,я,ев" }}</em> или так 
-{{ params.comment_number }} <em>{{ params.comment_number|choose_plural:"комментарий, комментария, комментариев" }}</em>
+варианты в одну строку, например: так {{ comment_number }} 
+комментари<em>{{ comment_number|choose_plural:"й,я,ев" }}</em> или так 
+{{ comment_number }} <em>{{ comment_number|choose_plural:"комментарий, комментария, комментариев" }}</em>
 - как Вам больше нравится.</p>
 
 <p>Сделано это так:
 <code><pre>
 &lt;p&gt;Выбор нужной формы множественного числа. Классический пример с количеством 
-комментариев: {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
-&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:params.comment_variants {% templatetag closevariable %}&lt;/em&gt;
+комментариев: {% templatetag openvariable %} comment_number {% templatetag closevariable %} 
+&lt;em&gt;{% templatetag openvariable %} comment_number|choose_plural:comment_variants {% templatetag closevariable %}&lt;/em&gt;
 &lt;/p&gt;
 
 &lt;p&gt;В качестве аргумента можно передавать не только список вариантов, но и 
-варианты в одну строку, например: так {% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
-комментари&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"й,я,ев" {% templatetag closevariable %}&lt;/em&gt; или так 
-{% templatetag openvariable %} params.comment_number {% templatetag closevariable %} 
-&lt;em&gt;{% templatetag openvariable %} params.comment_number|choose_plural:"комментарий, комментария, комментариев" {% templatetag closevariable %}&lt;/em&gt;
+варианты в одну строку, например: так {% templatetag openvariable %} comment_number {% templatetag closevariable %} 
+комментари&lt;em&gt;{% templatetag openvariable %} comment_number|choose_plural:"й,я,ев" {% templatetag closevariable %}&lt;/em&gt; или так 
+{% templatetag openvariable %} comment_number {% templatetag closevariable %} 
+&lt;em&gt;{% templatetag openvariable %} comment_number|choose_plural:"комментарий, комментария, комментариев" {% templatetag closevariable %}&lt;/em&gt;
 - как Вам больше нравится.&lt;/p&gt;
 </pre></code></p>
 
 <p>Зачастую нужно показывать и число, и название объекта в правильной форме, а не только название
 объекта. В этом случае следует воспользоваться фильтром <code>get_plural</code>. Пример с теми же
 комментариями можно записать проще: 
-<em>{{ params.comment_number|get_plural:"комментарий,комментария,комментариев" }}</em>.
+<em>{{ comment_number|get_plural:"комментарий,комментария,комментариев" }}</em>.
 <code>get_plural</code> удобен еще и тем, что можно указать вариант, когда значение равно нулю.
 Например, гораздо симпатичней "без комментариев", чем "0 комментариев". В этом случае к вариантам
 нужно просто добавить еще один - нуль-вариант. Пример: 
-<em>{{ params.zero|get_plural:"пример,примера,примеров,без примеров" }}.</em></p>
+<em>{{ zero|get_plural:"пример,примера,примеров,без примеров" }}.</em></p>
 
 <p>Сделано это так:
 <code><pre>
 &lt;p&gt;Зачастую нужно показывать и число, и название объекта в правильной форме, а не только название
 объекта. В этом случае следует воспользоваться фильтром &lt;code&gt;get_plural&lt;/em&gt;. Пример с теми же
 комментариями можно записать проще: 
-&lt;em&gt;{% templatetag openvariable %} params.comment_number|get_plural:"комментарий,комментария,комментариев" {% templatetag closevariable %}&lt;/em&gt;.
+&lt;em&gt;{% templatetag openvariable %} comment_number|get_plural:"комментарий,комментария,комментариев" {% templatetag closevariable %}&lt;/em&gt;.
 &lt;code&gt;get_plural&lt;/code&gt; удобен еще и тем, что можно указать вариант, когда значение равно нулю.
 Например, гораздо симпатичней "без комментариев", чем "0 комментариев". В этом случае к вариантам
 нужно просто добавить еще один - нуль-вариант. Пример: 
-&lt;em&gt;{% templatetag openvariable %} params.zero|get_plural:"пример,примера,примеров,без примеров" {% templatetag closevariable %}.&lt;/em&gt;&lt;/p&gt;
+&lt;em&gt;{% templatetag openvariable %} zero|get_plural:"пример,примера,примеров,без примеров" {% templatetag closevariable %}.&lt;/em&gt;&lt;/p&gt;
 </pre></code></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
@@ -66,44 +66,44 @@
 получилось).</p>
 
 <h4>rubles</h4>
-<p>Рубли словами. К примеру, {{ params.rubles_value }} р. словами будет <em>{{ params.rubles_value|rubles }}</em>. У этого фильтра есть один 
+<p>Рубли словами. К примеру, {{ rubles_value }} р. словами будет <em>{{ rubles_value|rubles }}</em>. У этого фильтра есть один 
 параметр, определяющий, нужно ли нулевые копейки "проговаривать". Если нужно - то True, по умолчанию <code>rubles</code> этого не делает. 
-Пример: {{ params.rubles_value2 }} р. словами будет <em>{{ params.rubles_value2|rubles }}</em>, а с копейками - 
-<em>{{ params.rubles_value2|rubles:"True" }}</em>.</p>
+Пример: {{ rubles_value2 }} р. словами будет <em>{{ rubles_value2|rubles }}</em>, а с копейками - 
+<em>{{ rubles_value2|rubles:"True" }}</em>.</p>
 
 <p>В шаблоне этот фрагмент записан так:
 <code><pre>
-&lt;p&gt;Рубли словами. К примеру, {% templatetag openvariable %} params.rubles_value {% templatetag closevariable %} р. словами будет 
-&lt;em&gt;{% templatetag openvariable %} params.rubles_value|rubles {% templatetag closevariable %}&lt;/em&gt;. 
+&lt;p&gt;Рубли словами. К примеру, {% templatetag openvariable %} rubles_value {% templatetag closevariable %} р. словами будет 
+&lt;em&gt;{% templatetag openvariable %} rubles_value|rubles {% templatetag closevariable %}&lt;/em&gt;. 
 У этого фильтра есть один параметр, определяющий, нужно ли нулевые копейки "проговаривать". Если нужно - 
-то True, по умолчанию &lt;code&gt;rubles&lt;/code&gt; этого не делает. Пример: {% templatetag openvariable %} params.rubles_value2 {% templatetag closevariable %} р. 
-словами будет &lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles {% templatetag closevariable %}&lt;/em&gt;, а с копейками - 
-&lt;em&gt;{% templatetag openvariable %} params.rubles_value2|rubles:"True" {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
+то True, по умолчанию &lt;code&gt;rubles&lt;/code&gt; этого не делает. Пример: {% templatetag openvariable %} rubles_value2 {% templatetag closevariable %} р. 
+словами будет &lt;em&gt;{% templatetag openvariable %} rubles_value2|rubles {% templatetag closevariable %}&lt;/em&gt;, а с копейками - 
+&lt;em&gt;{% templatetag openvariable %} rubles_value2|rubles:"True" {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
 просто число.</p>
 
 <h4>in_words</h4>
-<p>Число словами. Можно целые, можно дробные. Примеры: {{ params.int_value }} - 
-<em>{{ params.int_value|in_words }}</em>. У целых можно менять пол (по умолчанию - 
-мужской, MALE): <em>{{ params.int_value|in_words:"FEMALE" }}</em> (женский),
-<em>{{ params.int_value|in_words:"NEUTER" }}</em> (средний).</p>
+<p>Число словами. Можно целые, можно дробные. Примеры: {{ int_value }} - 
+<em>{{ int_value|in_words }}</em>. У целых можно менять пол (по умолчанию - 
+мужской, MALE): <em>{{ int_value|in_words:"FEMALE" }}</em> (женский),
+<em>{{ int_value|in_words:"NEUTER" }}</em> (средний).</p>
 
 <p>У дробных почти то же самое, только пол всегда женский и не меняется (т.е. 
-параметр передавать можно, но он не будет влиять). {{ params.float_value }} 
-словами будет <em>{{ params.float_value|in_words }}</em>.</p>
+параметр передавать можно, но он не будет влиять). {{ float_value }} 
+словами будет <em>{{ float_value|in_words }}</em>.</p>
 
 <p>В коде это так:
 <code><pre>
-&lt;p&gt;Число словами. Можно целые, можно дробные. Примеры: {% templatetag openvariable %} params.int_value {% templatetag closevariable %} - 
-&lt;em&gt;{% templatetag openvariable %} params.int_value|in_words {% templatetag closevariable %}&lt;/em&gt;. У целых можно менять пол (по умолчанию - 
-мужской, MALE): &lt;em&gt;{% templatetag openvariable %} params.int_value|in_words:"FEMALE" {% templatetag closevariable %}&lt;/em&gt; (женский),
-&lt;em&gt;{% templatetag openvariable %} params.int_value|in_words:"NEUTER" {% templatetag closevariable %}&lt;/em&gt; (средний).&lt;/p&gt;
+&lt;p&gt;Число словами. Можно целые, можно дробные. Примеры: {% templatetag openvariable %} int_value {% templatetag closevariable %} - 
+&lt;em&gt;{% templatetag openvariable %} int_value|in_words {% templatetag closevariable %}&lt;/em&gt;. У целых можно менять пол (по умолчанию - 
+мужской, MALE): &lt;em&gt;{% templatetag openvariable %} int_value|in_words:"FEMALE" {% templatetag closevariable %}&lt;/em&gt; (женский),
+&lt;em&gt;{% templatetag openvariable %} int_value|in_words:"NEUTER" {% templatetag closevariable %}&lt;/em&gt; (средний).&lt;/p&gt;
 
 &lt;p&gt;У дробных почти то же самое, только пол всегда женский и не меняется (т.е. 
-параметр передавать можно, но он не будет влиять). {% templatetag openvariable %} params.float_value {% templatetag closevariable %} 
-словами будет &lt;em&gt;{% templatetag openvariable %} params.float_value|in_words {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
+параметр передавать можно, но он не будет влиять). {% templatetag openvariable %} float_value {% templatetag closevariable %} 
+словами будет &lt;em&gt;{% templatetag openvariable %} float_value|in_words {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке отображается 
@@ -116,16 +116,16 @@
 <h4>sum_string</h4>
 <p>Наиболее общая функция для работы с числами. Умеет "проговаривать" числа и 
 одновременно подставлять название объекта в нужной форме. Например, вместо 
-{{ params.comment_number }} комментарий(ев) можно смело писать 
-<em>{% sum_string params.comment_number params.comment_gender params.comment_variants %}</em>
+{{ comment_number }} комментарий(ев) можно смело писать 
+<em>{% sum_string comment_number comment_gender comment_variants %}</em>
 </p>
 
 <p>В коде это реализовано так:
 <code><pre>
 &lt;p&gt;Наиболее общая функция для работы с числами. Умеет "проговаривать" числа и 
 одновременно подставлять название объекта в нужной форме. Например, вместо 
-{% templatetag openvariable %} params.comment_number {% templatetag closevariable %} комментарий(ев) можно смело писать 
-&lt;em&gt;{% templatetag openblock %} sum_string params.comment_number params.comment_gender params.comment_variants {% templatetag closeblock %}&lt;/em&gt;
+{% templatetag openvariable %} comment_number {% templatetag closevariable %} комментарий(ев) можно смело писать 
+&lt;em&gt;{% templatetag openblock %} sum_string comment_number comment_gender comment_variants {% templatetag closeblock %}&lt;/em&gt;
 &lt;/p&gt;
 </pre></code>
 

@@ -6,13 +6,13 @@ if use_setuptools:
     try:
         from setuptools import setup
     except ImportError:
-        print "Cannot load setuptool, revert to distutils"
+        print("Cannot load setuptool, revert to distutils")
         use_setuptools = False
         from distutils.core import setup
 else:
     from distutils.core import setup
 
-version = "0.2.4"
+version = "0.3"
 
 setup_data = {
       'name': 'pytils',

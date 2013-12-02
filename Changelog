@@ -1,10 +1,11 @@
-pytils (0.2.4dev)
+pytils (0.3dev)
 
   * Add typography
   * License updated to MIT
   * Remove support for old non-unicode Django
+  * Remove dependency of redudant type checks
 
- -- Yury Yurevich <the.pythy@gmail.com>  Sun, 18 Feb 2012 23:43:12 +0700
+ -- Yury Yurevich <the.pythy@gmail.com>  Thu, 22 Aug 2013 24:10:06 -0700
 
 pytils (0.2.3)
 
