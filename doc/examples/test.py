@@ -79,6 +79,20 @@ def test_example():
         for i in runner.test_cases():
             yield runner.run_test, example, i
 
+def assert_python_version(current_version):
+    exec_version = subprocess.check_output(
+        ['python', '-c', 'import sys; print(sys.version_info)'], stderr=subprocess.STDOUT).strip()
+    assert current_version == exec_version.decode('utf-8')
+
+
+def test_python_version():
+    # check that `python something.py` will run the same version interepreter as it is running
+    import sys
+    current_version = str(sys.version_info)
+    # do a yield to show in the test output the python version
+    yield assert_python_version, current_version
+
+
 if __name__ == '__main__':
     import nose, sys
     if not nose.runmodule():
