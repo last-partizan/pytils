@@ -253,6 +253,8 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна стотысячная")
         self.assertEquals(pytils.numeral.in_words_float(2e-6),
                           u"ноль целых две милллионных")
+        self.assertEquals(pytils.numeral.in_words_float(2.5e-6),
+                          u"ноль целых двадцать пять десятимиллионных")
 
     def testDecimal(self):
         """
