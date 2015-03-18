@@ -95,7 +95,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     if not isinstance(to_time, datetime.datetime):
         to_time = datetime.datetime.fromtimestamp(to_time)
 
-    if from_time.tzinfo:
+    if from_time.tzinfo and not to_time.tzinfo:
         to_time = to_time.replace(tzinfo=from_time.tzinfo)
 
     dt_delta = to_time - from_time
