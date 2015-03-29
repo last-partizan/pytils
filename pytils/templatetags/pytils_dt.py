@@ -34,7 +34,6 @@ def distance_of_time(from_time, accuracy=1):
         to_time = None
         if conf.settings.USE_TZ:
             to_time=utils.timezone.now()
-            print to_time
         res = dt.distance_of_time_in_words(from_time, accuracy, to_time)
     except Exception as err:
         # because filter must die silently
