@@ -87,6 +87,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
         current = True
         to_time = datetime.datetime.now()
 
+
     check_positive(accuracy, strict=True)
 
     if not isinstance(from_time, datetime.datetime):
