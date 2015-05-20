@@ -5,9 +5,15 @@ pytils.translit templatetags for Django web-framework
 """
 
 from django import template, conf
-from django.utils.encoding import smart_unicode
 from pytils import translit
 from pytils.templatetags import init_defaults
+
+try:
+    # Django 1.4+
+    from django.utils.encoding import smart_text
+except ImportError:
+    from django.utils.encoding import smart_unicode
+    smart_text = smart_unicode
 
 register = template.Library()  #: Django template tag/filter registrator
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
@@ -21,8 +27,8 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 def translify(text):
     """Translify russian text"""
     try:
-        res = translit.translify(smart_unicode(text, encoding))
-    except Exception, err:
+        res = translit.translify(smart_text(text, encoding))
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res
@@ -31,7 +37,7 @@ def detranslify(text):
     """Detranslify russian text"""
     try:
         res = translit.detranslify(text)
-    except Exception, err:
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res
@@ -39,8 +45,8 @@ def detranslify(text):
 def slugify(text):
     """Make slug from (russian) text"""
     try:
-        res = translit.slugify(smart_unicode(text, encoding))
-    except Exception, err:
+        res = translit.slugify(smart_text(text, encoding))
+    except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res

@@ -5,6 +5,19 @@ import datetime
 import time
 from pytils import dt
 
+def print_(s):
+    # pytils всегда возвращает юникод (строка в Py3.x)
+    # обычно это ОК выводить юникод в терминал
+    # но если это неинтерактивный вывод
+    # (например, использования модуля subprocess)
+    # то для Py2.x нужно использовать перекодировку в utf-8
+    from pytils.third import six
+    if six.PY3:
+        out = s
+    else:
+        out = s.encode('UTF-8')
+    print(out)
+
 # поддерживаются оба модуля работы со временем:
 # time
 current_time = time.time()
@@ -24,30 +37,30 @@ dt_in_future = dt_current_time + datetime.timedelta(0, 100000)
 
 # если to_time не передано, считается от "сейчас",
 # и тогда -1 день -> "вчера", а +1 день -> "завтра"
-print dt.distance_of_time_in_words(in_past)
+print_(dt.distance_of_time_in_words(in_past))
 #-> вчера
-print dt.distance_of_time_in_words(dt_in_future)
+print_(dt.distance_of_time_in_words(dt_in_future))
 #-> завтра
 
 
 # а вот если передано to_time, то нельзя говорить "вчера",
 # потому что to_time не обязательно "сейчас",
 # поэтому -1 день -> "1 день назад"
-print dt.distance_of_time_in_words(in_past, to_time=current_time)
+print_(dt.distance_of_time_in_words(in_past, to_time=current_time))
 #-> 1 день назад
 
 # увеличение точности отражается на результате
-print dt.distance_of_time_in_words(in_past, accuracy=2)
+print_(dt.distance_of_time_in_words(in_past, accuracy=2))
 #-> 1 день 3 часа назад
-print dt.distance_of_time_in_words(in_past, accuracy=3)
+print_(dt.distance_of_time_in_words(in_past, accuracy=3))
 #-> 1 день 3 часа 46 минут назад
 
 # аналогично и с будущим временем:
-print dt.distance_of_time_in_words(in_future)
+print_(dt.distance_of_time_in_words(in_future))
 #-> завтра
-print dt.distance_of_time_in_words(in_future, to_time=current_time)
+print_(dt.distance_of_time_in_words(in_future, to_time=current_time))
 #-> через 1 день
-print dt.distance_of_time_in_words(in_future, accuracy=2)
+print_(dt.distance_of_time_in_words(in_future, accuracy=2))
 #-> через 1 день 3 часа
-print dt.distance_of_time_in_words(in_future, accuracy=3)
+print_(dt.distance_of_time_in_words(in_future, accuracy=3))
 #-> через 1 день 3 часа 46 минут

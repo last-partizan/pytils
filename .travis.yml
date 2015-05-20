@@ -1,6 +1,12 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
-install: pip install -r .travis-requirements.txt --use-mirrors
-script: python setup.py test
+env:
+  - TOXENV="py27-django13"
+  - TOXENV="py27-django14"
+  - TOXENV="py27-django15"
+  - TOXENV="py27-django16"
+  - TOXENV="py33-django15"
+  - TOXENV="py33-django16"
+install: pip install tox
+script: tox -e $TOXENV

@@ -1,1 +1,3 @@
-*.py[co]
+*.pyc
+*egg-info/
+.tox/

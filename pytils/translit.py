@@ -5,7 +5,7 @@ Simple transliteration
 """
 
 import re
-from pytils.utils import takes, returns
+from pytils.third import six
 
 TRANSTABLE = (
         (u"'", u"'"),
@@ -132,36 +132,34 @@ RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can transla
 EN_ALPHABET = [x[1] for x in TRANSTABLE] #: English alphabet that we can detransliterate
 ALPHABET = RU_ALPHABET + EN_ALPHABET #: Alphabet that we can (de)transliterate
 
-@takes(unicode)
-@returns(str)
-def translify(in_string):
+
+def translify(in_string, strict=True):
     """
     Translify russian text
 
     @param in_string: input string
     @type in_string: C{unicode}
 
+    @param strict: raise error if transliteration is incomplete.
+        (True by default)
+    @type strict: C{bool}
+
     @return: transliterated string
     @rtype: C{str}
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
-        (in_string is not C{unicode})
-    @raise ValueError: when string doesn't transliterate completely
+    @raise ValueError: when string doesn't transliterate completely.
+        Raised only if strict=True
     """
     translit = in_string
     for symb_in, symb_out in TRANSTABLE:
         translit = translit.replace(symb_in, symb_out)
 
-    try:
-        translit = str(translit)
-    except UnicodeEncodeError:
+    if strict and any(ord(symb) > 128 for symb in translit):
         raise ValueError("Unicode string doesn't transliterate completely, " + \
                          "is it russian?")
 
     return translit
 
-@takes(basestring)
-@returns(unicode)
 def detranslify(in_string):
     """
     Detranslify
@@ -172,13 +170,10 @@ def detranslify(in_string):
     @return: detransliterated string
     @rtype: C{unicode}
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
-        (when in_string not C{basestring})
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
-    # в unicode
     try:
-        russian = unicode(in_string)
+        russian = six.text_type(in_string)
     except UnicodeDecodeError:
         raise ValueError("We expects if in_string is 8-bit string," + \
                          "then it consists only ASCII chars, but now it doesn't. " + \
@@ -187,10 +182,11 @@ def detranslify(in_string):
     for symb_out, symb_in in TRANSTABLE:
         russian = russian.replace(symb_in, symb_out)
 
+    # TODO: выбрать правильный регистр для ь и ъ
+    # твердый и мягкий знак в dentranslify всегда будут в верхнем регистре
+    # потому что ` и ' не несут информацию о регистре
     return russian
 
-@takes(basestring)
-@returns(str)
 def slugify(in_string):
     """
     Prepare string for slug (i.e. URL or file/dir name)
@@ -201,12 +197,10 @@ def slugify(in_string):
     @return: slug-string
     @rtype: C{str}
 
-    @raise L{pytils.err.InputParameterError}: input parameters' check failed
-        (when in_string isn't C{unicode} or C{str})
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:
-        u_in_string = unicode(in_string).lower()
+        u_in_string = six.text_type(in_string).lower()
     except UnicodeDecodeError:
         raise ValueError("We expects when in_string is str type," + \
                          "it is an ascii, but now it isn't. Use unicode " + \

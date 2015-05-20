@@ -15,26 +15,26 @@
 <p>Для наглядности, текст подставленный фильтром выделен курсивом.</p>
 
 <h4>translify</h4>
-<p>Простая транслитерация, из текста <blockquote>{{ params.text }}</blockquote> 
-получается <blockquote><em>{{ params.text|translify }}</em></blockquote></p>
+<p>Простая транслитерация, из текста <blockquote>{{ text }}</blockquote> 
+получается <blockquote><em>{{ text|translify }}</em></blockquote></p>
 
 <p>В шаблоне записано так:
 <code><pre>
-&lt;p&gt;Простая транслитерация, из текста &lt;blockquote&gt;{% templatetag openvariable %} params.text {% templatetag closevariable %}&lt;/blockquote&gt; 
-получается &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.text|translify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
+&lt;p&gt;Простая транслитерация, из текста &lt;blockquote&gt;{% templatetag openvariable %} text {% templatetag closevariable %}&lt;/blockquote&gt; 
+получается &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} text|translify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
 </code></pre></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
 отображается оригинальный текст.</p>
 
 <h4>detranslify</h4>
-<p>Простая детранслитерация, из текста <blockquote>{{ params.translit }}</blockquote> 
-получается <blockquote><em>{{ params.translit|detranslify }}</em></blockquote></p>
+<p>Простая детранслитерация, из текста <blockquote>{{ translit }}</blockquote> 
+получается <blockquote><em>{{ translit|detranslify }}</em></blockquote></p>
 
 <p>В шаблоне записано так:
 <code><pre>
-&lt;p&gt;Простая детранслитерация, из текста &lt;blockquote&gt;{% templatetag openvariable %} params.translit {% templatetag closevariable %}&lt;/blockquote&gt; 
-получается &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.translit|detranslify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
+&lt;p&gt;Простая детранслитерация, из текста &lt;blockquote&gt;{% templatetag openvariable %} translit {% templatetag closevariable %}&lt;/blockquote&gt; 
+получается &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} translit|detranslify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
 </code></pre></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
@@ -42,18 +42,18 @@
 
 
 <h4>slugify</h4>
-<p>Подготовка текста для URL. Из текста <blockquote>{{ params.text }}</blockquote> 
-получается slug <blockquote><em>{{ params.text|slugify }}</em></blockquote>
-Также возможна обработка и английского текста: например из <blockquote>{{ params.translit }}</blockquote>
-получается slug <blockquote><em>{{ params.translit|slugify }}</em></blockquote></p>
+<p>Подготовка текста для URL. Из текста <blockquote>{{ text }}</blockquote> 
+получается slug <blockquote><em>{{ text|slugify }}</em></blockquote>
+Также возможна обработка и английского текста: например из <blockquote>{{ translit }}</blockquote>
+получается slug <blockquote><em>{{ translit|slugify }}</em></blockquote></p>
 
 
 <p>В шаблоне это всё записано так:
 <code><pre>
-&lt;p&gt;Подготовка текста для URL. Из текста &lt;blockquote&gt;{% templatetag openvariable %} params.text {% templatetag closevariable %}&lt;/blockquote&gt; 
-получается slug &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.text|slugify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;
-Также возможна обработка и английского текста: например из &lt;blockquote&gt;{% templatetag openvariable %} params.translit {% templatetag closevariable %}&lt;/blockquote&gt;
-получается slug &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} params.translit|slugify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
+&lt;p&gt;Подготовка текста для URL. Из текста &lt;blockquote&gt;{% templatetag openvariable %} text {% templatetag closevariable %}&lt;/blockquote&gt; 
+получается slug &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} text|slugify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;
+Также возможна обработка и английского текста: например из &lt;blockquote&gt;{% templatetag openvariable %} translit {% templatetag closevariable %}&lt;/blockquote&gt;
+получается slug &lt;blockquote&gt;&lt;em&gt;{% templatetag openvariable %} translit|slugify {% templatetag closevariable %}&lt;/em&gt;&lt;/blockquote&gt;&lt;/p&gt;
 </code></pre></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 

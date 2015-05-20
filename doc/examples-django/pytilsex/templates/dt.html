@@ -15,32 +15,32 @@
 <p>Для наглядности, текст подставленный фильтром выделен курсивом.</p>
 
 <h4>distance_of_time</h4>
-<p>Например, тест прошлого времени был <em>{{ params.otime|distance_of_time }}</em>.
-Если более точно, то <em>{{ params.otime|distance_of_time:2 }}</em>. Нужно ли еще
-более точно? Пожалуйста - это было <em>{{ params.otime|distance_of_time:3 }}</em>.
+<p>Например, тест прошлого времени был <em>{{ otime|distance_of_time }}</em>.
+Если более точно, то <em>{{ otime|distance_of_time:2 }}</em>. Нужно ли еще
+более точно? Пожалуйста - это было <em>{{ otime|distance_of_time:3 }}</em>.
 </p>
 
 <p>Точно так же (т.е. для Вас абсолютно прозрачно) и с будущим временем -
-следующий тест будет <em>{{ params.ftime|distance_of_time }}</em>.</p>
+следующий тест будет <em>{{ ftime|distance_of_time }}</em>.</p>
 
 <p><code>distance_of_time</code> умеет работать с обеими типами времени, 
 представленных в Python: с <code>datetime.datetime</code> и <code>time.time</code>.
-Например, {{ params.fdate }} будет  <em>{{ params.fdate|distance_of_time }}</em>.</p>
+Например, {{ fdate }} будет  <em>{{ fdate|distance_of_time }}</em>.</p>
 
 
 <p>Сделано это так:
 <code><pre>
-&lt;p&gt;Например, тест прошлого времени был &lt;em&gt;{% templatetag openvariable %} params.otime|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.
-Если более точно, то &lt;em&gt;{% templatetag openvariable %} params.otime|distance_of_time:2 {% templatetag closevariable %}&lt;/em&gt;. Нужно ли еще
-более точно? Пожалуйста - это было &lt;em&gt;{% templatetag openvariable %} params.otime|distance_of_time:3 {% templatetag closevariable %}&lt;/em&gt;.
+&lt;p&gt;Например, тест прошлого времени был &lt;em&gt;{% templatetag openvariable %} otime|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.
+Если более точно, то &lt;em&gt;{% templatetag openvariable %} otime|distance_of_time:2 {% templatetag closevariable %}&lt;/em&gt;. Нужно ли еще
+более точно? Пожалуйста - это было &lt;em&gt;{% templatetag openvariable %} otime|distance_of_time:3 {% templatetag closevariable %}&lt;/em&gt;.
 &lt;/p&gt;
 
 &lt;p&gt;Точно так же (т.е. для Вас абсолютно прозрачно) и с будущим временем -
-следующий тест будет &lt;em&gt;{% templatetag openvariable %} params.ftime|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
+следующий тест будет &lt;em&gt;{% templatetag openvariable %} ftime|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;distance_of_time&lt;/code&gt; умеет работать с обеими типами времени, 
 представленных в Python: с &lt;code&gt;datetime.datetime&lt;/code&gt; и &lt;code&gt;time.time&lt;/code&gt;.
-Например, {% templatetag openvariable %} params.fdate {% templatetag closevariable %} будет  &lt;em&gt;{% templatetag openvariable %} params.fdate|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
+Например, {% templatetag openvariable %} fdate {% templatetag closevariable %} будет  &lt;em&gt;{% templatetag openvariable %} fdate|distance_of_time {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </pre></code></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
@@ -52,11 +52,11 @@
 <p>Тоже всё просто - используем обычный формат strftime, в котором %a, %A, %b, 
 %B заменены на русские.</p>
 
-<p>К примеру, текущая дата: <em>{{ params.cdate|ru_strftime:"%d %B %Y, %A" }}</em>.</p>
+<p>К примеру, текущая дата: <em>{{ cdate|ru_strftime:"%d %B %Y, %A" }}</em>.</p>
 
 <p>Код таков:
 <code><pre>
-&lt;p&gt;К примеру, текущая дата: &lt;em&gt;{% templatetag openvariable %} params.cdate|ru_strftime:"%d %B %Y, %A" {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;К примеру, текущая дата: &lt;em&gt;{% templatetag openvariable %} cdate|ru_strftime:"%d %B %Y, %A" {% templatetag closevariable %}&lt;/em&gt;.&lt;/p&gt;
 </code></pre></p>
 
 <p>Если включен режим <code>PYTILS_SHOW_VALUES_ON_ERROR</code>, то при ошибке 
@@ -67,13 +67,13 @@
 
 <h4>ru_strftime_inflected</h4>
 <p>Аналогично <code>ru_strftime</code>, только день склоняется. Т.е. текущий тест был 
-выполнен в <em>{{ params.cdate|ru_strftime_inflected:"%A, %d %B %Y" }}</em>
+выполнен в <em>{{ cdate|ru_strftime_inflected:"%A, %d %B %Y" }}</em>
 
 <p>
 В шаблоне запись такова:
 <pre><code>
 &lt;p&gt;Аналогично &lt;code&gt;ru_strftime&lt;/code&gt;, только день склоняется. Т.е. текущий тест был 
-выполнен в &lt;em&gt;{% templatetag openvariable %} params.cdate|ru_strftime_inflected:"%A, %d %B %Y" {% templatetag closevariable %}&lt;/em&gt;
+выполнен в &lt;em&gt;{% templatetag openvariable %} cdate|ru_strftime_inflected:"%A, %d %B %Y" {% templatetag closevariable %}&lt;/em&gt;
 </pre></code>
 </p>
 
@@ -85,13 +85,13 @@
 
 <h4>ru_strftime_preposition</h4>
 <p>Аналогично <code>ru_strftime_inflected</code>, только добавляется правильный предлог. Т.е. текущий тест был 
-выполнен <em>{{ params.cdate|ru_strftime_preposition:"%A, %d %B %Y" }}</em>
+выполнен <em>{{ cdate|ru_strftime_preposition:"%A, %d %B %Y" }}</em>
 
 <p>
 В шаблоне запись такова:
 <pre><code>
 &lt;p&gt;Аналогично &lt;code&gt;ru_strftime&lt;/code&gt;, только добавляется правильный предлог. Т.е. текущий тест был 
-выполнен &lt;em&gt;{% templatetag openvariable %} params.cdate|ru_strftime_preposition:"%A, %d %B %Y" {% templatetag closevariable %}&lt;/em&gt;
+выполнен &lt;em&gt;{% templatetag openvariable %} cdate|ru_strftime_preposition:"%A, %d %B %Y" {% templatetag closevariable %}&lt;/em&gt;
 </pre></code>
 </p>
 

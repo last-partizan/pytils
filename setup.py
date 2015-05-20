@@ -6,20 +6,20 @@ if use_setuptools:
     try:
         from setuptools import setup
     except ImportError:
-        print "Cannot load setuptool, revert to distutils"
+        print("Cannot load setuptool, revert to distutils")
         use_setuptools = False
         from distutils.core import setup
 else:
     from distutils.core import setup
 
-version = "0.2.4"
+version = "0.3.1"
 
 setup_data = {
       'name': 'pytils',
       'version': version,
       'author': 'Yury Yurevich',
-      'author_email': 'the.pythy@gmail.com',
-      'url': 'http://www.pyobject.ru/projects/pytils/',
+      'author_email': 'yyurevich@jellycrystal.com',
+      'url': 'https://github.com/j2a/pytils/',
       'description': 'Russian-specific string utils',
       'long_description': """Simple tools for processing strings in russian
 (choose proper form for plurals, in-words representation of numerals,
