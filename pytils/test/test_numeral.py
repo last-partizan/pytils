@@ -219,6 +219,17 @@ class RublesTestCase(unittest.TestCase):
                           u"три рубля")
         self.assertEquals(pytils.numeral.rubles(D(3), True),
                           u"три рубля ноль копеек")
+        # BYN - belarussian rubels
+        self.assertEquals(pytils.numeral.rubles(D("10.01"), False, True),
+                          u"десять белорусских рублей одна копейка")
+        self.assertEquals(pytils.numeral.rubles(D("10.10"), False, True),
+                          u"десять белорусских рублей десять копеек")
+        self.assertEquals(pytils.numeral.rubles(D("2.35"), False, True),
+                          u"два белорусских рубля тридцать пять копеек")
+        self.assertEquals(pytils.numeral.rubles(D(3), False, True),
+                          u"три белорусских рубля")
+        self.assertEquals(pytils.numeral.rubles(D(3), True, True),
+                          u"три белорусских рубля ноль копеек")
 
     def testRublesExceptions(self):
         """
