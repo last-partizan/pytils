@@ -230,7 +230,7 @@ def rubles(amount, zero_for_kopeck=False, by_rubles=False):
     if not by_rubles:
         pts.append(sum_string(int(amount), 1, (u"рубль", u"рубля", u"рублей")))
     else:
-        pts.append(sum_string(int(amount), 1, (u"белорусский рубль", u"белорусского рубля", u"белорусских рублей")))
+        pts.append(sum_string(int(amount), 1, (u"белорусский рубль", u"белорусских рубля", u"белорусских рублей")))
     remainder = _get_float_remainder(amount, 2)
     iremainder = int(remainder)
 
