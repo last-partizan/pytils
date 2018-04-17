@@ -220,6 +220,7 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for in_words_int
         """
+        self.assertEquals(pytils.numeral.in_words_int(0), u"ноль")
         self.assertEquals(pytils.numeral.in_words_int(10), u"десять")
         self.assertEquals(pytils.numeral.in_words_int(5), u"пять")
         self.assertEquals(pytils.numeral.in_words_int(102), u"сто два")

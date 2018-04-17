@@ -360,7 +360,10 @@ def sum_string(amount, gender, items=None):
     check_positive(amount)
 
     if amount == 0:
-        return u"ноль %s" % five_items
+        if five_items:
+            return u"ноль %s" % five_items
+        else:
+            return u"ноль"
 
     into = u''
     tmp_val = amount
