@@ -106,12 +106,35 @@ def in_words(amount, gender=None):
         res = default_value % {'error': err, 'value': str(amount)}
     return res
 
+def in_words_ordinal(amount, gender=None):
+    """
+    In-words representation of amount (ordinal numbers).
+
+    Parameter is a gender: MALE (default), FEMALE or NEUTER
+
+    Examples::
+        {{ some_int|in_words_ordinal }}
+        {{ some_other_int|in_words_ordinal:FEMALE }}
+    """
+    try:
+        ures = numeral.in_words_ordinal(amount, getattr(numeral, str(gender), None))
+        res = pseudo_str(
+                ures,
+                encoding,
+                default_value
+            )
+    except Exception, err:
+        # because filter must die silently
+        res = default_value % {'error': err, 'value': str(amount)}
+    return res
+
 # -- register filters
 
 register.filter('choose_plural', choose_plural)
 register.filter('get_plural', get_plural)
 register.filter('rubles', rubles)
 register.filter('in_words', in_words)
+register.filter('in_words_ordinal', in_words_ordinal)
 
 # -- tags
 
