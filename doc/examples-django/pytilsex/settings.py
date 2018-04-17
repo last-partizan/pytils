@@ -6,10 +6,10 @@ CURRPATH = os.path.dirname(os.path.normpath(os.path.abspath(__file__)))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-DEFAULT_CHARSET='utf-8'
+DEFAULT_CHARSET = 'utf-8'
 
 ADMINS = (
-     ('Pythy', 'the.pythy@gmail.com'),
+    ('Pythy', 'the.pythy@gmail.com'),
 )
 
 DATABASES = {
@@ -46,7 +46,7 @@ MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 
 STATICFILES_DIRS = (
-	MEDIA_ROOT,
+    MEDIA_ROOT,
 )
 
 STATIC_URL = '/static/'
@@ -61,18 +61,17 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates".
-    # Always use forward slashes, even on Windows.
-    os.path.join(CURRPATH, 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+    },
+]
 
-
-TEMPLATE_CONTEXT_PROCESSORS = []
 
 INSTALLED_APPS = (
     'django_nose',
-# -- install pytils
+    # -- install pytils
     'pytils',
 )
 
