@@ -4,11 +4,7 @@ import time
 import datetime
 import sys
 
-try:
-    from django.conf.urls import patterns, url
-except ImportError:
-    # Django 1.3
-    from django.conf.urls.defaults import patterns, url
+from django.conf.urls import url
 
 from django.views.generic.base import TemplateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -16,12 +12,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from pytils import VERSION as pytils_version
 from django import VERSION as _django_version
 
+
 def get_python_version():
     return '.'.join(str(v) for v in sys.version_info[:3])
+
 
 def get_django_version(_ver):
     ver = '.'.join([str(x) for x in _ver[:-2]])
     return ver
+
 
 class DtView(TemplateView):
     template_name = 'dt.html'
@@ -68,6 +67,7 @@ class TranslitView(TemplateView):
         })
         return context
 
+
 class IndexView(TemplateView):
     template_name = 'base.html'
 
@@ -80,11 +80,12 @@ class IndexView(TemplateView):
         })
         return context
 
-urlpatterns = patterns('',
+
+urlpatterns = [
     url(r'^dt/', DtView.as_view(), name='pytils_dt_example'),
     url(r'^numeral/', NumeralView.as_view(), name='pytils_numeral_example'),
     url(r'^translit/', TranslitView.as_view(), name='pytils_translit_example'),
     url(r'^$', IndexView.as_view(), name='pytils_example'),
-)
+]
 
 urlpatterns += staticfiles_urlpatterns()
