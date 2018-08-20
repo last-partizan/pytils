@@ -189,7 +189,7 @@ def detranslify(in_string):
     # потому что ` и ' не несут информацию о регистре
     return russian
 
-def slugify(in_string, preserve_file_attribites=False):
+def slugify(in_string, preserve_file_attributes=False):
     """
     Prepare string for slug (i.e. URL or file/dir name)
 
