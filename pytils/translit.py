@@ -127,6 +127,7 @@ TRANSTABLE = (
         (u"9", u"9"),
         (u"0", u"0"),
         (u".", u"."),
+        (u"/", u"/"),
         )  #: Translation table
 
 RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can translate
@@ -188,7 +189,7 @@ def detranslify(in_string):
     # потому что ` и ' не несут информацию о регистре
     return russian
 
-def slugify(in_string):
+def slugify(in_string, preserve_file_attribites=False):
     """
     Prepare string for slug (i.e. URL or file/dir name)
 
@@ -215,7 +216,10 @@ def slugify(in_string):
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha
-    return re.sub('[^\w\s\-\.]', '', out_string).strip().lower()
+    if not preserve_file_attributes:
+        return re.sub('[^\w\s\-]', '', out_string).strip().lower()
+    else:
+        return re.sub('[^\w\s\-\./]', '', out_string).strip().lower()
 
 
 def dirify(in_string):
