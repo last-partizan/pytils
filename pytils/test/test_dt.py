@@ -377,6 +377,16 @@ class RuStrftimeTestCase(unittest.TestCase):
                               datetime.date(2007,3,18),
                               inflected_day=True)
                          )
+
+    def test_special_case(self):
+        self.assertEqual(
+            u"октябрь",
+            pytils.dt.ru_strftime(
+                '%B',
+                inflected=False,
+                date=datetime.datetime.fromtimestamp(1540209256)
+            ),
+        )
         
 
 if __name__ == '__main__':
