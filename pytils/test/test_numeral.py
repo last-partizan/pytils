@@ -450,5 +450,37 @@ class SumStringTestCase(unittest.TestCase):
         self.assertRaises(ValueError, pytils.numeral.sum_string,
                                       -1, pytils.numeral.MALE, u"any,bene,raba")
 
+    def testSumStringBigNumbers(self):
+        """
+        Unit-test for testing sum_string's big number names
+        """
+        MALE = pytils.numeral.MALE
+        self.assertEquals(u"один",
+                          pytils.numeral.sum_string(1, MALE))
+        self.assertEquals(u"одна тысяча",
+                          pytils.numeral.sum_string(1000, MALE))
+        self.assertEquals(u"один миллион",
+                          pytils.numeral.sum_string(10**6, MALE))
+        self.assertEquals(u"один миллиард",
+                          pytils.numeral.sum_string(10**9, MALE))
+        self.assertEquals(u"один триллион",
+                          pytils.numeral.sum_string(10**12, MALE))
+        self.assertEquals(u"один квадриллион",
+                          pytils.numeral.sum_string(10**15, MALE))
+        self.assertEquals(u"один квинтиллион",
+                          pytils.numeral.sum_string(10**18, MALE))
+        self.assertEquals(u"один секстилион",
+                          pytils.numeral.sum_string(10**21, MALE))
+        self.assertEquals(u"один септиллион",
+                          pytils.numeral.sum_string(10**24, MALE))
+        self.assertEquals(u"один октиллион",
+                          pytils.numeral.sum_string(10**27, MALE))
+        self.assertEquals(u"один нониллион",
+                          pytils.numeral.sum_string(10**30, MALE))
+        self.assertEquals(u"один дециллион",
+                          pytils.numeral.sum_string(10**33, MALE))
+        self.assertRaises(ValueError,
+                          pytils.numeral.sum_string, 10**36, MALE)
+
 if __name__ == '__main__':
     unittest.main()
