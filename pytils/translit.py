@@ -126,6 +126,7 @@ TRANSTABLE = (
         (u"8", u"8"),
         (u"9", u"9"),
         (u"0", u"0"),
+        (u".", u"."),
         )  #: Translation table
 
 RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can translate
@@ -214,7 +215,7 @@ def slugify(in_string):
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha
-    return re.sub('[^\w\s-]', '', out_string).strip().lower()
+    return re.sub('[^\w\s\-\.]', '', out_string).strip().lower()
 
 
 def dirify(in_string):
