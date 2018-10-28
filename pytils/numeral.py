@@ -102,7 +102,11 @@ def _get_float_remainder(fvalue, signs=9):
 
     # нужно remainder в строке, потому что дробные X.0Y
     # будут "ломаться" до X.Y
-    remainder = str(fvalue).split('.')[1]
+    if 'e' in str(fvalue).lower():
+        remainder = str(Decimal(str(fvalue))).split('.')[1]
+    else:
+        remainder = str(fvalue).split('.')[1]
+
     iremainder = int(remainder)
     orig_remainder = remainder
     factor = len(str(remainder)) - signs
