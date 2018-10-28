@@ -208,7 +208,7 @@ def _get_plural_legacy(amount, extra_variants):
     return get_plural(amount, variants, absence)
 
 
-def rubles(amount, zero_for_kopeck=False):
+def rubles(amount, zero_for_kopeck=False, by_rubles=False):
     """
     Get string for money
 
@@ -227,7 +227,10 @@ def rubles(amount, zero_for_kopeck=False):
 
     pts = []
     amount = round(amount, 2)
-    pts.append(sum_string(int(amount), 1, (u"рубль", u"рубля", u"рублей")))
+    if not by_rubles:
+        pts.append(sum_string(int(amount), 1, (u"рубль", u"рубля", u"рублей")))
+    else:
+        pts.append(sum_string(int(amount), 1, (u"белорусский рубль", u"белорусских рубля", u"белорусских рублей")))
     remainder = _get_float_remainder(amount, 2)
     iremainder = int(remainder)
 
