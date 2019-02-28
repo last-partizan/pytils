@@ -215,10 +215,12 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False,
     if u'%b' in format or u'%B' in format:
         format = format.replace(u'%d', six.text_type(date.day))
 
-    format = format.replace(u'%a', prepos+DAY_NAMES[weekday][0])
-    format = format.replace(u'%A', prepos+DAY_NAMES[weekday][day_idx])
-    format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
-    format = format.replace(u'%B', MONTH_NAMES[date.month-1][month_idx])
+    # save custom placeholders to work on them later
+    # because of https://github.com/last-partizan/pytils/issues/32
+    format = format.replace(u'%a', u'--PYTILS--a--')
+    format = format.replace(u'%A', u'--PYTILS--A--')
+    format = format.replace(u'%b', u'--PYTILS--b--')
+    format = format.replace(u'%B', u'--PYTILS--B--')
 
     # Python 2: strftime's argument must be str
     # Python 3: strftime's argument str, not a bitestring
@@ -230,4 +232,10 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False,
         u_res = s_res.decode("utf-8")
     else:
         u_res = date.strftime(format)
+    
+    u_res = u_res.replace(u'--PYTILS--a--', prepos+DAY_NAMES[weekday][0])
+    u_res = u_res.replace(u'--PYTILS--A--', prepos+DAY_NAMES[weekday][day_idx])
+    u_res = u_res.replace(u'--PYTILS--b--', MONTH_NAMES[date.month-1][0])
+    u_res = u_res.replace(u'--PYTILS--B--', MONTH_NAMES[date.month-1][month_idx])
+    
     return u_res
