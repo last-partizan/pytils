@@ -5,6 +5,7 @@ Russian dates without locales
 """
 
 import datetime
+import re
 
 from pytils import numeral
 from pytils.utils import check_positive
@@ -215,27 +216,37 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False,
     if u'%b' in format or u'%B' in format:
         format = format.replace(u'%d', six.text_type(date.day))
 
-    # save custom placeholders to work on them later
-    # because of https://github.com/last-partizan/pytils/issues/32
-    format = format.replace(u'%a', u'--PYTILS--a--')
-    format = format.replace(u'%A', u'--PYTILS--A--')
-    format = format.replace(u'%b', u'--PYTILS--b--')
-    format = format.replace(u'%B', u'--PYTILS--B--')
+    format = format.replace(u'%a', prepos+DAY_NAMES[weekday][0])
+    format = format.replace(u'%A', prepos+DAY_NAMES[weekday][day_idx])
+    format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
+    format = format.replace(u'%B', MONTH_NAMES[date.month-1][month_idx])
 
-    # Python 2: strftime's argument must be str
-    # Python 3: strftime's argument str, not a bitestring
-    if six.PY2:
-        # strftime must be str, so encode it to utf8:
-        s_format = format.encode("utf-8")
-        s_res = date.strftime(s_format)
-        # and back to unicode
-        u_res = s_res.decode("utf-8")
-    else:
-        u_res = date.strftime(format)
+    def run_strftime_on_py_2_or_3(f):
+        # Python 2: strftime's argument must be str
+        # Python 3: strftime's argument str, not a bitestring
+        if six.PY2:
+            # strftime must be str, so encode it to utf8:
+            s_format = f.encode("utf-8")
+            s_res = date.strftime(s_format)
+            # and back to unicode
+            return s_res.decode("utf-8")
+        else:
+            return date.strftime(f)
     
-    u_res = u_res.replace(u'--PYTILS--a--', prepos+DAY_NAMES[weekday][0])
-    u_res = u_res.replace(u'--PYTILS--A--', prepos+DAY_NAMES[weekday][day_idx])
-    u_res = u_res.replace(u'--PYTILS--b--', MONTH_NAMES[date.month-1][0])
-    u_res = u_res.replace(u'--PYTILS--B--', MONTH_NAMES[date.month-1][month_idx])
+    need_locale_workaround = False
+    try:
+        u_res = run_strftime_on_py_2_or_3(format)
+        if u_res == u'' and format:
+            need_locale_workaround = True
+    except UnicodeError:
+        need_locale_workaround = True
+    
+    # workaround for https://github.com/last-partizan/pytils/issues/32
+    if need_locale_workaround:
+        u_res = re.sub(
+            u'\%[c-zC-Z]{1}',
+            lambda m: run_strftime_on_py_2_or_3(m.group(0)),
+            format
+        )
     
     return u_res
