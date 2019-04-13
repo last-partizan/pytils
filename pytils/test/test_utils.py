@@ -3,6 +3,7 @@
 Unit-tests for pytils.utils
 """
 
+from __future__ import unicode_literals
 import unittest
 import pytils
 import decimal
@@ -18,7 +19,7 @@ class ChecksTestCase(unittest.TestCase):
         """
         Unit-test for pytils.utils.check_length
         """
-        self.assertEquals(pytils.utils.check_length("var", 3), None)
+        self.assertEqual(pytils.utils.check_length("var", 3), None)
         
         self.assertRaises(ValueError, pytils.utils.check_length, "var", 4)
         self.assertRaises(ValueError, pytils.utils.check_length, "var", 2)
@@ -28,14 +29,14 @@ class ChecksTestCase(unittest.TestCase):
         """
         Unit-test for pytils.utils.check_positive
         """
-        self.assertEquals(pytils.utils.check_positive(0), None)
-        self.assertEquals(pytils.utils.check_positive(1), None)
-        self.assertEquals(pytils.utils.check_positive(1, False), None)
-        self.assertEquals(pytils.utils.check_positive(1, strict=False), None)
-        self.assertEquals(pytils.utils.check_positive(1, True), None)
-        self.assertEquals(pytils.utils.check_positive(1, strict=True), None)
-        self.assertEquals(pytils.utils.check_positive(decimal.Decimal("2.0")), None)
-        self.assertEquals(pytils.utils.check_positive(2.0), None)
+        self.assertEqual(pytils.utils.check_positive(0), None)
+        self.assertEqual(pytils.utils.check_positive(1), None)
+        self.assertEqual(pytils.utils.check_positive(1, False), None)
+        self.assertEqual(pytils.utils.check_positive(1, strict=False), None)
+        self.assertEqual(pytils.utils.check_positive(1, True), None)
+        self.assertEqual(pytils.utils.check_positive(1, strict=True), None)
+        self.assertEqual(pytils.utils.check_positive(decimal.Decimal("2.0")), None)
+        self.assertEqual(pytils.utils.check_positive(2.0), None)
         
         self.assertRaises(ValueError, pytils.utils.check_positive, -2)
         self.assertRaises(ValueError, pytils.utils.check_positive, -2.0)
@@ -49,17 +50,17 @@ class SplitValuesTestCase(unittest.TestCase):
         """
         Unit-test for pytils.utils.split_values, classic split
         """
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u"Раз,Два,Три"))
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u"Раз, Два,Три"))
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u" Раз,   Два, Три  "))
-        self.assertEquals((u"Раз", u"Два", u"Три"), pytils.utils.split_values(u" Раз, \nДва,\n Три  "))
+        self.assertEqual(("Раз", "Два", "Три"), pytils.utils.split_values("Раз,Два,Три"))
+        self.assertEqual(("Раз", "Два", "Три"), pytils.utils.split_values("Раз, Два,Три"))
+        self.assertEqual(("Раз", "Два", "Три"), pytils.utils.split_values(" Раз,   Два, Три  "))
+        self.assertEqual(("Раз", "Два", "Три"), pytils.utils.split_values(" Раз, \nДва,\n Три  "))
     
     def testEscapedSplit(self):
         """
         Unit-test for pytils.utils.split_values, split with escaping
         """
-        self.assertEquals((u"Раз,Два", u"Три,Четыре", u"Пять,Шесть"), pytils.utils.split_values(u"Раз\,Два,Три\,Четыре,Пять\,Шесть"))
-        self.assertEquals((u"Раз, Два", u"Три", u"Четыре"), pytils.utils.split_values(u"Раз\, Два, Три, Четыре"))
+        self.assertEqual(("Раз,Два", "Три,Четыре", "Пять,Шесть"), pytils.utils.split_values("Раз\,Два,Три\,Четыре,Пять\,Шесть"))
+        self.assertEqual(("Раз, Два", "Три", "Четыре"), pytils.utils.split_values("Раз\, Два, Три, Четыре"))
 
 if __name__ == '__main__':
     unittest.main()

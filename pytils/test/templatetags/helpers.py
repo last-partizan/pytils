@@ -3,6 +3,7 @@
 Helpers for templatetags' unit tests in Django webframework
 """
 
+from __future__ import unicode_literals
 from django.conf import settings
 from django.utils.encoding import smart_str
 
@@ -51,5 +52,5 @@ class TemplateTagTestCase(unittest.TestCase):
         loader.template_source_loaders = [test_template_loader,]
         
         output = loader.get_template(template_name).render(template.Context(context))
-        self.assertEquals(output, result_string)
+        self.assertEqual(output, result_string)
 

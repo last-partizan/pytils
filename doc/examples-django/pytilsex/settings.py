@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 # Django settings for pytilsex project.
 
 # find current path
@@ -55,9 +58,9 @@ STATIC_URL = '/static/'
 SECRET_KEY = '-)^ay7gz76#9!j=ssycphb7*(gg74zhx9h-(j_1k7!wfr7j(o^'
 
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
-)
+]
 
 ROOT_URLCONF = 'urls'
 

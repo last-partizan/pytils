@@ -1,18 +1,29 @@
 language: python
-python:
-  - "2.7"
-  - "3.6"
-env:
-  - TOXENV="py27-django11"
-  - TOXENV="py36-django11"
-  - TOXENV="py36-django20"
+sudo: false
+dist: xenial
 matrix:
-  exclude:
+  include:
     - python: "2.7"
+      env: TOXENV="py27-django11"
+    - python: "3.4"
+      env: TOXENV="py34-django11"
+    - python: "3.4"
+      env: TOXENV="py34-django20"
+    - python: "3.5"
+      env: TOXENV="py35-django11"
+    - python: "3.5"
+      env: TOXENV="py35-django20"
+    - python: "3.5"
+      env: TOXENV="py35-django21"
+    - python: "3.5"
+      env: TOXENV="py35-django22"
+    - python: "3.6"
       env: TOXENV="py36-django11"
-    - python: "2.7"
+    - python: "3.6"
       env: TOXENV="py36-django20"
     - python: "3.6"
-      env: TOXENV="py27-django11"
+      env: TOXENV="py36-django21"
+    - python: "3.6"
+      env: TOXENV="py36-django22"
 install: pip install tox
 script: tox -e $TOXENV

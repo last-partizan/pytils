@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import datetime
 from pytils import dt
 
@@ -30,29 +32,29 @@ print_(d.strftime("%d.%m.%Y (%a)"))
 # теперь на русском
 # (единственно, что нужно формат строки передавать в unicode
 # в то время, как в оригинальном strftime это обязательно str)
-print_(dt.ru_strftime(u"%d.%m.%Y (%a)", d))
+print_(dt.ru_strftime("%d.%m.%Y (%a)", d))
 # -> 15.09.2006 (пт)
 
 # %A дает полное название дня недели
-print_(dt.ru_strftime(u"%d.%m.%Y (%A)", d))
+print_(dt.ru_strftime("%d.%m.%Y (%A)", d))
 # -> 15.09.2006 (пятница)
 
 # %B -- название месяца
-print_(dt.ru_strftime(u"%d %B %Y", d))
+print_(dt.ru_strftime("%d %B %Y", d))
 # -> 15 сентябрь 2006
 
 # ru_strftime умеет правильно склонять месяц (опция inflected)
-print_(dt.ru_strftime(u"%d %B %Y", d, inflected=True))
+print_(dt.ru_strftime("%d %B %Y", d, inflected=True))
 # -> 15 сентября 2006
 
 # ... и день (опция inflected_day)
-print_(dt.ru_strftime(u"%d.%m.%Y, в %A", d, inflected_day=True))
+print_(dt.ru_strftime("%d.%m.%Y, в %A", d, inflected_day=True))
 # -> 15.09.2006, в пятницу
 
 # ... и добавлять правильный предлог (опция preposition)
-print_(dt.ru_strftime(u"%d.%m.%Y, %A", d, preposition=True))
+print_(dt.ru_strftime("%d.%m.%Y, %A", d, preposition=True))
 # -> 15.09.2006, в пятницу
 
 # второй параметр можно не передавать, будет использована текущая дата
-print_(dt.ru_strftime(u"%d %B %Y", inflected=True))
+print_(dt.ru_strftime("%d %B %Y", inflected=True))
 # ->> 1 декабря 2013

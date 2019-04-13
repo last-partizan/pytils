@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
 import subprocess
 import sys
 import os
@@ -57,7 +59,7 @@ class ExampleFileTestSuite(object):
             "%r is not text type (not a unicode for Py2.x, not a str for Py3.x" % self.expected_output[0]
  
     def test_cases(self):
-        return range(len(self.real_output))
+        return list(range(len(self.real_output)))
 
     def run_test(self, name, i):
         assert name == self.name

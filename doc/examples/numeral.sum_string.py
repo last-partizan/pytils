@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from pytils import numeral
 
 def print_(s):
@@ -27,13 +29,13 @@ def print_(s):
 # 3) items, варианты названий объекта (необязательно),
 #    правила аналогичны таковым у choose_plural
 
-print_(numeral.sum_string(3, numeral.MALE, (u"носок", u"носка", u"носков")))
+print_(numeral.sum_string(3, numeral.MALE, ("носок", "носка", "носков")))
 #-> три носка
 
-print_(numeral.sum_string(5, numeral.FEMALE, (u"коробка", u"коробки", u"коробок")))
+print_(numeral.sum_string(5, numeral.FEMALE, ("коробка", "коробки", "коробок")))
 #-> пять коробок
 
-print_(numeral.sum_string(21, numeral.NEUTER, (u"очко", u"очка", u"очков")))
+print_(numeral.sum_string(21, numeral.NEUTER, ("очко", "очка", "очков")))
 #-> двадцать одно очко
 
 # если варианты не указывать, то действие функции аналогично дейтсвию in_words
