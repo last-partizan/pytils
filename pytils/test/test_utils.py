@@ -3,13 +3,11 @@
 Unit-tests for pytils.utils
 """
 
-from __future__ import unicode_literals
 import unittest
 import pytils
 import decimal
 
     
-
 class ChecksTestCase(unittest.TestCase):
     """
     Test case for check_* utils

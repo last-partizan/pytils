@@ -2,7 +2,6 @@
 """
 Pytils templatetags for Django web-framework
 """
-from __future__ import unicode_literals
 
 # Если отладка, то показываем 'unknown+сообщение об ошибке'.
 # Если отладка выключена, то можно чтобы при ошибках показывалось

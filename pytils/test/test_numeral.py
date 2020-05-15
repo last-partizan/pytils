@@ -3,17 +3,9 @@
 Unit-tests for pytils.numeral
 """
 
-from __future__ import unicode_literals
 import unittest
 import decimal
 import pytils
-
-# Python3 doesn't have long type
-# it has only int
-from pytils.third import six
-
-if six.PY3:
-    long = int
 
 
 class ChoosePluralTestCase(unittest.TestCase):
@@ -44,7 +36,6 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(5, "гвоздей")
         self.checkChoosePlural(11, "гвоздей")
         self.checkChoosePlural(109, "гвоздей")
-        self.checkChoosePlural(long(109), "гвоздей")
 
     def testChoosePluralNegativeBug9(self):
         """
@@ -186,8 +177,6 @@ class RublesTestCase(unittest.TestCase):
                           "три рубля")
         self.assertEqual(pytils.numeral.rubles(3, True),
                           "три рубля ноль копеек")
-        self.assertEqual(pytils.numeral.rubles(long(3)),
-                          "три рубля")
 
     def testRublesDecimal(self):
         """
@@ -231,7 +220,6 @@ class InWordsTestCase(unittest.TestCase):
                           "три тысячи пятьсот")
         self.assertEqual(pytils.numeral.in_words_int(5231000),
                           "пять миллионов двести тридцать одна тысяча")
-        self.assertEqual(pytils.numeral.in_words_int(long(10)), "десять")
 
     def testIntExceptions(self):
         """
@@ -292,8 +280,6 @@ class InWordsTestCase(unittest.TestCase):
                           "двадцать одна целая ноль десятых")
         self.assertEqual(pytils.numeral.in_words(21.0, 3),
                           "двадцать одна целая ноль десятых")
-        self.assertEqual(pytils.numeral.in_words(long(21), 1),
-                          "двадцать один")
 
     def testWithGender(self):
         """
@@ -312,8 +298,6 @@ class InWordsTestCase(unittest.TestCase):
                           "двадцать одна целая ноль десятых")
         self.assertEqual(pytils.numeral.in_words(21.0, pytils.numeral.NEUTER),
                           "двадцать одна целая ноль десятых")
-        self.assertEqual(pytils.numeral.in_words(long(21), pytils.numeral.MALE),
-                          "двадцать один")
 
 
     def testCommon(self):
@@ -338,7 +322,6 @@ class InWordsTestCase(unittest.TestCase):
                           "ноль целых одна сотая")
         self.assertEqual(pytils.numeral.in_words(0.10),
                           "ноль целых одна десятая")
-        self.assertEqual(pytils.numeral.in_words(long(10)), "десять")
         self.assertEqual(pytils.numeral.in_words(D("2.25")),
                           "две целых двадцать пять сотых")
         self.assertEqual(pytils.numeral.in_words(D("0.01")),
@@ -415,8 +398,6 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemaleOldStyle(2, "две шляпки")
         self.ckFemaleOldStyle(31, "тридцать одна шляпка")
         
-        self.ckFemaleOldStyle(long(31), "тридцать одна шляпка")
-
         self.assertEqual("одиннадцать негритят",
                           pytils.numeral.sum_string(
                               11,
@@ -434,8 +415,6 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemale(10, "десять шляпок")
         self.ckFemale(2, "две шляпки")
         self.ckFemale(31, "тридцать одна шляпка")
-        
-        self.ckFemale(long(31), "тридцать одна шляпка")
 
         self.assertEqual("одиннадцать негритят",
                           pytils.numeral.sum_string(

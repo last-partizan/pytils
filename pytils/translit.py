@@ -4,10 +4,7 @@
 Simple transliteration
 """
 
-from __future__ import unicode_literals
-
 import re
-from pytils.third import six
 
 TRANSTABLE = (
         ("'", "'"),
@@ -175,10 +172,10 @@ def detranslify(in_string):
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:
-        russian = six.text_type(in_string)
+        russian = str(in_string)
     except UnicodeDecodeError:
-        raise ValueError("We expects if in_string is 8-bit string," + \
-                         "then it consists only ASCII chars, but now it doesn't. " + \
+        raise ValueError("We expects if in_string is 8-bit string," +
+                         "then it consists only ASCII chars, but now it doesn't. " +
                          "Use unicode in this case.")
 
     for symb_out, symb_in in TRANSTABLE:
@@ -202,17 +199,17 @@ def slugify(in_string):
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:
-        u_in_string = six.text_type(in_string).lower()
+        u_in_string = str(in_string).lower()
     except UnicodeDecodeError:
-        raise ValueError("We expects when in_string is str type," + \
-                         "it is an ascii, but now it isn't. Use unicode " + \
+        raise ValueError("We expects when in_string is str type," +
+                         "it is an ascii, but now it isn't. Use unicode " +
                          "in this case.")
     # convert & to "and"
-    u_in_string = re.sub(r'\&amp\;|\&', ' and ', u_in_string)
+    u_in_string = re.sub(r'&amp;|&', ' and ', u_in_string)
     # replace spaces by hyphen
     u_in_string = re.sub(r'[-\s]+', '-', u_in_string)
     # remove symbols that not in alphabet
-    u_in_string = ''.join([symb for symb in u_in_string if symb in ALPHABET])
+    u_in_string = ''.join(symb for symb in u_in_string if symb in ALPHABET)
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha

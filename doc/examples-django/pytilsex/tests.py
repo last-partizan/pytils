@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import unicode_literals
 from django.urls import reverse
 from django.test import TestCase
 from django.test.client import Client

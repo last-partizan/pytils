@@ -3,7 +3,6 @@
 Unit tests for pytils' dt templatetags for Django web framework
 """
 
-from __future__ import unicode_literals
 import datetime
 from pytils.test.templatetags import helpers
 

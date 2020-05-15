@@ -3,7 +3,6 @@
 Unit tests for pytils' templatetags common things
 """
 
-from __future__ import unicode_literals
 import unittest
 
 from pytils import templatetags as tt

@@ -4,12 +4,10 @@
 Russian dates without locales
 """
 
-from __future__ import unicode_literals
 import datetime
 
 from pytils import numeral
 from pytils.utils import check_positive
-from pytils.third import six
 
 DAY_ALTERNATIVES = {
     1: ("вчера", "завтра"),
@@ -214,21 +212,11 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False,
     # for russian typography standard,
     # 1 April 2007, but 01.04.2007
     if '%b' in format or '%B' in format:
-        format = format.replace('%d', six.text_type(date.day))
+        format = format.replace('%d', str(date.day))
 
     format = format.replace('%a', prepos+DAY_NAMES[weekday][0])
     format = format.replace('%A', prepos+DAY_NAMES[weekday][day_idx])
     format = format.replace('%b', MONTH_NAMES[date.month-1][0])
     format = format.replace('%B', MONTH_NAMES[date.month-1][month_idx])
 
-    # Python 2: strftime's argument must be str
-    # Python 3: strftime's argument str, not a bitestring
-    if six.PY2:
-        # strftime must be str, so encode it to utf8:
-        s_format = format.encode("utf-8")
-        s_res = date.strftime(s_format)
-        # and back to unicode
-        u_res = s_res.decode("utf-8")
-    else:
-        u_res = date.strftime(format)
-    return u_res
+    return date.strftime(format)

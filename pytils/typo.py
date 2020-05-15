@@ -4,12 +4,9 @@
 Russian typography
 """
 
-from __future__ import unicode_literals
 import re
 import os
 import collections
-
-from pytils.third import six
 
 
 def _sub_patterns(patterns, text):
@@ -170,7 +167,7 @@ def _get_rule_by_name(name):
     return rule
 
 def _resolve_rule_name(rule_or_name, forced_name=None):
-    if isinstance(rule_or_name, six.string_types):
+    if isinstance(rule_or_name, str):
         # got name
         name = rule_or_name
         rule = _get_rule_by_name(name)
@@ -241,7 +238,7 @@ class Typography(object):
                 expanded_args += list(arg)
             elif isinstance(arg, dict):
                 expanded_kwargs.update(arg)
-            elif isinstance(arg, six.string_types) or isinstance(arg, collections.Callable):
+            elif isinstance(arg, str) or isinstance(arg, collections.Callable):
                 expanded_args.append(arg)
             else:
                 raise TypeError(
@@ -249,7 +246,7 @@ class Typography(object):
                     " dict, str or callable, not %s" %
                     (arg, type(arg).__name__))
         for kw, arg in list(kwargs.items()):
-            if isinstance(arg, six.string_types) or isinstance(arg, collections.Callable):
+            if isinstance(arg, str) or isinstance(arg, collections.Callable):
                 expanded_kwargs[kw] = arg
             else:
                 raise TypeError(

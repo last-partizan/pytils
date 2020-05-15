@@ -3,7 +3,6 @@
 Unit tests for pytils' translit templatetags for Django web framework
 """
 
-from __future__ import unicode_literals
 from pytils.test.templatetags import helpers
 
 class TranslitDefaultTestCase(helpers.TemplateTagTestCase):

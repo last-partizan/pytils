@@ -3,7 +3,6 @@
 Helpers for templatetags' unit tests in Django webframework
 """
 
-from __future__ import unicode_literals
 from django.conf import settings
 from django.utils.encoding import smart_str
 

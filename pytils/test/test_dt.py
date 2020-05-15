@@ -3,7 +3,6 @@
 Unit-tests for pytils.dt
 """
 
-from __future__ import unicode_literals
 import datetime
 import time
 import unittest

@@ -3,7 +3,6 @@
 Unit-tests for pytils.typo
 """
 
-from __future__ import unicode_literals
 import unittest
 import os
 from pytils import typo

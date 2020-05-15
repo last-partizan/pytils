@@ -3,10 +3,9 @@
 Unit-tests for pytils.translit
 """
 
-from __future__ import unicode_literals
 import unittest
 import pytils
-from pytils.third import six
+
 
 class TranslitTestCase(unittest.TestCase):
     """
@@ -57,14 +56,6 @@ class TranslitTestCase(unittest.TestCase):
         self.ckDetransl('SCHuka', "Щука")
         self.ckDetransl('Schuka', "Щука")
 
-    def testDetransliterationExceptions(self):
-        """
-        Unit-test for testing detranslify's exceptions
-        """
-        # for Python 2.x non-unicode detranslify should raise exception
-        if six.PY2:
-            self.assertRaises(ValueError, pytils.translit.detranslify, "тест".encode('utf8'))
-
     def testSlug(self):
         """
         Unit-test for slugs
@@ -73,14 +64,6 @@ class TranslitTestCase(unittest.TestCase):
         self.ckSlug("Проверка связи", 'proverka-svyazi')
         self.ckSlug("me&you", 'me-and-you')
         self.ckSlug("и еще один тест", 'i-esche-odin-test')
-
-    def testSlugExceptions(self):
-        """
-        Unit-test for testing slugify's exceptions
-        """
-        # for Python 2.x non-unicode slugify should raise exception
-        if six.PY2:
-            self.assertRaises(ValueError, pytils.translit.slugify, "тест".encode('utf8'))
 
     def testTranslifyAdditionalUnicodeSymbols(self):
         """

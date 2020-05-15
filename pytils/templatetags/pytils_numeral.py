@@ -8,14 +8,8 @@ from django import template, conf
 
 from pytils import numeral
 from pytils.templatetags import init_defaults
-from pytils.third import six
 
-try:
-    # Django 1.4+
-    from django.utils.encoding import smart_text
-except ImportError:
-    from django.utils.encoding import smart_unicode
-    smart_text = smart_unicode
+from django.utils.encoding import smart_text
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -39,7 +33,7 @@ def choose_plural(amount, variants):
         {{ some_int|choose_plural:"пример,примера,примеров" }}
     """
     try:
-        if isinstance(variants, six.string_types):
+        if isinstance(variants, str):
             uvariants = smart_text(variants, encoding)
         else:
             uvariants = [smart_text(v, encoding) for v in variants]
@@ -66,7 +60,7 @@ def get_plural(amount, variants):
         {{ some_int|get_plural:"пример,примера,примеров,нет примеров" }}
     """
     try:
-        if isinstance(variants, six.string_types):
+        if isinstance(variants, str):
             uvariants = smart_text(variants, encoding)
         else:
             uvariants = [smart_text(v, encoding) for v in variants]
@@ -130,7 +124,7 @@ def sum_string(amount, gender, items):
         {% sum_string some_other_int FEMALE "задача,задачи,задач" %}
     """
     try:
-        if isinstance(items, six.string_types):
+        if isinstance(items, str):
             uitems = smart_text(items, encoding, default_uvalue)
         else:
             uitems = [smart_text(i, encoding) for i in items]
