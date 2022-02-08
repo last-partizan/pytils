@@ -11,9 +11,10 @@ from pytils.templatetags import init_defaults
 try:
     # Django 3+
     from django.utils.encoding import smart_unicode
+    smart_text = smart_str
 except ImportError:
     from django.utils.encoding import smart_str
-    smart_text = smart_unicode
+    smart_text = smart_str
 
 register = template.Library()  #: Django template tag/filter registrator
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
