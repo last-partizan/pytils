@@ -9,10 +9,10 @@ from pytils import translit
 from pytils.templatetags import init_defaults
 
 try:
-    # Django 1.4+
-    from django.utils.encoding import smart_text
-except ImportError:
+    # Django 3+
     from django.utils.encoding import smart_unicode
+except ImportError:
+    from django.utils.encoding import smart_str
     smart_text = smart_unicode
 
 register = template.Library()  #: Django template tag/filter registrator
