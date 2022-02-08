@@ -12,10 +12,10 @@ from pytils.third import six
 
 try:
     # Django 1.4+
-    from django.utils.encoding import smart_text
-except ImportError:
     from django.utils.encoding import smart_unicode
-    smart_text = smart_unicode
+except ImportError:
+    from django.utils.encoding import smart_str
+    smart_text = smart_str
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
