@@ -6,7 +6,6 @@ Plural forms and in-word representation for numerals.
 from __future__ import division
 from decimal import Decimal
 from pytils.utils import check_positive, check_length, split_values
-from pytils.third import six
 
 FRACTIONS = (
     (u"десятая", u"десятых", u"десятых"),
@@ -91,7 +90,7 @@ def _get_float_remainder(fvalue, signs=9):
     @raise ValueError: signs overflow
     """
     check_positive(fvalue)
-    if isinstance(fvalue, six.integer_types):
+    if isinstance(fvalue, int):
         return "0"
     if isinstance(fvalue, Decimal) and fvalue.as_tuple()[2] == 0:
         # Decimal.as_tuple() -> (sign, digit_tuple, exponent)
@@ -141,7 +140,7 @@ def choose_plural(amount, variants):
     @raise ValueError: variants' length lesser than 3
     """
     
-    if isinstance(variants, six.text_type):
+    if isinstance(variants, str):
         variants = split_values(variants)
     check_length(variants, 3)
     amount = abs(amount)
@@ -198,7 +197,7 @@ def _get_plural_legacy(amount, extra_variants):
     @rtype: C{unicode}
     """
     absence = None
-    if isinstance(extra_variants, six.text_type):
+    if isinstance(extra_variants, str):
         extra_variants = split_values(extra_variants)
     if len(extra_variants) == 4:
         variants = extra_variants[:3]
@@ -260,6 +259,7 @@ def in_words_int(amount, gender=MALE):
 
     return sum_string(amount, gender)
 
+
 def in_words_float(amount, _gender=FEMALE):
     """
     Float in words
@@ -312,7 +312,7 @@ def in_words(amount, gender=None):
     else:
         args = (amount, gender)
     # если целое
-    if isinstance(amount, six.integer_types):
+    if isinstance(amount, int):
         return in_words_int(*args)
     # если дробное
     elif isinstance(amount, (float, Decimal)):
@@ -347,7 +347,7 @@ def sum_string(amount, gender, items=None):
     @raise ValueError: amount bigger than 10**11
     @raise ValueError: amount is negative
     """
-    if isinstance(items, six.text_type):
+    if isinstance(items, str):
         items = split_values(items)
     if items is None:
         items = (u"", u"", u"")

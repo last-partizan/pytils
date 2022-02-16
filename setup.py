@@ -12,7 +12,7 @@ if use_setuptools:
 else:
     from distutils.core import setup
 
-version = "0.3.1"
+version = "0.4"
 
 setup_data = {
       'name': 'pytils',
@@ -24,7 +24,7 @@ setup_data = {
       'long_description': """Simple tools for processing strings in russian
 (choose proper form for plurals, in-words representation of numerals,
 dates in russian without locales, transliteration, etc)""",
-      'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags', 'pytils.third'],
+      'packages': ['pytils', 'pytils.templatetags', 'pytils.test', 'pytils.test.templatetags'],
       'license': "MIT",
       'platforms': "All",
       'classifiers': [
@@ -35,6 +35,10 @@ dates in russian without locales, transliteration, etc)""",
           'Programming Language :: Python',
           'Programming Language :: Python :: 3',
           'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
+          'Programming Language :: Python :: 3.9',
+          'Programming Language :: Python :: 3.10',
           'Natural Language :: Russian',
           'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',

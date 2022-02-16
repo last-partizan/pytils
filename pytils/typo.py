@@ -6,6 +6,7 @@ Russian typography
 import re
 import os
 
+
 def _sub_patterns(patterns, text):
     """
     Apply re.sub to bunch of (pattern, repl)
@@ -14,7 +15,8 @@ def _sub_patterns(patterns, text):
         text = re.sub(pattern, repl, text)
     return text
 
-## ---------- rules -------------
+
+# ---------- rules -------------
 # rules is a regular function,
 # name convention is rl_RULENAME
 def rl_testrule(x):
@@ -22,6 +24,7 @@ def rl_testrule(x):
     Rule for tests. Do nothing.
     """
     return x
+
 
 def rl_cleanspaces(x):
     """
@@ -43,6 +46,7 @@ def rl_cleanspaces(x):
         for line in _sub_patterns(patterns, x).split(os.linesep)
     )
 
+
 def rl_ellipsis(x):
     """
     Replace three dots to ellipsis
@@ -60,6 +64,7 @@ def rl_ellipsis(x):
     )
     return _sub_patterns(patterns, x)
 
+
 def rl_initials(x):
     """
     Replace space between initials and surname by thin space
@@ -69,6 +74,7 @@ def rl_initials(x):
         u'\\1.\\2.\u2009\\3',
         x
     )
+
 
 def rl_dashes(x):
     """
@@ -82,6 +88,7 @@ def rl_dashes(x):
         # TODO: а что с минусом?
     )
     return _sub_patterns(patterns, x)
+
 
 def rl_wordglue(x):
     """
@@ -99,6 +106,7 @@ def rl_wordglue(x):
         (re.compile(u'([^\\s]+)\\s+([^\\s]+)$', re.UNICODE), u'\\1\u202f\\2'),
     )
     return _sub_patterns(patterns, x)
+
 
 def rl_marks(x):
     """
@@ -131,6 +139,7 @@ def rl_marks(x):
         x = x.replace(what, to)
     return _sub_patterns(patterns, x)
 
+
 def rl_quotes(x):
     """
     Replace quotes by typographic quotes
@@ -151,8 +160,9 @@ def rl_quotes(x):
     return _sub_patterns(patterns, x)
     
 
-## -------- rules end ----------
+# -------- rules end ----------
 STANDARD_RULES = ('cleanspaces', 'ellipsis', 'initials', 'marks', 'dashes', 'wordglue', 'quotes')
+
 
 def _get_rule_by_name(name):
 
@@ -162,6 +172,7 @@ def _get_rule_by_name(name):
     if not callable(rule):
         raise ValueError("Rule with name %s is not callable" % name)
     return rule
+
 
 def _resolve_rule_name(rule_or_name, forced_name=None):
     if isinstance(rule_or_name, str):
@@ -183,6 +194,7 @@ def _resolve_rule_name(rule_or_name, forced_name=None):
     if forced_name is not None:
         name = forced_name
     return name, rule
+
 
 class Typography(object):
     """
@@ -274,9 +286,11 @@ class Typography(object):
     def __call__(self, text):
         return self.apply(text)
 
+
 def typography(text):
     t = Typography(STANDARD_RULES)
     return t.apply(text)
+
 
 if __name__ == '__main__':
     from pytils.test import run_tests_from_module, test_typo
