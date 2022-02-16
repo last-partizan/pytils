@@ -10,12 +10,7 @@ def print_(s):
     # но если это неинтерактивный вывод
     # (например, использования модуля subprocess)
     # то для Py2.x нужно использовать перекодировку в utf-8
-    from pytils.third import six
-    if six.PY3:
-        out = s
-    else:
-        out = s.encode('UTF-8')
-    print(out)
+    print(s)
 
 
 # действие ru_strftime аналогично оригинальному strftime

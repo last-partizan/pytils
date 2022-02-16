@@ -4,7 +4,7 @@ import time
 import datetime
 import sys
 
-from django.conf.urls import url
+from django.urls import path
 
 from django.views.generic.base import TemplateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -82,10 +82,10 @@ class IndexView(TemplateView):
 
 
 urlpatterns = [
-    url(r'^dt/', DtView.as_view(), name='pytils_dt_example'),
-    url(r'^numeral/', NumeralView.as_view(), name='pytils_numeral_example'),
-    url(r'^translit/', TranslitView.as_view(), name='pytils_translit_example'),
-    url(r'^$', IndexView.as_view(), name='pytils_example'),
+    path('dt/', DtView.as_view(), name='pytils_dt_example'),
+    path('numeral/', NumeralView.as_view(), name='pytils_numeral_example'),
+    path('translit/', TranslitView.as_view(), name='pytils_translit_example'),
+    path('', IndexView.as_view(), name='pytils_example'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -3,11 +3,11 @@
 Unit tests for pytils' templatetags common things
 """
 
-import unittest
+from django.test import TestCase
+from ....pytils import templatetags as tt
 
-from pytils import templatetags as tt
 
-class TemplateTagsCommonsTestCase(unittest.TestCase):
+class TemplateTagsCommonsTestCase(TestCase):
     
     def testInitDefaults(self):
         """
@@ -18,6 +18,3 @@ class TemplateTagsCommonsTestCase(unittest.TestCase):
         self.assertEquals(tt.init_defaults(debug=True, show_value=False), ('unknown: %(error)s', u'unknown: %(error)s'))
         self.assertEquals(tt.init_defaults(debug=True, show_value=True), ('unknown: %(error)s', u'unknown: %(error)s'))
 
-
-if __name__ == '__main__':
-    unittest.main()

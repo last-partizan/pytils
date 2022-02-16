@@ -5,6 +5,7 @@ from django.test.client import Client
 
 from pytils import VERSION as pytils_version
 
+
 class ExamplesTestCase(TestCase):
 
     def setUp(self):

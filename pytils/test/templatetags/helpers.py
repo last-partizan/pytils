@@ -18,13 +18,10 @@ settings.configure(
 
 from django import template
 from django.template import loader
-
-import unittest
-
+from django.test import TestCase
 
 
-
-class TemplateTagTestCase(unittest.TestCase):
+class TemplateTagTestCase(TestCase):
     """
     TestCase for testing template tags and filters
     """

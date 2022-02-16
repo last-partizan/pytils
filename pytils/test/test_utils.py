@@ -7,7 +7,6 @@ import unittest
 import pytils
 import decimal
 
-    
 
 class ChecksTestCase(unittest.TestCase):
     """

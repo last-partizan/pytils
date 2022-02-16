@@ -3,7 +3,7 @@
 Unit tests for pytils' numeral templatetags for Django web framework
 """
 
-from pytils.test.templatetags import helpers
+from . import helpers
 
 
 class NumeralDefaultTestCase(helpers.TemplateTagTestCase):
@@ -70,8 +70,4 @@ class NumeralDefaultTestCase(helpers.TemplateTagTestCase):
             {'val': 1},
             u'')
 
-
-if __name__ == '__main__':
-    import unittest
-    unittest.main()
 

@@ -7,8 +7,10 @@ import unittest
 import os
 from pytils import typo
 
+
 def cb_testrule(x):
     return x
+
 
 class HelpersTestCase(unittest.TestCase):
     """
@@ -231,8 +233,8 @@ class RulesTestCase(unittest.TestCase):
             u"... Дааааа",
             u"…Дааааа"
         )
-        
-    
+
+
     def testInitials(self):
         """
         Unit-test for initials rule

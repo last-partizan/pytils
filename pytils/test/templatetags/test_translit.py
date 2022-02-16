@@ -3,7 +3,8 @@
 Unit tests for pytils' translit templatetags for Django web framework
 """
 
-from pytils.test.templatetags import helpers
+from . import helpers
+
 
 class TranslitDefaultTestCase(helpers.TemplateTagTestCase):
     
@@ -28,7 +29,3 @@ class TranslitDefaultTestCase(helpers.TemplateTagTestCase):
             {'val': 'Проверка связи'},
             u'proverka-svyazi')
 
-
-if __name__ == '__main__':
-    import unittest
-    unittest.main()

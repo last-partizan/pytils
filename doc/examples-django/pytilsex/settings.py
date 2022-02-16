@@ -3,6 +3,7 @@
 # find current path
 import os
 CURRPATH = os.path.dirname(os.path.normpath(os.path.abspath(__file__)))
+BASE_DIR = CURRPATH
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -64,18 +65,18 @@ ROOT_URLCONF = 'urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(CURRPATH, 'templates')],
     },
 ]
 
 
 INSTALLED_APPS = (
-    'django_nose',
+    # 'django_nose',
     # -- install pytils
     'pytils',
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # is value will shown at error in pytils (default - False)
 # PYTILS_SHOW_VALUES_ON_ERROR = True

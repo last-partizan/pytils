@@ -4,7 +4,8 @@ Unit tests for pytils' dt templatetags for Django web framework
 """
 
 import datetime
-from pytils.test.templatetags import helpers
+from . import helpers
+
 
 class DtDefaultTestCase(helpers.TemplateTagTestCase):
     
@@ -50,7 +51,3 @@ class DtDefaultTestCase(helpers.TemplateTagTestCase):
             u'{% load pytils_dt %}{{ val|ru_strftime:"%d %B %Y" }}',
             {'val': 1},
             u'')
-
-if __name__ == '__main__':
-    import unittest
-    unittest.main()

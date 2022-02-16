@@ -9,6 +9,7 @@ import unittest
 
 import pytils
 
+
 class DistanceOfTimeInWordsTestCase(unittest.TestCase):
     """
     Test case for pytils.dt.distance_of_time_in_words
@@ -387,7 +388,7 @@ class RuStrftimeTestCase(unittest.TestCase):
                 date=datetime.datetime.fromtimestamp(1540209256)
             ),
         )
-        
+
 
 if __name__ == '__main__':
     unittest.main()
