@@ -2,26 +2,37 @@
 """
 Helpers for templatetags' unit tests in Django webframework
 """
-
+import django
 from django.conf import settings
 from django.utils.encoding import smart_str
 
 encoding = 'utf-8'
 
 settings.configure(
-    TEMPLATE_DIRS=(),
-    TEMPLATE_CONTEXT_PROCESSORS=(),
-    TEMPLATE_LOADERS=(),
+    TEMPLATES=[
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+        },
+    ],
+    DATABASES={
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'mydatabase',
+        }
+    },
     INSTALLED_APPS=('pytils',),
     DEFAULT_CHARSET=encoding,
 )
+django.setup()
 
 from django import template
 from django.template import loader
-from django.test import TestCase
+from django.template import Context, Template
+import unittest
 
 
-class TemplateTagTestCase(TestCase):
+class TemplateTagTestCase(unittest.TestCase):
     """
     TestCase for testing template tags and filters
     """
@@ -42,11 +53,14 @@ class TemplateTagTestCase(TestCase):
         @type result_string: C{str} or C{unicode}
         """
         
-        def test_template_loader(template_name, template_dirs=None):
-            return smart_str(template_string), template_name
-        
-        loader.template_source_loaders = [test_template_loader,]
-        
-        output = loader.get_template(template_name).render(template.Context(context))
+        # def test_template_loader(template_name, template_dirs=None):
+        #     return smart_str(template_string), template_name
+        #
+        # loader.template_source_loaders = [test_template_loader,]
+        #
+        # output = loader.get_template(template_name).render(template.Context(context))
+        t = Template(template_string)
+        c = Context(context)
+        output = t.render(c)
         self.assertEquals(output, result_string)
 

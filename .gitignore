@@ -5,3 +5,4 @@
 /pyproject.toml
 /poetry.lock
 .idea
+/mydatabase

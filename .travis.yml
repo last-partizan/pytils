@@ -6,8 +6,8 @@ python:
   - "3.9"
   - "3.10"
 env:
-  # - TOXENV="py36-django32"
-  # - TOXENV="py37-django32"
+   - TOXENV="py36-django32"
+   - TOXENV="py37-django32"
   - TOXENV="py38-django32"
   - TOXENV="py39-django32"
   - TOXENV="py38-django40"
@@ -15,10 +15,10 @@ env:
   - TOXENV="py310-django40"
 matrix:
   exclude:
-    # - python: "3.6"
-    #  env: TOXENV="py36-django32"
-    # - python: "3.7"
-    #  env: TOXENV="py37-django32"
+     - python: "3.6"
+      env: TOXENV="py36-django32"
+     - python: "3.7"
+      env: TOXENV="py37-django32"
     - python: "3.8"
       env: TOXENV="py38-django32"
     - python: "3.9"
