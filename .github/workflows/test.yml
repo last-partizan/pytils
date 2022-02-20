@@ -1,0 +1,29 @@
+# Docs:
+#  - https://docs.github.com/en/actions/guides/about-service-containers
+name: CI
+on: [push, pull_request]
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python:
+          - "2.7"
+          - "3.6"
+        django:
+          - "1.1"
+          - "2.0"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Set up env
+        run: |
+          python -m pip install -q tox tox-gh-actions
+      - name: Run tests
+        run: |
+          tox
