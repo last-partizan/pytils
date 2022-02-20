@@ -70,12 +70,10 @@ TEMPLATES = [
 
 
 INSTALLED_APPS = (
-    # 'django_nose',
     # -- install pytils
     'pytils',
 )
 
-# TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # is value will shown at error in pytils (default - False)
 # PYTILS_SHOW_VALUES_ON_ERROR = True
