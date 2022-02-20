@@ -2,34 +2,11 @@
 """
 Helpers for templatetags' unit tests in Django webframework
 """
-import django
-from django.conf import settings
-#
-#
-# settings.configure(
-#     TEMPLATES=[
-#         {
-#             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-#             'DIRS': [],
-#         },
-#     ],
-#     DATABASES={
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': 'mydatabase',
-#         }
-#     },
-#     INSTALLED_APPS=('pytils',),
-# )
-# django.setup()
-
-from django import template
-from django.template import loader
 from django.template import Context, Template
-import unittest
+from django.test import TestCase
 
 
-class TemplateTagTestCase(unittest.TestCase):
+class TemplateTagTestCase(TestCase):
     """
     TestCase for testing template tags and filters
     """
@@ -49,13 +26,6 @@ class TemplateTagTestCase(unittest.TestCase):
         @param result_string: reference output
         @type result_string: C{str} or C{unicode}
         """
-        
-        # def test_template_loader(template_name, template_dirs=None):
-        #     return smart_str(template_string), template_name
-        #
-        # loader.template_source_loaders = [test_template_loader,]
-        #
-        # output = loader.get_template(template_name).render(template.Context(context))
         t = Template(template_string)
         c = Context(context)
         output = t.render(c)
