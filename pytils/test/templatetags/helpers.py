@@ -4,27 +4,24 @@ Helpers for templatetags' unit tests in Django webframework
 """
 import django
 from django.conf import settings
-from django.utils.encoding import smart_str
-
-encoding = 'utf-8'
-
-settings.configure(
-    TEMPLATES=[
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
-        },
-    ],
-    DATABASES={
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'mydatabase',
-        }
-    },
-    INSTALLED_APPS=('pytils',),
-    DEFAULT_CHARSET=encoding,
-)
-django.setup()
+#
+#
+# settings.configure(
+#     TEMPLATES=[
+#         {
+#             'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#             'DIRS': [],
+#         },
+#     ],
+#     DATABASES={
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': 'mydatabase',
+#         }
+#     },
+#     INSTALLED_APPS=('pytils',),
+# )
+# django.setup()
 
 from django import template
 from django.template import loader

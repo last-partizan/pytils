@@ -2,6 +2,6 @@
 """
 Simple processing for russian strings
 """
-VERSION = '0.3.1dev'
+VERSION = '0.4.0dev'
 
 from pytils import numeral, dt, translit, typo
