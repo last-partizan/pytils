@@ -177,8 +177,6 @@ class RublesTestCase(unittest.TestCase):
                           u"три рубля")
         self.assertEquals(pytils.numeral.rubles(3, True),
                           u"три рубля ноль копеек")
-        self.assertEquals(pytils.numeral.rubles(int(3)),
-                          u"три рубля")
 
     def testRublesDecimal(self):
         """
@@ -222,7 +220,6 @@ class InWordsTestCase(unittest.TestCase):
                           u"три тысячи пятьсот")
         self.assertEquals(pytils.numeral.in_words_int(5231000),
                           u"пять миллионов двести тридцать одна тысяча")
-        self.assertEquals(pytils.numeral.in_words_int(int(10)), u"десять")
 
     def testIntExceptions(self):
         """
@@ -283,8 +280,6 @@ class InWordsTestCase(unittest.TestCase):
                           u"двадцать одна целая ноль десятых")
         self.assertEquals(pytils.numeral.in_words(21.0, 3),
                           u"двадцать одна целая ноль десятых")
-        self.assertEquals(pytils.numeral.in_words(int(21), 1),
-                          u"двадцать один")
 
     def testWithGender(self):
         """
@@ -303,9 +298,6 @@ class InWordsTestCase(unittest.TestCase):
                           u"двадцать одна целая ноль десятых")
         self.assertEquals(pytils.numeral.in_words(21.0, pytils.numeral.NEUTER),
                           u"двадцать одна целая ноль десятых")
-        self.assertEquals(pytils.numeral.in_words(int(21), pytils.numeral.MALE),
-                          u"двадцать один")
-
 
     def testCommon(self):
         """
@@ -329,7 +321,6 @@ class InWordsTestCase(unittest.TestCase):
                           u"ноль целых одна сотая")
         self.assertEquals(pytils.numeral.in_words(0.10),
                           u"ноль целых одна десятая")
-        self.assertEquals(pytils.numeral.in_words(int(10)), u"десять")
         self.assertEquals(pytils.numeral.in_words(D("2.25")),
                           u"две целых двадцать пять сотых")
         self.assertEquals(pytils.numeral.in_words(D("0.01")),
@@ -405,8 +396,6 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemaleOldStyle(10, u"десять шляпок")
         self.ckFemaleOldStyle(2, u"две шляпки")
         self.ckFemaleOldStyle(31, u"тридцать одна шляпка")
-        
-        self.ckFemaleOldStyle(int(31), u"тридцать одна шляпка")
 
         self.assertEquals(u"одиннадцать негритят",
                           pytils.numeral.sum_string(
@@ -425,8 +414,6 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemale(10, u"десять шляпок")
         self.ckFemale(2, u"две шляпки")
         self.ckFemale(31, u"тридцать одна шляпка")
-        
-        self.ckFemale(int(31), u"тридцать одна шляпка")
 
         self.assertEquals(u"одиннадцать негритят",
                           pytils.numeral.sum_string(
