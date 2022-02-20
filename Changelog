@@ -4,7 +4,7 @@ pytils (0.4dev)
   * Remove support Django 1, 2
   * Fix test and dependency
 
- -- Yury Yurevich <the.pythy@gmail.com>  Thu, 16 Feb 2022
+ -- Artem Shkapov <temi4sh@gmail.com>  Thu, 16 Feb 2022
 
 pytils (0.3)
 

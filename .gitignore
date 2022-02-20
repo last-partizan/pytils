@@ -2,7 +2,5 @@
 *egg-info/
 .tox/
 .venv
-/pyproject.toml
-/poetry.lock
 .idea
 /mydatabase

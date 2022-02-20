@@ -2,8 +2,7 @@
 
 # find current path
 import os
-CURRPATH = os.path.dirname(os.path.normpath(os.path.abspath(__file__)))
-BASE_DIR = CURRPATH
+BASE_DIR = os.path.dirname(os.path.normpath(os.path.abspath(__file__)))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -35,7 +34,7 @@ SITE_ID = 1
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(CURRPATH, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -65,7 +64,7 @@ ROOT_URLCONF = 'urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(CURRPATH, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
     },
 ]
 

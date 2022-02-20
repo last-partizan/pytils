@@ -8,13 +8,7 @@ from django import template, conf
 from pytils import translit
 from pytils.templatetags import init_defaults
 
-try:
-    # Django 3+
-    from django.utils.encoding import smart_unicode
-    smart_text = smart_unicode
-except ImportError:
-    from django.utils.encoding import smart_str
-    smart_text = smart_str
+from django.utils.encoding import smart_str
 
 register = template.Library()  #: Django template tag/filter registrator
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
@@ -28,7 +22,7 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 def translify(text):
     """Translify russian text"""
     try:
-        res = translit.translify(smart_text(text, encoding))
+        res = translit.translify(smart_str(text, encoding))
     except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
@@ -46,7 +40,7 @@ def detranslify(text):
 def slugify(text):
     """Make slug from (russian) text"""
     try:
-        res = translit.slugify(smart_text(text, encoding))
+        res = translit.slugify(smart_str(text, encoding))
     except Exception as err:
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
