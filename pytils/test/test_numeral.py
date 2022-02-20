@@ -36,7 +36,6 @@ class ChoosePluralTestCase(unittest.TestCase):
         self.checkChoosePlural(5, u"гвоздей")
         self.checkChoosePlural(11, u"гвоздей")
         self.checkChoosePlural(109, u"гвоздей")
-        self.checkChoosePlural(int(109), u"гвоздей")
 
     def testChoosePluralNegativeBug9(self):
         """
