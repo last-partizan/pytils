@@ -10,9 +10,8 @@ setup(
     author_email='yyurevich@jellycrystal.com',
     url='https://github.com/last-partizan/pytils/',
     description='Russian-specific string utils',
-    long_description="""Simple tools for processing strings in russian
-(choose proper form for plurals, in-words representation of numerals,
-    dates in russian without locales, transliteration, etc)""",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
     packages=[
         'pytils',
         'pytils.templatetags',
