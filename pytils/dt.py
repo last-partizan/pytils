@@ -181,7 +181,7 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False,
     Russian strftime without locale
 
     @param format: strftime format, default='%d.%m.%Y'
-    @type format: str
+    @type format: C{str}
 
     @param date: date value, default=None translates to today
     @type date: C{datetime.date} or C{datetime.datetime}
@@ -197,7 +197,7 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False,
     @type preposition: C{bool}
 
     @return: strftime string
-    @rtype: str
+    @rtype: C{str}
     """
     if date is None:
         date = datetime.datetime.today()
