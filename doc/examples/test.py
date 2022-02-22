@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
 import subprocess
+import sys
+
+import pytest
 
 EXAMPLES = [
     'dt.distance_of_time_in_words.py',
@@ -63,33 +64,27 @@ class ExampleFileTestSuite(object):
             "Real output %r doesn't match to expected %r for example #%s" % (self.real_output[i], self.expected_output[i], i)
 
 
-def test_example():
+def test_python_version():
+    # check that `python something.py` will run the same version interepreter as it is running
+    import sys
+    current_version = str(sys.version_info)
+    exec_version = subprocess.check_output(
+        ['python', '-c', 'import sys; print(sys.version_info)'],
+        stderr=subprocess.STDOUT,
+    ).strip()
+    assert current_version == exec_version.decode('utf-8')
+
+
+def generate_example_tests():
     for example in EXAMPLES:
         runner = ExampleFileTestSuite(example)
         # we want to have granular test, one test case per line
         # nose show each test as "executable, arg1, arg2", that's
         # why we want pass example name again, even test runner already knows it
         for i in runner.test_cases():
-            yield runner.run_test, example, i
+            yield runner, example, i
 
 
-def assert_python_version(current_version):
-    exec_version = subprocess.check_output(
-        ['python', '-c', 'import sys; print(sys.version_info)'], stderr=subprocess.STDOUT).strip()
-    assert current_version == exec_version.decode('utf-8')
-
-
-def test_python_version():
-    # check that `python something.py` will run the same version interepreter as it is running
-    import sys
-    current_version = str(sys.version_info)
-    # do a yield to show in the test output the python version
-    yield assert_python_version, current_version
-
-
-if __name__ == '__main__':
-    import sys
-
-    import nose2
-    if not nose2.main():
-        sys.exit(1)
+@pytest.mark.parametrize("runner,name,i", generate_example_tests())
+def test_examples(runner: ExampleFileTestSuite, name: str, i: int):
+    runner.run_test(name, i)

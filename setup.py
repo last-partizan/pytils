@@ -34,6 +34,5 @@ setup(
         'Intended Audience :: Developers',
     ],
     zip_safe=True,
-    test_suite='pytils.test.get_suite',
     include_package_data=True,
 )
