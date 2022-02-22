@@ -17,19 +17,19 @@ class TranslitTestCase(unittest.TestCase):
         """
         Checks translify
         """
-        self.assertEquals(pytils.translit.translify(in_), out_)
+        self.assertEqual(pytils.translit.translify(in_), out_)
 
     def ckDetransl(self, in_, out_):
         """
         Checks detranslify
         """
-        self.assertEquals(pytils.translit.detranslify(in_), out_)
+        self.assertEqual(pytils.translit.detranslify(in_), out_)
 
     def ckSlug(self, in_, out_):
         """
         Checks slugify
         """
-        self.assertEquals(pytils.translit.slugify(in_), out_)
+        self.assertEqual(pytils.translit.slugify(in_), out_)
 
     def testTransliteration(self):
         """

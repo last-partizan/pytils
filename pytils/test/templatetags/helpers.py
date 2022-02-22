@@ -27,5 +27,5 @@ class TemplateTagTestCase(TestCase):
         t = Template(template_string)
         c = Context(context)
         output = t.render(c)
-        self.assertEquals(output, result_string)
+        self.assertEqual(output, result_string)
 

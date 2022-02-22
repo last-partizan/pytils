@@ -24,7 +24,7 @@ class ChoosePluralTestCase(unittest.TestCase):
         """
         Checks choose_plural
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.choose_plural(amount, self.variants),
             estimated
         )
@@ -62,11 +62,11 @@ class ChoosePluralTestCase(unittest.TestCase):
         """
         Tests new-style variants
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.choose_plural(1, "гвоздь,гвоздя, гвоздей"),
             "гвоздь"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.choose_plural(5, "гвоздь, гвоздя, гвоздей\, шпунтов"),
             "гвоздей, шпунтов"
         )
@@ -80,11 +80,11 @@ class GetPluralTestCase(unittest.TestCase):
         """
         Test regular get_plural
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.get_plural(1, "комментарий, комментария, комментариев"),
             "1 комментарий"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.get_plural(0, "комментарий, комментария, комментариев"),
             "0 комментариев"
         )
@@ -93,7 +93,7 @@ class GetPluralTestCase(unittest.TestCase):
         """
         Test get_plural with absence
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.get_plural(
                 1,
                 "комментарий, комментария, комментариев",
@@ -101,7 +101,7 @@ class GetPluralTestCase(unittest.TestCase):
             ),
             "1 комментарий"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.get_plural(
                 0,
                 "комментарий, комментария, комментариев",
@@ -114,19 +114,19 @@ class GetPluralTestCase(unittest.TestCase):
         """
         Test _get_plural_legacy
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_plural_legacy(1, "комментарий, комментария, комментариев"),
             "1 комментарий"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_plural_legacy(0, "комментарий, комментария, комментариев"),
             "0 комментариев"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_plural_legacy(1, "комментарий, комментария, комментариев, без комментариев"),
             "1 комментарий"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_plural_legacy(0, "комментарий, комментария, комментариев, без комментариев"),
             "без комментариев"
         )
@@ -141,27 +141,27 @@ class GetFloatRemainderTestCase(unittest.TestCase):
         """
         Unit-test for _get_float_remainder
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(1.3),
             '3'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(2.35, 1),
             '4'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(123.1234567891),
             '123456789'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(2.353, 2),
             '35'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(0.01),
             '01'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(5),
             '0'
         )
@@ -171,27 +171,27 @@ class GetFloatRemainderTestCase(unittest.TestCase):
         Unit-test for _get_float_remainder with decimal type
         """
         D = decimal.Decimal
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(D("1.3")),
             '3'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(D("2.35"), 1),
             '4'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(D("123.1234567891")),
             '123456789'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(D("2.353"), 2),
             '35'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(D("0.01")),
             '01'
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral._get_float_remainder(D("5")),
             '0'
         )
@@ -222,27 +222,27 @@ class RublesTestCase(unittest.TestCase):
         """
         Unit-test for rubles
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(10.01),
             "десять рублей одна копейка"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(10.10),
             "десять рублей десять копеек"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(2.353),
             "два рубля тридцать пять копеек"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(2.998),
             "три рубля"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(3),
             "три рубля"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(3, True),
             "три рубля ноль копеек"
         )
@@ -252,23 +252,23 @@ class RublesTestCase(unittest.TestCase):
         Test for rubles with decimal instead of float/integer
         """
         D = decimal.Decimal
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(D("10.01")),
             "десять рублей одна копейка"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(D("10.10")),
             "десять рублей десять копеек"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(D("2.35")),
             "два рубля тридцать пять копеек"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(D(3)),
             "три рубля"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.rubles(D(3), True),
             "три рубля ноль копеек"
         )
@@ -289,13 +289,13 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for in_words_int
         """
-        self.assertEquals(pytils.numeral.in_words_int(0), "ноль")
-        self.assertEquals(pytils.numeral.in_words_int(10), "десять")
-        self.assertEquals(pytils.numeral.in_words_int(5), "пять")
-        self.assertEquals(pytils.numeral.in_words_int(102), "сто два")
-        self.assertEquals(pytils.numeral.in_words_int(3521), "три тысячи пятьсот двадцать один")
-        self.assertEquals(pytils.numeral.in_words_int(3500), "три тысячи пятьсот")
-        self.assertEquals(pytils.numeral.in_words_int(5231000), "пять миллионов двести тридцать одна тысяча")
+        self.assertEqual(pytils.numeral.in_words_int(0), "ноль")
+        self.assertEqual(pytils.numeral.in_words_int(10), "десять")
+        self.assertEqual(pytils.numeral.in_words_int(5), "пять")
+        self.assertEqual(pytils.numeral.in_words_int(102), "сто два")
+        self.assertEqual(pytils.numeral.in_words_int(3521), "три тысячи пятьсот двадцать один")
+        self.assertEqual(pytils.numeral.in_words_int(3500), "три тысячи пятьсот")
+        self.assertEqual(pytils.numeral.in_words_int(5231000), "пять миллионов двести тридцать одна тысяча")
 
     def testIntExceptions(self):
         """
@@ -307,32 +307,32 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for in_words_float
         """
-        self.assertEquals(pytils.numeral.in_words_float(10.0), "десять целых ноль десятых")
-        self.assertEquals(pytils.numeral.in_words_float(2.25), "две целых двадцать пять сотых")
-        self.assertEquals(pytils.numeral.in_words_float(0.01), "ноль целых одна сотая")
-        self.assertEquals(pytils.numeral.in_words_float(0.10), "ноль целых одна десятая")
+        self.assertEqual(pytils.numeral.in_words_float(10.0), "десять целых ноль десятых")
+        self.assertEqual(pytils.numeral.in_words_float(2.25), "две целых двадцать пять сотых")
+        self.assertEqual(pytils.numeral.in_words_float(0.01), "ноль целых одна сотая")
+        self.assertEqual(pytils.numeral.in_words_float(0.10), "ноль целых одна десятая")
 
     def testDecimal(self):
         """
         Unit-test for in_words_float with decimal type
         """
         D = decimal.Decimal
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words_float(D("10.0")),
             "десять целых ноль десятых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words_float(D("2.25")),
             "две целых двадцать пять сотых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words_float(D("0.01")),
             "ноль целых одна сотая"
         )
         # поскольку это Decimal, то здесь нет незначащих нулей
         # т.е. нули определяют точность, поэтому десять сотых,
         # а не одна десятая
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words_float(D("0.10")),
             "ноль целых десять сотых"
         )
@@ -347,40 +347,40 @@ class InWordsTestCase(unittest.TestCase):
         """
         Unit-test for in_words_float with gender (old-style, i.e. ints)
         """
-        self.assertEquals(pytils.numeral.in_words(21, 1), "двадцать один")
-        self.assertEquals(pytils.numeral.in_words(21, 2), "двадцать одна")
-        self.assertEquals(pytils.numeral.in_words(21, 3), "двадцать одно")
+        self.assertEqual(pytils.numeral.in_words(21, 1), "двадцать один")
+        self.assertEqual(pytils.numeral.in_words(21, 2), "двадцать одна")
+        self.assertEqual(pytils.numeral.in_words(21, 3), "двадцать одно")
         # на дробные пол не должен влиять - всегда в женском роде
-        self.assertEquals(pytils.numeral.in_words(21.0, 1), "двадцать одна целая ноль десятых")
-        self.assertEquals(pytils.numeral.in_words(21.0, 2), "двадцать одна целая ноль десятых")
-        self.assertEquals(pytils.numeral.in_words(21.0, 3), "двадцать одна целая ноль десятых")
+        self.assertEqual(pytils.numeral.in_words(21.0, 1), "двадцать одна целая ноль десятых")
+        self.assertEqual(pytils.numeral.in_words(21.0, 2), "двадцать одна целая ноль десятых")
+        self.assertEqual(pytils.numeral.in_words(21.0, 3), "двадцать одна целая ноль десятых")
 
     def testWithGender(self):
         """
         Unit-test for in_words_float with gender (old-style, i.e. ints)
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(21, pytils.numeral.MALE),
             "двадцать один"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(21, pytils.numeral.FEMALE),
             "двадцать одна"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(21, pytils.numeral.NEUTER),
             "двадцать одно"
         )
         # на дробные пол не должен влиять - всегда в женском роде
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(21.0, pytils.numeral.MALE),
             "двадцать одна целая ноль десятых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(21.0, pytils.numeral.FEMALE),
             "двадцать одна целая ноль десятых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(21.0, pytils.numeral.NEUTER),
             "двадцать одна целая ноль десятых"
         )
@@ -390,59 +390,59 @@ class InWordsTestCase(unittest.TestCase):
         Unit-test for general in_words
         """
         D = decimal.Decimal
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(10),
             "десять"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(5),
             "пять"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(102),
             "сто два"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(3521),
             "три тысячи пятьсот двадцать один"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(3500),
             "три тысячи пятьсот"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(5231000),
             "пять миллионов двести тридцать одна тысяча"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(10.0),
             "десять целых ноль десятых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(2.25),
             "две целых двадцать пять сотых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(0.01),
             "ноль целых одна сотая"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(0.10),
             "ноль целых одна десятая"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(D("2.25")),
             "две целых двадцать пять сотых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(D("0.01")),
             "ноль целых одна сотая"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(D("0.10")),
             "ноль целых десять сотых"
         )
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.in_words(D("10")),
             "десять"
         )
@@ -471,7 +471,7 @@ class SumStringTestCase(unittest.TestCase):
         """
         Checks sum_string with male gender with old-style genders (i.e. ints)
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.sum_string(amount, 1, self.variants_male),
             estimated
         )
@@ -480,7 +480,7 @@ class SumStringTestCase(unittest.TestCase):
         """
         Checks sum_string with male gender
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.sum_string(amount, pytils.numeral.MALE, self.variants_male),
             estimated
         )
@@ -489,7 +489,7 @@ class SumStringTestCase(unittest.TestCase):
         """
         Checks sum_string with female gender wuth old-style genders (i.e. ints)
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.sum_string(amount, 2, self.variants_female),
             estimated
         )
@@ -498,7 +498,7 @@ class SumStringTestCase(unittest.TestCase):
         """
         Checks sum_string with female gender
         """
-        self.assertEquals(
+        self.assertEqual(
             pytils.numeral.sum_string(amount, pytils.numeral.FEMALE, self.variants_female),
             estimated
         )
@@ -514,7 +514,7 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemaleOldStyle(2, "две шляпки")
         self.ckFemaleOldStyle(31, "тридцать одна шляпка")
 
-        self.assertEquals(
+        self.assertEqual(
             "одиннадцать негритят",
             pytils.numeral.sum_string(11, 1, "негритенок,негритенка,негритят")
         )
@@ -530,7 +530,7 @@ class SumStringTestCase(unittest.TestCase):
         self.ckFemale(2, "две шляпки")
         self.ckFemale(31, "тридцать одна шляпка")
 
-        self.assertEquals(
+        self.assertEqual(
             "одиннадцать негритят",
             pytils.numeral.sum_string(11, pytils.numeral.MALE, "негритенок,негритенка,негритят")
         )

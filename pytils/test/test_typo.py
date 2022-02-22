@@ -21,10 +21,10 @@ class HelpersTestCase(unittest.TestCase):
         """
         unit-test for pytils.typo._get_rule_by_name
         """
-        self.assert_(
+        self.assertTrue(
             callable(typo._get_rule_by_name('testrule'))
         )
-        self.assertEquals(
+        self.assertEqual(
             'rl_testrule',
             typo._get_rule_by_name('testrule').__name__
         )
@@ -33,17 +33,17 @@ class HelpersTestCase(unittest.TestCase):
         """
         unit-test for pytils.typo._resolve_rule
         """
-        self.assert_(
+        self.assertTrue(
             callable(typo._resolve_rule_name('testrule')[1])
         )
-        self.assert_(
+        self.assertTrue(
             callable(typo._resolve_rule_name(cb_testrule)[1])
         )
-        self.assertEquals(
+        self.assertEqual(
             'testrule',
             typo._resolve_rule_name('testrule')[0]
         )
-        self.assertEquals(
+        self.assertEqual(
             'cb_testrule',
             typo._resolve_rule_name(cb_testrule)[0]
         )
@@ -52,17 +52,17 @@ class HelpersTestCase(unittest.TestCase):
         """
         unit-test for pytils.typo._resolve_rule with forced_name arg
         """
-        self.assert_(
+        self.assertTrue(
             callable(typo._resolve_rule_name('testrule', 'newrule')[1])
         )
-        self.assert_(
+        self.assertTrue(
             callable(typo._resolve_rule_name(cb_testrule, 'newrule')[1])
         )
-        self.assertEquals(
+        self.assertEqual(
             'newrule',
             typo._resolve_rule_name('testrule', 'newrule')[0]
         )
-        self.assertEquals(
+        self.assertEqual(
             'newrule',
             typo._resolve_rule_name(cb_testrule, 'newrule')[0]
         )
@@ -73,88 +73,88 @@ class TypographyApplierTestCase(unittest.TestCase):
     Test case for typography rule applier pytils.typo.Typography
     """
     def testExpandEmptyArgs(self):
-        self.assertEquals(
+        self.assertEqual(
             {},
             typo.Typography().rules
         )
-        self.assertEquals(
+        self.assertEqual(
             [],
             typo.Typography().rules_names
         )
     
     def testExpandSimpleStrArgs(self):
-        self.assertEquals(
+        self.assertEqual(
             {'testrule': typo.rl_testrule},
             typo.Typography('testrule').rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['testrule'],
             typo.Typography('testrule').rules_names
         )
     
     def testExpandDictStrArgs(self):
-        self.assertEquals(
+        self.assertEqual(
             {
                 'testrule': typo.rl_testrule,
                 'newrule':  typo.rl_testrule
             },
             typo.Typography('testrule', {'newrule': 'testrule'}).rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['testrule', 'newrule'],
             typo.Typography('testrule', {'newrule': 'testrule'}).rules_names
         )
 
     def testExpandSimpleCallableArgs(self):
-        self.assertEquals(
+        self.assertEqual(
             {'cb_testrule': cb_testrule},
             typo.Typography(cb_testrule).rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['cb_testrule'],
             typo.Typography(cb_testrule).rules_names
         )
     
     def testExpandDictCallableArgs(self):
-        self.assertEquals(
+        self.assertEqual(
             {
                 'cb_testrule': cb_testrule,
                 'newrule': cb_testrule
             },
             typo.Typography(cb_testrule, {'newrule': cb_testrule}).rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['cb_testrule', 'newrule'],
             typo.Typography(cb_testrule, {'newrule': cb_testrule}).rules_names
         )
 
     def testExpandMixedArgs(self):
-        self.assertEquals(
+        self.assertEqual(
             {
                 'cb_testrule': cb_testrule,
                 'newrule': typo.rl_testrule
             },
             typo.Typography(cb_testrule, newrule='testrule').rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['cb_testrule', 'newrule'],
             typo.Typography(cb_testrule, newrule='testrule').rules_names
         )
-        self.assertEquals(
+        self.assertEqual(
             {
                 'cb_testrule': cb_testrule,
                 'testrule': typo.rl_testrule
             },
             typo.Typography(cb_testrule, 'testrule').rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['cb_testrule', 'testrule'],
             typo.Typography(cb_testrule, 'testrule').rules_names
         )
 
     def testRecommendedArgsStyle(self):
         lambdarule = lambda x: x
-        self.assertEquals(
+        self.assertEqual(
             {
                 'cb_testrule': cb_testrule,
                 'testrule': typo.rl_testrule,
@@ -162,7 +162,7 @@ class TypographyApplierTestCase(unittest.TestCase):
             },
             typo.Typography([cb_testrule], ['testrule'], {'newrule': lambdarule}).rules
         )
-        self.assertEquals(
+        self.assertEqual(
             ['cb_testrule', 'testrule', 'newrule'],
             typo.Typography([cb_testrule], ['testrule'], {'newrule': lambdarule}).rules_names
         )
@@ -174,7 +174,7 @@ class RulesTestCase(unittest.TestCase):
         """
         Check how rule is acted on input_value with expected_result
         """
-        self.assertEquals(
+        self.assertEqual(
             expected_result,
             typo._get_rule_by_name(name)(input_value)
         )
@@ -408,7 +408,7 @@ class TypographyTestCase(unittest.TestCase):
         """
         Helper for checking typo.typography
         """
-        self.assertEquals(expected_value, typo.typography(input_value))
+        self.assertEqual(expected_value, typo.typography(input_value))
     
     def testPupkin(self):
         """

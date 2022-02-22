@@ -63,7 +63,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         # --- revert state to original value
         self.updateTime(self.time)
         # ---
-        self.assertEquals(res, estimated)
+        self.assertEqual(res, estimated)
 
     def ckDefaultTimeAndAccuracy(self, typ, estimated):
         """
@@ -78,7 +78,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         # --- revert state to original value
         self.updateTime(self.time)
         # ---
-        self.assertEquals(res, estimated)
+        self.assertEqual(res, estimated)
 
     def ckDefaultToTime(self, typ, accuracy, estimated):
         """
@@ -93,7 +93,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         # --- revert state to original value
         self.updateTime(self.time)
         # ---
-        self.assertEquals(res, estimated)
+        self.assertEqual(res, estimated)
 
     def testDOTIWDefaultAccuracy(self):
         """
@@ -156,7 +156,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
     def test4Days1MinuteDaytimeBug2(self):
         from_time = datetime.datetime.now() - datetime.timedelta(days=4, minutes=1)
         res = pytils.dt.distance_of_time_in_words(from_time)
-        self.assertEquals(res, "4 дня назад")
+        self.assertEqual(res, "4 дня назад")
 
     def testDOTIWDefaultToTimeAcc1(self):
         """
@@ -251,7 +251,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         """
         first_time = datetime.datetime.now()
         second_time = first_time + datetime.timedelta(0, 1000)
-        self.assertEquals(
+        self.assertEqual(
             pytils.dt.distance_of_time_in_words(
                 from_time=first_time,
                 accuracy=1,
@@ -271,7 +271,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         Unit-test for testing that Issue#25 is fixed (err when accuracy==1, days<>0, hours==1)
         """
         d_days = datetime.datetime.now() - datetime.timedelta(13, 3620)
-        self.assertEquals(
+        self.assertEqual(
             pytils.dt.distance_of_time_in_words(d_days),
             "13 дней назад"
         )
@@ -281,7 +281,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         Unit-test for testing that Issue#25 is fixed (err when accuracy==1, hours<>0, minutes==1)
         """
         d_hours = datetime.datetime.now() - datetime.timedelta(0, 46865)
-        self.assertEquals(
+        self.assertEqual(
             pytils.dt.distance_of_time_in_words(d_hours),
             "13 часов назад"
         )
@@ -305,7 +305,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         if date is None:
             date = self.date
         res = pytils.dt.ru_strftime(format, date)
-        self.assertEquals(res, estimates)
+        self.assertEqual(res, estimates)
 
     def ckInflected(self, format, estimates, date=None):
         """
@@ -314,7 +314,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         if date is None:
             date = self.date
         res = pytils.dt.ru_strftime(format, date, True)
-        self.assertEquals(res, estimates)
+        self.assertEqual(res, estimates)
 
     def ckInflectedDay(self, format, estimates, date=None):
         """
@@ -323,7 +323,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         if date is None:
             date = self.date
         res = pytils.dt.ru_strftime(format, date, inflected_day=True)
-        self.assertEquals(res, estimates)
+        self.assertEqual(res, estimates)
 
     def ckPreposition(self, format, estimates, date=None):
         """
@@ -332,7 +332,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         if date is None:
             date = self.date
         res = pytils.dt.ru_strftime(format, date, preposition=True)
-        self.assertEquals(res, estimates)
+        self.assertEqual(res, estimates)
 
     def testRuStrftime(self):
         """
@@ -367,7 +367,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         """
         Unit-test for testing that Issue#20 is fixed (typo)
         """
-        self.assertEquals(
+        self.assertEqual(
             "воскресенье",
             pytils.dt.ru_strftime(
                 "%A",
