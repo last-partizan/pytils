@@ -1,3 +1,6 @@
+check: build
+	twine check
+
 publish: build
 	twine upload dist/*
 
