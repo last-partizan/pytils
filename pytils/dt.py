@@ -76,7 +76,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     @type to_time: C{int}, C{float} or C{datetime.datetime}
 
     @return: distance of time in words
-    @rtype: str
+    @rtype: C{str}
 
     @raise ValueError: accuracy is lesser or equal zero
     """
