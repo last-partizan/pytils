@@ -180,7 +180,7 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False,
     """
     Russian strftime without locale
 
-    @param format: strftime format, default=u'%d.%m.%Y'
+    @param format: strftime format, default='%d.%m.%Y'
     @type format: str
 
     @param date: date value, default=None translates to today

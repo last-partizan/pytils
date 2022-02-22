@@ -367,7 +367,7 @@ def sum_string(amount, gender, items=None):
         else:
             return "ноль"
 
-    into = u''
+    into = ''
     tmp_val = amount
 
     # единицы

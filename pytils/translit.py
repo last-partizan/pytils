@@ -211,7 +211,7 @@ def slugify(in_string):
     # replace spaces by hyphen
     u_in_string = re.sub('[-\s]+', '-', u_in_string)
     # remove symbols that not in alphabet
-    u_in_string = u''.join([symb for symb in u_in_string if symb in ALPHABET])
+    u_in_string = ''.join([symb for symb in u_in_string if symb in ALPHABET])
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha
