@@ -1,4 +1,12 @@
-pytils (0.3dev)
+pytils (0.4dev)
+
+  * Fix support Django 3.2, 4
+  * Remove support Django 1, 2
+  * Fix test and dependency
+
+ -- Artem Shkapov <temi4sh@gmail.com>  Thu, 16 Feb 2022
+
+pytils (0.3)
 
   * Add typography
   * License updated to MIT

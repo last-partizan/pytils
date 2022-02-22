@@ -3,12 +3,15 @@
 Unit-tests for pytils.typo
 """
 
-import unittest
 import os
+import unittest
+
 from pytils import typo
+
 
 def cb_testrule(x):
     return x
+
 
 class HelpersTestCase(unittest.TestCase):
     """
@@ -19,9 +22,8 @@ class HelpersTestCase(unittest.TestCase):
         unit-test for pytils.typo._get_rule_by_name
         """
         self.assert_(
-            callable(
-                typo._get_rule_by_name('testrule')
-        ))
+            callable(typo._get_rule_by_name('testrule'))
+        )
         self.assertEquals(
             'rl_testrule',
             typo._get_rule_by_name('testrule').__name__
@@ -32,13 +34,11 @@ class HelpersTestCase(unittest.TestCase):
         unit-test for pytils.typo._resolve_rule
         """
         self.assert_(
-            callable(
-                typo._resolve_rule_name('testrule')[1]
-        ))
+            callable(typo._resolve_rule_name('testrule')[1])
+        )
         self.assert_(
-            callable(
-                typo._resolve_rule_name(cb_testrule)[1]
-        ))
+            callable(typo._resolve_rule_name(cb_testrule)[1])
+        )
         self.assertEquals(
             'testrule',
             typo._resolve_rule_name('testrule')[0]
@@ -53,11 +53,11 @@ class HelpersTestCase(unittest.TestCase):
         unit-test for pytils.typo._resolve_rule with forced_name arg
         """
         self.assert_(
-            callable(typo._resolve_rule_name('testrule', 'newrule')[1]
-        ))
+            callable(typo._resolve_rule_name('testrule', 'newrule')[1])
+        )
         self.assert_(
-            callable(typo._resolve_rule_name(cb_testrule, 'newrule')[1]
-        ))
+            callable(typo._resolve_rule_name(cb_testrule, 'newrule')[1])
+        )
         self.assertEquals(
             'newrule',
             typo._resolve_rule_name('testrule', 'newrule')[0]
@@ -66,6 +66,7 @@ class HelpersTestCase(unittest.TestCase):
             'newrule',
             typo._resolve_rule_name(cb_testrule, 'newrule')[0]
         )
+
 
 class TypographyApplierTestCase(unittest.TestCase):
     """
@@ -166,6 +167,7 @@ class TypographyApplierTestCase(unittest.TestCase):
             typo.Typography([cb_testrule], ['testrule'], {'newrule': lambdarule}).rules_names
         )
 
+
 class RulesTestCase(unittest.TestCase):
 
     def checkRule(self, name, input_value, expected_result):
@@ -183,28 +185,28 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'cleanspaces',
-            u" Точка ,точка , запятая, вышла рожица  кривая . ",
-            u"Точка, точка, запятая, вышла рожица кривая."
+            " Точка ,точка , запятая, вышла рожица  кривая . ",
+            "Точка, точка, запятая, вышла рожица кривая."
         )
         self.checkRule(
             'cleanspaces',
-            u" Точка ,точка , %(n)sзапятая,%(n)s вышла рожица  кривая . " % {'n': os.linesep},
-            u"Точка, точка,%(n)sзапятая,%(n)sвышла рожица кривая." % {'n': os.linesep}
+            " Точка ,точка , %(n)sзапятая,%(n)s вышла рожица  кривая . " % {'n': os.linesep},
+            "Точка, точка,%(n)sзапятая,%(n)sвышла рожица кривая." % {'n': os.linesep}
         )
         self.checkRule(
             'cleanspaces',
-            u"Газета ( ее принес мальчишка утром ) всё еще лежала на столе.",
-            u"Газета (ее принес мальчишка утром) всё еще лежала на столе.",
+            "Газета ( ее принес мальчишка утром ) всё еще лежала на столе.",
+            "Газета (ее принес мальчишка утром) всё еще лежала на столе.",
         )
         self.checkRule(
             'cleanspaces',
-            u"Газета, утром принесенная мальчишкой ( это был сосед, подзарабатывающий летом ) , всё еще лежала на столе.",
-            u"Газета, утром принесенная мальчишкой (это был сосед, подзарабатывающий летом), всё еще лежала на столе.",
+            "Газета, утром принесенная мальчишкой ( это был сосед, подзарабатывающий летом ) , всё еще лежала на столе.",
+            "Газета, утром принесенная мальчишкой (это был сосед, подзарабатывающий летом), всё еще лежала на столе.",
         )
         self.checkRule(
             'cleanspaces',
-            u"Что это?!?!",
-            u"Что это?!?!",
+            "Что это?!?!",
+            "Что это?!?!",
         )
 
     def testEllipsis(self):
@@ -213,49 +215,48 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'ellipsis',
-            u"Быть или не быть, вот в чем вопрос...%(n)s%(n)sШекспир" % {'n': os.linesep},
-            u"Быть или не быть, вот в чем вопрос…%(n)s%(n)sШекспир" % {'n': os.linesep}
+            "Быть или не быть, вот в чем вопрос...%(n)s%(n)sШекспир" % {'n': os.linesep},
+            "Быть или не быть, вот в чем вопрос…%(n)s%(n)sШекспир" % {'n': os.linesep}
         )
         self.checkRule(
             'ellipsis',
-            u"Мдя..... могло быть лучше",
-            u"Мдя..... могло быть лучше"
+            "Мдя..... могло быть лучше",
+            "Мдя..... могло быть лучше"
         )
         self.checkRule(
             'ellipsis',
-            u"...Дааааа",
-            u"…Дааааа"
+            "...Дааааа",
+            "…Дааааа"
         )
         self.checkRule(
             'ellipsis',
-            u"... Дааааа",
-            u"…Дааааа"
+            "... Дааааа",
+            "…Дааааа"
         )
-        
-    
+
     def testInitials(self):
         """
         Unit-test for initials rule
         """
         self.checkRule(
             'initials',
-            u'Председатель В.И.Иванов выступил на собрании',
-            u'Председатель В.И.\u2009Иванов выступил на собрании',
+            'Председатель В.И.Иванов выступил на собрании',
+            'Председатель В.И.\u2009Иванов выступил на собрании',
         )
         self.checkRule(
             'initials',
-            u'Председатель В.И. Иванов выступил на собрании',
-            u'Председатель В.И.\u2009Иванов выступил на собрании',
+            'Председатель В.И. Иванов выступил на собрании',
+            'Председатель В.И.\u2009Иванов выступил на собрании',
         )
         self.checkRule(
             'initials',
-            u'1. В.И.Иванов%(n)s2. С.П.Васечкин'% {'n': os.linesep},
-            u'1. В.И.\u2009Иванов%(n)s2. С.П.\u2009Васечкин' % {'n': os.linesep}
+            '1. В.И.Иванов%(n)s2. С.П.Васечкин'% {'n': os.linesep},
+            '1. В.И.\u2009Иванов%(n)s2. С.П.\u2009Васечкин' % {'n': os.linesep}
         )
         self.checkRule(
             'initials',
-            u'Комиссия в составе директора В.И.Иванова и главного бухгалтера С.П.Васечкина постановила',
-            u'Комиссия в составе директора В.И.\u2009Иванова и главного бухгалтера С.П.\u2009Васечкина постановила'
+            'Комиссия в составе директора В.И.Иванова и главного бухгалтера С.П.Васечкина постановила',
+            'Комиссия в составе директора В.И.\u2009Иванова и главного бухгалтера С.П.\u2009Васечкина постановила'
         )
 
     def testDashes(self):
@@ -264,28 +265,28 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'dashes',
-            u'- Я пошел домой... - Может останешься? - Нет, ухожу.',
-            u'\u2014 Я пошел домой... \u2014 Может останешься? \u2014 Нет, ухожу.'
+            '- Я пошел домой... - Может останешься? - Нет, ухожу.',
+            '\u2014 Я пошел домой... \u2014 Может останешься? \u2014 Нет, ухожу.'
         )
         self.checkRule(
             'dashes',
-            u'-- Я пошел домой... -- Может останешься? -- Нет, ухожу.',
-            u'\u2014 Я пошел домой... \u2014 Может останешься? \u2014 Нет, ухожу.'
+            '-- Я пошел домой... -- Может останешься? -- Нет, ухожу.',
+            '\u2014 Я пошел домой... \u2014 Может останешься? \u2014 Нет, ухожу.'
         )
         self.checkRule(
             'dashes',
-            u'-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.',
-            u'\u2014 Я\u202fпошел домой…\u202f\u2014 Может останешься?\u202f\u2014 Нет,\u202fухожу.'
+            '-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.',
+            '\u2014 Я\u202fпошел домой…\u202f\u2014 Может останешься?\u202f\u2014 Нет,\u202fухожу.'
         )
         self.checkRule(
             'dashes',
-            u'Ползать по-пластунски',
-            u'Ползать по-пластунски',
+            'Ползать по-пластунски',
+            'Ползать по-пластунски',
         )
         self.checkRule(
             'dashes',
-            u'Диапазон: 9-15',
-            u'Диапазон: 9\u201315',
+            'Диапазон: 9-15',
+            'Диапазон: 9\u201315',
         )
 
     def testWordglue(self):
@@ -294,35 +295,34 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'wordglue',
-            u'Вроде бы он согласен',
-            u'Вроде\u202fбы\u202fон\u202fсогласен',
+            'Вроде бы он согласен',
+            'Вроде\u202fбы\u202fон\u202fсогласен',
         )
         self.checkRule(
             'wordglue',
-            u'Он не поверил своим глазам',
-            u'Он\u202fне\u202fповерил своим\u202fглазам',
+            'Он не поверил своим глазам',
+            'Он\u202fне\u202fповерил своим\u202fглазам',
         )
         self.checkRule(
             'wordglue',
-            u'Это - великий и ужасный Гудвин',
-            u'Это\u202f- великий и\u202fужасный\u202fГудвин',
+            'Это - великий и ужасный Гудвин',
+            'Это\u202f- великий и\u202fужасный\u202fГудвин',
         )
         self.checkRule(
             'wordglue',
-            u'Это \u2014 великий и ужасный Гудвин',
-            u'Это\u202f\u2014 великий и\u202fужасный\u202fГудвин',
+            'Это \u2014 великий и ужасный Гудвин',
+            'Это\u202f\u2014 великий и\u202fужасный\u202fГудвин',
         )
         self.checkRule(
             'wordglue',
-            u'-- Я пошел домой… -- Может останешься? -- Нет, ухожу.',
-            u'-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.'
+            '-- Я пошел домой… -- Может останешься? -- Нет, ухожу.',
+            '-- Я\u202fпошел домой…\u202f-- Может останешься?\u202f-- Нет,\u202fухожу.'
         )
         self.checkRule(
             'wordglue',
-            u'увидел в газете (это была "Сермяжная правда" № 45) рубрику Weather Forecast',
-            u'увидел в\u202fгазете (это\u202fбыла "Сермяжная правда" № 45) рубрику Weather\u202fForecast',
+            'увидел в газете (это была "Сермяжная правда" № 45) рубрику Weather Forecast',
+            'увидел в\u202fгазете (это\u202fбыла "Сермяжная правда" № 45) рубрику Weather\u202fForecast',
         )
-        
 
     def testMarks(self):
         """
@@ -330,43 +330,43 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'marks',
-            u"Когда В. И. Пупкин увидел в газете рубрику Weather Forecast(r), он не поверил своим глазам \u2014 температуру обещали +-451F.",
-            u"Когда В. И. Пупкин увидел в газете рубрику Weather Forecast®, он не поверил своим глазам \u2014 температуру обещали ±451\u202f°F."
+            "Когда В. И. Пупкин увидел в газете рубрику Weather Forecast(r), он не поверил своим глазам \u2014 температуру обещали +-451F.",
+            "Когда В. И. Пупкин увидел в газете рубрику Weather Forecast®, он не поверил своим глазам \u2014 температуру обещали ±451\u202f°F."
         )
         self.checkRule(
             'marks',
-            u"14 Foo",
-            u"14 Foo"
+            "14 Foo",
+            "14 Foo"
         )
         self.checkRule(
             'marks',
-            u"Coca-cola(tm)",
-            u"Coca-cola™"
+            "Coca-cola(tm)",
+            "Coca-cola™"
         )
         self.checkRule(
             'marks',
-            u'(c) 2008 Юрий Юревич',
-            u'©\u202f2008 Юрий Юревич'
+            '(c) 2008 Юрий Юревич',
+            '©\u202f2008 Юрий Юревич'
         )
         self.checkRule(
             'marks',
-            u"Microsoft (R) Windows (tm)",
-            u"Microsoft® Windows™"
+            "Microsoft (R) Windows (tm)",
+            "Microsoft® Windows™"
         )
         self.checkRule(
             'marks',
-            u"Школа-гимназия No 3",
-            u"Школа-гимназия №\u20093",
+            "Школа-гимназия No 3",
+            "Школа-гимназия №\u20093",
         )
         self.checkRule(
             'marks',
-            u"Школа-гимназия No3",
-            u"Школа-гимназия №\u20093",
+            "Школа-гимназия No3",
+            "Школа-гимназия №\u20093",
         )
         self.checkRule(
             'marks',
-            u"Школа-гимназия №3",
-            u"Школа-гимназия №\u20093",
+            "Школа-гимназия №3",
+            "Школа-гимназия №\u20093",
         )
 
     def testQuotes(self):
@@ -375,29 +375,30 @@ class RulesTestCase(unittest.TestCase):
         """
         self.checkRule(
             'quotes',
-            u"ООО \"МСК \"Аско-Забота\"",
-            u"ООО «МСК «Аско-Забота»"
+            "ООО \"МСК \"Аско-Забота\"",
+            "ООО «МСК «Аско-Забота»"
         )
         self.checkRule(
             'quotes',
-            u"ООО\u202f\"МСК\u202f\"Аско-Забота\"",
-            u"ООО\u202f«МСК\u202f«Аско-Забота»"
+            "ООО\u202f\"МСК\u202f\"Аско-Забота\"",
+            "ООО\u202f«МСК\u202f«Аско-Забота»"
         )
         self.checkRule(
             'quotes',
-            u"Двигатели 'Pratt&Whitney'",
-            u"Двигатели “Pratt&Whitney”"
+            "Двигатели 'Pratt&Whitney'",
+            "Двигатели “Pratt&Whitney”"
         )
         self.checkRule(
             'quotes',
-            u"\"Вложенные \"кавычки\" - бич всех типографик\", не правда ли",
-            u"«Вложенные «кавычки» - бич всех типографик», не правда ли",
+            "\"Вложенные \"кавычки\" - бич всех типографик\", не правда ли",
+            "«Вложенные «кавычки» - бич всех типографик», не правда ли",
         )
         self.checkRule(
             'quotes',
-            u"Двигатели 'Pratt&Whitney' никогда не использовались на самолетах \"Аэрофлота\"",
-            u"Двигатели “Pratt&Whitney” никогда не использовались на самолетах «Аэрофлота»"
+            "Двигатели 'Pratt&Whitney' никогда не использовались на самолетах \"Аэрофлота\"",
+            "Двигатели “Pratt&Whitney” никогда не использовались на самолетах «Аэрофлота»"
         )
+
 
 class TypographyTestCase(unittest.TestCase):
     """
@@ -414,8 +415,9 @@ class TypographyTestCase(unittest.TestCase):
         Unit-test on pupkin-text
         """
         self.checkTypo(
-        u"""...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F.""",
-        u"""…Когда В.И.\u2009Пупкин увидел в\u202fгазете (это\u202fбыла «Сермяжная правда» №\u200945) рубрику Weather Forecast®, он\u202fне\u202fповерил своим глазам\u202f\u2014 температуру обещали ±451\u202f°F.""")
+        """...Когда В. И. Пупкин увидел в газете ( это была "Сермяжная правда" № 45) рубрику Weather Forecast(r), он не поверил своим глазам - температуру обещали +-451F.""",
+        """…Когда В.И.\u2009Пупкин увидел в\u202fгазете (это\u202fбыла «Сермяжная правда» №\u200945) рубрику Weather Forecast®, он\u202fне\u202fповерил своим глазам\u202f\u2014 температуру обещали ±451\u202f°F.""")
+
 
 if __name__ == '__main__':
     unittest.main()

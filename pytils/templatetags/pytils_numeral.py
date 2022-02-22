@@ -4,18 +4,11 @@
 pytils.numeral templatetags for Django web-framework
 """
 
-from django import template, conf
+from django import conf, template
+from django.utils.encoding import smart_str
 
 from pytils import numeral
 from pytils.templatetags import init_defaults
-from pytils.third import six
-
-try:
-    # Django 1.4+
-    from django.utils.encoding import smart_text
-except ImportError:
-    from django.utils.encoding import smart_unicode
-    smart_text = smart_unicode
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
@@ -25,6 +18,7 @@ show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Sh
 default_value, default_uvalue = init_defaults(debug, show_value)
 
 # -- filters
+
 
 def choose_plural(amount, variants):
     """
@@ -39,10 +33,10 @@ def choose_plural(amount, variants):
         {{ some_int|choose_plural:"пример,примера,примеров" }}
     """
     try:
-        if isinstance(variants, six.string_types):
-            uvariants = smart_text(variants, encoding)
+        if isinstance(variants, str):
+            uvariants = smart_str(variants, encoding)
         else:
-            uvariants = [smart_text(v, encoding) for v in variants]
+            uvariants = [smart_str(v, encoding) for v in variants]
         res = numeral.choose_plural(amount, uvariants)
     except Exception as err:
         # because filter must die silently
@@ -52,6 +46,7 @@ def choose_plural(amount, variants):
             default_variant = ""
         res = default_value % {'error': err, 'value': default_variant}
     return res
+
 
 def get_plural(amount, variants):
     """
@@ -66,10 +61,10 @@ def get_plural(amount, variants):
         {{ some_int|get_plural:"пример,примера,примеров,нет примеров" }}
     """
     try:
-        if isinstance(variants, six.string_types):
-            uvariants = smart_text(variants, encoding)
+        if isinstance(variants, str):
+            uvariants = smart_str(variants, encoding)
         else:
-            uvariants = [smart_text(v, encoding) for v in variants]
+            uvariants = [smart_str(v, encoding) for v in variants]
         res = numeral._get_plural_legacy(amount, uvariants)
     except Exception as err:
         # because filter must die silently
@@ -80,6 +75,7 @@ def get_plural(amount, variants):
         res = default_value % {'error': err, 'value': default_variant}
     return res
 
+
 def rubles(amount, zero_for_kopeck=False):
     """Converts float value to in-words representation (for money)"""
     try:
@@ -88,6 +84,7 @@ def rubles(amount, zero_for_kopeck=False):
         # because filter must die silently
         res = default_value % {'error': err, 'value': str(amount)}
     return res
+
 
 def in_words(amount, gender=None):
     """
@@ -106,15 +103,15 @@ def in_words(amount, gender=None):
         res = default_value % {'error': err, 'value': str(amount)}
     return res
 
-# -- register filters
 
+# -- register filters
 register.filter('choose_plural', choose_plural)
 register.filter('get_plural', get_plural)
 register.filter('rubles', rubles)
 register.filter('in_words', in_words)
 
-# -- tags
 
+# -- tags
 def sum_string(amount, gender, items):
     """
     in_words and choose_plural in a one flask
@@ -130,16 +127,16 @@ def sum_string(amount, gender, items):
         {% sum_string some_other_int FEMALE "задача,задачи,задач" %}
     """
     try:
-        if isinstance(items, six.string_types):
-            uitems = smart_text(items, encoding, default_uvalue)
+        if isinstance(items, str):
+            uitems = smart_str(items, encoding, default_uvalue)
         else:
-            uitems = [smart_text(i, encoding) for i in items]
+            uitems = [smart_str(i, encoding) for i in items]
         res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
     except Exception as err:
         # because tag's renderer must die silently
         res = default_value % {'error': err, 'value': str(amount)}
     return res
 
-# -- register tags
 
+# -- register tags
 register.simple_tag(sum_string)

@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import subprocess
-import sys
 import os
-from pytils.third import six
+import subprocess
 
 EXAMPLES = [
     'dt.distance_of_time_in_words.py',
@@ -15,18 +13,14 @@ EXAMPLES = [
     'translit.py',
 ]
 
+
 name_to_path = lambda x: os.path.join(os.path.normpath(os.path.abspath(os.path.dirname(__file__))), x)
 sanitize_output = lambda x: x.replace('#->', '').replace('# ->', '').strip()
 
+
 def safe_file_iterator(fh, encoding='UTF-8'):
-    # Py2.x file iterator returns strings, not unicode
-    # Py3 file iterator returns not a bytestrings but string
-    # therefore we should decode for Py2.x and leave as is for Py3
     for line in fh:
-        if six.PY3:
-            yield line
-        else:
-            yield line.decode(encoding)
+        yield line
 
 
 def grab_expected_output(name):
@@ -42,7 +36,6 @@ def run_example_and_collect_output(name):
         ['python', name_to_path(name)], stderr=subprocess.STDOUT).strip().splitlines()]
 
 
-
 class ExampleFileTestSuite(object):
     def __init__(self, name):
         self.name = name
@@ -51,9 +44,9 @@ class ExampleFileTestSuite(object):
         assert len(self.real_output) == len(self.expected_output), \
             "Mismatch in number of real (%s) and expected (%s) strings" % (len(self.real_output), len(self.expected_output))
         assert len(self.real_output) > 0
-        assert isinstance(self.real_output[0], six.text_type), \
+        assert isinstance(self.real_output[0], str), \
             "%r is not text type (not a unicode for Py2.x, not a str for Py3.x" % self.real_output[0]
-        assert isinstance(self.expected_output[0], six.text_type), \
+        assert isinstance(self.expected_output[0], str), \
             "%r is not text type (not a unicode for Py2.x, not a str for Py3.x" % self.expected_output[0]
  
     def test_cases(self):
@@ -61,8 +54,8 @@ class ExampleFileTestSuite(object):
 
     def run_test(self, name, i):
         assert name == self.name
-        assert isinstance(self.real_output[i], six.text_type)
-        assert isinstance(self.expected_output[i], six.text_type)
+        assert isinstance(self.real_output[i], str)
+        assert isinstance(self.expected_output[i], str)
         # ignore real output if in example line marked with ->>
         if self.expected_output[i].startswith('>'):
             return
@@ -79,6 +72,7 @@ def test_example():
         for i in runner.test_cases():
             yield runner.run_test, example, i
 
+
 def assert_python_version(current_version):
     exec_version = subprocess.check_output(
         ['python', '-c', 'import sys; print(sys.version_info)'], stderr=subprocess.STDOUT).strip()
@@ -94,6 +88,8 @@ def test_python_version():
 
 
 if __name__ == '__main__':
-    import nose, sys
-    if not nose.runmodule():
+    import sys
+
+    import nose2
+    if not nose2.main():
         sys.exit(1)

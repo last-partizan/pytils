@@ -5,127 +5,126 @@ Simple transliteration
 """
 
 import re
-from pytils.third import six
 
 TRANSTABLE = (
-        (u"'", u"'"),
-        (u'"', u'"'),
-        (u"‘", u"'"),
-        (u"’", u"'"),
-        (u"«", u'"'),
-        (u"»", u'"'),
-        (u"“", u'"'),
-        (u"”", u'"'),
-        (u"–", u"-"),  # en dash
-        (u"—", u"-"),  # em dash
-        (u"‒", u"-"),  # figure dash
-        (u"−", u"-"),  # minus
-        (u"…", u"..."),
-        (u"№", u"#"),
+        ("'", "'"),
+        ('"', '"'),
+        ("‘", "'"),
+        ("’", "'"),
+        ("«", '"'),
+        ("»", '"'),
+        ("“", '"'),
+        ("”", '"'),
+        ("–", "-"),  # en dash
+        ("—", "-"),  # em dash
+        ("‒", "-"),  # figure dash
+        ("−", "-"),  # minus
+        ("…", "..."),
+        ("№", "#"),
         ## upper
         # three-symbols replacements
-        (u"Щ", u"Sch"),
+        ("Щ", "Sch"),
         # on russian->english translation only first replacement will be done
         # i.e. Sch
         # but on english->russian translation both variants (Sch and SCH) will play
-        (u"Щ", u"SCH"),
+        ("Щ", "SCH"),
         # two-symbol replacements
-        (u"Ё", u"Yo"),
-        (u"Ё", u"YO"),
-        (u"Ж", u"Zh"),
-        (u"Ж", u"ZH"),
-        (u"Ц", u"Ts"),
-        (u"Ц", u"TS"),
-        (u"Ч", u"Ch"),
-        (u"Ч", u"CH"),
-        (u"Ш", u"Sh"),
-        (u"Ш", u"SH"),
-        (u"Ы", u"Yi"),
-        (u"Ы", u"YI"),
-        (u"Ю", u"Yu"),
-        (u"Ю", u"YU"),
-        (u"Я", u"Ya"),
-        (u"Я", u"YA"),
+        ("Ё", "Yo"),
+        ("Ё", "YO"),
+        ("Ж", "Zh"),
+        ("Ж", "ZH"),
+        ("Ц", "Ts"),
+        ("Ц", "TS"),
+        ("Ч", "Ch"),
+        ("Ч", "CH"),
+        ("Ш", "Sh"),
+        ("Ш", "SH"),
+        ("Ы", "Yi"),
+        ("Ы", "YI"),
+        ("Ю", "YU"),
+        ("Ю", "Yu"),
+        ("Я", "Ya"),
+        ("Я", "YA"),
         # one-symbol replacements
-        (u"А", u"A"),
-        (u"Б", u"B"),
-        (u"В", u"V"),
-        (u"Г", u"G"),
-        (u"Д", u"D"),
-        (u"Е", u"E"),
-        (u"З", u"Z"),
-        (u"И", u"I"),
-        (u"Й", u"J"),
-        (u"К", u"K"),
-        (u"Л", u"L"),
-        (u"М", u"M"),
-        (u"Н", u"N"),
-        (u"О", u"O"),
-        (u"П", u"P"),
-        (u"Р", u"R"),
-        (u"С", u"S"),
-        (u"Т", u"T"),
-        (u"У", u"U"),
-        (u"Ф", u"F"),
-        (u"Х", u"H"),
-        (u"Э", u"E"),
-        (u"Ъ", u"`"),
-        (u"Ь", u"'"),
+        ("А", "A"),
+        ("Б", "B"),
+        ("В", "V"),
+        ("Г", "G"),
+        ("Д", "D"),
+        ("Е", "E"),
+        ("З", "Z"),
+        ("И", "I"),
+        ("Й", "J"),
+        ("К", "K"),
+        ("Л", "L"),
+        ("М", "M"),
+        ("Н", "N"),
+        ("О", "O"),
+        ("П", "P"),
+        ("Р", "R"),
+        ("С", "S"),
+        ("Т", "T"),
+        ("У", "U"),
+        ("Ф", "F"),
+        ("Х", "H"),
+        ("Э", "E"),
+        ("Ъ", "`"),
+        ("Ь", "'"),
         ## lower
         # three-symbols replacements
-        (u"щ", u"sch"),
+        ("щ", "sch"),
         # two-symbols replacements
-        (u"ё", u"yo"),
-        (u"ж", u"zh"),
-        (u"ц", u"ts"),
-        (u"ч", u"ch"),
-        (u"ш", u"sh"),
-        (u"ы", u"yi"),
-        (u"ю", u"yu"),
-        (u"я", u"ya"),
+        ("ё", "yo"),
+        ("ж", "zh"),
+        ("ц", "ts"),
+        ("ч", "ch"),
+        ("ш", "sh"),
+        ("ы", "yi"),
+        ("ю", "yu"),
+        ("я", "ya"),
         # one-symbol replacements
-        (u"а", u"a"),
-        (u"б", u"b"),
-        (u"в", u"v"),
-        (u"г", u"g"),
-        (u"д", u"d"),
-        (u"е", u"e"),
-        (u"з", u"z"),
-        (u"и", u"i"),
-        (u"й", u"j"),
-        (u"к", u"k"),
-        (u"л", u"l"),
-        (u"м", u"m"),
-        (u"н", u"n"),
-        (u"о", u"o"),
-        (u"п", u"p"),
-        (u"р", u"r"),
-        (u"с", u"s"),
-        (u"т", u"t"),
-        (u"у", u"u"),
-        (u"ф", u"f"),
-        (u"х", u"h"),
-        (u"э", u"e"),
-        (u"ъ", u"`"),
-        (u"ь", u"'"),
+        ("а", "a"),
+        ("б", "b"),
+        ("в", "v"),
+        ("г", "g"),
+        ("д", "d"),
+        ("е", "e"),
+        ("з", "z"),
+        ("и", "i"),
+        ("й", "j"),
+        ("к", "k"),
+        ("л", "l"),
+        ("м", "m"),
+        ("н", "n"),
+        ("о", "o"),
+        ("п", "p"),
+        ("р", "r"),
+        ("с", "s"),
+        ("т", "t"),
+        ("у", "u"),
+        ("ф", "f"),
+        ("х", "h"),
+        ("э", "e"),
+        ("ъ", "`"),
+        ("ь", "'"),
         # Make english alphabet full: append english-english pairs
         # for symbols which is not used in russian-english
         # translations. Used in slugify.
-        (u"c", u"c"),
-        (u"q", u"q"),
-        (u"y", u"y"),
-        (u"x", u"x"),
-        (u"w", u"w"),
-        (u"1", u"1"),
-        (u"2", u"2"),
-        (u"3", u"3"),
-        (u"4", u"4"),
-        (u"5", u"5"),
-        (u"6", u"6"),
-        (u"7", u"7"),
-        (u"8", u"8"),
-        (u"9", u"9"),
-        (u"0", u"0"),
+        ("c", "c"),
+        ("q", "q"),
+        ("y", "y"),
+        ("x", "x"),
+        ("w", "w"),
+        ("1", "1"),
+        ("2", "2"),
+        ("3", "3"),
+        ("4", "4"),
+        ("5", "5"),
+        ("6", "6"),
+        ("7", "7"),
+        ("8", "8"),
+        ("9", "9"),
+        ("0", "0"),
         )  #: Translation table
 
 RU_ALPHABET = [x[0] for x in TRANSTABLE] #: Russian alphabet that we can translate
@@ -138,7 +137,7 @@ def translify(in_string, strict=True):
     Translify russian text
 
     @param in_string: input string
-    @type in_string: C{unicode}
+    @type in_string: C{str}
 
     @param strict: raise error if transliteration is incomplete.
         (True by default)
@@ -160,6 +159,7 @@ def translify(in_string, strict=True):
 
     return translit
 
+
 def detranslify(in_string):
     """
     Detranslify
@@ -168,12 +168,12 @@ def detranslify(in_string):
     @type in_string: C{basestring}
 
     @return: detransliterated string
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:
-        russian = six.text_type(in_string)
+        russian = str(in_string)
     except UnicodeDecodeError:
         raise ValueError("We expects if in_string is 8-bit string," + \
                          "then it consists only ASCII chars, but now it doesn't. " + \
@@ -186,6 +186,7 @@ def detranslify(in_string):
     # твердый и мягкий знак в dentranslify всегда будут в верхнем регистре
     # потому что ` и ' не несут информацию о регистре
     return russian
+
 
 def slugify(in_string):
     """
@@ -200,7 +201,7 @@ def slugify(in_string):
     @raise ValueError: if in_string is C{str}, but it isn't ascii
     """
     try:
-        u_in_string = six.text_type(in_string).lower()
+        u_in_string = str(in_string).lower()
     except UnicodeDecodeError:
         raise ValueError("We expects when in_string is str type," + \
                          "it is an ascii, but now it isn't. Use unicode " + \
@@ -210,7 +211,7 @@ def slugify(in_string):
     # replace spaces by hyphen
     u_in_string = re.sub('[-\s]+', '-', u_in_string)
     # remove symbols that not in alphabet
-    u_in_string = u''.join([symb for symb in u_in_string if symb in ALPHABET])
+    u_in_string = ''.join([symb for symb in u_in_string if symb in ALPHABET])
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha

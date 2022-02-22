@@ -1,7 +1,7 @@
 Examples of usage pytils with Django.
 =====================================
 
-You need installed Django (1.3 and higher) and pytils 
+You need installed Django (3.2 and higher) and pytils
 for run it.
 
 It's a regular Django-project, so just start it
@@ -10,20 +10,16 @@ It's a regular Django-project, so just start it
 
 go to http://127.0.0.1:8000/ and look it...
 
-Examples are verified on Django 1.3, 1.4, 1.5.
-
 ------------------------------------
 
 Пример использования pytils с Django.
 ====================================
 
 Чтобы запустить примеры, Вам понадобятся установленные 
-Django (версии 1.3 и выше) и pytils.
+Django (версии 3.2 и выше) и pytils.
 
 Это обычный Django-проект. Запускайте 
 
     python manage.py runserver
 
 заходите браузером на http://127.0.0.1:8000/ и смотрите...
-
-Протестировано на Django версий 1.3, 1.4, 1.5.

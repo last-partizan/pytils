@@ -5,7 +5,9 @@ pytils.dt templatetags for Django web-framework
 """
 
 import time
-from django import template, conf, utils
+
+from django import conf, template, utils
+
 from pytils import dt
 from pytils.templatetags import init_defaults
 
@@ -15,8 +17,8 @@ show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Sh
 
 default_value, default_uvalue = init_defaults(debug, show_value)
 
-# -- filters --
 
+# -- filters --
 def distance_of_time(from_time, accuracy=1):
     """
     Display distance of time from current time.
@@ -33,7 +35,7 @@ def distance_of_time(from_time, accuracy=1):
     try:
         to_time = None
         if conf.settings.USE_TZ:
-            to_time=utils.timezone.now()
+            to_time = utils.timezone.now()
         res = dt.distance_of_time_in_words(from_time, accuracy, to_time)
     except Exception as err:
         # because filter must die silently
@@ -43,6 +45,7 @@ def distance_of_time(from_time, accuracy=1):
             default_distance = ""
         res = default_value % {'error': err, 'value': default_distance}
     return res
+
 
 def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False):
     """
@@ -70,6 +73,7 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
             default_date = str(date)
         res = default_value % {'error': err, 'value': default_date}
     return res
+
 
 def ru_strftime_inflected(date, format="%d.%m.%Y"):
     """
