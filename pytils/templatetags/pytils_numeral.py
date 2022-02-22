@@ -4,12 +4,11 @@
 pytils.numeral templatetags for Django web-framework
 """
 
-from django import template, conf
+from django import conf, template
+from django.utils.encoding import smart_str
 
 from pytils import numeral
 from pytils.templatetags import init_defaults
-
-from django.utils.encoding import smart_str
 
 register = template.Library()  #: Django template tag/filter registrator
 encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)

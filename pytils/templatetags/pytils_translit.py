@@ -4,11 +4,11 @@
 pytils.translit templatetags for Django web-framework
 """
 
-from django import template, conf
+from django import conf, template
+from django.utils.encoding import smart_str
+
 from pytils import translit
 from pytils.templatetags import init_defaults
-
-from django.utils.encoding import smart_str
 
 register = template.Library()  #: Django template tag/filter registrator
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)

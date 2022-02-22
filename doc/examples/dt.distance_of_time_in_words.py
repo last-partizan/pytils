@@ -3,8 +3,8 @@
 
 import datetime
 import time
-from pytils import dt
 
+from pytils import dt
 
 # поддерживаются оба модуля работы со временем:
 # time

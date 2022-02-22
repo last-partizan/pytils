@@ -3,7 +3,6 @@
 
 from pytils import numeral
 
-
 # choose_plural нужен для выбора правильной формы
 # существительного
 

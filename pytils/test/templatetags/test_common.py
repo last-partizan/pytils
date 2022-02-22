@@ -4,6 +4,7 @@ Unit tests for pytils' templatetags common things
 """
 
 from django.test import TestCase
+
 from pytils import templatetags as tt
 
 

@@ -3,8 +3,9 @@
 Unit-tests for pytils.numeral
 """
 
-import unittest
 import decimal
+import unittest
+
 import pytils
 
 

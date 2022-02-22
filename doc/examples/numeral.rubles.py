@@ -3,7 +3,6 @@
 
 from pytils import numeral
 
-
 # rubles служит для формирования строк с деньгами
 
 print(numeral.rubles(10))

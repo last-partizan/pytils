@@ -4,8 +4,10 @@
 Plural forms and in-word representation for numerals.
 """
 from __future__ import division
+
 from decimal import Decimal
-from pytils.utils import check_positive, check_length, split_values
+
+from pytils.utils import check_length, check_positive, split_values
 
 FRACTIONS = (
     ("десятая", "десятых", "десятых"),

@@ -4,6 +4,7 @@ Unit-tests for pytils.translit
 """
 
 import unittest
+
 import pytils
 
 

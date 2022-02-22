@@ -3,8 +3,8 @@
 """
 Russian typography
 """
-import re
 import os
+import re
 
 
 def _sub_patterns(patterns, text):

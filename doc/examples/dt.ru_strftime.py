@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from pytils import dt
 
+from pytils import dt
 
 # действие ru_strftime аналогично оригинальному strftime
 # только в %a, %A, %b и %B вместо английских названий будут русские

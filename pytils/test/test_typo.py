@@ -3,8 +3,9 @@
 Unit-tests for pytils.typo
 """
 
-import unittest
 import os
+import unittest
+
 from pytils import typo
 
 

@@ -3,7 +3,6 @@
 
 from pytils import numeral
 
-
 # in_words нужен для представления цифр словами
 
 print(numeral.in_words(12))

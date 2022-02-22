@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import subprocess
 import os
+import subprocess
 
 EXAMPLES = [
     'dt.distance_of_time_in_words.py',
@@ -88,6 +88,8 @@ def test_python_version():
 
 
 if __name__ == '__main__':
-    import nose2, sys
+    import sys
+
+    import nose2
     if not nose2.main():
         sys.exit(1)

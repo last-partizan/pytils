@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-from django.urls import reverse
 from django.test import TestCase
 from django.test.client import Client
+from django.urls import reverse
 
 from pytils import VERSION as pytils_version
 

@@ -2,6 +2,7 @@
 
 # find current path
 import os
+
 BASE_DIR = os.path.dirname(os.path.normpath(os.path.abspath(__file__)))
 
 DEBUG = True

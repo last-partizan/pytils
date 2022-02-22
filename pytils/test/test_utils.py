@@ -3,9 +3,10 @@
 Unit-tests for pytils.utils
 """
 
-import unittest
-import pytils
 import decimal
+import unittest
+
+import pytils
 
 
 class ChecksTestCase(unittest.TestCase):

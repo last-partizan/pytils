@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
-import time
 import datetime
 import sys
+import time
 
-from django.urls import path
-
-from django.views.generic.base import TemplateView
+from django import VERSION as _django_version
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path
+from django.views.generic.base import TemplateView
 
 from pytils import VERSION as pytils_version
-from django import VERSION as _django_version
 
 
 def get_python_version():

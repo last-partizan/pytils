@@ -5,7 +5,9 @@ pytils.dt templatetags for Django web-framework
 """
 
 import time
-from django import template, conf, utils
+
+from django import conf, template, utils
+
 from pytils import dt
 from pytils.templatetags import init_defaults
 
