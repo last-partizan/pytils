@@ -8,64 +8,64 @@ from decimal import Decimal
 from pytils.utils import check_positive, check_length, split_values
 
 FRACTIONS = (
-    (u"десятая", u"десятых", u"десятых"),
-    (u"сотая", u"сотых", u"сотых"),
-    (u"тысячная", u"тысячных", u"тысячных"),
-    (u"десятитысячная", u"десятитысячных", u"десятитысячных"),
-    (u"стотысячная", u"стотысячных", u"стотысячных"),
-    (u"миллионная", u"милллионных", u"милллионных"),
-    (u"десятимиллионная", u"десятимилллионных", u"десятимиллионных"),
-    (u"стомиллионная", u"стомилллионных", u"стомиллионных"),
-    (u"миллиардная", u"миллиардных", u"миллиардных"),
+    ("десятая", "десятых", "десятых"),
+    ("сотая", "сотых", "сотых"),
+    ("тысячная", "тысячных", "тысячных"),
+    ("десятитысячная", "десятитысячных", "десятитысячных"),
+    ("стотысячная", "стотысячных", "стотысячных"),
+    ("миллионная", "милллионных", "милллионных"),
+    ("десятимиллионная", "десятимилллионных", "десятимиллионных"),
+    ("стомиллионная", "стомилллионных", "стомиллионных"),
+    ("миллиардная", "миллиардных", "миллиардных"),
     )  #: Forms (1, 2, 5) for fractions
 
 ONES = {
-    0: (u"",       u"",       u""),
-    1: (u"один",   u"одна",   u"одно"),
-    2: (u"два",    u"две",    u"два"),
-    3: (u"три",    u"три",    u"три"),
-    4: (u"четыре", u"четыре", u"четыре"),
-    5: (u"пять",   u"пять",   u"пять"),
-    6: (u"шесть",  u"шесть",  u"шесть"),
-    7: (u"семь",   u"семь",   u"семь"),
-    8: (u"восемь", u"восемь", u"восемь"),
-    9: (u"девять", u"девять", u"девять"),
+    0: ("",       "",       ""),
+    1: ("один",   "одна",   "одно"),
+    2: ("два",    "две",    "два"),
+    3: ("три",    "три",    "три"),
+    4: ("четыре", "четыре", "четыре"),
+    5: ("пять",   "пять",   "пять"),
+    6: ("шесть",  "шесть",  "шесть"),
+    7: ("семь",   "семь",   "семь"),
+    8: ("восемь", "восемь", "восемь"),
+    9: ("девять", "девять", "девять"),
     }  #: Forms (MALE, FEMALE, NEUTER) for ones
 
 TENS = {
-    0: u"",
+    0: "",
     # 1 - особый случай
-    10: u"десять",
-    11: u"одиннадцать",
-    12: u"двенадцать",
-    13: u"тринадцать",
-    14: u"четырнадцать",
-    15: u"пятнадцать",
-    16: u"шестнадцать",
-    17: u"семнадцать",
-    18: u"восемнадцать",
-    19: u"девятнадцать",
-    2: u"двадцать",
-    3: u"тридцать",
-    4: u"сорок",
-    5: u"пятьдесят",
-    6: u"шестьдесят",
-    7: u"семьдесят",
-    8: u"восемьдесят",
-    9: u"девяносто",
+    10: "десять",
+    11: "одиннадцать",
+    12: "двенадцать",
+    13: "тринадцать",
+    14: "четырнадцать",
+    15: "пятнадцать",
+    16: "шестнадцать",
+    17: "семнадцать",
+    18: "восемнадцать",
+    19: "девятнадцать",
+    2: "двадцать",
+    3: "тридцать",
+    4: "сорок",
+    5: "пятьдесят",
+    6: "шестьдесят",
+    7: "семьдесят",
+    8: "восемьдесят",
+    9: "девяносто",
     }  #: Tens
 
 HUNDREDS = {
-    0: u"",
-    1: u"сто",
-    2: u"двести",
-    3: u"триста",
-    4: u"четыреста",
-    5: u"пятьсот",
-    6: u"шестьсот",
-    7: u"семьсот",
-    8: u"восемьсот",
-    9: u"девятьсот",
+    0: "",
+    1: "сто",
+    2: "двести",
+    3: "триста",
+    4: "четыреста",
+    5: "пятьсот",
+    6: "шестьсот",
+    7: "семьсот",
+    8: "восемьсот",
+    9: "девятьсот",
     }  #: Hundreds
 
 MALE = 1    #: sex - male
@@ -135,7 +135,7 @@ def choose_plural(amount, variants):
         or C{unicode} (three variants with delimeter ',')
 
     @return: proper variant
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     @raise ValueError: variants' length lesser than 3
     """
@@ -165,17 +165,17 @@ def get_plural(amount, variants, absence=None):
 
     @param variants: variants (forms) of object in such form:
         (1 object, 2 objects, 5 objects).
-    @type variants: 3-element C{sequence} of C{unicode}
-        or C{unicode} (three variants with delimeter ',')
+    @type variants: 3-element C{sequence} of C{str}
+        or C{str} (three variants with delimeter ',')
 
     @param absence: if amount is zero will return it
-    @type absence: C{unicode}
+    @type absence: C{str}
 
     @return: amount with proper variant
-    @rtype: C{unicode}
+    @rtype: C{str}
     """
     if amount or absence is None:
-        return u"%d %s" % (amount, choose_plural(amount, variants))
+        return "%d %s" % (amount, choose_plural(amount, variants))
     else:
         return absence
 
@@ -190,11 +190,11 @@ def _get_plural_legacy(amount, extra_variants):
     @param variants: variants (forms) of object in such form:
         (1 object, 2 objects, 5 objects, 0-object variant).
         0-object variant is similar to C{absence} in C{get_plural}
-    @type variants: 3-element C{sequence} of C{unicode}
-        or C{unicode} (three variants with delimeter ',')
+    @type variants: 3-element C{sequence} of C{str}
+        or C{str} (three variants with delimeter ',')
 
     @return: amount with proper variant
-    @rtype: C{unicode}
+    @rtype: C{str}
     """
     absence = None
     if isinstance(extra_variants, str):
@@ -218,7 +218,7 @@ def rubles(amount, zero_for_kopeck=False):
     @type zero_for_kopeck: C{bool}
 
     @return: in-words representation of money's amount
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     @raise ValueError: amount is negative
     """
@@ -226,7 +226,7 @@ def rubles(amount, zero_for_kopeck=False):
 
     pts = []
     amount = round(amount, 2)
-    pts.append(sum_string(int(amount), 1, (u"рубль", u"рубля", u"рублей")))
+    pts.append(sum_string(int(amount), 1, ("рубль", "рубля", "рублей")))
     remainder = _get_float_remainder(amount, 2)
     iremainder = int(remainder)
 
@@ -235,9 +235,9 @@ def rubles(amount, zero_for_kopeck=False):
         if iremainder < 10 and len(remainder) == 1:
             iremainder *= 10
         pts.append(sum_string(iremainder, 2,
-                              (u"копейка", u"копейки", u"копеек")))
+                              ("копейка", "копейки", "копеек")))
 
-    return u" ".join(pts)
+    return " ".join(pts)
 
 
 def in_words_int(amount, gender=MALE):
@@ -251,7 +251,7 @@ def in_words_int(amount, gender=MALE):
     @type gender: C{int}
 
     @return: in-words reprsentation of numeral
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     @raise ValueError: amount is negative
     """
@@ -268,7 +268,7 @@ def in_words_float(amount, _gender=FEMALE):
     @type amount: C{float} or C{Decimal}
 
     @return: in-words reprsentation of float numeral
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     @raise ValueError: when ammount is negative
     """
@@ -277,13 +277,13 @@ def in_words_float(amount, _gender=FEMALE):
     pts = []
     # преобразуем целую часть
     pts.append(sum_string(int(amount), 2,
-                          (u"целая", u"целых", u"целых")))
+                          ("целая", "целых", "целых")))
     # теперь то, что после запятой
     remainder = _get_float_remainder(amount)
     signs = len(str(remainder)) - 1
     pts.append(sum_string(int(remainder), 2, FRACTIONS[signs]))
 
-    return u" ".join(pts)
+    return " ".join(pts)
 
 
 def in_words(amount, gender=None):
@@ -297,7 +297,7 @@ def in_words(amount, gender=None):
     @type gender: C{int}
 
     @return: in-words reprsentation of numeral
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     raise ValueError: when amount is negative
     """
@@ -337,11 +337,11 @@ def sum_string(amount, gender, items=None):
 
     @param items: variants of object in three forms:
         for one object, for two objects and for five objects
-    @type items: 3-element C{sequence} of C{unicode} or
-        just C{unicode} (three variants with delimeter ',')
+    @type items: 3-element C{sequence} of C{str} or
+        just C{str} (three variants with delimeter ',')
 
     @return: in-words representation objects' amount
-    @rtype: C{unicode}
+    @rtype: C{str}
 
     @raise ValueError: items isn't 3-element C{sequence} or C{unicode}
     @raise ValueError: amount bigger than 10**11
@@ -350,7 +350,7 @@ def sum_string(amount, gender, items=None):
     if isinstance(items, str):
         items = split_values(items)
     if items is None:
-        items = (u"", u"", u"")
+        items = ("", "", "")
 
     try:
         one_item, two_items, five_items = items
@@ -361,9 +361,9 @@ def sum_string(amount, gender, items=None):
 
     if amount == 0:
         if five_items:
-            return u"ноль %s" % five_items
+            return "ноль %s" % five_items
         else:
-            return u"ноль"
+            return "ноль"
 
     into = u''
     tmp_val = amount
@@ -372,13 +372,13 @@ def sum_string(amount, gender, items=None):
     into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
     # тысячи
     into, tmp_val = _sum_string_fn(into, tmp_val, FEMALE,
-                                    (u"тысяча", u"тысячи", u"тысяч"))
+                                    ("тысяча", "тысячи", "тысяч"))
     # миллионы
     into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
-                                    (u"миллион", u"миллиона", u"миллионов"))
+                                    ("миллион", "миллиона", "миллионов"))
     # миллиарды
     into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
-                                    (u"миллиард", u"миллиарда", u"миллиардов"))
+                                    ("миллиард", "миллиарда", "миллиардов"))
     if tmp_val == 0:
         return into
     else:
@@ -390,7 +390,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     Make in-words representation of single order
 
     @param into: in-words representation of lower orders
-    @type into: C{unicode}
+    @type into: C{str}
 
     @param tmp_val: temporary value without lower orders
     @type tmp_val: C{integer types}
@@ -399,7 +399,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @type gender: C{int}
 
     @param items: variants of objects
-    @type items: 3-element C{sequence} of C{unicode}
+    @type items: 3-element C{sequence} of C{str}
 
     @return: new into and tmp_val
     @rtype: C{tuple}
@@ -407,7 +407,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     @raise ValueError: tmp_val is negative
     """
     if items is None:
-        items = (u"", u"", u"")
+        items = ("", "", "")
     one_item, two_items, five_items = items
     
     check_positive(tmp_val)
@@ -421,8 +421,8 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     tmp_val = tmp_val // 1000
     if rest == 0:
         # последние три знака нулевые
-        if into == u"":
-            into = u"%s " % five_items
+        if into == "":
+            into = "%s " % five_items
         return into, tmp_val
 
     # начинаем подсчет с rest
@@ -452,4 +452,4 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     words = filter(lambda x: len(x) > 0, words)
 
     # склеиваем и отдаем
-    return u" ".join(words).strip(), tmp_val
+    return " ".join(words).strip(), tmp_val

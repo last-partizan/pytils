@@ -19,6 +19,7 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 
 # -- filters --
 
+
 def translify(text):
     """Translify russian text"""
     try:
@@ -27,6 +28,7 @@ def translify(text):
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res
+
 
 def detranslify(text):
     """Detranslify russian text"""
@@ -37,6 +39,7 @@ def detranslify(text):
         res = default_value % {'error': err, 'value': text}
     return res
 
+
 def slugify(text):
     """Make slug from (russian) text"""
     try:
@@ -45,6 +48,7 @@ def slugify(text):
         # because filter must die silently
         res = default_value % {'error': err, 'value': text}
     return res
+
 
 # -- register filters
 register.filter('translify', translify)

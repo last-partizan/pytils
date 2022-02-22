@@ -28,8 +28,8 @@ class ExamplesTestCase(TestCase):
         self.assertTrue('ru_strftime' in body)
         self.assertTrue('ru_strftime_inflected' in body)
         self.assertTrue('ru_strftime_preposition' in body)
-        self.assertTrue(u'вчера' in body)
-        self.assertTrue(u'завтра' in body)
+        self.assertTrue('вчера' in body)
+        self.assertTrue('завтра' in body)
 
     def testNumeral(self):
         resp = self.c.get(reverse('pytils_numeral_example'))
@@ -40,13 +40,13 @@ class ExamplesTestCase(TestCase):
         self.assertTrue('rubles' in body)
         self.assertTrue('in_words' in body)
         self.assertTrue('sum_string' in body)
-        self.assertTrue(u'комментарий' in body)
-        self.assertTrue(u'без примеров' in body)
-        self.assertTrue(u'двадцать три рубля пятнадцать копеек' in body)
-        self.assertTrue(u'двенадцать рублей' in body)
-        self.assertTrue(u'двадцать один' in body)
-        self.assertTrue(u'тридцать одна целая триста восемьдесят пять тысячных' in body)
-        self.assertTrue(u'двадцать один комментарий' in body)
+        self.assertTrue('комментарий' in body)
+        self.assertTrue('без примеров' in body)
+        self.assertTrue('двадцать три рубля пятнадцать копеек' in body)
+        self.assertTrue('двенадцать рублей' in body)
+        self.assertTrue('двадцать один' in body)
+        self.assertTrue('тридцать одна целая триста восемьдесят пять тысячных' in body)
+        self.assertTrue('двадцать один комментарий' in body)
 
     def testTranslit(self):
         resp = self.c.get(reverse('pytils_translit_example'))

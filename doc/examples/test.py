@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import subprocess
-import sys
 import os
 
 EXAMPLES = [
@@ -14,8 +13,10 @@ EXAMPLES = [
     'translit.py',
 ]
 
+
 name_to_path = lambda x: os.path.join(os.path.normpath(os.path.abspath(os.path.dirname(__file__))), x)
 sanitize_output = lambda x: x.replace('#->', '').replace('# ->', '').strip()
+
 
 def safe_file_iterator(fh, encoding='UTF-8'):
     for line in fh:
@@ -33,7 +34,6 @@ def run_example_and_collect_output(name):
     x.decode('UTF-8') for x in
     subprocess.check_output(
         ['python', name_to_path(name)], stderr=subprocess.STDOUT).strip().splitlines()]
-
 
 
 class ExampleFileTestSuite(object):
@@ -71,6 +71,7 @@ def test_example():
         # why we want pass example name again, even test runner already knows it
         for i in runner.test_cases():
             yield runner.run_test, example, i
+
 
 def assert_python_version(current_version):
     exec_version = subprocess.check_output(

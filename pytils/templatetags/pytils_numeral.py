@@ -20,6 +20,7 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 
 # -- filters
 
+
 def choose_plural(amount, variants):
     """
     Choose proper form for plural.
@@ -46,6 +47,7 @@ def choose_plural(amount, variants):
             default_variant = ""
         res = default_value % {'error': err, 'value': default_variant}
     return res
+
 
 def get_plural(amount, variants):
     """
@@ -74,6 +76,7 @@ def get_plural(amount, variants):
         res = default_value % {'error': err, 'value': default_variant}
     return res
 
+
 def rubles(amount, zero_for_kopeck=False):
     """Converts float value to in-words representation (for money)"""
     try:
@@ -82,6 +85,7 @@ def rubles(amount, zero_for_kopeck=False):
         # because filter must die silently
         res = default_value % {'error': err, 'value': str(amount)}
     return res
+
 
 def in_words(amount, gender=None):
     """
@@ -100,15 +104,15 @@ def in_words(amount, gender=None):
         res = default_value % {'error': err, 'value': str(amount)}
     return res
 
-# -- register filters
 
+# -- register filters
 register.filter('choose_plural', choose_plural)
 register.filter('get_plural', get_plural)
 register.filter('rubles', rubles)
 register.filter('in_words', in_words)
 
-# -- tags
 
+# -- tags
 def sum_string(amount, gender, items):
     """
     in_words and choose_plural in a one flask
@@ -134,6 +138,6 @@ def sum_string(amount, gender, items):
         res = default_value % {'error': err, 'value': str(amount)}
     return res
 
-# -- register tags
 
+# -- register tags
 register.simple_tag(sum_string)

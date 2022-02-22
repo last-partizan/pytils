@@ -10,54 +10,54 @@ from pytils import numeral
 from pytils.utils import check_positive
 
 DAY_ALTERNATIVES = {
-    1: (u"вчера", u"завтра"),
-    2: (u"позавчера", u"послезавтра")
+    1: ("вчера", "завтра"),
+    2: ("позавчера", "послезавтра")
     }  #: Day alternatives (i.e. one day ago -> yesterday)
 
 DAY_VARIANTS = (
-    u"день",
-    u"дня",
-    u"дней",
+    "день",
+    "дня",
+    "дней",
     )  #: Forms (1, 2, 5) for noun 'day'
 
 HOUR_VARIANTS = (
-    u"час",
-    u"часа",
-    u"часов",
+    "час",
+    "часа",
+    "часов",
     )  #: Forms (1, 2, 5) for noun 'hour'
 
 MINUTE_VARIANTS = (
-    u"минуту",
-    u"минуты",
-    u"минут",
+    "минуту",
+    "минуты",
+    "минут",
     )  #: Forms (1, 2, 5) for noun 'minute'
 
-PREFIX_IN = u"через"  #: Prefix 'in' (i.e. B{in} three hours)
-SUFFIX_AGO = u"назад"  #: Prefix 'ago' (i.e. three hours B{ago})
+PREFIX_IN = "через"  #: Prefix 'in' (i.e. B{in} three hours)
+SUFFIX_AGO = "назад"  #: Prefix 'ago' (i.e. three hours B{ago})
 
 MONTH_NAMES = (
-    (u"янв", u"январь", u"января"),
-    (u"фев", u"февраль", u"февраля"),
-    (u"мар", u"март", u"марта"),
-    (u"апр", u"апрель", u"апреля"),
-    (u"май", u"май", u"мая"),
-    (u"июн", u"июнь", u"июня"),
-    (u"июл", u"июль", u"июля"),
-    (u"авг", u"август", u"августа"),
-    (u"сен", u"сентябрь", u"сентября"),
-    (u"окт", u"октябрь", u"октября"),
-    (u"ноя", u"ноябрь", u"ноября"),
-    (u"дек", u"декабрь", u"декабря"),
+    ("янв", "январь", "января"),
+    ("фев", "февраль", "февраля"),
+    ("мар", "март", "марта"),
+    ("апр", "апрель", "апреля"),
+    ("май", "май", "мая"),
+    ("июн", "июнь", "июня"),
+    ("июл", "июль", "июля"),
+    ("авг", "август", "августа"),
+    ("сен", "сентябрь", "сентября"),
+    ("окт", "октябрь", "октября"),
+    ("ноя", "ноябрь", "ноября"),
+    ("дек", "декабрь", "декабря"),
     )  #: Month names (abbreviated, full, inflected)
 
 DAY_NAMES = (
-    (u"пн", u"понедельник", u"понедельник", u"в\xa0"),
-    (u"вт", u"вторник", u"вторник", u"во\xa0"),
-    (u"ср", u"среда", u"среду", u"в\xa0"),
-    (u"чт", u"четверг", u"четверг", u"в\xa0"),
-    (u"пт", u"пятница", u"пятницу", u"в\xa0"),
-    (u"сб", u"суббота", u"субботу", u"в\xa0"),
-    (u"вск", u"воскресенье", u"воскресенье", u"в\xa0")
+    ("пн", "понедельник", "понедельник", "в\xa0"),
+    ("вт", "вторник", "вторник", "во\xa0"),
+    ("ср", "среда", "среду", "в\xa0"),
+    ("чт", "четверг", "четверг", "в\xa0"),
+    ("пт", "пятница", "пятницу", "в\xa0"),
+    ("сб", "суббота", "субботу", "в\xa0"),
+    ("вск", "воскресенье", "воскресенье", "в\xa0")
     )  #: Day names (abbreviated, full, inflected, preposition)
 
 
@@ -76,7 +76,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     @type to_time: C{int}, C{float} or C{datetime.datetime}
 
     @return: distance of time in words
-    @rtype: unicode
+    @rtype: str
 
     @raise ValueError: accuracy is lesser or equal zero
     """
@@ -112,23 +112,23 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     days = days_orig
     hours = hours_orig - days_orig*24
 
-    words.append(u"%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
+    words.append("%d %s" % (days, numeral.choose_plural(days, DAY_VARIANTS)))
     values.append(days)
 
-    words.append(u"%d %s" %
+    words.append("%d %s" %
                  (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
     values.append(hours)
 
-    days == 0 and hours == 1 and current and alternatives.append(u"час")
+    days == 0 and hours == 1 and current and alternatives.append("час")
 
     minutes = minutes_orig - hours_orig*60
 
-    words.append(u"%d %s" % (minutes,
+    words.append("%d %s" % (minutes,
                              numeral.choose_plural(minutes, MINUTE_VARIANTS)))
     values.append(minutes)
 
     days == 0 and hours == 0 and minutes == 1 and current and \
-        alternatives.append(u"минуту")
+        alternatives.append("минуту")
 
     # убираем из values и words конечные нули
     while values and not values[-1]:
@@ -154,14 +154,14 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     alter_str = limit == 1 and current and alternatives and \
         alternatives[0]
     _result_str = alter_str or real_str
-    result_str = in_future and u"%s %s" % (PREFIX_IN, _result_str) \
-        or u"%s %s" % (_result_str, SUFFIX_AGO)
+    result_str = in_future and "%s %s" % (PREFIX_IN, _result_str) \
+        or "%s %s" % (_result_str, SUFFIX_AGO)
 
     # если же прошло менее минуты, то real_words -- пустой, и поэтому
     # нужно брать alternatives[0], а не result_str
     zero_str = minutes == 0 and not real_words and \
-        (in_future and u"менее чем через минуту"
-         or u"менее минуты назад")
+        (in_future and "менее чем через минуту"
+         or "менее минуты назад")
 
     # нужно использовать вчера/позавчера/завтра/послезавтра
     # если days 1..2 и в real_words одно значение
@@ -175,13 +175,13 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     return final_str
 
 
-def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False,
+def ru_strftime(format="%d.%m.%Y", date=None, inflected=False,
                 inflected_day=False, preposition=False):
     """
     Russian strftime without locale
 
     @param format: strftime format, default=u'%d.%m.%Y'
-    @type format: C{unicode}
+    @type format: str
 
     @param date: date value, default=None translates to today
     @type date: C{datetime.date} or C{datetime.datetime}
@@ -197,7 +197,7 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False,
     @type preposition: C{bool}
 
     @return: strftime string
-    @rtype: unicode
+    @rtype: str
     """
     if date is None:
         date = datetime.datetime.today()
@@ -211,13 +211,13 @@ def ru_strftime(format=u"%d.%m.%Y", date=None, inflected=False,
 
     # for russian typography standard,
     # 1 April 2007, but 01.04.2007
-    if u'%b' in format or u'%B' in format:
-        format = format.replace(u'%d', str(date.day))
+    if '%b' in format or '%B' in format:
+        format = format.replace('%d', str(date.day))
 
-    format = format.replace(u'%a', prepos+DAY_NAMES[weekday][0])
-    format = format.replace(u'%A', prepos+DAY_NAMES[weekday][day_idx])
-    format = format.replace(u'%b', MONTH_NAMES[date.month-1][0])
-    format = format.replace(u'%B', MONTH_NAMES[date.month-1][month_idx])
+    format = format.replace('%a', prepos+DAY_NAMES[weekday][0])
+    format = format.replace('%A', prepos+DAY_NAMES[weekday][day_idx])
+    format = format.replace('%b', MONTH_NAMES[date.month-1][0])
+    format = format.replace('%B', MONTH_NAMES[date.month-1][month_idx])
 
     u_res = date.strftime(format)
     return u_res

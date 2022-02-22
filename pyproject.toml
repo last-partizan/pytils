@@ -7,6 +7,7 @@ authors = ["temi4sh <temi4sh@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Django = "^4.0.2"
+isort = "^5.10.1"
 
 [tool.poetry.dev-dependencies]
 

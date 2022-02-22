@@ -48,10 +48,10 @@ def split_values(ustring, sep=u','):
     but skips escaped separator.
     
     @param ustring: string to split
-    @type ustring: C{unicode}
+    @type ustring: C{str}
     
     @param sep: separator (default to u',')
-    @type sep: C{unicode}
+    @type sep: C{str}
     
     @return: tuple of splitted elements
     """
