@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytils"
-version = "0.4.0"
+version = "0.4.1"
 description = "Russian-specific string utils"
 authors = ["Yury Yurevich <yyurevich@jellycrystal.com>"]
 
