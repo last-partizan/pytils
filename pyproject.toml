@@ -6,9 +6,9 @@ authors = ["Yury Yurevich <yyurevich@jellycrystal.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Django = ">=3.2,<5"
 
 [tool.poetry.dev-dependencies]
+Django = ">=3.2,<5"
 isort = "^5.10.1"
 pytest = "^7.0.1"
 pytest-sugar = "^0.9.4"
