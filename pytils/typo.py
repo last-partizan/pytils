@@ -149,13 +149,13 @@ def rl_quotes(x):
         # открывающие кавычки ставятся обычно вплотную к слову слева
         # а закрывающие -- вплотную справа
         # открывающие русские кавычки-ёлочки
-        (re.compile(r'((?:^|\s))(")((?u))', re.UNICODE), '\\1\xab\\3'),
+        (re.compile(r'((?:^|\s))(")', re.UNICODE), '\\1\xab'),
         # закрывающие русские кавычки-ёлочки
-        (re.compile(r'(\S)(")((?u))', re.UNICODE), '\\1\xbb\\3'),
+        (re.compile(r'(\S)(")', re.UNICODE), '\\1\xbb'),
         # открывающие кавычки-лапки, вместо одинарных кавычек
-        (re.compile(r'((?:^|\s))(\')((?u))', re.UNICODE), '\\1\u201c\\3'),
+        (re.compile(r'((?:^|\s))(\')', re.UNICODE), '\\1\u201c'),
         # закрывающие кавычки-лапки
-	(re.compile(r'(\S)(\')((?u))', re.UNICODE), '\\1\u201d\\3'),
+	(re.compile(r'(\S)(\')', re.UNICODE), '\\1\u201d'),
     )
     return _sub_patterns(patterns, x)
     
