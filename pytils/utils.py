@@ -58,6 +58,6 @@ def split_values(ustring, sep=','):
     assert isinstance(ustring, str), "uvalue must be str, not %s" % type(ustring)
     # unicode have special mark symbol 0xffff which cannot be used in a regular text,
     # so we use it to mark a place where escaped column was
-    ustring_marked = ustring.replace('\,', '\uffff')
+    ustring_marked = ustring.replace(r'\,', '\uffff')
     items = tuple([i.strip().replace('\uffff', ',') for i in ustring_marked.split(sep)])
     return items

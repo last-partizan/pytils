@@ -67,7 +67,7 @@ class ChoosePluralTestCase(unittest.TestCase):
             "гвоздь"
         )
         self.assertEqual(
-            pytils.numeral.choose_plural(5, "гвоздь, гвоздя, гвоздей\, шпунтов"),
+            pytils.numeral.choose_plural(5, r"гвоздь, гвоздя, гвоздей\, шпунтов"),
             "гвоздей, шпунтов"
         )
 

@@ -58,8 +58,8 @@ class SplitValuesTestCase(unittest.TestCase):
         """
         Unit-test for pytils.utils.split_values, split with escaping
         """
-        self.assertEqual(("Раз,Два", "Три,Четыре", "Пять,Шесть"), pytils.utils.split_values("Раз\,Два,Три\,Четыре,Пять\,Шесть"))
-        self.assertEqual(("Раз, Два", "Три", "Четыре"), pytils.utils.split_values("Раз\, Два, Три, Четыре"))
+        self.assertEqual(("Раз,Два", "Три,Четыре", "Пять,Шесть"), pytils.utils.split_values(r"Раз\,Два,Три\,Четыре,Пять\,Шесть"))
+        self.assertEqual(("Раз, Два", "Три", "Четыре"), pytils.utils.split_values(r"Раз\, Два, Три, Четыре"))
 
 
 if __name__ == '__main__':
