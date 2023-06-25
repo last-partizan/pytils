@@ -290,9 +290,3 @@ class Typography(object):
 def typography(text):
     t = Typography(STANDARD_RULES)
     return t.apply(text)
-
-
-if __name__ == '__main__':
-    from pytils.test import run_tests_from_module, test_typo
-    run_tests_from_module(test_typo, verbosity=2)
-    
