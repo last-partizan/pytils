@@ -207,15 +207,15 @@ def slugify(in_string):
                          "it is an ascii, but now it isn't. Use unicode " + \
                          "in this case.")
     # convert & to "and"
-    u_in_string = re.sub('\&amp\;|\&', ' and ', u_in_string)
+    u_in_string = re.sub(r'\&amp\;|\&', ' and ', u_in_string)
     # replace spaces by hyphen
-    u_in_string = re.sub('[-\s]+', '-', u_in_string)
+    u_in_string = re.sub(r'[-\s]+', '-', u_in_string)
     # remove symbols that not in alphabet
     u_in_string = ''.join([symb for symb in u_in_string if symb in ALPHABET])
     # translify it
     out_string = translify(u_in_string)
     # remove non-alpha
-    return re.sub('[^\w\s-]', '', out_string).strip().lower()
+    return re.sub(r'[^\w\s-]', '', out_string).strip().lower()
 
 
 def dirify(in_string):

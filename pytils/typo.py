@@ -84,7 +84,7 @@ def rl_dashes(x):
         # тире
         (re.compile('(^|(.\\s))\\-\\-?(([\\s\u202f].)|$)', re.MULTILINE|re.UNICODE), '\\1\u2014\\3'),
         # диапазоны между цифрами - en dash
-        (re.compile('(\\d[\\s\u2009]*)\\-([\\s\u2009]*\d)', re.MULTILINE|re.UNICODE), '\\1\u2013\\2'),
+        (re.compile(r'(\d[\s\u2009]*)\-([\s\u2009]*\d)', re.MULTILINE|re.UNICODE), '\\1\u2013\\2'),
         # TODO: а что с минусом?
     )
     return _sub_patterns(patterns, x)
