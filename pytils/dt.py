@@ -147,7 +147,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
         real_words.pop()
         limit -= 1
 
-    real_str = u" ".join(real_words)
+    real_str = " ".join(real_words)
 
     # альтернативные варианты нужны только если в real_words одно значение
     # и, вдобавок, если используется текущее время
@@ -204,7 +204,7 @@ def ru_strftime(format="%d.%m.%Y", date=None, inflected=False,
 
     weekday = date.weekday()
 
-    prepos = preposition and DAY_NAMES[weekday][3] or u""
+    prepos = preposition and DAY_NAMES[weekday][3] or ""
 
     month_idx = inflected and 2 or 1
     day_idx = (inflected_day or preposition) and 2 or 1
