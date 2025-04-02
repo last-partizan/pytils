@@ -5,16 +5,16 @@ description = "Russian-specific string utils"
 authors = ["Yury Yurevich <yyurevich@jellycrystal.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 Django = ">=3.2,<5"
 isort = "^5.10.1"
 pytest = "^7.0.1"
 pytest-sugar = "^0.9.4"
 pytest-django = "^4.5.2"
-tox = "^3.24.5"
-tox-gh-actions = "^2.9.1"
+tox = "^4.25.0"
+tox-gh-actions = "^3.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
