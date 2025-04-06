@@ -5,7 +5,7 @@ publish: build
 	twine upload dist/*
 
 build: clean
-	python setup.py sdist
+	python -m build
 
 clean:
 	rm -rf dist
