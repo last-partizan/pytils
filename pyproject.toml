@@ -15,7 +15,3 @@ pytest-sugar = "^0.9.4"
 pytest-django = "^4.5.2"
 tox = "^4.25.0"
 tox-gh-actions = "^3.3.0"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
