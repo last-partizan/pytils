@@ -27,7 +27,7 @@ jobs:
       - name: Install ty
         run: pip install ty
       - name: Run ty
-        run: ty check ./pytils --ignore-unresolved-import
+        run: ty check ./pytils --ignore unresolved-import
   Test:
     runs-on: ubuntu-latest
     strategy:
