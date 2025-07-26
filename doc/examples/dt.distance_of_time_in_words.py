@@ -26,29 +26,29 @@ dt_in_future = dt_current_time + datetime.timedelta(0, 100000)
 # если to_time не передано, считается от "сейчас",
 # и тогда -1 день -> "вчера", а +1 день -> "завтра"
 print(dt.distance_of_time_in_words(in_past))
-#-> вчера
+# -> вчера
 print(dt.distance_of_time_in_words(dt_in_future))
-#-> завтра
+# -> завтра
 
 
 # а вот если передано to_time, то нельзя говорить "вчера",
 # потому что to_time не обязательно "сейчас",
 # поэтому -1 день -> "1 день назад"
 print(dt.distance_of_time_in_words(in_past, to_time=current_time))
-#-> 1 день назад
+# -> 1 день назад
 
 # увеличение точности отражается на результате
 print(dt.distance_of_time_in_words(in_past, accuracy=2))
-#-> 1 день 3 часа назад
+# -> 1 день 3 часа назад
 print(dt.distance_of_time_in_words(in_past, accuracy=3))
-#-> 1 день 3 часа 46 минут назад
+# -> 1 день 3 часа 46 минут назад
 
 # аналогично и с будущим временем:
 print(dt.distance_of_time_in_words(in_future))
-#-> завтра
+# -> завтра
 print(dt.distance_of_time_in_words(in_future, to_time=current_time))
-#-> через 1 день
+# -> через 1 день
 print(dt.distance_of_time_in_words(in_future, accuracy=2))
-#-> через 1 день 3 часа
+# -> через 1 день 3 часа
 print(dt.distance_of_time_in_words(in_future, accuracy=3))
-#-> через 1 день 3 часа 46 минут
+# -> через 1 день 3 часа 46 минут
