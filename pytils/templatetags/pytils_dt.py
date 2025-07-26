@@ -4,9 +4,10 @@
 pytils.dt templatetags for Django web-framework
 """
 
+import datetime
 import time
 
-from django import conf, template, utils
+from django import conf, template, utils  # type: ignore
 
 from pytils import dt
 from pytils.templatetags import init_defaults
@@ -21,7 +22,9 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 
 
 # -- filters --
-def distance_of_time(from_time, accuracy=1):
+def distance_of_time(
+    from_time: int | float | datetime.datetime, accuracy: int = 1
+) -> str:
     """
     Display distance of time from current time.
 
@@ -42,14 +45,19 @@ def distance_of_time(from_time, accuracy=1):
     except Exception as err:
         # because filter must die silently
         try:
-            default_distance = "%s seconds" % str(int(time.time() - from_time))
+            default_distance = "%s seconds" % str(int(time.time() - from_time))  # type: ignore
         except Exception:
             default_distance = ""
         res = default_value % {"error": err, "value": default_distance}
     return res
 
 
-def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False):
+def ru_strftime(
+    date: datetime.date | datetime.datetime,
+    format: str = "%d.%m.%Y",
+    inflected_day: bool = False,
+    preposition: bool = False,
+) -> str:
     """
     Russian strftime, formats date with given format.
 
@@ -79,7 +87,9 @@ def ru_strftime(date, format="%d.%m.%Y", inflected_day=False, preposition=False)
     return res
 
 
-def ru_strftime_inflected(date, format="%d.%m.%Y"):
+def ru_strftime_inflected(
+    date: datetime.date | datetime.datetime, format: str = "%d.%m.%Y"
+) -> str:
     """
     Russian strftime with inflected day, formats date
     with given format (similar to ru_strftime),
@@ -91,7 +101,9 @@ def ru_strftime_inflected(date, format="%d.%m.%Y"):
     return ru_strftime(date, format, inflected_day=True)
 
 
-def ru_strftime_preposition(date, format="%d.%m.%Y"):
+def ru_strftime_preposition(
+    date: datetime.date | datetime.datetime, format: str = "%d.%m.%Y"
+) -> str:
     """
     Russian strftime with inflected day and correct preposition,
     formats date with given format (similar to ru_strftime),

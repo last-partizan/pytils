@@ -6,9 +6,10 @@ Russian typography
 
 import os
 import re
+from typing import Callable, Sequence
 
 
-def _sub_patterns(patterns, text):
+def _sub_patterns(patterns: Sequence[tuple[str | re.Pattern, str]], text: str) -> str:
     """
     Apply re.sub to bunch of (pattern, repl)
     """
@@ -20,14 +21,14 @@ def _sub_patterns(patterns, text):
 # ---------- rules -------------
 # rules is a regular function,
 # name convention is rl_RULENAME
-def rl_testrule(x):
+def rl_testrule(x: str) -> str:
     """
     Rule for tests. Do nothing.
     """
     return x
 
 
-def rl_cleanspaces(x):
+def rl_cleanspaces(x: str) -> str:
     """
     Clean double spaces, trailing spaces, heading spaces,
     spaces before punctuations
@@ -48,7 +49,7 @@ def rl_cleanspaces(x):
     )
 
 
-def rl_ellipsis(x):
+def rl_ellipsis(x: str) -> str:
     """
     Replace three dots to ellipsis
     """
@@ -68,7 +69,7 @@ def rl_ellipsis(x):
     return _sub_patterns(patterns, x)
 
 
-def rl_initials(x):
+def rl_initials(x: str) -> str:
     """
     Replace space between initials and surname by thin space
     """
@@ -79,7 +80,7 @@ def rl_initials(x):
     )
 
 
-def rl_dashes(x):
+def rl_dashes(x: str) -> str:
     """
     Replace dash to long/medium dashes
     """
@@ -101,7 +102,7 @@ def rl_dashes(x):
     return _sub_patterns(patterns, x)
 
 
-def rl_wordglue(x):
+def rl_wordglue(x: str) -> str:
     """
     Glue (set nonbreakable space) short words with word before/after
     """
@@ -122,7 +123,7 @@ def rl_wordglue(x):
     return _sub_patterns(patterns, x)
 
 
-def rl_marks(x):
+def rl_marks(x: str) -> str:
     """
     Replace +-, (c), (tm), (r), (p), etc by its typographic eqivalents
     """
@@ -157,7 +158,7 @@ def rl_marks(x):
     return _sub_patterns(patterns, x)
 
 
-def rl_quotes(x):
+def rl_quotes(x: str) -> str:
     """
     Replace quotes by typographic quotes
     """
@@ -189,7 +190,7 @@ STANDARD_RULES = (
 )
 
 
-def _get_rule_by_name(name):
+def _get_rule_by_name(name: str) -> Callable[[str], str]:
     rule = globals().get("rl_%s" % name)
     if rule is None:
         raise ValueError("Rule %s is not found" % name)
@@ -198,7 +199,9 @@ def _get_rule_by_name(name):
     return rule
 
 
-def _resolve_rule_name(rule_or_name, forced_name=None):
+def _resolve_rule_name(
+    rule_or_name: str | Callable[[str], str], forced_name: str | None = None
+) -> tuple[str, Callable[[str], str]]:
     if isinstance(rule_or_name, str):
         # got name
         name = rule_or_name
@@ -223,7 +226,15 @@ class Typography(object):
     Russian typography rules applier
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(
+        self,
+        *args: str
+        | Callable[[str], str]
+        | list[str | Callable[[str], str]]
+        | dict[str, str | Callable[[str], str]]
+        | tuple[str | Callable[[str], str], ...],
+        **kwargs: str | Callable[[str], str],
+    ) -> None:
         """
         Typography applier constructor:
 
@@ -313,6 +324,6 @@ class Typography(object):
         return self.apply(text)
 
 
-def typography(text):
+def typography(text: str) -> str:
     t = Typography(STANDARD_RULES)
     return t.apply(text)

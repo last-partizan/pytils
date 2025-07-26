@@ -4,8 +4,10 @@
 pytils.numeral templatetags for Django web-framework
 """
 
-from django import conf, template
-from django.utils.encoding import smart_str
+from decimal import Decimal
+
+from django import conf, template  # type: ignore
+from django.utils.encoding import smart_str  # type: ignore
 
 from pytils import numeral
 from pytils.templatetags import init_defaults
@@ -24,7 +26,7 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 # -- filters
 
 
-def choose_plural(amount, variants):
+def choose_plural(amount: int, variants: str | tuple[str, ...]) -> str:
     """
     Choose proper form for plural.
 
@@ -52,7 +54,9 @@ def choose_plural(amount, variants):
     return res
 
 
-def get_plural(amount, variants):
+def get_plural(
+    amount: int, variants: str | tuple[str, ...], absence: str | None = None
+) -> str:
     """
     Get proper form for plural and it value.
 
@@ -80,7 +84,7 @@ def get_plural(amount, variants):
     return res
 
 
-def rubles(amount, zero_for_kopeck=False):
+def rubles(amount: int | float | Decimal, zero_for_kopeck: bool = False) -> str:
     """Converts float value to in-words representation (for money)"""
     try:
         res = numeral.rubles(amount, zero_for_kopeck)
@@ -90,7 +94,7 @@ def rubles(amount, zero_for_kopeck=False):
     return res
 
 
-def in_words(amount, gender=None):
+def in_words(amount: int | float | Decimal, gender: int | None = None) -> str:
     """
     In-words representation of amount.
 
@@ -116,7 +120,9 @@ register.filter("in_words", in_words)
 
 
 # -- tags
-def sum_string(amount, gender, items):
+def sum_string(
+    amount: int, gender: int, items: str | tuple[str, ...] | None = None
+) -> str:
     """
     in_words and choose_plural in a one flask
     Makes in-words representation of value with
@@ -134,8 +140,8 @@ def sum_string(amount, gender, items):
         if isinstance(items, str):
             uitems = smart_str(items, encoding, default_uvalue)
         else:
-            uitems = [smart_str(i, encoding) for i in items]
-        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
+            uitems = [smart_str(i, encoding) for i in items]  # type: ignore
+        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)  # type: ignore
     except Exception as err:
         # because tag's renderer must die silently
         res = default_value % {"error": err, "value": str(amount)}

@@ -4,13 +4,15 @@
 Misc utils for internal use
 """
 
+from decimal import Decimal
 
-def check_length(value, length):
+
+def check_length(value: str | tuple[str, ...], length: int) -> None:
     """
     Checks length of value
 
     @param value: value to check
-    @type value: C{str}
+    @type value: C{str} or C{tuple}
 
     @param length: length checking for
     @type length: C{int}
@@ -24,7 +26,7 @@ def check_length(value, length):
         raise ValueError("length must be %d, not %d" % (length, _length))
 
 
-def check_positive(value, strict=False):
+def check_positive(value: int | float | Decimal, strict: bool = False) -> None:
     """
     Checks if variable is positive
 
@@ -41,7 +43,7 @@ def check_positive(value, strict=False):
         raise ValueError("Value must be positive, not %s" % str(value))
 
 
-def split_values(ustring, sep=","):
+def split_values(ustring: str, sep: str = ",") -> tuple[str, ...]:
     """
     Splits unicode string with separator C{sep},
     but skips escaped separator.

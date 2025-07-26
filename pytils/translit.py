@@ -134,7 +134,7 @@ EN_ALPHABET = [
 ALPHABET = RU_ALPHABET + EN_ALPHABET  #: Alphabet that we can (de)transliterate
 
 
-def translify(in_string, strict=True):
+def translify(in_string: str, strict: bool = True) -> str:
     """
     Translify russian text
 
@@ -163,7 +163,7 @@ def translify(in_string, strict=True):
     return translit
 
 
-def detranslify(in_string):
+def detranslify(in_string: str) -> str:
     """
     Detranslify
 
@@ -193,7 +193,7 @@ def detranslify(in_string):
     return russian
 
 
-def slugify(in_string):
+def slugify(in_string: str) -> str:
     """
     Prepare string for slug (i.e. URL or file/dir name)
 
@@ -225,7 +225,7 @@ def slugify(in_string):
     return re.sub(r"[^\w\s-]", "", out_string).strip().lower()
 
 
-def dirify(in_string):
+def dirify(in_string: str) -> None:
     """
     Alias for L{slugify}
     """

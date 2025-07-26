@@ -61,7 +61,11 @@ DAY_NAMES = (
 )  #: Day names (abbreviated, full, inflected, preposition)
 
 
-def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
+def distance_of_time_in_words(
+    from_time: int | float | datetime.datetime,
+    accuracy: int = 1,
+    to_time: int | float | datetime.datetime | None = None,
+) -> str:
     """
     Represents distance of time in words
 
@@ -118,14 +122,14 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
     words.append("%d %s" % (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
     values.append(hours)
 
-    days == 0 and hours == 1 and current and alternatives.append("час")
+    days == 0 and hours == 1 and current and alternatives.append("час")  # type: ignore
 
     minutes = minutes_orig - hours_orig * 60
 
     words.append("%d %s" % (minutes, numeral.choose_plural(minutes, MINUTE_VARIANTS)))
     values.append(minutes)
 
-    days == 0 and hours == 0 and minutes == 1 and current and alternatives.append(
+    days == 0 and hours == 0 and minutes == 1 and current and alternatives.append(  # type: ignore
         "минуту"
     )
 
@@ -173,7 +177,7 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
         day_alternatives
         and current
         and limit == 1
-        and ((in_future and day_alternatives[1]) or day_alternatives[0])
+        and ((in_future and day_alternatives[1]) or day_alternatives[0])  # type: ignore
     )
 
     final_str = not real_words and zero_str or alternate_day or result_str
@@ -182,11 +186,11 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
 
 def ru_strftime(
-    format="%d.%m.%Y",
-    date=None,
-    inflected=False,
-    inflected_day=False,
-    preposition=False,
+    format: str = "%d.%m.%Y",
+    date: datetime.date | datetime.datetime | None = None,
+    inflected: bool = False,
+    inflected_day: bool = False,
+    preposition: bool = False,
 ):
     """
     Russian strftime without locale
