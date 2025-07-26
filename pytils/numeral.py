@@ -3,6 +3,7 @@
 """
 Plural forms and in-word representation for numerals.
 """
+
 from __future__ import division
 
 from decimal import Decimal
@@ -19,20 +20,20 @@ FRACTIONS = (
     ("десятимиллионная", "десятимилллионных", "десятимиллионных"),
     ("стомиллионная", "стомилллионных", "стомиллионных"),
     ("миллиардная", "миллиардных", "миллиардных"),
-    )  #: Forms (1, 2, 5) for fractions
+)  #: Forms (1, 2, 5) for fractions
 
 ONES = {
-    0: ("",       "",       ""),
-    1: ("один",   "одна",   "одно"),
-    2: ("два",    "две",    "два"),
-    3: ("три",    "три",    "три"),
+    0: ("", "", ""),
+    1: ("один", "одна", "одно"),
+    2: ("два", "две", "два"),
+    3: ("три", "три", "три"),
     4: ("четыре", "четыре", "четыре"),
-    5: ("пять",   "пять",   "пять"),
-    6: ("шесть",  "шесть",  "шесть"),
-    7: ("семь",   "семь",   "семь"),
+    5: ("пять", "пять", "пять"),
+    6: ("шесть", "шесть", "шесть"),
+    7: ("семь", "семь", "семь"),
     8: ("восемь", "восемь", "восемь"),
     9: ("девять", "девять", "девять"),
-    }  #: Forms (MALE, FEMALE, NEUTER) for ones
+}  #: Forms (MALE, FEMALE, NEUTER) for ones
 
 TENS = {
     0: "",
@@ -55,7 +56,7 @@ TENS = {
     7: "семьдесят",
     8: "восемьдесят",
     9: "девяносто",
-    }  #: Tens
+}  #: Tens
 
 HUNDREDS = {
     0: "",
@@ -68,9 +69,9 @@ HUNDREDS = {
     7: "семьсот",
     8: "восемьсот",
     9: "девятьсот",
-    }  #: Hundreds
+}  #: Hundreds
 
-MALE = 1    #: sex - male
+MALE = 1  #: sex - male
 FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
@@ -103,7 +104,7 @@ def _get_float_remainder(fvalue, signs=9):
 
     # нужно remainder в строке, потому что дробные X.0Y
     # будут "ломаться" до X.Y
-    remainder = str(fvalue).split('.')[1]
+    remainder = str(fvalue).split(".")[1]
     iremainder = int(remainder)
     orig_remainder = remainder
     factor = len(str(remainder)) - signs
@@ -117,9 +118,11 @@ def _get_float_remainder(fvalue, signs=9):
 
     if len(remainder) > signs:
         # при округлении цифр вида 0.998 ругаться
-        raise ValueError("Signs overflow: I can't round only fractional part \
-                          of %s to fit %s in %d signs" % \
-                         (str(fvalue), orig_remainder, signs))
+        raise ValueError(
+            "Signs overflow: I can't round only fractional part \
+                          of %s to fit %s in %d signs"
+            % (str(fvalue), orig_remainder, signs)
+        )
 
     return remainder
 
@@ -141,20 +144,23 @@ def choose_plural(amount, variants):
 
     @raise ValueError: variants' length lesser than 3
     """
-    
+
     if isinstance(variants, str):
         variants = split_values(variants)
     check_length(variants, 3)
     amount = abs(amount)
-    
+
     if amount % 10 == 1 and amount % 100 != 11:
         variant = 0
-    elif amount % 10 >= 2 and amount % 10 <= 4 and \
-         (amount % 100 < 10 or amount % 100 >= 20):
+    elif (
+        amount % 10 >= 2
+        and amount % 10 <= 4
+        and (amount % 100 < 10 or amount % 100 >= 20)
+    ):
         variant = 1
     else:
         variant = 2
-    
+
     return variants[variant]
 
 
@@ -236,8 +242,7 @@ def rubles(amount, zero_for_kopeck=False):
         # если 3.1, то это 10 копеек, а не одна
         if iremainder < 10 and len(remainder) == 1:
             iremainder *= 10
-        pts.append(sum_string(iremainder, 2,
-                              ("копейка", "копейки", "копеек")))
+        pts.append(sum_string(iremainder, 2, ("копейка", "копейки", "копеек")))
 
     return " ".join(pts)
 
@@ -278,8 +283,7 @@ def in_words_float(amount, _gender=FEMALE):
 
     pts = []
     # преобразуем целую часть
-    pts.append(sum_string(int(amount), 2,
-                          ("целая", "целых", "целых")))
+    pts.append(sum_string(int(amount), 2, ("целая", "целых", "целых")))
     # теперь то, что после запятой
     remainder = _get_float_remainder(amount)
     signs = len(str(remainder)) - 1
@@ -324,7 +328,8 @@ def in_words(amount, gender=None):
         # до сюда не должно дойти
         raise TypeError(
             "amount should be number type (int, long, float, Decimal), got %s"
-            % type(amount))
+            % type(amount)
+        )
 
 
 def sum_string(amount, gender, items=None):
@@ -367,20 +372,21 @@ def sum_string(amount, gender, items=None):
         else:
             return "ноль"
 
-    into = ''
+    into = ""
     tmp_val = amount
 
     # единицы
     into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
     # тысячи
-    into, tmp_val = _sum_string_fn(into, tmp_val, FEMALE,
-                                    ("тысяча", "тысячи", "тысяч"))
+    into, tmp_val = _sum_string_fn(into, tmp_val, FEMALE, ("тысяча", "тысячи", "тысяч"))
     # миллионы
-    into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
-                                    ("миллион", "миллиона", "миллионов"))
+    into, tmp_val = _sum_string_fn(
+        into, tmp_val, MALE, ("миллион", "миллиона", "миллионов")
+    )
     # миллиарды
-    into, tmp_val = _sum_string_fn(into, tmp_val, MALE,
-                                    ("миллиард", "миллиарда", "миллиардов"))
+    into, tmp_val = _sum_string_fn(
+        into, tmp_val, MALE, ("миллиард", "миллиарда", "миллиардов")
+    )
     if tmp_val == 0:
         return into
     else:
@@ -411,7 +417,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     if items is None:
         items = ("", "", "")
     one_item, two_items, five_items = items
-    
+
     check_positive(tmp_val)
 
     if tmp_val == 0:
@@ -444,7 +450,7 @@ def _sum_string_fn(into, tmp_val, gender, items=None):
     if rest1 < 1 or rest1 > 1:
         amount = rest % 10
         end_word = choose_plural(amount, items)
-        words.append(ONES[amount][gender-1])
+        words.append(ONES[amount][gender - 1])
     words.append(end_word)
 
     # добавляем то, что уже было

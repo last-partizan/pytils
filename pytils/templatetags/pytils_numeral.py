@@ -11,9 +11,13 @@ from pytils import numeral
 from pytils.templatetags import init_defaults
 
 register = template.Library()  #: Django template tag/filter registrator
-encoding = conf.settings.DEFAULT_CHARSET  #: Current charset (sets in Django project's settings)
+encoding = (
+    conf.settings.DEFAULT_CHARSET
+)  #: Current charset (sets in Django project's settings)
 debug = conf.settings.DEBUG  #: Debug mode (sets in Django project's settings)
-show_value = getattr(conf.settings, 'PYTILS_SHOW_VALUES_ON_ERROR', False)  #: Show values on errors (sets in Django project's settings)
+show_value = getattr(
+    conf.settings, "PYTILS_SHOW_VALUES_ON_ERROR", False
+)  #: Show values on errors (sets in Django project's settings)
 
 default_value, default_uvalue = init_defaults(debug, show_value)
 
@@ -44,7 +48,7 @@ def choose_plural(amount, variants):
             default_variant = variants
         except Exception:
             default_variant = ""
-        res = default_value % {'error': err, 'value': default_variant}
+        res = default_value % {"error": err, "value": default_variant}
     return res
 
 
@@ -72,7 +76,7 @@ def get_plural(amount, variants):
             default_variant = variants
         except Exception:
             default_variant = ""
-        res = default_value % {'error': err, 'value': default_variant}
+        res = default_value % {"error": err, "value": default_variant}
     return res
 
 
@@ -82,7 +86,7 @@ def rubles(amount, zero_for_kopeck=False):
         res = numeral.rubles(amount, zero_for_kopeck)
     except Exception as err:
         # because filter must die silently
-        res = default_value % {'error': err, 'value': str(amount)}
+        res = default_value % {"error": err, "value": str(amount)}
     return res
 
 
@@ -100,15 +104,15 @@ def in_words(amount, gender=None):
         res = numeral.in_words(amount, getattr(numeral, str(gender), None))
     except Exception as err:
         # because filter must die silently
-        res = default_value % {'error': err, 'value': str(amount)}
+        res = default_value % {"error": err, "value": str(amount)}
     return res
 
 
 # -- register filters
-register.filter('choose_plural', choose_plural)
-register.filter('get_plural', get_plural)
-register.filter('rubles', rubles)
-register.filter('in_words', in_words)
+register.filter("choose_plural", choose_plural)
+register.filter("get_plural", get_plural)
+register.filter("rubles", rubles)
+register.filter("in_words", in_words)
 
 
 # -- tags
@@ -134,7 +138,7 @@ def sum_string(amount, gender, items):
         res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)
     except Exception as err:
         # because tag's renderer must die silently
-        res = default_value % {'error': err, 'value': str(amount)}
+        res = default_value % {"error": err, "value": str(amount)}
     return res
 
 

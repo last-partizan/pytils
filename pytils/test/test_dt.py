@@ -24,31 +24,31 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.updateTime(self.time)
 
     def updateTime(self, _time):
-        """Update all time-related values for current time """
-        self.dtime['10sec_ago'] = _time - 10
-        self.dtime['1min_ago'] = _time - 60
-        self.dtime['10min_ago'] = _time - 600
-        self.dtime['59min_ago'] = _time - 3540
-        self.dtime['59min59sec_ago'] = _time - 3599
-        self.dtime['1hr_ago'] = _time - 3600
-        self.dtime['1hr1sec_ago'] = _time - 3601
-        self.dtime['1hr59sec_ago'] = _time - 3659
-        self.dtime['1hr1min_ago'] = _time - 3660
-        self.dtime['1hr2min_ago'] = _time - 3720
-        self.dtime['10hr_ago'] = _time - 36600
-        self.dtime['1day_ago'] = _time - 87600
-        self.dtime['1day1hr_ago'] = _time - 90600
-        self.dtime['2day_ago'] = _time - 87600*2
-        self.dtime['4day1min_ago'] = _time - 87600*4 - 60
+        """Update all time-related values for current time"""
+        self.dtime["10sec_ago"] = _time - 10
+        self.dtime["1min_ago"] = _time - 60
+        self.dtime["10min_ago"] = _time - 600
+        self.dtime["59min_ago"] = _time - 3540
+        self.dtime["59min59sec_ago"] = _time - 3599
+        self.dtime["1hr_ago"] = _time - 3600
+        self.dtime["1hr1sec_ago"] = _time - 3601
+        self.dtime["1hr59sec_ago"] = _time - 3659
+        self.dtime["1hr1min_ago"] = _time - 3660
+        self.dtime["1hr2min_ago"] = _time - 3720
+        self.dtime["10hr_ago"] = _time - 36600
+        self.dtime["1day_ago"] = _time - 87600
+        self.dtime["1day1hr_ago"] = _time - 90600
+        self.dtime["2day_ago"] = _time - 87600 * 2
+        self.dtime["4day1min_ago"] = _time - 87600 * 4 - 60
 
-        self.dtime['in_10sec'] = _time + 10
-        self.dtime['in_1min'] = _time + 61
-        self.dtime['in_10min'] = _time + 601
-        self.dtime['in_1hr'] = _time + 3721
-        self.dtime['in_10hr'] = _time + 36601
-        self.dtime['in_1day'] = _time + 87601
-        self.dtime['in_1day1hr'] = _time + 90601
-        self.dtime['in_2day'] = _time + 87600*2 + 1
+        self.dtime["in_10sec"] = _time + 10
+        self.dtime["in_1min"] = _time + 61
+        self.dtime["in_10min"] = _time + 601
+        self.dtime["in_1hr"] = _time + 3721
+        self.dtime["in_10hr"] = _time + 36601
+        self.dtime["in_1day"] = _time + 87601
+        self.dtime["in_1day1hr"] = _time + 90601
+        self.dtime["in_2day"] = _time + 87600 * 2 + 1
 
     def ckDefaultAccuracy(self, typ, estimated):
         """
@@ -165,7 +165,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         # accuracy = 1
         self.ckDefaultToTime("10sec_ago", 1, "менее минуты назад")
         self.ckDefaultToTime("1min_ago", 1, "минуту назад")
-        self.ckDefaultToTime("10min_ago", 1,  "10 минут назад")
+        self.ckDefaultToTime("10min_ago", 1, "10 минут назад")
         self.ckDefaultToTime("59min_ago", 1, "59 минут назад")
         self.ckDefaultToTime("59min59sec_ago", 1, "59 минут назад")
         self.ckDefaultToTime("1hr_ago", 1, "час назад")
@@ -186,7 +186,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_1day", 1, "завтра")
         self.ckDefaultToTime("in_1day1hr", 1, "завтра")
         self.ckDefaultToTime("in_2day", 1, "послезавтра")
-        
+
     def testDOTIWDefaultToTimeAcc2(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=2
@@ -215,7 +215,7 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         self.ckDefaultToTime("in_1day", 2, "завтра")
         self.ckDefaultToTime("in_1day1hr", 2, "через 1 день 1 час")
         self.ckDefaultToTime("in_2day", 2, "послезавтра")
-        
+
     def testDOTIWDefaultToTimeAcc3(self):
         """
         Unit-tests for distance_of_time_in_words with default to_time and accuracy=3
@@ -253,39 +253,33 @@ class DistanceOfTimeInWordsTestCase(unittest.TestCase):
         second_time = first_time + datetime.timedelta(0, 1000)
         self.assertEqual(
             pytils.dt.distance_of_time_in_words(
-                from_time=first_time,
-                accuracy=1,
-                to_time=second_time
+                from_time=first_time, accuracy=1, to_time=second_time
             ),
-            "16 минут назад"
+            "16 минут назад",
         )
 
     def testDOTIWExceptions(self):
         """
         Unit-tests for testings distance_of_time_in_words' exceptions
         """
-        self.assertRaises(ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0)
-    
+        self.assertRaises(
+            ValueError, pytils.dt.distance_of_time_in_words, time.time(), 0
+        )
+
     def testIssue25DaysFixed(self):
         """
         Unit-test for testing that Issue#25 is fixed (err when accuracy==1, days<>0, hours==1)
         """
         d_days = datetime.datetime.now() - datetime.timedelta(13, 3620)
-        self.assertEqual(
-            pytils.dt.distance_of_time_in_words(d_days),
-            "13 дней назад"
-        )
+        self.assertEqual(pytils.dt.distance_of_time_in_words(d_days), "13 дней назад")
 
     def testIssue25HoursFixed(self):
         """
         Unit-test for testing that Issue#25 is fixed (err when accuracy==1, hours<>0, minutes==1)
         """
         d_hours = datetime.datetime.now() - datetime.timedelta(0, 46865)
-        self.assertEqual(
-            pytils.dt.distance_of_time_in_words(d_hours),
-            "13 часов назад"
-        )
-        
+        self.assertEqual(pytils.dt.distance_of_time_in_words(d_hours), "13 часов назад")
+
 
 class RuStrftimeTestCase(unittest.TestCase):
     """
@@ -297,7 +291,7 @@ class RuStrftimeTestCase(unittest.TestCase):
         Setting up environment for tests
         """
         self.date = datetime.date(2006, 8, 25)
-    
+
     def ck(self, format, estimates, date=None):
         """
         Checks w/o inflected
@@ -343,9 +337,11 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ck("тест %b", "тест авг")
         self.ck("тест %B", "тест август")
         self.ckInflected("тест %B", "тест августа")
-        self.ckInflected("тест выполнен %d %B %Y года", "тест выполнен 25 августа 2006 года")
+        self.ckInflected(
+            "тест выполнен %d %B %Y года", "тест выполнен 25 августа 2006 года"
+        )
         self.ckInflectedDay("тест выполнен в %A", "тест выполнен в пятницу")
-    
+
     def testRuStrftimeWithPreposition(self):
         """
         Unit-tests for pytils.dt.ru_strftime with preposition option
@@ -353,11 +349,11 @@ class RuStrftimeTestCase(unittest.TestCase):
         self.ckPreposition("тест %a", "тест в\xa0пт")
         self.ckPreposition("тест %A", "тест в\xa0пятницу")
         self.ckPreposition("тест %A", "тест во\xa0вторник", datetime.date(2007, 6, 5))
-    
+
     def testRuStrftimeZeros(self):
         """
         Unit-test for testing that Issue#24 is correctly implemented
-        
+
         It means, 1 April 2007, but 01.04.2007
         """
         self.ck("%d.%m.%Y", "01.04.2007", datetime.date(2007, 4, 1))
@@ -369,23 +365,17 @@ class RuStrftimeTestCase(unittest.TestCase):
         """
         self.assertEqual(
             "воскресенье",
-            pytils.dt.ru_strftime(
-                "%A",
-                datetime.date(2007, 3, 18),
-                inflected_day=True
-            )
-         )
+            pytils.dt.ru_strftime("%A", datetime.date(2007, 3, 18), inflected_day=True),
+        )
 
     def test_special_case(self):
         self.assertEqual(
             "октябрь",
             pytils.dt.ru_strftime(
-                '%B',
-                inflected=False,
-                date=datetime.datetime.fromtimestamp(1540209256)
+                "%B", inflected=False, date=datetime.datetime.fromtimestamp(1540209256)
             ),
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

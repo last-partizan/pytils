@@ -14,16 +14,14 @@ from pytils import numeral
 #    правила аналогичны таковым у choose_plural
 
 print(numeral.sum_string(3, numeral.MALE, ("носок", "носка", "носков")))
-#-> три носка
+# -> три носка
 
 print(numeral.sum_string(5, numeral.FEMALE, ("коробка", "коробки", "коробок")))
-#-> пять коробок
+# -> пять коробок
 
 print(numeral.sum_string(21, numeral.NEUTER, ("очко", "очка", "очков")))
-#-> двадцать одно очко
+# -> двадцать одно очко
 
 # если варианты не указывать, то действие функции аналогично дейтсвию in_words
 print(numeral.sum_string(21, gender=numeral.NEUTER))
-#-> двадцать одно
-
-
+# -> двадцать одно

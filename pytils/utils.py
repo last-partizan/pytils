@@ -21,8 +21,7 @@ def check_length(value, length):
     """
     _length = len(value)
     if _length != length:
-        raise ValueError("length must be %d, not %d" % \
-                         (length, _length))
+        raise ValueError("length must be %d, not %d" % (length, _length))
 
 
 def check_positive(value, strict=False):
@@ -42,22 +41,22 @@ def check_positive(value, strict=False):
         raise ValueError("Value must be positive, not %s" % str(value))
 
 
-def split_values(ustring, sep=','):
+def split_values(ustring, sep=","):
     """
     Splits unicode string with separator C{sep},
     but skips escaped separator.
-    
+
     @param ustring: string to split
     @type ustring: C{str}
-    
+
     @param sep: separator (default to ',')
     @type sep: C{str}
-    
+
     @return: tuple of splitted elements
     """
     assert isinstance(ustring, str), "uvalue must be str, not %s" % type(ustring)
     # unicode have special mark symbol 0xffff which cannot be used in a regular text,
     # so we use it to mark a place where escaped column was
-    ustring_marked = ustring.replace(r'\,', '\uffff')
-    items = tuple([i.strip().replace('\uffff', ',') for i in ustring_marked.split(sep)])
+    ustring_marked = ustring.replace(r"\,", "\uffff")
+    items = tuple([i.strip().replace("\uffff", ",") for i in ustring_marked.split(sep)])
     return items
