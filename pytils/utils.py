@@ -7,12 +7,12 @@ Misc utils for internal use
 from decimal import Decimal
 
 
-def check_length(value: str | tuple[str, ...] | list[str], length: int) -> None:
+def check_length(value: tuple[str, ...] | list[str], length: int) -> None:
     """
     Checks length of value
 
     @param value: value to check
-    @type value: C{str}, C{tuple} or C{list}
+    @type value: C{tuple} or C{list}
 
     @param length: length checking for
     @type length: C{int}
