@@ -13,6 +13,21 @@ jobs:
       - uses: astral-sh/ruff-action@v3
         with:
           args: "format --check --diff"
+  Typecheck:
+    runs-on: ubuntu-latest
+    strategy: 
+      matrix:
+        python: ["3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install ty
+        run: pip install ty
+      - name: Run ty
+        run: ty check . 
   Test:
     runs-on: ubuntu-latest
     strategy:
