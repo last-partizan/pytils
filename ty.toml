@@ -1,0 +1,2 @@
+[rules]
+unused-ignore-comment = "error"
