@@ -324,7 +324,7 @@ def in_words(amount: int | float | Decimal, gender: int | None = None) -> str:
         return in_words_int(*args)  # type: ignore
     # если дробное
     elif isinstance(amount, (float, Decimal)):
-        return in_words_float(*args)
+        return in_words_float(*args)  # type: ignore
     # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти

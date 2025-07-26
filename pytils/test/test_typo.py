@@ -23,7 +23,7 @@ class HelpersTestCase(unittest.TestCase):
         unit-test for pytils.typo._get_rule_by_name
         """
         self.assertTrue(callable(typo._get_rule_by_name("testrule")))
-        self.assertEqual("rl_testrule", typo._get_rule_by_name("testrule").__name__)
+        self.assertEqual("rl_testrule", typo._get_rule_by_name("testrule").__name__)  # type: ignore
 
     def testResolveRule(self):
         """

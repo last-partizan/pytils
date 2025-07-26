@@ -210,7 +210,7 @@ def _resolve_rule_name(
         rule = _get_rule_by_name(name)
     elif callable(rule_or_name):
         # got rule
-        name = rule_or_name.__name__
+        name = rule_or_name.__name__  # type: ignore
         if name.startswith("rl_"):
             # by rule name convention
             # rule is a function with name rl_RULENAME

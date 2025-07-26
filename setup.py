@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from setuptools import setup
+from setuptools import setup  # type: ignore
 
 version = "0.4.3"
 
