@@ -29,7 +29,7 @@ jobs:
           python -m pip install -q poetry
           poetry install
       - name: Run ty
-        run: ty check
+        run: poetry run ty check
   Test:
     runs-on: ubuntu-latest
     strategy:
