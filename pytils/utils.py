@@ -43,7 +43,7 @@ def check_positive(value: int | float | Decimal, strict: bool = False) -> None:
         raise ValueError("Value must be positive, not %s" % str(value))
 
 
-def split_values(ustring: str, sep: str = ",") -> tuple[str, str, str]:
+def split_values(ustring: str, sep: str = ",") -> tuple[str, ...]:
     """
     Splits unicode string with separator C{sep},
     but skips escaped separator.
@@ -61,5 +61,4 @@ def split_values(ustring: str, sep: str = ",") -> tuple[str, str, str]:
     # so we use it to mark a place where escaped column was
     ustring_marked = ustring.replace(r"\,", "\uffff")
     items = tuple([i.strip().replace("\uffff", ",") for i in ustring_marked.split(sep)])
-    assert len(items) == 3, "items must be 3-element sequence"
     return items
