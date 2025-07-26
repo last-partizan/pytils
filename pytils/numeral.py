@@ -12,6 +12,8 @@ from typing import cast
 
 from pytils.utils import check_length, check_positive, split_values
 
+FORMS_COUNT = 3  # for one object, for two objects and for five objects
+
 FRACTIONS = (
     ("десятая", "десятых", "десятых"),
     ("сотая", "сотых", "сотых"),
@@ -151,7 +153,7 @@ def choose_plural(amount: int, variants: str | tuple[str, ...] | list[str]) -> s
 
     if isinstance(variants, str):
         variants = split_values(variants)
-    check_length(variants, 3)
+    check_length(variants, FORMS_COUNT)
     amount = abs(amount)
 
     if amount % 10 == 1 and amount % 100 != 11:
@@ -369,14 +371,16 @@ def sum_string(
     @raise ValueError: amount is negative
     """
     if isinstance(items, str):
-        items = split_values(items)
-    if items is None:
-        items = ("", "", "")
+        _items = split_values(items)
+    elif items is None:
+        _items = ("", "", "")
+    else:
+        _items = tuple(items)
 
-    try:
-        one_item, two_items, five_items = items
-    except ValueError:
-        raise ValueError("Items must be 3-element sequence")
+    check_length(_items, FORMS_COUNT)
+    checked_items = cast(tuple[str, str, str], _items)
+
+    _, _, five_items = checked_items
 
     check_positive(amount)
 
@@ -386,11 +390,8 @@ def sum_string(
         else:
             return "ноль"
 
-    into = ""
-    tmp_val = amount
-
     # единицы
-    into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
+    into, tmp_val = _sum_string_fn("", amount, gender, checked_items)
     # тысячи
     into, tmp_val = _sum_string_fn(
         into, tmp_val, Gender.FEMALE, ("тысяча", "тысячи", "тысяч")
@@ -413,7 +414,7 @@ def _sum_string_fn(
     into: str,
     tmp_val: int,
     gender: Gender,
-    items: tuple[str, str, str] | list[str] | None = None,
+    items: tuple[str, str, str],
 ) -> tuple[str, int]:
     """
     Make in-words representation of single order
@@ -428,16 +429,14 @@ def _sum_string_fn(
     @type gender: C{int}
 
     @param items: variants of objects
-    @type items: 3-element C{sequence} of C{str}
+    @type items: 3-element C{sequence}
 
     @return: new into and tmp_val
     @rtype: C{tuple}
 
     @raise ValueError: tmp_val is negative
     """
-    if items is None:
-        items = ("", "", "")
-    one_item, two_items, five_items = items
+    _, _, five_items = items
 
     check_positive(tmp_val)
 
