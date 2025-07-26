@@ -4,6 +4,8 @@
 Misc utils for internal use
 """
 
+from __future__ import annotations
+
 from decimal import Decimal
 
 

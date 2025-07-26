@@ -4,7 +4,7 @@
 Plural forms and in-word representation for numerals.
 """
 
-from __future__ import division
+from __future__ import annotations, division
 
 from decimal import Decimal
 

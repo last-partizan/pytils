@@ -4,6 +4,8 @@
 pytils.dt templatetags for Django web-framework
 """
 
+from __future__ import annotations
+
 import datetime
 import time
 

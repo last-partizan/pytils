@@ -4,6 +4,8 @@
 pytils.numeral templatetags for Django web-framework
 """
 
+from __future__ import annotations
+
 from decimal import Decimal
 
 from django import conf, template  # type: ignore

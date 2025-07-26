@@ -4,6 +4,8 @@
 Russian dates without locales
 """
 
+from __future__ import annotations
+
 import datetime
 
 from pytils import numeral
