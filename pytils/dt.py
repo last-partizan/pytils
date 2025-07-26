@@ -124,14 +124,14 @@ def distance_of_time_in_words(
     words.append("%d %s" % (hours, numeral.choose_plural(hours, HOUR_VARIANTS)))
     values.append(hours)
 
-    days == 0 and hours == 1 and current and alternatives.append("час")  # type: ignore
+    days == 0 and hours == 1 and current and alternatives.append("час")
 
     minutes = minutes_orig - hours_orig * 60
 
     words.append("%d %s" % (minutes, numeral.choose_plural(minutes, MINUTE_VARIANTS)))
     values.append(minutes)
 
-    days == 0 and hours == 0 and minutes == 1 and current and alternatives.append(  # type: ignore
+    days == 0 and hours == 0 and minutes == 1 and current and alternatives.append(
         "минуту"
     )
 
@@ -179,7 +179,7 @@ def distance_of_time_in_words(
         day_alternatives
         and current
         and limit == 1
-        and ((in_future and day_alternatives[1]) or day_alternatives[0])  # type: ignore
+        and ((in_future and day_alternatives[1]) or day_alternatives[0])
     )
 
     final_str = not real_words and zero_str or alternate_day or result_str

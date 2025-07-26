@@ -6,8 +6,8 @@ pytils.translit templatetags for Django web-framework
 
 from __future__ import annotations
 
-from django import conf, template  # type: ignore
-from django.utils.encoding import smart_str  # type: ignore
+from django import conf, template
+from django.utils.encoding import smart_str
 
 from pytils import translit
 from pytils.templatetags import init_defaults

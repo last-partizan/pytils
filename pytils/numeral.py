@@ -235,7 +235,7 @@ def rubles(amount: int | float | Decimal, zero_for_kopeck: bool = False) -> str:
     check_positive(amount)
 
     pts = []
-    amount = round(amount, 2)  # type: ignore
+    amount = round(amount, 2)
     pts.append(sum_string(int(amount), 1, ("рубль", "рубля", "рублей")))
     remainder = _get_float_remainder(amount, 2)
     iremainder = int(remainder)
@@ -318,13 +318,13 @@ def in_words(amount: int | float | Decimal, gender: int | None = None) -> str:
     if gender is None:
         args = (amount,)
     else:
-        args = (amount, gender)  # type: ignore
+        args = (amount, gender)
     # если целое
     if isinstance(amount, int):
-        return in_words_int(*args)  # type: ignore
+        return in_words_int(*args)  # type: ignore[invalid-argument-type]
     # если дробное
     elif isinstance(amount, (float, Decimal)):
-        return in_words_float(*args)  # type: ignore
+        return in_words_float(*args)  # type: ignore[invalid-argument-type]
     # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти
@@ -364,7 +364,7 @@ def sum_string(
         items = ("", "", "")
 
     try:
-        one_item, two_items, five_items = items  # type: ignore
+        one_item, two_items, five_items = items
     except ValueError:
         raise ValueError("Items must be 3-element sequence")
 

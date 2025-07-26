@@ -8,8 +8,8 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from django import conf, template  # type: ignore
-from django.utils.encoding import smart_str  # type: ignore
+from django import conf, template
+from django.utils.encoding import smart_str
 
 from pytils import numeral
 from pytils.templatetags import init_defaults
@@ -142,8 +142,11 @@ def sum_string(
         if isinstance(items, str):
             uitems = smart_str(items, encoding, default_uvalue)
         else:
-            uitems = [smart_str(i, encoding) for i in items]  # type: ignore
-        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)  # type: ignore
+            uitems = [
+                smart_str(i, encoding)
+                for i in items  # type: ignore[not-iterable]
+            ]
+        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)  # type: ignore[invalid-argument-type]
     except Exception as err:
         # because tag's renderer must die silently
         res = default_value % {"error": err, "value": str(amount)}
