@@ -9,6 +9,11 @@ jobs:
       matrix:
         python: ["3.13"]
     steps:
+      - name: Check env
+        run: |
+          env
+          pwd
+          ls
       - uses: astral-sh/ruff-action@v3
         with:
           args: "format --check --diff"
