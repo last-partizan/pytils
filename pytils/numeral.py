@@ -277,7 +277,7 @@ def in_words_int(amount: int, gender: Gender = Gender.MALE) -> str:
     return sum_string(amount, gender)
 
 
-def in_words_float(amount: float | Decimal, _gender: Gender = Gender.FEMALE) -> str:
+def in_words_float(amount: float | Decimal) -> str:
     """
     Float in words
 
@@ -293,11 +293,11 @@ def in_words_float(amount: float | Decimal, _gender: Gender = Gender.FEMALE) -> 
 
     pts = []
     # преобразуем целую часть
-    pts.append(sum_string(int(amount), _gender, ("целая", "целых", "целых")))
+    pts.append(sum_string(int(amount), Gender.FEMALE, ("целая", "целых", "целых")))
     # теперь то, что после запятой
     remainder = _get_float_remainder(amount)
     signs = len(str(remainder)) - 1
-    pts.append(sum_string(int(remainder), _gender, FRACTIONS[signs]))
+    pts.append(sum_string(int(remainder), Gender.FEMALE, FRACTIONS[signs]))
 
     return " ".join(pts)
 
@@ -332,7 +332,7 @@ def in_words(amount: int | float | Decimal, gender: Gender | None = None) -> str
         return in_words_int(*args)  # type: ignore
     # если дробное
     elif isinstance(amount, (float, Decimal)):
-        return in_words_float(*args)
+        return in_words_float(amount)
     # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти
