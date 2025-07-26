@@ -66,7 +66,6 @@ class ExampleFileTestSuite(object):
 
 def test_python_version():
     # check that `python something.py` will run the same version interepreter as it is running
-    import sys
     current_version = str(sys.version_info)
     exec_version = subprocess.check_output(
         ['python', '-c', 'import sys; print(sys.version_info)'],
