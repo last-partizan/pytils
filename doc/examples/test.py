@@ -15,10 +15,12 @@ EXAMPLES = [
 ]
 
 
-name_to_path = lambda x: os.path.join(
-    os.path.normpath(os.path.abspath(os.path.dirname(__file__))), x
-)
-sanitize_output = lambda x: x.replace("#->", "").replace("# ->", "").strip()
+def name_to_path(x):
+    return os.path.join(os.path.normpath(os.path.abspath(os.path.dirname(__file__))), x)
+
+
+def sanitize_output(x):
+    return x.replace("#->", "").replace("# ->", "").strip()
 
 
 def safe_file_iterator(fh, encoding="UTF-8"):

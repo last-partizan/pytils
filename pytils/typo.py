@@ -288,7 +288,7 @@ class Typography:
             else:
                 raise TypeError(
                     "Cannot expand arg %r, must be tuple, list,"
-                    " dict, str or callable, not" % (arg, type(arg).__name__)
+                    " dict, str or callable, not %s" % (arg, type(arg).__name__)
                 )
         for kw, arg in kwargs.items():
             if isinstance(arg, str) or callable(arg):
@@ -296,7 +296,7 @@ class Typography:
             else:
                 raise TypeError(
                     "Cannot expand kwarg %r, must be str or "
-                    "callable, not" % (arg, type(arg).__name__)
+                    "callable, not %s" % (arg, type(arg).__name__)
                 )
         # next, resolve rule names to callables
         for name, rule in (_resolve_rule_name(a) for a in expanded_args):
