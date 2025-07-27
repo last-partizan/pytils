@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Helpers for templatetags' unit tests in Django webframework
 """

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Unit tests for pytils' numeral templatetags for Django web framework
 """

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_typo -*-
 """
 Russian typography
@@ -8,7 +7,8 @@ from __future__ import annotations
 
 import os
 import re
-from typing import Callable, Sequence
+from typing import Callable
+from collections.abc import Sequence
 
 
 def _sub_patterns(patterns: Sequence[tuple[str | re.Pattern, str]], text: str) -> str:
@@ -223,7 +223,7 @@ def _resolve_rule_name(
     return name, rule
 
 
-class Typography(object):
+class Typography:
     """
     Russian typography rules applier
     """
@@ -314,7 +314,7 @@ class Typography(object):
         try:
             res = self.rules[rulename](text)
         except ValueError as e:
-            raise ValueError("Rule %s failed to apply: %s" % (rulename, e))
+            raise ValueError("Rule {} failed to apply: {}".format(rulename, e))
         return res
 
     def apply(self, text):

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Pytils templatetags for Django web-framework
 """

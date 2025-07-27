@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_dt -*-
 """
 Russian dates without locales
@@ -160,8 +159,8 @@ def distance_of_time_in_words(
     _result_str = alter_str or real_str
     result_str = (
         in_future
-        and "%s %s" % (PREFIX_IN, _result_str)
-        or "%s %s" % (_result_str, SUFFIX_AGO)
+        and "{} {}".format(PREFIX_IN, _result_str)
+        or "{} {}".format(_result_str, SUFFIX_AGO)
     )
 
     # если же прошло менее минуты, то real_words -- пустой, и поэтому

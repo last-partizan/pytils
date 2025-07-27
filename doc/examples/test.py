@@ -22,8 +22,7 @@ sanitize_output = lambda x: x.replace("#->", "").replace("# ->", "").strip()
 
 
 def safe_file_iterator(fh, encoding="UTF-8"):
-    for line in fh:
-        yield line
+    yield from fh
 
 
 def grab_expected_output(name):
@@ -46,7 +45,7 @@ def run_example_and_collect_output(name):
     ]
 
 
-class ExampleFileTestSuite(object):
+class ExampleFileTestSuite:
     def __init__(self, name):
         self.name = name
         self.expected_output = list(grab_expected_output(name))

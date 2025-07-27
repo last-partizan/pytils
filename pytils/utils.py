@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.test_utils -*-
 """
 Misc utils for internal use

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.templatetags.test_translit -*-
 """
 pytils.translit templatetags for Django web-framework

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Unit-tests for pytils.typo
 """
@@ -141,7 +140,7 @@ class RulesTestCase(unittest.TestCase):
             "cleanspaces",
             " Точка ,точка , %(n)sзапятая,%(n)s вышла рожица  кривая . "
             % {"n": os.linesep},
-            "Точка, точка,%(n)sзапятая,%(n)sвышла рожица кривая." % {"n": os.linesep},
+            "Точка, точка,{n}запятая,{n}вышла рожица кривая.".format(n=os.linesep),
         )
         self.checkRule(
             "cleanspaces",
@@ -167,7 +166,7 @@ class RulesTestCase(unittest.TestCase):
             "ellipsis",
             "Быть или не быть, вот в чем вопрос...%(n)s%(n)sШекспир"
             % {"n": os.linesep},
-            "Быть или не быть, вот в чем вопрос…%(n)s%(n)sШекспир" % {"n": os.linesep},
+            "Быть или не быть, вот в чем вопрос…{n}{n}Шекспир".format(n=os.linesep),
         )
         self.checkRule(
             "ellipsis", "Мдя..... могло быть лучше", "Мдя..... могло быть лучше"
@@ -191,8 +190,8 @@ class RulesTestCase(unittest.TestCase):
         )
         self.checkRule(
             "initials",
-            "1. В.И.Иванов%(n)s2. С.П.Васечкин" % {"n": os.linesep},
-            "1. В.И.\u2009Иванов%(n)s2. С.П.\u2009Васечкин" % {"n": os.linesep},
+            "1. В.И.Иванов{n}2. С.П.Васечкин".format(n=os.linesep),
+            "1. В.И.\u2009Иванов{n}2. С.П.\u2009Васечкин".format(n=os.linesep),
         )
         self.checkRule(
             "initials",
