@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Unit tests for pytils' dt templatetags for Django web framework
 """

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # -*- test-case-name: pytils.test.templatetags.test_dt -*-
 """
 pytils.dt templatetags for Django web-framework

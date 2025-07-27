@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import datetime
 import sys
 import time
@@ -25,7 +23,7 @@ class DtView(TemplateView):
     template_name = "dt.html"
 
     def get_context_data(self, **kwargs):
-        context = super(DtView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(
             {
                 "ctime": time.time(),
@@ -43,7 +41,7 @@ class NumeralView(TemplateView):
     template_name = "numeral.html"
 
     def get_context_data(self, **kwargs):
-        context = super(NumeralView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(
             {
                 "comment_variants": ("комментарий", "комментария", "комментариев"),
@@ -63,7 +61,7 @@ class TranslitView(TemplateView):
     template_name = "translit.html"
 
     def get_context_data(self, **kwargs):
-        context = super(TranslitView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(
             {
                 "text": "Пример траслитерации средствами pytils",
@@ -77,7 +75,7 @@ class IndexView(TemplateView):
     template_name = "base.html"
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(
             {
                 "pytils_version": pytils_version,
