@@ -4,6 +4,8 @@
 Russian dates without locales
 """
 
+from __future__ import annotations
+
 import datetime
 
 from pytils import numeral
@@ -61,7 +63,11 @@ DAY_NAMES = (
 )  #: Day names (abbreviated, full, inflected, preposition)
 
 
-def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
+def distance_of_time_in_words(
+    from_time: int | float | datetime.datetime,
+    accuracy: int = 1,
+    to_time: int | float | datetime.datetime | None = None,
+) -> str:
     """
     Represents distance of time in words
 
@@ -182,11 +188,11 @@ def distance_of_time_in_words(from_time, accuracy=1, to_time=None):
 
 
 def ru_strftime(
-    format="%d.%m.%Y",
-    date=None,
-    inflected=False,
-    inflected_day=False,
-    preposition=False,
+    format: str = "%d.%m.%Y",
+    date: datetime.date | datetime.datetime | None = None,
+    inflected: bool = False,
+    inflected_day: bool = False,
+    preposition: bool = False,
 ):
     """
     Russian strftime without locale

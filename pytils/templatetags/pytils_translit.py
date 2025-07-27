@@ -4,6 +4,8 @@
 pytils.translit templatetags for Django web-framework
 """
 
+from __future__ import annotations
+
 from django import conf, template
 from django.utils.encoding import smart_str
 
@@ -24,7 +26,7 @@ default_value, default_uvalue = init_defaults(debug, show_value)
 # -- filters --
 
 
-def translify(text):
+def translify(text: str) -> str:
     """Translify russian text"""
     try:
         res = translit.translify(smart_str(text, encoding))
@@ -34,7 +36,7 @@ def translify(text):
     return res
 
 
-def detranslify(text):
+def detranslify(text: str) -> str:
     """Detranslify russian text"""
     try:
         res = translit.detranslify(text)
@@ -44,7 +46,7 @@ def detranslify(text):
     return res
 
 
-def slugify(text):
+def slugify(text: str) -> str:
     """Make slug from (russian) text"""
     try:
         res = translit.slugify(smart_str(text, encoding))

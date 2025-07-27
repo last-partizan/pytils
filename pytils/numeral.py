@@ -4,7 +4,7 @@
 Plural forms and in-word representation for numerals.
 """
 
-from __future__ import division
+from __future__ import annotations, division
 
 from decimal import Decimal
 
@@ -76,7 +76,7 @@ FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
 
 
-def _get_float_remainder(fvalue, signs=9):
+def _get_float_remainder(fvalue: int | float | Decimal, signs: int = 9) -> str:
     """
     Get remainder of float, i.e. 2.05 -> '05'
 
@@ -127,7 +127,7 @@ def _get_float_remainder(fvalue, signs=9):
     return remainder
 
 
-def choose_plural(amount, variants):
+def choose_plural(amount: int, variants: str | tuple[str, ...]) -> str:
     """
     Choose proper case depending on amount
 
@@ -164,7 +164,9 @@ def choose_plural(amount, variants):
     return variants[variant]
 
 
-def get_plural(amount, variants, absence=None):
+def get_plural(
+    amount: int, variants: str | tuple[str, ...], absence: str | None = None
+) -> str:
     """
     Get proper case with value
 
@@ -215,7 +217,7 @@ def _get_plural_legacy(amount, extra_variants):
     return get_plural(amount, variants, absence)
 
 
-def rubles(amount, zero_for_kopeck=False):
+def rubles(amount: int | float | Decimal, zero_for_kopeck: bool = False) -> str:
     """
     Get string for money
 
@@ -247,7 +249,7 @@ def rubles(amount, zero_for_kopeck=False):
     return " ".join(pts)
 
 
-def in_words_int(amount, gender=MALE):
+def in_words_int(amount: int, gender: int = MALE) -> str:
     """
     Integer in words
 
@@ -267,7 +269,7 @@ def in_words_int(amount, gender=MALE):
     return sum_string(amount, gender)
 
 
-def in_words_float(amount, _gender=FEMALE):
+def in_words_float(amount: float | Decimal, _gender: int = FEMALE) -> str:
     """
     Float in words
 
@@ -292,7 +294,7 @@ def in_words_float(amount, _gender=FEMALE):
     return " ".join(pts)
 
 
-def in_words(amount, gender=None):
+def in_words(amount: int | float | Decimal, gender: int | None = None) -> str:
     """
     Numeral in words
 
@@ -319,10 +321,10 @@ def in_words(amount, gender=None):
         args = (amount, gender)
     # если целое
     if isinstance(amount, int):
-        return in_words_int(*args)
+        return in_words_int(*args)  # ty: ignore[invalid-argument-type]
     # если дробное
     elif isinstance(amount, (float, Decimal)):
-        return in_words_float(*args)
+        return in_words_float(*args)  # ty: ignore[invalid-argument-type]
     # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти
@@ -332,7 +334,9 @@ def in_words(amount, gender=None):
         )
 
 
-def sum_string(amount, gender, items=None):
+def sum_string(
+    amount: int, gender: int, items: str | tuple[str, ...] | None = None
+) -> str:
     """
     Get sum in words
 
