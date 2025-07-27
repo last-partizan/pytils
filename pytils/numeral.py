@@ -235,7 +235,7 @@ def rubles(amount: int | float | Decimal, zero_for_kopeck: bool = False) -> str:
 
     pts = []
     amount = round(amount, 2)
-    pts.append(sum_string(int(amount), 1, ("рубль", "рубля", "рублей")))
+    pts.append(sum_string(int(amount), MALE, ("рубль", "рубля", "рублей")))
     remainder = _get_float_remainder(amount, 2)
     iremainder = int(remainder)
 
@@ -243,7 +243,7 @@ def rubles(amount: int | float | Decimal, zero_for_kopeck: bool = False) -> str:
         # если 3.1, то это 10 копеек, а не одна
         if iremainder < 10 and len(remainder) == 1:
             iremainder *= 10
-        pts.append(sum_string(iremainder, 2, ("копейка", "копейки", "копеек")))
+        pts.append(sum_string(iremainder, FEMALE, ("копейка", "копейки", "копеек")))
 
     return " ".join(pts)
 
@@ -268,7 +268,7 @@ def in_words_int(amount: int, gender: int = MALE) -> str:
     return sum_string(amount, gender)
 
 
-def in_words_float(amount: float | Decimal, _gender: int = FEMALE) -> str:
+def in_words_float(amount: float | Decimal) -> str:
     """
     Float in words
 
@@ -284,11 +284,11 @@ def in_words_float(amount: float | Decimal, _gender: int = FEMALE) -> str:
 
     pts = []
     # преобразуем целую часть
-    pts.append(sum_string(int(amount), 2, ("целая", "целых", "целых")))
+    pts.append(sum_string(int(amount), FEMALE, ("целая", "целых", "целых")))
     # теперь то, что после запятой
     remainder = _get_float_remainder(amount)
     signs = len(str(remainder)) - 1
-    pts.append(sum_string(int(remainder), 2, FRACTIONS[signs]))
+    pts.append(sum_string(int(remainder), FEMALE, FRACTIONS[signs]))
 
     return " ".join(pts)
 
@@ -323,7 +323,7 @@ def in_words(amount: int | float | Decimal, gender: int | None = None) -> str:
         return in_words_int(*args)  # ty: ignore[invalid-argument-type]
     # если дробное
     elif isinstance(amount, (float, Decimal)):
-        return in_words_float(*args)  # ty: ignore[invalid-argument-type]
+        return in_words_float(amount)
     # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти
