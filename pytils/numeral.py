@@ -396,7 +396,9 @@ def sum_string(
         raise ValueError("Cannot operand with numbers bigger than 10**11")
 
 
-def _sum_string_fn(into, tmp_val, gender, items=None):
+def _sum_string_fn(
+    into: str, tmp_val: int, gender: int, items: tuple[str, str, str]
+) -> tuple[str, int]:
     """
     Make in-words representation of single order
 
