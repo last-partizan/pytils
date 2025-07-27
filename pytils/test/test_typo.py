@@ -103,7 +103,9 @@ class TypographyApplierTestCase(unittest.TestCase):
         )
 
     def testRecommendedArgsStyle(self):
-        lambdarule = lambda x: x
+        def lambdarule(x):
+            return x
+
         self.assertEqual(
             {
                 "cb_testrule": cb_testrule,
