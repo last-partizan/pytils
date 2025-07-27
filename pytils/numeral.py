@@ -6,6 +6,7 @@ Plural forms and in-word representation for numerals.
 from __future__ import annotations
 
 from decimal import Decimal
+from typing import cast
 
 from pytils.utils import check_length, check_positive, split_values
 
@@ -73,6 +74,8 @@ HUNDREDS = {
 MALE = 1  #: sex - male
 FEMALE = 2  #: sex - female
 NEUTER = 3  #: sex - neuter
+
+FORMS_COUNT = 3
 
 
 def _get_float_remainder(fvalue: int | float | Decimal, signs: int = 9) -> str:
@@ -146,7 +149,8 @@ def choose_plural(amount: int, variants: str | tuple[str, ...]) -> str:
 
     if isinstance(variants, str):
         variants = split_values(variants)
-    check_length(variants, 3)
+    check_length(variants, FORMS_COUNT)
+
     amount = abs(amount)
 
     if amount % 10 == 1 and amount % 100 != 11:
@@ -358,16 +362,17 @@ def sum_string(
     @raise ValueError: amount is negative
     """
     if isinstance(items, str):
-        items = split_values(items)
-    if items is None:
-        items = ("", "", "")
-
-    try:
-        one_item, two_items, five_items = items
-    except ValueError:
-        raise ValueError("Items must be 3-element sequence")
+        items_tuple = split_values(items)
+    elif items is None:
+        items_tuple = ("", "", "")
+    else:
+        items_tuple = items
 
     check_positive(amount)
+    check_length(items_tuple, FORMS_COUNT)
+    items_tuple = cast(tuple[str, str, str], items_tuple)
+
+    _, _, five_items = items_tuple
 
     if amount == 0:
         if five_items:
@@ -379,7 +384,7 @@ def sum_string(
     tmp_val = amount
 
     # единицы
-    into, tmp_val = _sum_string_fn(into, tmp_val, gender, items)
+    into, tmp_val = _sum_string_fn(into, tmp_val, gender, items_tuple)
     # тысячи
     into, tmp_val = _sum_string_fn(into, tmp_val, FEMALE, ("тысяча", "тысячи", "тысяч"))
     # миллионы
@@ -419,9 +424,7 @@ def _sum_string_fn(
 
     @raise ValueError: tmp_val is negative
     """
-    if items is None:
-        items = ("", "", "")
-    one_item, two_items, five_items = items
+    _, _, five_items = items
 
     check_positive(tmp_val)
 
