@@ -9,7 +9,8 @@ from __future__ import annotations
 import datetime
 import time
 
-from django import conf, template, utils
+from django import conf, template
+from django.utils import timezone
 
 from pytils import dt
 from pytils.templatetags import init_defaults
@@ -42,12 +43,12 @@ def distance_of_time(
     try:
         to_time = None
         if conf.settings.USE_TZ:
-            to_time = utils.timezone.now()  # type: ignore[attr-defined]
+            to_time = timezone.now()
         res = dt.distance_of_time_in_words(from_time, accuracy, to_time)
     except Exception as err:
         # because filter must die silently
         try:
-            default_distance = "%s seconds" % str(int(time.time() - from_time))  # type: ignore[operator]
+            default_distance = "%s seconds" % str(int(time.time() - from_time))  # ty: ignore[unsupported-operator]
         except Exception:
             default_distance = ""
         res = default_value % {"error": err, "value": default_distance}

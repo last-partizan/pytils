@@ -144,9 +144,9 @@ def sum_string(
         else:
             uitems = [
                 smart_str(i, encoding)
-                for i in items  # type: ignore[not-iterable]
+                for i in items  # ty: ignore[not-iterable]
             ]
-        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)  # type: ignore[invalid-argument-type]
+        res = numeral.sum_string(amount, getattr(numeral, str(gender), None), uitems)  # ty: ignore[invalid-argument-type]
     except Exception as err:
         # because tag's renderer must die silently
         res = default_value % {"error": err, "value": str(amount)}

@@ -321,10 +321,10 @@ def in_words(amount: int | float | Decimal, gender: int | None = None) -> str:
         args = (amount, gender)
     # если целое
     if isinstance(amount, int):
-        return in_words_int(*args)  # type: ignore[invalid-argument-type]
+        return in_words_int(*args)  # ty: ignore[invalid-argument-type]
     # если дробное
     elif isinstance(amount, (float, Decimal)):
-        return in_words_float(*args)  # type: ignore[invalid-argument-type]
+        return in_words_float(*args)  # ty: ignore[invalid-argument-type]
     # ни float, ни int, ни Decimal
     else:
         # до сюда не должно дойти
